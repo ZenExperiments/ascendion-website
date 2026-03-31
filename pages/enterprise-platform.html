@@ -425,6 +425,53 @@
     .impact-card:nth-child(2n)   { border-right: none; }
     .impact-card:nth-child(3),
     .impact-card:nth-child(4)   { border-bottom: none; }
+
+    /* 4-column variant */
+    .impact-grid--4col {
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: auto auto auto 1fr;
+      align-items: stretch;
+    }
+    .impact-grid--4col .impact-card {
+      border-right: 1px solid rgba(0,0,0,0.06);
+      border-bottom: none;
+      /* Subgrid: each card spans 4 rows so icon/stat/heading/body align across all columns */
+      display: grid;
+      grid-template-rows: subgrid;
+      grid-row: span 4;
+    }
+    .impact-grid--4col .impact-card:last-child { border-right: none; }
+
+    /* Icon styling for 4-col cards */
+    .impact-card-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(100,100,215,0.08);
+      border-radius: 2px;
+      margin-bottom: 32px;
+      color: var(--primary-500);
+      position: relative;
+      z-index: 1;
+      transition: background 0.4s, color 0.4s;
+    }
+    .impact-grid--4col .impact-card:hover .impact-card-icon {
+      background: rgba(0,0,0,0.06);
+      color: #000000;
+    }
+    /* h4 inside 4-col cards */
+    .impact-grid--4col .impact-card h4 {
+      font-family: var(--font-primary);
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 1.3;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      transition: color 0.4s;
+    }
+    .impact-grid--4col .impact-card:hover h4 { color: #000000; }
     /* Teal fade — fades in/out on hover */
     .impact-card::before {
       content: '';
@@ -439,6 +486,7 @@
     /* All content sits above overlay */
     .impact-card-stat,
     .impact-card h3,
+    .impact-card h4,
     .impact-card p { position: relative; z-index: 1; }
     .impact-card-stat {
       font-family: var(--font-display);
@@ -938,9 +986,226 @@
         transition-duration: 0.01ms !important;
       }
     }
+
+    /* =====================================================
+       POWER OF AI — STEPS VARIANT  (bg-dark #000)
+    ===================================================== */
+    .pai2-section { background: var(--bg-dark); padding-top: var(--py); padding-bottom: var(--py); }
+    .pai2-section .s-head { text-align: center; margin-bottom: 56px; }
+    .pai2-section .s-head p { font-size: 18px; color: var(--text-inv-2); max-width: 640px; margin: 0 auto; }
+    .pai2-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .pai2-nav { display: flex; flex-direction: column; gap: 2px; }
+    .pai2-btn {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 20px 24px;
+      background: none;
+      border: none;
+      border-left: 3px solid var(--neutral-800);
+      cursor: pointer;
+      text-align: left;
+      transition: border-color 0.2s, background 0.2s;
+      width: 100%;
+    }
+    .pai2-btn:hover { background: rgba(255,255,255,0.04); border-left-color: var(--neutral-700); }
+    .pai2-btn.active { border-left-color: var(--accent-100); background: rgba(45,220,170,0.05); }
+    .pai2-num {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 400;
+      color: var(--neutral-700);
+      min-width: 40px;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+    .pai2-btn.active .pai2-num { color: var(--accent-100); }
+    .pai2-label { font-size: 15px; font-weight: 500; color: var(--neutral-600); transition: color 0.2s; }
+    .pai2-btn.active .pai2-label { color: var(--neutral-0); }
+    .pai2-panel { display: none; }
+    .pai2-panel.active { display: block; }
+    .pai2-panel h4 {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 400;
+      color: var(--text-inv);
+      margin-bottom: 24px;
+    }
+    .pai2-list {
+      list-style: none;
+      padding: 0; margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .pai2-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      font-size: 16px;
+      color: var(--text-inv-2);
+      line-height: 1.65;
+    }
+    .pai2-list li::before {
+      content: '';
+      flex-shrink: 0;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent-100);
+      margin-top: 8px;
+    }
+
+    /* =====================================================
+       CAPABILITIES — FULL-WIDTH ACCORDION  (bg-default #fff)
+    ===================================================== */
+    .cap2-section { background: var(--bg-default); padding-top: var(--py); padding-bottom: var(--py); }
+    .cap2-accordion { border-top: 1px solid var(--neutral-200); }
+    .cap2-item { border-bottom: 1px solid var(--neutral-200); overflow: hidden; }
+    .cap2-trigger {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 32px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      gap: 24px;
+      transition: background 0.3s;
+    }
+    .cap2-trigger-title {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--text-primary);
+      transition: color 0.3s;
+      line-height: 1.3;
+    }
+    .cap2-icon {
+      width: 40px; height: 40px; flex-shrink: 0;
+      border: 1px solid var(--neutral-200);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--neutral-700);
+      transition: background 0.3s, border-color 0.3s, color 0.3s;
+    }
+    .cap2-icon svg { transition: transform 0.35s ease; }
+    .cap2-item.open .cap2-icon {
+      background: rgba(255,255,255,0.2);
+      border-color: rgba(255,255,255,0.4);
+      color: #fff;
+    }
+    .cap2-item.open .cap2-icon svg { transform: rotate(180deg); }
+    .cap2-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.45s ease;
+    }
+    .cap2-item.open .cap2-body { max-height: 600px; }
+    .cap2-body-inner {
+      padding: 0 32px 48px;
+      max-width: 720px;
+    }
+    /* Open state — violet bg, white text */
+    .cap2-item.open { background: var(--primary-500); }
+    .cap2-item.open .cap2-trigger { background: var(--primary-500); }
+    .cap2-item.open .cap2-trigger-title { color: #fff; }
+    .cap2-item.open .cap2-body-inner p,
+    .cap2-item.open .cap2-body-inner li { color: rgba(255,255,255,0.85); }
+    .cap2-item.open .cap2-body-inner h5 { color: #fff; }
+    .cap2-body-inner p { font-size: 16px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 16px; }
+    .cap2-body-inner p:last-child { margin-bottom: 0; }
+    .cap2-list {
+      list-style: none; padding: 0; margin: 16px 0 0;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .cap2-list li {
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: 15px; color: var(--text-secondary); line-height: 1.6;
+    }
+    .cap2-list li::before {
+      content: '';
+      flex-shrink: 0; width: 6px; height: 6px;
+      border-radius: 50%; background: var(--primary-500); margin-top: 7px;
+    }
+    .cap2-item.open .cap2-list li::before { background: rgba(255,255,255,0.7); }
+    .cap2-visual {
+      aspect-ratio: 4/3;
+      background: linear-gradient(135deg, #ebebf8 0%, #e0e0f0 100%);
+      border-radius: 2px;
+    }
+    .cap2-item.open .cap2-visual {
+      background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%);
+    }
+    /* Accordion lives inside .container — 80px side margins preserved naturally */
+
+    /* =====================================================
+       SECTION NAV — fixed top bar (right-aligned)
+    ===================================================== */
+    .secnav {
+      position: fixed;
+      top: 86px;
+      left: 0;
+      right: 0;
+      z-index: 149;
+      background: #000000;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      display: flex;
+      align-items: stretch;
+      justify-content: flex-end;
+      padding: 0 80px;
+      height: 44px;
+      gap: 0;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-100%);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+    .secnav.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+    .secnav-item {
+      font-family: var(--font-primary);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: rgba(255,255,255,0.55);
+      padding: 0 16px;
+      border-radius: 0;
+      border: none;
+      background: none;
+      cursor: pointer;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      transition: color 0.2s ease, background 0.2s ease;
+    }
+    .secnav-item:hover { color: #ffffff; }
+    .secnav-item.active {
+      background: var(--primary-500);
+      color: #ffffff;
+    }
   </style>
 </head>
 <body>
+
+<!-- SECTION NAV — fixed top bar, right-aligned -->
+<nav class="secnav" id="sectionNav" aria-label="Page sections">
+  <button class="secnav-item" data-target="s-intro">Intro</button>
+  <button class="secnav-item" data-target="s-impact">Impact</button>
+  <button class="secnav-item" data-target="s-powerai">Power of AI</button>
+  <button class="secnav-item" data-target="s-cap">Capabilities</button>
+  <button class="secnav-item" data-target="s-outcomes">Client Outcomes</button>
+  <button class="secnav-item" data-target="s-insights">Insights</button>
+</nav>
 
 <!-- ===================================================
      ANNOUNCE BAR
@@ -1051,7 +1316,7 @@
 <!-- ===================================================
      INTRO + STATS  ·  bg-default #ffffff
 =================================================== -->
-<section class="intro-section">
+<section class="intro-section" id="s-intro">
   <div class="container">
     <div class="intro-grid">
       <div class="intro-body rv">
@@ -1074,7 +1339,7 @@
 <!-- ===================================================
      IMPACT  ·  bg-dark #000000
 =================================================== -->
-<section class="impact-section">
+<section class="impact-section" id="s-impact">
   <div class="container">
     <div class="s-head rv">
       <div class="lbl lbl--dark">Impact</div>
@@ -1110,9 +1375,67 @@
 </section>
 
 <!-- ===================================================
+     IMPACT ALT  ·  4-column layout  ·  bg-subtle #f4f4f4
+=================================================== -->
+<section class="impact-section" id="s-impact2" style="border-top:1px solid rgba(0,0,0,0.06);">
+  <div class="container">
+    <div class="s-head rv">
+      <div class="lbl lbl--dark">Impact</div>
+    </div>
+    <div class="impact-grid impact-grid--4col">
+
+      <div class="impact-card rv d1">
+        <div class="impact-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8l10 6 10-6"/>
+          </svg>
+        </div>
+        <div class="impact-card-stat">50%+</div>
+        <h4>Higher Email Open Rates</h4>
+        <p>Transform customer engagement. Automated, behavior-based journeys. Personalize at scale. Convert more with less manual effort.</p>
+      </div>
+
+      <div class="impact-card rv d2">
+        <div class="impact-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+          </svg>
+        </div>
+        <div class="impact-card-stat">48-Hour</div>
+        <h4>Resolution Guarantee</h4>
+        <p>Digital partner portal with structured onboarding and live chat support. Structure verification. Scale engagement without adding overhead.</p>
+      </div>
+
+      <div class="impact-card rv d3">
+        <div class="impact-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+          </svg>
+        </div>
+        <div class="impact-card-stat">Frictionless</div>
+        <h4>Partner Onboarding</h4>
+        <p>Centralized partner platform with personalized onboarding journeys. Enable mobile sales logging. Drive collaboration. Reduce operational friction.</p>
+      </div>
+
+      <div class="impact-card rv d4">
+        <div class="impact-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/>
+          </svg>
+        </div>
+        <div class="impact-card-stat">Drive</div>
+        <h4>Global Growth</h4>
+        <p>Unified CRM with automated quoting and real-time insights. Align business units. Improve data quality. Forecast across regions.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================
      POWER OF AI  ·  bg-dark-subtle #1a1a1a
 =================================================== -->
-<section class="powerai-section">
+<section class="powerai-section" id="s-powerai">
   <div class="container">
     <div class="s-head rv">
       <div class="lbl">The Power of AI</div>
@@ -1161,9 +1484,60 @@
 </section>
 
 <!-- ===================================================
+     POWER OF AI — STEPS VARIANT  ·  bg-dark #000000
+=================================================== -->
+<section class="pai2-section" id="s-powerai2">
+  <div class="container">
+    <div class="s-head rv">
+      <div class="lbl">The Power of AI</div>
+      <p>Agentforce and Salesforce AI tools deliver productivity gains, automate routine tasks, and surface insights so human teams can focus on higher-impact work.</p>
+    </div>
+
+    <div class="pai2-layout rv d1">
+      <!-- Nav -->
+      <div class="pai2-nav" role="tablist">
+        <button class="pai2-btn active" onclick="switchPai2(0)">
+          <span class="pai2-num">01</span>
+          <span class="pai2-label">Humans Own</span>
+        </button>
+        <button class="pai2-btn" onclick="switchPai2(1)">
+          <span class="pai2-num">02</span>
+          <span class="pai2-label">AI Agents Handle</span>
+        </button>
+      </div>
+
+      <!-- Panels -->
+      <div>
+        <div class="pai2-panel active" id="pai2-0">
+          <h4>Humans Own</h4>
+          <ul class="pai2-list">
+            <li>Identifying automation-ready workflows and setting guardrails, approval workflows, and data permissions</li>
+            <li>Complex case resolution and relationship building</li>
+            <li>Strategic decision-making</li>
+            <li>Testing, validation, and accountability for outcomes</li>
+          </ul>
+        </div>
+
+        <div class="pai2-panel" id="pai2-1">
+          <h4>AI Agents Handle</h4>
+          <ul class="pai2-list">
+            <li>24/7 omnichannel engagement</li>
+            <li>Routine customer inquiries</li>
+            <li>Lead scoring and qualification</li>
+            <li>Predictive analytics for cross-sell, upsell, and forecasting</li>
+            <li>Automated data entry, follow-ups, record updates, and customer segmentation</li>
+            <li>Real-time sentiment tracking and personalized content generation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================
      CAPABILITIES — TABS  ·  bg-subtle #f4f4f4
 =================================================== -->
-<section class="cap-section">
+<section class="cap-section" id="s-cap">
   <div class="container">
     <div class="s-head rv">
       <div class="lbl lbl--dark">Capabilities</div>
@@ -1225,9 +1599,86 @@
 </section>
 
 <!-- ===================================================
+     CAPABILITIES — FULL-WIDTH ACCORDION  ·  bg-default #ffffff
+=================================================== -->
+<section class="cap2-section" id="s-cap2">
+  <div class="container">
+    <div class="s-head rv">
+      <div class="lbl lbl--dark">Capabilities</div>
+    </div>
+
+    <div class="cap2-accordion rv d1">
+
+      <!-- Item 1 — open by default -->
+      <div class="cap2-item open">
+        <button class="cap2-trigger" onclick="toggleCap2(this)" aria-expanded="true">
+          <span class="cap2-trigger-title">Salesforce Design &amp; Consulting</span>
+          <span class="cap2-icon" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </button>
+        <div class="cap2-body">
+          <div class="cap2-body-inner">
+            <p>Assess needs, design and implement solutions, train teams, and provide ongoing support to maximize the platform's value. Consulting specialties include:</p>
+            <ul class="cap2-list">
+              <li>Roadmap development</li>
+              <li>Health check</li>
+              <li>Business process review</li>
+              <li>Experience design</li>
+              <li>Strategic transformation</li>
+              <li>Change management</li>
+              <li>Training and enablement</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 2 -->
+      <div class="cap2-item">
+        <button class="cap2-trigger" onclick="toggleCap2(this)" aria-expanded="false">
+          <span class="cap2-trigger-title">Salesforce Implementations</span>
+          <span class="cap2-icon" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </button>
+        <div class="cap2-body">
+          <div class="cap2-body-inner">
+            <p>Deploy and enhance across the entire Salesforce Platform, including but not limited to Agentforce, Sales Cloud, Service Cloud, Marketing Cloud, Revenue Cloud, Data 360, Mulesoft, Tableau, Experience Cloud, Informatica, and Nonprofit Cloud.</p>
+            <p>Salesforce solutions are aligned to business objectives and built to easily integrate into daily work.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 3 -->
+      <div class="cap2-item">
+        <button class="cap2-trigger" onclick="toggleCap2(this)" aria-expanded="false">
+          <span class="cap2-trigger-title">Salesforce Lifecycle Services</span>
+          <span class="cap2-icon" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </button>
+        <div class="cap2-body">
+          <div class="cap2-body-inner">
+            <p>Own the full lifecycle: roadmaps, optimization, custom development, enhancements, release management, and day-to-day support.</p>
+            <p>Centers of Excellence are built with governance frameworks that tie Salesforce evolution to business strategy.</p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.cap2-accordion -->
+  </div><!-- /.container -->
+</section>
+
+<!-- ===================================================
      CLIENT OUTCOMES  ·  bg-dark #000000
 =================================================== -->
-<section class="outcomes-section">
+<section class="outcomes-section" id="s-outcomes">
   <div class="container">
     <div class="s-head rv">
       <div class="lbl">Client Outcomes</div>
@@ -1298,7 +1749,7 @@
 <!-- ===================================================
      IDEAS & INSIGHTS  ·  bg-default #ffffff
 =================================================== -->
-<section class="insights-section">
+<section class="insights-section" id="s-insights">
   <div class="container">
     <div class="s-head rv">
       <div class="lbl lbl--dark">Ideas &amp; Insights</div>
@@ -1424,7 +1875,7 @@
 <!-- ===================================================
      CTA BAND  ·  bg-dark #000000
 =================================================== -->
-<section class="cta-section">
+<section class="cta-section" id="s-cta">
   <div class="container">
     <div class="cta-inner rv">
       <h2>Grow revenue and customer delight with AI-powered Salesforce implementation.</h2>
@@ -1570,7 +2021,7 @@
       if (e.isIntersecting) { countUp(e.target); statObs.unobserve(e.target); }
     });
   }, { threshold: 0.4 });
-  document.querySelectorAll('[data-target]').forEach(function (el) { statObs.observe(el); });
+  document.querySelectorAll('.intro-stat-num[data-target]').forEach(function (el) { statObs.observe(el); });
 
   function countUp(el) {
     var target   = parseInt(el.dataset.target, 10);
@@ -1586,6 +2037,34 @@
     })(performance.now());
   }
 
+  /* ── POWER OF AI STEPS (variant 2) ─────────────────── */
+  function switchPai2(idx) {
+    document.querySelectorAll('.pai2-btn').forEach(function (b, i) {
+      b.classList.toggle('active', i === idx);
+    });
+    document.querySelectorAll('.pai2-panel').forEach(function (p, i) {
+      p.classList.toggle('active', i === idx);
+    });
+  }
+  window.switchPai2 = switchPai2;
+
+  /* ── CAPABILITIES FULL-WIDTH ACCORDION (variant 2) ── */
+  function toggleCap2(trigger) {
+    var item = trigger.closest('.cap2-item');
+    var isOpen = item.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.cap2-item').forEach(function (el) {
+      el.classList.remove('open');
+      el.querySelector('.cap2-trigger').setAttribute('aria-expanded', 'false');
+    });
+    // Open clicked if it was closed
+    if (!isOpen) {
+      item.classList.add('open');
+      trigger.setAttribute('aria-expanded', 'true');
+    }
+  }
+  window.toggleCap2 = toggleCap2;
+
   /* ── CAPABILITIES TABS ─────────────────────────────── */
   function switchTab(idx) {
     document.querySelectorAll('.tab-btn').forEach(function (b, i) {
@@ -1597,6 +2076,53 @@
     });
   }
   window.switchTab = switchTab;
+
+  /* ── SECTION NAV ─────────────────────────────────────── */
+  (function () {
+    var nav = document.getElementById('sectionNav');
+    if (!nav) return;
+
+    var items = Array.from(nav.querySelectorAll('.secnav-item'));
+    var sections = items.map(function (btn) {
+      return document.getElementById(btn.dataset.target);
+    });
+
+    // Click scrolls to section
+    items.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var target = document.getElementById(btn.dataset.target);
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    // Show nav once hero + intro scroll out of view (i.e. when impact section arrives)
+    var introSection = document.getElementById('s-intro');
+    var showObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        // When intro is no longer visible, show the nav
+        if (!e.isIntersecting) {
+          nav.classList.add('visible');
+        } else {
+          nav.classList.remove('visible');
+        }
+      });
+    }, { threshold: 0 });
+    if (introSection) showObs.observe(introSection);
+
+    // Track active section
+    var sectionObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        var idx = sections.indexOf(e.target);
+        if (idx === -1) return;
+        if (e.isIntersecting) {
+          items.forEach(function (b) { b.classList.remove('active'); });
+          items[idx].classList.add('active');
+        }
+      });
+    }, { threshold: 0.35 });
+
+    sections.forEach(function (s) { if (s) sectionObs.observe(s); });
+  })();
 
   /* ── INSIGHTS GRID PAGINATION ───────────────────────── */
   var insGrid   = document.getElementById('insGrid');
