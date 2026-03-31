@@ -1,0 +1,1682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enterprise Platforms AI | Ascendion</title>
+
+  <!-- PP Neue Machina — self-hosted -->
+  <style>
+    @font-face {
+      font-family: 'PP Neue Machina';
+      src: url('assets/fonts/PPNeueMachina-PlainRegular 2.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+  </style>
+
+  <!-- Inter + Roboto Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* =====================================================
+       DESIGN TOKENS
+    ===================================================== */
+    :root {
+      --primary-500: #6464d7;
+      --primary-100: #968cfa;
+      --primary-900: #5a37af;
+      --accent-100:  #2ddcaa;
+      --accent-500:  #009673;
+      --neutral-0:   #ffffff;
+      --neutral-100: #f4f4f4;
+      --neutral-200: #cccccc;
+      --neutral-300: #b2b2b2;
+      --neutral-400: #999999;
+      --neutral-600: #666666;
+      --neutral-700: #333333;
+      --neutral-800: #1a1a1a;
+      --neutral-900: #000000;
+
+      --bg-default:     #ffffff;
+      --bg-subtle:      #f4f4f4;
+      --bg-dark:        #000000;
+      --bg-dark-subtle: #1a1a1a;
+      --bg-dark-2:      #333333;
+      --bg-violet:      #6464d7;
+      --bg-accent:      #2ddcaa;
+      --text-primary:   #000000;
+      --text-secondary: #333333;
+      --text-inv:       #ffffff;
+      --text-inv-2:     #cccccc;
+      --text-highlight: #6464d7;
+      --text-hi-inv:    #2ddcaa;
+      --text-disabled:  #666666;
+      --border:         #999999;
+
+      --font-display: 'PP Neue Machina', sans-serif;
+      --font-primary: 'Inter', sans-serif;
+      --font-mono:    'Roboto Mono', monospace;
+
+      --px: 80px;
+      --py: 80px;
+    }
+
+    /* =====================================================
+       RESET & BASE
+    ===================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-primary);
+      font-size: 18px;
+      color: var(--text-primary);
+      background: var(--bg-default);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img, svg { display: block; }
+    sup { font-size: 9px; vertical-align: super; }
+
+    /* =====================================================
+       LAYOUT
+    ===================================================== */
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding-left: var(--px);
+      padding-right: var(--px);
+    }
+    section { padding-top: var(--py); padding-bottom: var(--py); }
+    .s-head { margin-bottom: 56px; }
+
+    /* =====================================================
+       LABEL STYLE
+    ===================================================== */
+    .lbl {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      font-family: var(--font-primary);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-100);
+      margin-bottom: 24px;
+    }
+    .lbl--dark { color: var(--primary-500); }
+    .lbl::before,
+    .lbl::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: currentColor;
+      opacity: 0.3;
+    }
+
+    /* =====================================================
+       TYPOGRAPHY
+    ===================================================== */
+    h1, h2, h3 { font-family: var(--font-display); font-weight: 400; }
+    h4, h5     { font-family: var(--font-primary);  font-weight: 400; }
+    h1 { font-size: 80px;  line-height: 1.0; }
+    h2 { font-size: 48px;  line-height: 1.1; }
+    h3 { font-size: 32px;  line-height: 1.2; }
+    h4 { font-size: 24px;  line-height: 1.3; }
+    h5 { font-size: 20px;  line-height: 1.35; }
+
+    /* =====================================================
+       BUTTONS
+    ===================================================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-primary);
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      border-radius: 2px;
+      padding: 14px 20px;
+      line-height: 1;
+      white-space: nowrap;
+      cursor: pointer;
+      border: none;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+    .btn__icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+    }
+    .btn:hover .btn__icon { transform: translateX(3px); }
+
+    .btn-primary        { background: var(--neutral-900); color: var(--neutral-0); }
+    .btn-primary .btn__icon { color: var(--primary-500); }
+    .btn-primary:hover  { background: var(--neutral-800); }
+
+    .btn-inverse        { background: var(--accent-100); color: var(--neutral-900); }
+    .btn-inverse .btn__icon { color: var(--neutral-900); }
+    .btn-inverse:hover  { background: var(--accent-500); }
+
+    .btn-ghost          { background: transparent; color: var(--neutral-900); border: 1px solid var(--neutral-900); }
+    .btn-ghost .btn__icon { color: var(--primary-500); }
+    .btn-ghost:hover    { background: var(--neutral-100); }
+
+    .btn-ghost-inv      { background: transparent; color: var(--neutral-0); border: 1px solid var(--neutral-0); }
+    .btn-ghost-inv .btn__icon { color: var(--neutral-0); }
+    .btn-ghost-inv:hover { background: rgba(255,255,255,0.08); }
+
+    .btn-text           { background: none; color: var(--primary-500); padding: 0; }
+    .btn-text .btn__icon { color: var(--primary-500); }
+    .btn-text:hover     { color: var(--primary-900); }
+
+    .btn-text-inv       { background: none; color: var(--accent-100); padding: 0; }
+    .btn-text-inv .btn__icon { color: var(--accent-100); }
+    .btn-text-inv:hover { color: var(--accent-500); }
+
+    .btn-sm { font-size: 14px; padding: 10px 16px; }
+
+    /* =====================================================
+       ANNOUNCE BAR  (bg-dark-subtle #1a1a1a)
+    ===================================================== */
+    .announce {
+      background: var(--bg-dark-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 10px var(--px);
+      flex-wrap: wrap;
+    }
+    .announce-tag {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--primary-500);
+      color: var(--neutral-0);
+      padding: 2px 8px;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+    .announce-text { font-size: 14px; color: var(--text-inv-2); }
+    .announce-link {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--accent-100);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: color 0.15s;
+      white-space: nowrap;
+    }
+    .announce-link:hover { color: var(--accent-500); }
+
+    /* =====================================================
+       NAV  (bg-subtle #f4f4f4)
+    ===================================================== */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: var(--bg-subtle);
+      height: 86px;
+      transition: box-shadow 0.2s;
+    }
+    .nav.scrolled { box-shadow: 0 1px 0 var(--neutral-200); }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 86px;
+    }
+    .nav-logo { display: flex; flex-direction: column; }
+    .nav-logo-text {
+      font-family: var(--font-primary);
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--neutral-900);
+      line-height: 1;
+    }
+    .nav-logo-tagline {
+      display: block;
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--neutral-600);
+      letter-spacing: 0;
+      line-height: 1.2;
+      margin-top: 2px;
+    }
+    .nav-menu { display: flex; align-items: center; gap: 4px; }
+    .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; margin-right: 16px; }
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--neutral-900);
+      padding: 6px 10px;
+      border-radius: 2px;
+      transition: color 0.15s;
+    }
+    .nav-link:hover { color: var(--primary-900); }
+    .nav-link.active { color: var(--primary-500); }
+    .nav-link--aava { color: var(--primary-500); font-weight: 500; }
+    .nav-link--aava:hover { color: var(--primary-900); }
+    .nav-link--aava sup { font-size: 10px; vertical-align: super; }
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+    .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--neutral-900); transition: all 0.3s; }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* =====================================================
+       HERO — FULL-WIDTH BANNER  (bg-dark #000)
+    ===================================================== */
+    .hero {
+      background: var(--bg-dark);
+      padding-top: var(--py);
+      padding-bottom: var(--py);
+      position: relative;
+      overflow: hidden;
+      min-height: 64vh;
+    }
+    /* Subtle decorative background grid */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 80px 80px;
+      pointer-events: none;
+    }
+    /* Ambient glow */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 60%;
+      height: 100%;
+      background: radial-gradient(ellipse at 80% 40%, rgba(100,100,215,0.07) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      text-align: left;
+    }
+    .hero-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--neutral-600);
+      margin-bottom: 40px;
+    }
+    .hero-breadcrumb a { color: var(--neutral-600); transition: color 0.15s; }
+    .hero-breadcrumb a:hover { color: var(--neutral-0); }
+    .hero-breadcrumb span { color: var(--neutral-400); }
+    .hero h1 {
+      color: var(--text-inv);
+      max-width: 880px;
+      text-align: left;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent-100);
+    }
+    /* Scanline accent */
+    .hero-line {
+      display: block;
+      width: 64px;
+      height: 3px;
+      background: var(--accent-100);
+      margin-top: 40px;
+    }
+
+    /* =====================================================
+       INTRO + STATS  (bg-default #fff)
+    ===================================================== */
+    .intro-section { background: var(--bg-default); }
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .intro-body p {
+      font-size: 20px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .intro-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+    .intro-stat { position: relative; }
+    .intro-stat::before {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 3px;
+      background: var(--primary-500);
+      margin-bottom: 20px;
+    }
+    .intro-stat-num {
+      font-family: var(--font-display);
+      font-size: 72px;
+      font-weight: 400;
+      line-height: 1.0;
+      color: var(--neutral-900);
+    }
+    .intro-stat-label {
+      font-size: 16px;
+      color: var(--neutral-600);
+      margin-top: 8px;
+    }
+
+    /* =====================================================
+       IMPACT CARDS  (bg-subtle #f4f4f4)
+    ===================================================== */
+    .impact-section {
+      background: var(--bg-subtle);
+      padding-top: 56px;
+      padding-bottom: 56px;
+    }
+    .impact-section .s-head { margin-bottom: 40px; }
+    .impact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+    .impact-card {
+      background: var(--bg-default);
+      padding: 28px 32px;
+      position: relative;
+      overflow: hidden;
+      cursor: default;
+      border-right: 1px solid rgba(0,0,0,0.06);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .impact-card:nth-child(2n)   { border-right: none; }
+    .impact-card:nth-child(3),
+    .impact-card:nth-child(4)   { border-bottom: none; }
+    /* Teal fade — fades in/out on hover */
+    .impact-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--accent-100); /* teal #2ddcaa */
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: 0;
+    }
+    .impact-card:hover::before { opacity: 1; }
+    /* All content sits above overlay */
+    .impact-card-stat,
+    .impact-card h3,
+    .impact-card p { position: relative; z-index: 1; }
+    .impact-card-stat {
+      font-family: var(--font-display);
+      font-size: 32px;
+      color: var(--primary-500);
+      line-height: 1.2;
+      margin-bottom: 6px;
+      transition: color 0.4s;
+    }
+    .impact-card:hover .impact-card-stat { color: var(--neutral-900); }
+    .impact-card h3 {
+      font-family: var(--font-display);
+      font-size: 32px;
+      color: var(--text-primary);
+      margin-bottom: 14px;
+      line-height: 1.2;
+      font-weight: 400;
+      transition: color 0.4s;
+    }
+    .impact-card:hover h3 { color: var(--neutral-900); }
+    .impact-card p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      transition: color 0.4s;
+    }
+    .impact-card:hover p { color: var(--neutral-800); }
+
+    /* =====================================================
+       POWER OF AI  (bg-dark #000)
+    ===================================================== */
+    .powerai-section { background: var(--bg-dark); }
+    .powerai-section .s-head {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .powerai-section .s-head p {
+      font-size: 20px;
+      color: var(--text-inv-2);
+      line-height: 1.6;
+      margin-top: 0;
+    }
+    .powerai-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+    .powerai-col {
+      background: var(--bg-dark-subtle);
+      padding: 48px 40px;
+      position: relative;
+    }
+    .powerai-col::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+    .powerai-col--humans::before  { background: var(--primary-500); }
+    .powerai-col--agents::before  { background: var(--accent-100); }
+    .powerai-col-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+    .powerai-col-head h4 {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--text-inv);
+      line-height: 1.3;
+    }
+    .powerai-col-icon {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .powerai-col--humans .powerai-col-icon { background: rgba(100,100,215,0.15); color: var(--primary-500); }
+    .powerai-col--agents .powerai-col-icon { background: rgba(45,220,170,0.15);  color: var(--accent-100); }
+    .powerai-list { display: flex; flex-direction: column; }
+    .powerai-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      font-size: 16px;
+      color: var(--text-inv-2);
+      line-height: 1.6;
+    }
+    .powerai-col--humans .powerai-list li::before { content: '●'; color: var(--primary-500); font-size: 8px; flex-shrink: 0; margin-top: 6px; }
+    .powerai-col--agents .powerai-list li::before { content: '●'; color: var(--accent-100);  font-size: 8px; flex-shrink: 0; margin-top: 6px; }
+
+    /* =====================================================
+       CAPABILITIES — TABS  (bg-subtle #f4f4f4)
+    ===================================================== */
+    .cap-section { background: var(--bg-subtle); }
+    .tab-nav {
+      display: flex;
+      justify-content: flex-start;
+      border-bottom: 1px solid var(--neutral-200);
+      margin-bottom: 48px;
+    }
+    .tab-btn {
+      font-family: var(--font-primary);
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--neutral-600);
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      padding: 14px 28px;
+      margin-bottom: -1px;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+    .tab-btn:first-child { padding-left: 0; }
+    .tab-btn:hover { color: var(--primary-500); }
+    .tab-btn.active { color: var(--primary-500); border-bottom-color: var(--primary-500); }
+    .tab-panel { display: none; }
+    .tab-panel.active {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .tab-content h4 {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+      line-height: 1.3;
+    }
+    .tab-content p {
+      font-size: 17px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+    .tab-content p:last-child { margin-bottom: 0; }
+    .tab-content .btn { margin-top: 20px; }
+    .tab-list { display: flex; flex-direction: column; margin: 8px 0 16px; }
+    .tab-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-top: 1px solid var(--neutral-200);
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+    .tab-list li::before { content: '—'; color: var(--primary-500); flex-shrink: 0; margin-top: 1px; }
+    .tab-visual {
+      aspect-ratio: 4 / 3;
+      background: linear-gradient(135deg, #ebebf8 0%, #e0e0f0 100%);
+      border-radius: 2px;
+    }
+
+    /* =====================================================
+       CLIENT OUTCOMES  (bg-dark #000)
+    ===================================================== */
+    .outcomes-section { background: var(--bg-dark); }
+    .outcomes-section .s-head { text-align: center; }
+    .cs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--neutral-800);
+    }
+    .cs-card {
+      padding: 48px 36px;
+      border-right: 1px solid var(--neutral-800);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.25s;
+    }
+    .cs-card:last-child { border-right: none; }
+    .cs-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--accent-100);
+    }
+    .cs-card:hover { background: rgba(255,255,255,0.02); }
+    .cs-img-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .cs-img-inner {
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #333 0%, #1a1a1a 100%);
+      transition: transform 0.4s ease;
+    }
+    .cs-card:hover .cs-img-inner { transform: scale(1.03); }
+    .cs-tag {
+      position: absolute;
+      top: 16px; left: 16px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--neutral-900);
+      background: var(--accent-100);
+      padding: 4px 10px;
+      border-radius: 2px;
+      z-index: 2;
+    }
+    .cs-body h3 {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--text-inv);
+      margin-bottom: 16px;
+      line-height: 1.35;
+    }
+    .cs-body p {
+      font-size: 15px;
+      color: var(--text-inv-2);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    /* =====================================================
+       IDEAS & INSIGHTS  (bg-default #fff)
+    ===================================================== */
+    .insights-section { background: var(--bg-default); }
+    .ins-filters-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    .ins-filter {
+      font-family: var(--font-primary);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 8px 18px;
+      border-radius: 2px;
+      border: 1px solid var(--neutral-200);
+      background: transparent;
+      color: var(--neutral-600);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .ins-filter:hover  { border-color: var(--primary-500); color: var(--primary-500); }
+    .ins-filter.active { background: var(--primary-500); border-color: var(--primary-500); color: var(--neutral-0); }
+    .ins-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .ins-card {
+      background: var(--bg-subtle);
+      border: 1px solid var(--neutral-200);
+      border-radius: 2px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .ins-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: transparent;
+      transition: background 0.4s;
+    }
+    .ins-card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(0,0,0,0.07); }
+    .ins-card:hover::after { background: var(--primary-500); }
+    .ins-img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: linear-gradient(135deg, #d4d4d4 0%, #f4f4f4 100%);
+      flex-shrink: 0;
+    }
+    .ins-body { padding: 28px; display: flex; flex-direction: column; flex: 1; }
+    .ins-type {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--primary-500);
+      margin-bottom: 12px;
+    }
+    .ins-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--text-primary);
+      line-height: 1.35;
+      flex: 1;
+      margin-bottom: 20px;
+    }
+    .ins-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 40px;
+    }
+    .ins-arrows { display: flex; gap: 12px; }
+    .ins-arrow {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--neutral-400);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      color: var(--neutral-900);
+      background: transparent;
+      transition: border-color 0.35s, color 0.35s;
+    }
+    /* Sweep background slides in from left on hover */
+    .ins-arrow::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: var(--primary-500);
+      transform: translateX(-101%);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .ins-arrow:hover::before { transform: translateX(0); }
+    .ins-arrow:hover { border-color: var(--primary-500); color: var(--neutral-0); }
+    .ins-arrow svg { position: relative; z-index: 1; }
+    .ins-arrow:disabled { opacity: 0.3; cursor: default; pointer-events: none; }
+    /* Pagination as expanding horizontal bars */
+    .ins-dots { display: flex; gap: 8px; align-items: center; }
+    .ins-dot {
+      width: 24px; height: 3px;
+      border-radius: 2px;
+      background: var(--neutral-200);
+      border: none;
+      cursor: pointer;
+      transition: width 0.3s ease, background 0.3s ease;
+      padding: 0;
+    }
+    .ins-dot.active { width: 40px; background: var(--primary-500); }
+
+    /* =====================================================
+       CTA BAND  (bg-dark #000)
+    ===================================================== */
+    .cta-section { background: var(--bg-dark); }
+    .cta-inner { max-width: 760px; }
+    .cta-inner h2 {
+      color: var(--text-inv);
+      margin-bottom: 20px;
+    }
+    .cta-inner p {
+      font-size: 18px;
+      color: var(--text-inv-2);
+      line-height: 1.65;
+      margin-bottom: 36px;
+    }
+
+    /* =====================================================
+       FOOTER  (bg-default #fff)
+    ===================================================== */
+    .footer {
+      background: var(--bg-default);
+      border-top: 1px solid var(--neutral-200);
+      padding: 80px 0;
+    }
+    .footer-cols {
+      display: grid;
+      grid-template-columns: 2fr 2fr 1.5fr 1.5fr auto;
+      gap: 80px;
+      margin-bottom: 56px;
+    }
+    .footer-col-head {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--neutral-900);
+      margin-bottom: 20px;
+    }
+    .footer-links { display: flex; flex-direction: column; gap: 8px; }
+    .footer-link { font-size: 14px; color: var(--neutral-700); line-height: 1.4; transition: color 0.15s; }
+    .footer-link:hover { color: var(--primary-900); }
+    .footer-social { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+    .footer-social-link {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--neutral-0);
+      transition: opacity 0.15s, transform 0.15s;
+    }
+    .footer-social-link:hover { opacity: 0.85; transform: translateY(-2px); }
+    .footer-social-link--linkedin  { background: #6464d7; }
+    .footer-social-link--youtube   { background: #6464d7; }
+    .footer-social-link--instagram { background: #6464d7; }
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--neutral-200);
+      padding-top: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-copy { font-size: 14px; color: var(--neutral-600); }
+    .footer-legal { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .footer-legal-link { font-size: 14px; color: var(--neutral-600); transition: color 0.15s; }
+    .footer-legal-link:hover { color: var(--primary-500); }
+    .footer-sep { color: var(--neutral-400); font-size: 12px; }
+
+    /* =====================================================
+       SCROLL REVEAL
+    ===================================================== */
+    .rv {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out;
+    }
+    .rv.in  { opacity: 1; transform: translateY(0); }
+    .rv.d1  { transition-delay: 0.1s; }
+    .rv.d2  { transition-delay: 0.2s; }
+    .rv.d3  { transition-delay: 0.3s; }
+    .rv.d4  { transition-delay: 0.4s; }
+
+    /* =====================================================
+       RESPONSIVE BREAKPOINTS
+    ===================================================== */
+    @media (max-width: 1200px) { :root { --px: 60px; } }
+    @media (max-width: 900px) {
+      :root { --px: 32px; --py: 60px; }
+      .nav { height: 64px; }
+      .nav-inner { height: 64px; }
+      .nav-menu { display: none; }
+      .nav-menu.open {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 64px; left: 0; right: 0; bottom: 0;
+        background: var(--bg-subtle);
+        padding: 32px var(--px) 40px;
+        gap: 0;
+        z-index: 199;
+        overflow-y: auto;
+      }
+      .nav-menu.open .nav-links { flex-direction: column; align-items: flex-start; gap: 0; width: 100%; margin-right: 0; }
+      .nav-menu.open .nav-link { font-size: 18px; padding: 14px 0; width: 100%; border-bottom: 1px solid var(--neutral-200); }
+      .nav-menu.open .btn-primary { margin-top: 24px; }
+      .nav-toggle { display: flex; }
+      h1 { font-size: 48px; }
+      h2 { font-size: 36px; }
+      .intro-grid,
+      .powerai-cols { grid-template-columns: 1fr; gap: 40px; }
+      .cs-grid { grid-template-columns: 1fr; border-top: none; }
+      .cs-card { border-right: none; border-bottom: 1px solid var(--neutral-800); }
+      .cs-card:last-child { border-bottom: none; }
+      .footer-cols { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .ins-cards { grid-template-columns: 1fr 1fr; }
+      .tab-panel.active { grid-template-columns: 1fr; gap: 40px; }
+      .tab-nav { overflow-x: auto; }
+    }
+    @media (max-width: 600px) {
+      :root { --px: 24px; --py: 48px; }
+      h1 { font-size: 40px; }
+      h2 { font-size: 32px; }
+      .intro-stats { grid-template-columns: 1fr 1fr; gap: 24px; }
+      .intro-stat-num { font-size: 56px; }
+      .impact-grid { grid-template-columns: 1fr; }
+      .impact-card { border-right: none; }
+      .impact-card:nth-child(3),
+      .impact-card:nth-child(4) { border-bottom: 1px solid rgba(0,0,0,0.06); }
+      .impact-card:last-child { border-bottom: none; }
+      .footer-cols { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+      .ins-cards { grid-template-columns: 1fr; }
+    }
+
+    /* =====================================================
+       REDUCED MOTION
+    ===================================================== */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===================================================
+     ANNOUNCE BAR
+=================================================== -->
+<div class="announce">
+  <span class="announce-tag">Ascendion × Everest</span>
+  <span class="announce-text">Leader in Intelligent Automation</span>
+  <a href="#" class="announce-link">
+    Read the Report
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+      <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
+</div>
+
+<!-- ===================================================
+     NAV  ·  bg-subtle #f4f4f4
+=================================================== -->
+<header class="nav" id="nav">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo" aria-label="Ascendion home">
+      <span class="nav-logo-text">ASCENDION</span>
+      <span class="nav-logo-tagline">Engineering to elevate life</span>
+    </a>
+    <nav class="nav-menu" id="navMenu" aria-label="Main">
+      <ul class="nav-links">
+        <li>
+          <a href="#" class="nav-link nav-link--aava">
+            AAVA<sup>™</sup>
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link">What We Do
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link">Who We Serve
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link">How We Deliver
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link">Insights &amp; Impact
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link">Careers
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </li>
+      </ul>
+      <a href="#" class="btn btn-primary">
+        <span class="btn__label">Get In Touch</span>
+        <span class="btn__icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ===================================================
+     HERO — FULL-WIDTH BANNER  ·  bg-dark #000000
+=================================================== -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+
+      <nav class="hero-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <a href="#">What We Do</a>
+        <svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Enterprise Platforms <sup>AI</sup></span>
+      </nav>
+
+      <h1>Enterprise<br>Platforms <em>AI</em></h1>
+
+      <span class="hero-line" aria-hidden="true"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================
+     INTRO + STATS  ·  bg-default #ffffff
+=================================================== -->
+<section class="intro-section">
+  <div class="container">
+    <div class="intro-grid">
+      <div class="intro-body rv">
+        <p>Automate routine tasks, surface insights, and personalize at scale across sales, service, and operations with Salesforce. Ascendion is an award-winning Salesforce Summit Partner with <span style="color:var(--primary-500);font-weight:500">1,100+ projects delivered</span> for <span style="color:var(--primary-500);font-weight:500">500+ global customers</span> across financial services, fintech, the built environment, education, travel and hospitality, manufacturing, retail, media, technology, and nonprofits.</p>
+      </div>
+      <div class="intro-stats rv d1">
+        <div class="intro-stat">
+          <div class="intro-stat-num" data-target="1100" data-suffix="+">0</div>
+          <div class="intro-stat-label">Projects Delivered</div>
+        </div>
+        <div class="intro-stat">
+          <div class="intro-stat-num" data-target="500" data-suffix="+">0</div>
+          <div class="intro-stat-label">Global Customers</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================
+     IMPACT  ·  bg-dark #000000
+=================================================== -->
+<section class="impact-section">
+  <div class="container">
+    <div class="s-head rv">
+      <div class="lbl lbl--dark">Impact</div>
+    </div>
+    <div class="impact-grid">
+
+      <div class="impact-card rv d1">
+        <div class="impact-card-stat">50%+</div>
+        <h3>Higher Email Open Rates</h3>
+        <p>Transform customer engagement. Automated, behavior-based journeys. Personalize at scale. Convert more with less manual effort.</p>
+      </div>
+
+      <div class="impact-card rv d2">
+        <div class="impact-card-stat">48-Hour</div>
+        <h3>Resolution Guarantee</h3>
+        <p>Digital partner portal with structured onboarding and live chat support. Structure verification. Scale engagement without adding overhead.</p>
+      </div>
+
+      <div class="impact-card rv d3">
+        <div class="impact-card-stat">Frictionless</div>
+        <h3>Partner Onboarding</h3>
+        <p>Centralized partner platform with personalized onboarding journeys. Enable mobile sales logging. Drive collaboration. Reduce operational friction.</p>
+      </div>
+
+      <div class="impact-card rv d4">
+        <div class="impact-card-stat">Drive</div>
+        <h3>Global Growth</h3>
+        <p>Unified CRM with automated quoting and real-time insights. Align business units. Improve data quality. Forecast across regions.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================
+     POWER OF AI  ·  bg-dark-subtle #1a1a1a
+=================================================== -->
+<section class="powerai-section">
+  <div class="container">
+    <div class="s-head rv">
+      <div class="lbl">The Power of AI</div>
+      <p>Agentforce and Salesforce AI tools deliver productivity gains, automate routine tasks, and surface insights so human teams can focus on higher-impact work.</p>
+    </div>
+    <div class="powerai-cols">
+
+      <div class="powerai-col powerai-col--humans rv d1">
+        <div class="powerai-col-head">
+          <div class="powerai-col-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
+            </svg>
+          </div>
+          <h4>Humans Own</h4>
+        </div>
+        <ul class="powerai-list">
+          <li>Identifying automation-ready workflows and setting guardrails, approval workflows, and data permissions</li>
+          <li>Complex case resolution and relationship building</li>
+          <li>Strategic decision-making</li>
+          <li>Testing, validation, and accountability for outcomes</li>
+        </ul>
+      </div>
+
+      <div class="powerai-col powerai-col--agents rv d2">
+        <div class="powerai-col-head">
+          <div class="powerai-col-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 13h6M9 17h4"/>
+            </svg>
+          </div>
+          <h4>AI Agents Handle</h4>
+        </div>
+        <ul class="powerai-list">
+          <li>24/7 omnichannel engagement</li>
+          <li>Routine customer inquiries</li>
+          <li>Lead scoring and qualification</li>
+          <li>Predictive analytics for cross-sell, upsell, and forecasting</li>
+          <li>Automated data entry, follow-ups, record updates, and customer segmentation</li>
+          <li>Real-time sentiment tracking and personalized content generation</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================
+     CAPABILITIES — TABS  ·  bg-subtle #f4f4f4
+=================================================== -->
+<section class="cap-section">
+  <div class="container">
+    <div class="s-head rv">
+      <div class="lbl lbl--dark">Capabilities</div>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="tab-nav rv d1" role="tablist">
+      <button class="tab-btn active" role="tab" aria-selected="true" onclick="switchTab(0)">Salesforce Design &amp; Consulting</button>
+      <button class="tab-btn" role="tab" aria-selected="false" onclick="switchTab(1)">Salesforce Implementations</button>
+      <button class="tab-btn" role="tab" aria-selected="false" onclick="switchTab(2)">Salesforce Lifecycle Services</button>
+    </div>
+
+    <!-- Tab Panel 0 -->
+    <div class="tab-panel active rv d2" id="tab-0" role="tabpanel">
+      <div class="tab-content">
+        <h4>Salesforce Design &amp; Consulting</h4>
+        <p>Assess needs, design and implement solutions, train teams, and provide ongoing support to maximize the platform's value. Consulting specialties include:</p>
+        <ul class="tab-list">
+          <li>Roadmap development</li>
+          <li>Health check</li>
+          <li>Business process review</li>
+          <li>Experience design</li>
+          <li>Strategic transformation</li>
+          <li>Change management</li>
+          <li>Training and enablement</li>
+        </ul>
+      </div>
+      <div class="tab-visual rv d3" aria-hidden="true"></div>
+    </div>
+
+    <!-- Tab Panel 1 -->
+    <div class="tab-panel" id="tab-1" role="tabpanel">
+      <div class="tab-content">
+        <h4>Salesforce Implementations</h4>
+        <p>Deploy and enhance across the entire Salesforce Platform, including but not limited to Agentforce, Sales Cloud, Service Cloud, Marketing Cloud, Revenue Cloud, Data 360, Mulesoft, Tableau, Experience Cloud, Informatica, and Nonprofit Cloud.</p>
+        <p>Salesforce solutions are aligned to business objectives and built to easily integrate into daily work.</p>
+        <a href="#" class="btn btn-primary">
+          <span class="btn__label">Learn more</span>
+          <span class="btn__icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </a>
+      </div>
+      <div class="tab-visual" aria-hidden="true"></div>
+    </div>
+
+    <!-- Tab Panel 2 -->
+    <div class="tab-panel" id="tab-2" role="tabpanel">
+      <div class="tab-content">
+        <h4>Salesforce Lifecycle Services</h4>
+        <p>Own the full lifecycle: roadmaps, optimization, custom development, enhancements, release management, and day-to-day support. Centers of Excellence are built with governance frameworks that tie Salesforce evolution to business strategy.</p>
+      </div>
+      <div class="tab-visual" aria-hidden="true"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================================================
+     CLIENT OUTCOMES  ·  bg-dark #000000
+=================================================== -->
+<section class="outcomes-section">
+  <div class="container">
+    <div class="s-head rv">
+      <div class="lbl">Client Outcomes</div>
+    </div>
+    <div class="cs-grid">
+
+      <div class="cs-card rv d1">
+        <div class="cs-img-wrap">
+          <div class="cs-img-inner" aria-hidden="true"></div>
+          <div class="cs-tag">Financial Services</div>
+        </div>
+        <div class="cs-body">
+          <h3>Salesforce Transformation for a Leading Financial Services Firm</h3>
+          <p>End-to-end CRM modernization driving customer engagement and operational efficiency at scale.</p>
+          <a href="#" class="btn btn-inverse btn-sm">
+            <span class="btn__label">Read Case Study</span>
+            <span class="btn__icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <div class="cs-card rv d2">
+        <div class="cs-img-wrap">
+          <div class="cs-img-inner" aria-hidden="true"></div>
+          <div class="cs-tag">Retail</div>
+        </div>
+        <div class="cs-body">
+          <h3>Omnichannel Customer Experience for a Global Retailer</h3>
+          <p>Unified commerce platform delivering personalized journeys across every touchpoint.</p>
+          <a href="#" class="btn btn-inverse btn-sm">
+            <span class="btn__label">Read Case Study</span>
+            <span class="btn__icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <div class="cs-card rv d3">
+        <div class="cs-img-wrap">
+          <div class="cs-img-inner" aria-hidden="true"></div>
+          <div class="cs-tag">Healthcare</div>
+        </div>
+        <div class="cs-body">
+          <h3>Digital Engagement Platform for Healthcare Provider Network</h3>
+          <p>Streamlined patient communication and care coordination through intelligent automation.</p>
+          <a href="#" class="btn btn-inverse btn-sm">
+            <span class="btn__label">Read Case Study</span>
+            <span class="btn__icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================
+     IDEAS & INSIGHTS  ·  bg-default #ffffff
+=================================================== -->
+<section class="insights-section">
+  <div class="container">
+    <div class="s-head rv">
+      <div class="lbl lbl--dark">Ideas &amp; Insights</div>
+    </div>
+
+    <!-- Filter pills -->
+    <div class="ins-filters-bar rv d1">
+      <button class="ins-filter active" data-filter="all">All</button>
+      <button class="ins-filter" data-filter="whitepaper">Whitepapers</button>
+      <button class="ins-filter" data-filter="blog">Blogs</button>
+    </div>
+
+    <!-- 3-column grid -->
+    <div class="ins-cards rv d2" id="insGrid">
+
+      <article class="ins-card" data-cat="whitepaper">
+        <div class="ins-img" aria-hidden="true"></div>
+        <div class="ins-body">
+          <div class="ins-type">Whitepaper</div>
+          <h3 class="ins-title">The Future of AI with Salesforce's Agentforce</h3>
+          <a href="https://ascendion.com/wp-content/uploads/2025/05/Whitepaper-The-Future-of-AI-with-Salesforce-Agentforce.pdf"
+             class="btn btn-text" target="_blank" rel="noopener">
+            <span class="btn__label">Read more</span>
+            <span class="btn__icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </a>
+        </div>
+      </article>
+
+      <article class="ins-card" data-cat="whitepaper">
+        <div class="ins-img" aria-hidden="true"></div>
+        <div class="ins-body">
+          <div class="ins-type">Whitepaper</div>
+          <h3 class="ins-title">AI-Enhanced Employee Productivity: Using Salesforce AI to Empower Teams in the Workplace</h3>
+          <a href="https://ascendion.com/wp-content/uploads/2025/05/White-Paper_AI-Enhanced-Employee-Productivity.pdf"
+             class="btn btn-text" target="_blank" rel="noopener">
+            <span class="btn__label">Read more</span>
+            <span class="btn__icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </a>
+        </div>
+      </article>
+
+      <article class="ins-card" data-cat="blog">
+        <div class="ins-img" aria-hidden="true"></div>
+        <div class="ins-body">
+          <div class="ins-type">Blog</div>
+          <h3 class="ins-title">How Salesforce's Agentforce Technology Benefits IT: A Must-Consider for Today's CTOs and CIOs</h3>
+          <a href="https://ascendion.com/insights/how-salesforces-agentforce-technology-benefits-it-a-must-consider-for-todays-ctos-and-cios/"
+             class="btn btn-text" target="_blank" rel="noopener">
+            <span class="btn__label">Read more</span>
+            <span class="btn__icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </a>
+        </div>
+      </article>
+
+      <article class="ins-card" data-cat="blog" style="display:none">
+        <div class="ins-img" aria-hidden="true"></div>
+        <div class="ins-body">
+          <div class="ins-type">Blog</div>
+          <h3 class="ins-title">Revolutionizing Customer Service in Retail: The Impact of Salesforce's Agentforce</h3>
+          <a href="https://ascendion.com/insights/revolutionizing-customer-service-in-retail-the-impact-of-salesforces-agentforce/"
+             class="btn btn-text" target="_blank" rel="noopener">
+            <span class="btn__label">Read more</span>
+            <span class="btn__icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </a>
+        </div>
+      </article>
+
+      <article class="ins-card" data-cat="blog" style="display:none">
+        <div class="ins-img" aria-hidden="true"></div>
+        <div class="ins-body">
+          <div class="ins-type">Blog</div>
+          <h3 class="ins-title">How Data Drives AI Success in the High-Tech Industry: Debunking Common Myths with Salesforce Agentforce</h3>
+          <a href="https://ascendion.com/insights/debunking-common-myths-with-salesforce-agentforce/"
+             class="btn btn-text" target="_blank" rel="noopener">
+            <span class="btn__label">Read more</span>
+            <span class="btn__icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </a>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Bottom navigation: dots left, arrows right -->
+    <div class="ins-bottom rv d3">
+      <div class="ins-dots" id="insDots"></div>
+      <div class="ins-arrows">
+        <button class="ins-arrow ins-prev" aria-label="Previous" id="insPrev" disabled>
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="none">
+            <path d="M10 4l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button class="ins-arrow ins-next" aria-label="Next" id="insNext">
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="none">
+            <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================================================
+     CTA BAND  ·  bg-dark #000000
+=================================================== -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-inner rv">
+      <h2>Grow revenue and customer delight with AI-powered Salesforce implementation.</h2>
+      <p>More people isn't the answer. A different model is.<br>The GCC is one of the best places to start mining for value from agent-powered work.</p>
+      <a href="https://ascendion.com/contact-us/" class="btn btn-inverse" target="_blank" rel="noopener">
+        <span class="btn__label">Find out how AI can power your enterprise platforms</span>
+        <span class="btn__icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================
+     FOOTER  ·  bg-default #ffffff
+=================================================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-cols">
+      <div>
+        <div class="footer-col-head">What We Do</div>
+        <ul class="footer-links">
+          <li><a href="#" class="footer-link">Applied AI</a></li>
+          <li><a href="#" class="footer-link">GCC<sup>AI</sup></a></li>
+          <li><a href="#" class="footer-link">Product<sup>AI</sup></a></li>
+          <li><a href="#" class="footer-link">Data &amp; Insights<sup>AI</sup></a></li>
+          <li><a href="#" class="footer-link">Salesforce Implementation</a></li>
+          <li><a href="#" class="footer-link">Quality Engineering<sup>AI</sup></a></li>
+          <li><a href="#" class="footer-link">Experience<sup>AI</sup></a></li>
+          <li><a href="#" class="footer-link">Operations<sup>AI</sup></a></li>
+          <li><a href="#" class="footer-link">AI Workforce Transformation</a></li>
+          <li><a href="#" class="footer-link">Enterprise Platform</a></li>
+          <li><a href="#" class="footer-link">Platform Engineering<sup>AI</sup></a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-head">Industries</div>
+        <ul class="footer-links">
+          <li><a href="#" class="footer-link">Banking &amp; Financial Services</a></li>
+          <li><a href="#" class="footer-link">Communications, Media and Entertainment</a></li>
+          <li><a href="#" class="footer-link">Healthcare &amp; Life Sciences</a></li>
+          <li><a href="#" class="footer-link">Retail and Consumer Goods</a></li>
+          <li><a href="#" class="footer-link">High-tech</a></li>
+          <li><a href="#" class="footer-link">Travel and Hospitality</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-head">Who We Are</div>
+        <ul class="footer-links">
+          <li><a href="#" class="footer-link">Leadership</a></li>
+          <li><a href="#" class="footer-link">Analyst Recognition</a></li>
+          <li><a href="#" class="footer-link">Certifications</a></li>
+          <li><a href="#" class="footer-link">Locations</a></li>
+          <li><a href="#" class="footer-link">ESG</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-head">Quick Links</div>
+        <ul class="footer-links">
+          <li><a href="#" class="footer-link">Insights and impact</a></li>
+          <li><a href="#" class="footer-link">Careers India</a></li>
+          <li><a href="#" class="footer-link">Careers North America</a></li>
+          <li><a href="#" class="footer-link">Careers Europe</a></li>
+          <li><a href="#" class="footer-link">Careers Asia Pacific</a></li>
+          <li><a href="#" class="footer-link">Global Delivery Hubs</a></li>
+          <li><a href="#" class="footer-link">Contact us</a></li>
+        </ul>
+      </div>
+      <div style="padding-top:40px">
+        <div class="footer-social">
+          <a href="#" class="footer-social-link footer-social-link--linkedin" aria-label="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+          </a>
+          <a href="#" class="footer-social-link footer-social-link--youtube" aria-label="YouTube">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+            </svg>
+          </a>
+          <a href="#" class="footer-social-link footer-social-link--instagram" aria-label="Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">Copyright 2026, ASCENDION. All rights reserved.</span>
+      <div class="footer-legal">
+        <a href="#" class="footer-legal-link">Privacy Policy</a>
+        <span class="footer-sep">|</span>
+        <a href="#" class="footer-legal-link">Terms of Use</a>
+        <span class="footer-sep">|</span>
+        <a href="#" class="footer-legal-link">Accessibility Disclosure</a>
+        <span class="footer-sep">|</span>
+        <a href="#" class="footer-legal-link">AI-enhanced Content Notice</a>
+        <span class="footer-sep">|</span>
+        <a href="#" class="footer-legal-link">Security Disclosure Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ===================================================
+     JAVASCRIPT
+=================================================== -->
+<script>
+(function () {
+  'use strict';
+
+  /* ── NAV SCROLL SHADOW ─────────────────────────────── */
+  var nav = document.getElementById('nav');
+  window.addEventListener('scroll', function () {
+    nav.classList.toggle('scrolled', window.scrollY > 10);
+  }, { passive: true });
+
+  /* ── MOBILE NAV TOGGLE ─────────────────────────────── */
+  var toggle = document.getElementById('navToggle');
+  var menu   = document.getElementById('navMenu');
+  toggle.addEventListener('click', function () {
+    var open = menu.classList.toggle('open');
+    toggle.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+
+  /* ── SCROLL REVEAL ─────────────────────────────────── */
+  var rvObs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('in'); rvObs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -48px 0px' });
+  document.querySelectorAll('.rv').forEach(function (el) { rvObs.observe(el); });
+
+  /* ── STAT COUNTER ──────────────────────────────────── */
+  var statObs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { countUp(e.target); statObs.unobserve(e.target); }
+    });
+  }, { threshold: 0.4 });
+  document.querySelectorAll('[data-target]').forEach(function (el) { statObs.observe(el); });
+
+  function countUp(el) {
+    var target   = parseInt(el.dataset.target, 10);
+    var suffix   = el.dataset.suffix || '';
+    var duration = 1600;
+    var start    = performance.now();
+    (function tick(now) {
+      var p    = Math.min((now - start) / duration, 1);
+      var ease = 1 - Math.pow(1 - p, 3);
+      var val  = Math.round(ease * target);
+      el.textContent = (val >= 1000 ? (val / 1000).toFixed(1) + 'K' : val) + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+    })(performance.now());
+  }
+
+  /* ── CAPABILITIES TABS ─────────────────────────────── */
+  function switchTab(idx) {
+    document.querySelectorAll('.tab-btn').forEach(function (b, i) {
+      b.classList.toggle('active', i === idx);
+      b.setAttribute('aria-selected', i === idx ? 'true' : 'false');
+    });
+    document.querySelectorAll('.tab-panel').forEach(function (p, i) {
+      p.classList.toggle('active', i === idx);
+    });
+  }
+  window.switchTab = switchTab;
+
+  /* ── INSIGHTS GRID PAGINATION ───────────────────────── */
+  var insGrid   = document.getElementById('insGrid');
+  var insPrev   = document.getElementById('insPrev');
+  var insNext   = document.getElementById('insNext');
+  var insDots   = document.getElementById('insDots');
+  var insPage   = 0;
+  var insAllCards = Array.from(insGrid.querySelectorAll('.ins-card'));
+
+  function getPerPage() {
+    if (window.innerWidth <= 600) return 1;
+    if (window.innerWidth <= 900) return 2;
+    return 3;
+  }
+
+  function getVisible(cat) {
+    return insAllCards.filter(function (c) {
+      return cat === 'all' || c.dataset.cat === cat;
+    });
+  }
+
+  function buildDots(total) {
+    insDots.innerHTML = '';
+    for (var i = 0; i < total; i++) {
+      var d = document.createElement('button');
+      d.className = 'ins-dot' + (i === insPage ? ' active' : '');
+      d.setAttribute('aria-label', 'Page ' + (i + 1));
+      (function (idx) {
+        d.addEventListener('click', function () { goToPage(idx); });
+      })(i);
+      insDots.appendChild(d);
+    }
+  }
+
+  function goToPage(p) {
+    var cat     = (document.querySelector('.ins-filter.active') || { dataset: { filter: 'all' } }).dataset.filter;
+    var visible = getVisible(cat);
+    var pp      = getPerPage();
+    var pages   = Math.ceil(visible.length / pp);
+    insPage     = Math.max(0, Math.min(p, pages - 1));
+
+    insAllCards.forEach(function (c) { c.style.display = 'none'; });
+    visible.forEach(function (c, i) {
+      if (i >= insPage * pp && i < (insPage + 1) * pp) c.style.display = '';
+    });
+
+    insPrev.disabled = insPage === 0;
+    insNext.disabled = insPage >= pages - 1;
+
+    insDots.querySelectorAll('.ins-dot').forEach(function (d, i) {
+      d.classList.toggle('active', i === insPage);
+    });
+  }
+
+  function initInsights(cat) {
+    cat = cat || 'all';
+    var visible = getVisible(cat);
+    var pp      = getPerPage();
+    var pages   = Math.ceil(visible.length / pp);
+    insPage     = 0;
+    buildDots(pages);
+    goToPage(0);
+  }
+
+  /* ── INSIGHTS FILTERS ──────────────────────────────── */
+  document.querySelectorAll('.ins-filter').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.ins-filter').forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      initInsights(btn.dataset.filter);
+    });
+  });
+
+  insPrev.addEventListener('click', function () { goToPage(insPage - 1); });
+  insNext.addEventListener('click', function () { goToPage(insPage + 1); });
+
+  window.addEventListener('resize', function () { initInsights(); });
+  initInsights();
+
+}());
+</script>
+</body>
+</html>
