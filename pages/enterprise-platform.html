@@ -9,7 +9,7 @@
   <style>
     @font-face {
       font-family: 'PP Neue Machina';
-      src: url('../assets/fonts/PPNeueMachina-PlainRegular 2.ttf') format('truetype');
+      src: url('../assets/fonts/PPNeueMachina-PlainRegular.ttf') format('truetype');
       font-weight: 400;
       font-style: normal;
       font-display: swap;
@@ -1016,8 +1016,8 @@
     .pai2-btn:hover { background: rgba(255,255,255,0.04); border-left-color: var(--neutral-700); }
     .pai2-btn.active { border-left-color: var(--accent-100); background: rgba(45,220,170,0.05); }
     .pai2-num {
-      font-family: var(--font-display);
-      font-size: 24px;
+      font-family: var(--font-mono);
+      font-size: 13px;
       font-weight: 400;
       color: var(--neutral-700);
       min-width: 36px;
@@ -1025,7 +1025,7 @@
       transition: color 0.2s;
     }
     .pai2-btn.active .pai2-num { color: var(--accent-100); }
-    .pai2-label { font-size: 24px; font-weight: 500; color: var(--neutral-600); transition: color 0.2s; }
+    .pai2-label { font-size: 20px; font-weight: 500; color: var(--neutral-600); transition: color 0.2s; }
     .pai2-btn.active .pai2-label { color: var(--neutral-0); }
     .pai2-panel { display: none; }
     .pai2-panel.active { display: block; }
@@ -1047,9 +1047,9 @@
       display: flex;
       align-items: flex-start;
       gap: 14px;
-      font-size: 24px;
+      font-size: 16px;
       color: var(--text-inv-2);
-      line-height: 1.5;
+      line-height: 1.75;
     }
     .pai2-list li::before {
       content: '';
