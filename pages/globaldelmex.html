@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EngineeringAI in Mexico | How We Deliver | Ascendion</title>
+
+  <style>
+    @font-face {
+      font-family: 'PP Neue Machina';
+      src: url('assets/fonts/PPNeueMachina-PlainRegular.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+  </style>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* =====================================================
+       DESIGN TOKENS
+    ===================================================== */
+    :root {
+      --primary-500: #6464d7;
+      --primary-100: #968cfa;
+      --primary-900: #5a37af;
+      --accent-100:  #2ddcaa;
+      --accent-500:  #009673;
+      --neutral-0:   #ffffff;
+      --neutral-100: #f4f4f4;
+      --neutral-200: #cccccc;
+      --neutral-300: #b2b2b2;
+      --neutral-400: #999999;
+      --neutral-600: #666666;
+      --neutral-700: #333333;
+      --neutral-800: #1a1a1a;
+      --neutral-900: #000000;
+
+      --bg-default:     #ffffff;
+      --bg-subtle:      #f4f4f4;
+      --bg-dark:        #000000;
+      --bg-dark-subtle: #1a1a1a;
+      --bg-dark-2:      #333333;
+      --bg-violet:      #6464d7;
+      --bg-accent:      #2ddcaa;
+      --text-primary:   #000000;
+      --text-secondary: #333333;
+      --text-inv:       #ffffff;
+      --text-inv-2:     #cccccc;
+      --text-highlight: #6464d7;
+      --text-hi-inv:    #2ddcaa;
+      --text-disabled:  #666666;
+      --border:         #999999;
+
+      --font-display: 'PP Neue Machina', sans-serif;
+      --font-primary: 'Inter', sans-serif;
+      --font-mono:    'Roboto Mono', monospace;
+
+      --px: 80px;
+      --py: 80px;
+    }
+
+    /* =====================================================
+       RESET & BASE
+    ===================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-primary);
+      font-size: 16px;
+      color: var(--text-primary);
+      background: var(--bg-default);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img, svg { display: block; }
+    sup { font-size: 9px; vertical-align: super; }
+
+    /* =====================================================
+       LAYOUT
+    ===================================================== */
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding-left: var(--px);
+      padding-right: var(--px);
+    }
+    section { padding-top: var(--py); padding-bottom: var(--py); }
+    .s-head { margin-bottom: 56px; text-align: center; }
+
+    /* =====================================================
+       LABEL STYLE
+    ===================================================== */
+    .lbl {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      font-family: var(--font-primary);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-100);
+      margin-bottom: 24px;
+    }
+    .lbl--dark { color: var(--primary-500); }
+    .lbl::before,
+    .lbl::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: currentColor;
+      opacity: 0.3;
+    }
+
+    /* =====================================================
+       TYPOGRAPHY
+    ===================================================== */
+    h1, h2, h3 { font-family: var(--font-display); font-weight: 400; }
+    h4, h5     { font-family: var(--font-primary);  font-weight: 400; }
+    h1 { font-size: 80px;  line-height: 1.0; }
+    h2 { font-size: 48px;  line-height: 1.1; }
+    h3 { font-size: 32px;  line-height: 1.2; }
+    h4 { font-size: 24px;  line-height: 1.3; }
+    h5 { font-size: 20px;  line-height: 1.35; }
+
+    /* =====================================================
+       BUTTONS
+    ===================================================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-primary);
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      border-radius: 2px;
+      padding: 14px 20px;
+      line-height: 1;
+      white-space: nowrap;
+      cursor: pointer;
+      border: none;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+    .btn__icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+    }
+    .btn:hover .btn__icon { transform: translateX(3px); }
+
+    .btn-primary        { background: var(--neutral-900); color: var(--neutral-0); }
+    .btn-primary .btn__icon { color: var(--primary-500); }
+    .btn-primary:hover  { background: var(--neutral-800); }
+
+    .btn-inverse        { background: var(--accent-100); color: var(--neutral-900); }
+    .btn-inverse .btn__icon { color: var(--neutral-900); }
+    .btn-inverse:hover  { background: var(--accent-500); }
+
+    .btn-ghost          { background: transparent; color: var(--neutral-900); border: 1px solid var(--neutral-900); }
+    .btn-ghost .btn__icon { color: var(--primary-500); }
+    .btn-ghost:hover    { background: var(--neutral-100); }
+
+    .btn-ghost-inv      { background: transparent; color: var(--neutral-0); border: 1px solid var(--neutral-0); }
+    .btn-ghost-inv .btn__icon { color: var(--neutral-0); }
+    .btn-ghost-inv:hover { background: rgba(255,255,255,0.08); }
+
+    .btn-text           { background: none; color: var(--primary-500); padding: 0; }
+    .btn-text .btn__icon { color: var(--primary-500); }
+    .btn-text:hover     { color: var(--primary-900); }
+
+    .btn-text-inv       { background: none; color: var(--accent-100); padding: 0; }
+    .btn-text-inv .btn__icon { color: var(--accent-100); }
+    .btn-text-inv:hover { color: var(--accent-500); }
+
+    .btn-sm { font-size: 14px; padding: 10px 16px; }
+
+    /* =====================================================
+       ANNOUNCE BAR
+    ===================================================== */
+    .announce {
+      background: var(--bg-dark-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 10px var(--px);
+      flex-wrap: wrap;
+    }
+    .announce-tag {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--primary-500);
+      color: var(--neutral-0);
+      padding: 2px 8px;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+    .announce-text { font-size: 14px; color: var(--text-inv-2); }
+    .announce-link {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--accent-100);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: color 0.15s;
+      white-space: nowrap;
+    }
+    .announce-link:hover { color: var(--accent-500); }
+
+    /* =====================================================
+       NAV
+    ===================================================== */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: var(--bg-subtle);
+      height: 86px;
+      transition: box-shadow 0.2s;
+    }
+    .nav.scrolled { box-shadow: 0 1px 0 var(--neutral-200); }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 86px;
+    }
+    .nav-logo { display: flex; flex-direction: column; }
+    .nav-logo-text {
+      font-family: var(--font-primary);
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--neutral-900);
+      line-height: 1;
+    }
+    .nav-logo-tagline {
+      display: block;
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--neutral-600);
+      letter-spacing: 0;
+      line-height: 1.2;
+      margin-top: 2px;
+    }
+    .nav-menu { display: flex; align-items: center; gap: 4px; }
+    .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; margin-right: 16px; }
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--neutral-900);
+      padding: 6px 10px;
+      border-radius: 2px;
+      transition: color 0.15s;
+    }
+    .nav-link:hover { color: var(--primary-900); }
+    .nav-link.active { color: var(--primary-500); }
+    .nav-link--aava { color: var(--primary-500); font-weight: 500; }
+    .nav-link--aava:hover { color: var(--primary-900); }
+    .nav-link--aava sup { font-size: 10px; vertical-align: super; }
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+    .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--neutral-900); transition: all 0.3s; }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* =====================================================
+       SECTION NAV — sticky top bar (subnav style)
+    ===================================================== */
+    .subnav {
+      position: fixed;
+      top: 86px;
+      left: 0;
+      right: 0;
+      z-index: 190;
+      background: var(--bg-default);
+      border-bottom: 1px solid var(--neutral-200);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-4px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    .subnav.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    .subnav-inner {
+      display: flex; align-items: center;
+      justify-content: flex-end;
+      overflow-x: auto; scrollbar-width: none;
+      gap: 0; height: 52px;
+    }
+    .subnav-inner::-webkit-scrollbar { display: none; }
+    .subnav-link {
+      flex-shrink: 0;
+      font-family: var(--font-primary);
+      font-size: 13px; font-weight: 500;
+      color: var(--neutral-600);
+      padding: 0 18px; height: 52px;
+      display: inline-flex; align-items: center;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+      white-space: nowrap; text-decoration: none;
+    }
+    .subnav-link:hover { color: var(--primary-500); }
+    .subnav-link.active { color: var(--primary-500); border-bottom-color: var(--primary-500); }
+
+    /* =====================================================
+       HERO — FULL BANNER  (bg-dark #000)
+    ===================================================== */
+    .hero {
+      background: var(--bg-dark);
+      padding-top: var(--py);
+      padding-bottom: var(--py);
+      position: relative;
+      overflow: hidden;
+      min-height: 52vh;
+      display: flex;
+      align-items: center;
+    }
+    /* Subtle grid background */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 80px 80px;
+      pointer-events: none;
+    }
+    /* Ambient violet glow — right side */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 60%; height: 100%;
+      background: radial-gradient(ellipse at 80% 40%, rgba(100,100,215,0.08) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero > .container { width: 100%; }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      text-align: left;
+    }
+    .hero-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--neutral-600);
+      margin-bottom: 40px;
+    }
+    .hero-breadcrumb a { color: var(--neutral-600); transition: color 0.15s; }
+    .hero-breadcrumb a:hover { color: var(--neutral-0); }
+    .hero-breadcrumb span { color: var(--neutral-400); }
+    .hero h1 {
+      color: var(--text-inv);
+      max-width: 960px;
+      text-align: left;
+    }
+    /* AI superscript in hero H1 */
+    .hero h1 sup {
+      font-family: var(--font-mono);
+      font-size: 22px;
+      color: var(--accent-100);
+      letter-spacing: 0.05em;
+      vertical-align: super;
+    }
+    .hero-line {
+      display: block;
+      width: 64px;
+      height: 3px;
+      background: var(--accent-100);
+      margin-top: 40px;
+    }
+
+    /* =====================================================
+       OPENING INTRO  (bg-subtle #f4f4f4)
+    ===================================================== */
+    .opening-section { background: var(--bg-subtle); }
+    .opening-grid {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .opening-stat {
+      text-align: left;
+    }
+    .opening-stat-top {
+      font-family: var(--font-display);
+      font-size: 72px;
+      font-weight: 400;
+      line-height: 1.0;
+      color: var(--primary-500);
+      letter-spacing: -0.02em;
+    }
+    .opening-stat-num {
+      font-family: var(--font-display);
+      font-size: 72px;
+      font-weight: 400;
+      line-height: 1.0;
+      color: var(--primary-500);
+      letter-spacing: -0.02em;
+    }
+    .opening-stat-label {
+      font-size: 14px;
+      color: var(--neutral-600);
+      line-height: 1.5;
+      max-width: 180px;
+      margin-top: 12px;
+      margin-bottom: 20px;
+    }
+    .opening-stat-rule {
+      display: block;
+      width: 100%;
+      height: 1px;
+      background: var(--neutral-300);
+    }
+    .opening-body p {
+      font-size: 20px;
+      color: var(--text-primary);
+      line-height: 1.65;
+      margin-bottom: 24px;
+    }
+    .opening-body p:last-of-type { margin-bottom: 40px; }
+
+    /* =====================================================
+       DELIVERY MODELS — Option D layout  (bg-default #fff)
+    ===================================================== */
+    .delivery-section { background: var(--bg-default); }
+    .delivery-intro {
+      font-size: 18px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      max-width: 580px;
+      margin: 0 auto;
+    }
+    /* Alternating rows */
+    .delivery-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+      margin-bottom: 80px;
+    }
+    .delivery-row:last-child { margin-bottom: 0; }
+    /* Dummy image */
+    .delivery-img {
+      aspect-ratio: 4 / 3;
+      border-radius: 2px;
+      overflow: hidden;
+      align-self: start;
+    }
+    .delivery-img-inner {
+      width: 100%; height: 100%;
+      background: #d8d8ee center / cover no-repeat;
+      transition: transform 0.4s ease;
+    }
+    .delivery-row:hover .delivery-img-inner { transform: scale(1.03); }
+    /* Text side */
+    .delivery-text-num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--primary-500);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .delivery-text h3 {
+      font-size: 32px;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+    .delivery-text-intro {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    /* Inline stat highlight */
+    .delivery-stat-inline {
+      display: inline-flex;
+      align-items: stretch;
+      gap: 12px;
+      padding: 16px 24px;
+      background: var(--bg-subtle);
+      border-left: 3px solid var(--primary-500);
+      border-radius: 2px;
+      margin-bottom: 28px;
+    }
+    .delivery-stat-inline .stat-n {
+      font-family: var(--font-display);
+      font-size: 56px;
+      font-weight: 400;
+      line-height: 1.0;
+      color: var(--primary-500);
+      flex-shrink: 0;
+    }
+    .delivery-stat-inline .stat-d {
+      font-size: 14px;
+      color: var(--neutral-600);
+      line-height: 1.45;
+      display: flex;
+      align-items: flex-end;
+      padding-bottom: 12px;
+    }
+    .delivery-list { display: flex; flex-direction: column; }
+    .delivery-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 14px 0;
+      border-top: 1px solid var(--neutral-200);
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .delivery-list li::before {
+      content: '—';
+      color: var(--primary-500);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* =====================================================
+       VIDEO SECTION  (bg-dark #000)
+    ===================================================== */
+    .video-section { background: var(--bg-dark); }
+    .video-section .s-head h3 { color: var(--text-inv); margin-bottom: 0; }
+    .video-wrap {
+      width: 100vw;
+      margin-left: calc(50% - 50vw);
+    }
+    .video-player {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      position: relative;
+      overflow: hidden;
+      background: #000;
+      cursor: pointer;
+    }
+    .video-poster {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .video-play-btn {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: var(--accent-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--neutral-900);
+      box-shadow: 0 0 0 16px rgba(45,220,170,0.15);
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+      pointer-events: none;
+    }
+    .video-player:hover .video-play-btn {
+      transform: translate(-50%, -50%) scale(1.1);
+      background: var(--accent-500);
+      box-shadow: 0 0 0 22px rgba(45,220,170,0.08);
+    }
+    .video-player iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+    .video-caption {
+      text-align: center;
+      margin-top: 20px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--neutral-600);
+      letter-spacing: 0.08em;
+    }
+
+    /* =====================================================
+       BUILDING TEAMS  (bg-subtle #f4f4f4)
+    ===================================================== */
+    .teams-section { background: var(--bg-subtle); }
+    .teams-intro {
+      font-size: 18px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    /* 4-col subgrid — icon / h4 / p rows align across all columns */
+    .teams-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: auto auto 1fr;
+      align-items: stretch;
+      gap: 0;
+    }
+    .teams-card {
+      background: var(--bg-default);
+      padding: 40px 32px;
+      position: relative;
+      cursor: default;
+      border-right: 1px solid rgba(0,0,0,0.06);
+      border-bottom: none;
+      border-top: 3px solid transparent;
+      display: grid;
+      grid-template-rows: subgrid;
+      grid-row: span 3;
+      transition: border-top-color 0.28s ease, background 0.35s ease;
+    }
+    .teams-card:last-child { border-right: none; }
+    /* Bottleneck interaction: violet top stroke + gradient wash */
+    .teams-card:hover {
+      border-top-color: var(--primary-500);
+      background: linear-gradient(to bottom, rgba(100,100,215,0.07) 0%, #ffffff 55%);
+    }
+    .teams-icon {
+      width: 40px; height: 40px;
+      background: none;
+      border-radius: 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      color: var(--neutral-900);
+      margin-bottom: 32px;
+    }
+    .teams-card h4 {
+      font-family: var(--font-primary);
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+    .teams-card p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* =====================================================
+       TALENT HUB  (bg-dark #000)
+    ===================================================== */
+    .talent-section {
+      background: var(--bg-dark);
+      background-image:
+        linear-gradient(rgba(255,255,255,0.0375) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.0375) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    /* 2-col body + list layout */
+    .talent-body-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .talent-sub-intro {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 400;
+      line-height: 1.3;
+      text-align: left;
+      margin: 0;
+    }
+    .talent-sub-intro .char {
+      color: #333333;
+      transition: color 0.15s ease;
+      display: inline;
+    }
+    .talent-sub-intro .char.lit { color: #ffffff; }
+    /* Stacked list */
+    .talent-items { border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .talent-item {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      padding: 28px 0;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      cursor: default;
+      opacity: 0.4;
+      transition: border-color 0.25s ease, opacity 0.25s ease;
+    }
+    .talent-item:hover,
+    .talent-item.active { border-top-color: var(--accent-100); opacity: 1; }
+    .talent-item-title {
+      font-family: var(--font-primary);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-inv);
+      line-height: 1.4;
+    }
+    .talent-item-desc {
+      font-size: 15px;
+      color: var(--text-inv-2);
+      line-height: 1.65;
+    }
+    /* Big stat moment */
+    .talent-stat-hero {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      margin-top: 40px;
+      margin-bottom: 100px;
+      position: relative;
+    }
+    .talent-stat-hero::before { display: none; }
+    .talent-num-wrap { text-align: left; flex-shrink: 0; }
+    .talent-big-num {
+      font-family: var(--font-display);
+      font-size: 160px;
+      font-weight: 400;
+      line-height: 0.85;
+      color: var(--accent-100);
+      letter-spacing: -0.03em;
+      display: inline;
+    }
+    .talent-big-pct {
+      font-family: var(--font-display);
+      font-size: 80px;
+      font-weight: 400;
+      color: var(--accent-100);
+      line-height: 0.85;
+      display: inline;
+      vertical-align: top;
+      padding-top: 16px;
+    }
+    .talent-stat-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--neutral-600);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 8px;
+      padding-left: 12px;
+    }
+    .talent-map {
+      flex-shrink: 0;
+      width: 252px;
+      max-width: 40%;
+    }
+    .talent-map img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: brightness(0) saturate(100%) invert(74%) sepia(26%) saturate(1200%) hue-rotate(112deg) brightness(95%);
+      opacity: 0.85;
+    }
+
+    /* =====================================================
+       PRESS / MEDIA  (bg-default #ffffff)
+    ===================================================== */
+    .press-section { background: var(--bg-default); }
+    .press-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--neutral-200);
+      margin-bottom: 40px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .press-tabs::-webkit-scrollbar { display: none; }
+    .press-tab {
+      font-family: var(--font-primary);
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--neutral-600);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: 12px 20px 12px 0;
+      margin-right: 24px;
+      margin-bottom: -1px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .press-tab:hover { color: var(--text-primary); }
+    .press-tab.active { color: var(--text-primary); border-bottom-color: var(--primary-500); font-weight: 500; }
+    .press-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .ins-card {
+      background: var(--bg-subtle);
+      border: 1px solid var(--neutral-200);
+      border-radius: 2px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .ins-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: transparent;
+      transition: background 0.4s;
+    }
+    .ins-card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(0,0,0,0.07); }
+    .ins-card:hover::after { background: var(--primary-500); }
+    .ins-img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: linear-gradient(135deg, #d4d4d4 0%, #f4f4f4 100%);
+      flex-shrink: 0;
+    }
+    .ins-body { padding: 28px; display: flex; flex-direction: column; flex: 1; }
+    .ins-type {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--primary-500);
+      margin-bottom: 12px;
+    }
+    .ins-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--text-primary);
+      line-height: 1.35;
+      flex: 1;
+      margin-bottom: 20px;
+    }
+    .ins-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 40px;
+    }
+    .ins-arrows { display: flex; gap: 12px; }
+    .ins-arrow {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--neutral-400);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      color: var(--neutral-900);
+      background: transparent;
+      transition: border-color 0.35s, color 0.35s;
+    }
+    .ins-arrow::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: var(--primary-500);
+      transform: translateX(-101%);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .ins-arrow:hover::before { transform: translateX(0); }
+    .ins-arrow:hover { border-color: var(--primary-500); color: var(--neutral-0); }
+    .ins-arrow svg { position: relative; z-index: 1; }
+    .ins-arrow:disabled { opacity: 0.3; cursor: default; pointer-events: none; }
+    .ins-dots { display: flex; gap: 8px; align-items: center; }
+    .ins-dot {
+      width: 24px; height: 3px;
+      border-radius: 2px;
+      background: var(--neutral-200);
+      border: none;
+      cursor: pointer;
+      transition: width 0.3s ease, background 0.3s ease;
+      padding: 0;
+    }
+    .ins-dot.active { width: 40px; background: var(--primary-500); }
+
+    /* =====================================================
+       FOOTER
+    ===================================================== */
+    .footer {
+      background: var(--bg-default);
+      border-top: 1px solid var(--neutral-200);
+      padding: 80px 0;
+    }
+    .footer-cols {
+      display: grid;
+      grid-template-columns: 2fr 2fr 1.5fr 1.5fr auto;
+      gap: 80px;
+      margin-bottom: 56px;
+    }
+    .footer-col-head {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--neutral-900);
+      margin-bottom: 20px;
+    }
+    .footer-links { display: flex; flex-direction: column; gap: 8px; }
+    .footer-link { font-size: 14px; color: var(--neutral-700); line-height: 1.4; transition: color 0.15s; }
+    .footer-link:hover { color: var(--primary-900); }
+    .footer-social { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+    .footer-social-link {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--neutral-0);
+      transition: opacity 0.15s, transform 0.15s;
+    }
+    .footer-social-link:hover { opacity: 0.85; transform: translateY(-2px); }
+    .footer-social-link--linkedin  { background: #0077b5; }
+    .footer-social-link--youtube   { background: #ff0000; }
+    .footer-social-link--instagram { background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--neutral-200);
+      padding-top: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-copy { font-size: 14px; color: var(--neutral-600); }
+    .footer-legal { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .footer-legal-link { font-size: 14px; color: var(--neutral-600); transition: color 0.15s; }
+    .footer-legal-link:hover { color: var(--primary-500); }
+    .footer-sep { color: var(--neutral-400); font-size: 12px; }
+
+    /* =====================================================
+       SCROLL REVEAL
+    ===================================================== */
+    .rv {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out;
+    }
+    .rv.in  { opacity: 1; transform: translateY(0); }
+    .rv.d1  { transition-delay: 0.1s; }
+    .rv.d2  { transition-delay: 0.2s; }
+    .rv.d3  { transition-delay: 0.3s; }
+    .rv.d4  { transition-delay: 0.4s; }
+
+    /* =====================================================
+       KEYFRAMES
+    ===================================================== */
+    @keyframes fp {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50%       { transform: scale(0.7); opacity: 0.5; }
+    }
+
+    /* =====================================================
+       RESPONSIVE
+    ===================================================== */
+    @media (max-width: 1200px) { :root { --px: 60px; } }
+    @media (max-width: 900px) {
+      :root { --px: 32px; --py: 60px; }
+      .nav { height: 64px; }
+      .nav-inner { height: 64px; }
+      .nav-menu { display: none; }
+      .nav-menu.open {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 64px; left: 0; right: 0; bottom: 0;
+        background: var(--bg-subtle);
+        padding: 32px var(--px) 40px;
+        gap: 0;
+        z-index: 199;
+        overflow-y: auto;
+      }
+      .nav-menu.open .nav-links { flex-direction: column; align-items: flex-start; gap: 0; width: 100%; margin-right: 0; }
+      .nav-menu.open .nav-link  { font-size: 18px; padding: 14px 0; width: 100%; border-bottom: 1px solid var(--neutral-200); }
+      .nav-menu.open .btn-primary { margin-top: 24px; }
+      .nav-toggle { display: flex; }
+      h1 { font-size: 48px; }
+      h2 { font-size: 36px; }
+      h3 { font-size: 28px; }
+      .subnav { display: none; }
+      .hero h1 sup { font-size: 14px; }
+      .opening-grid { grid-template-columns: 1fr; gap: 40px; }
+      .opening-stat-top, .opening-stat-num { font-size: 48px; }
+      .delivery-row { grid-template-columns: 1fr; gap: 40px; }
+      .delivery-row.rv.d1 .delivery-text { order: -1; }
+      .teams-grid { grid-template-columns: 1fr 1fr; grid-template-rows: none; }
+      .teams-card { grid-row: span 1; display: block; border-right: 1px solid rgba(0,0,0,0.06); border-bottom: 1px solid rgba(0,0,0,0.06); }
+      .teams-card:nth-child(2n) { border-right: none; }
+      .teams-card:nth-child(3),
+      .teams-card:nth-child(4) { border-bottom: none; }
+      .teams-icon { margin-bottom: 20px; }
+      .talent-stat-hero { gap: 48px; }
+      .talent-map { width: 182px; }
+      .talent-big-num  { font-size: 100px; }
+      .talent-big-pct  { font-size: 56px; }
+      .talent-body-grid { grid-template-columns: 1fr; gap: 48px; }
+      .talent-item { grid-template-columns: 1fr; gap: 8px; }
+      .press-cards { grid-template-columns: 1fr 1fr; }
+      .footer-cols { grid-template-columns: 1fr 1fr; gap: 40px; }
+    }
+    @media (max-width: 600px) {
+      :root { --px: 24px; --py: 48px; }
+      h1 { font-size: 40px; }
+      h2 { font-size: 32px; }
+      .delivery-stat-num { font-size: 48px; }
+      .teams-grid { grid-template-columns: 1fr; grid-template-rows: none; }
+      .teams-card { grid-row: span 1; display: block; border-right: none; border-bottom: 1px solid rgba(0,0,0,0.06); }
+      .teams-card:last-child { border-bottom: none; }
+      .talent-stat-hero { flex-direction: column; gap: 32px; }
+      .talent-map { width: 154px; max-width: 70%; }
+      .talent-big-num  { font-size: 80px; }
+      .talent-big-pct  { font-size: 44px; }
+      .press-cards { grid-template-columns: 1fr; }
+      .footer-cols { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* =====================================================
+       REDUCED MOTION
+    ===================================================== */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===================================================
+     SECTION NAV — fixed top bar, right-aligned
+=================================================== -->
+<nav class="subnav" id="subnav" aria-label="Page sections">
+  <div class="container subnav-inner">
+    <a href="#s-delivery" class="subnav-link">Delivery Models</a>
+    <a href="#s-teams" class="subnav-link">Building Teams</a>
+    <a href="#s-talent" class="subnav-link">Talent Hub</a>
+    <a href="#s-press" class="subnav-link">Media</a>
+  </div>
+</nav>
+
+<!-- ===================================================
+     ANNOUNCE BAR
+=================================================== -->
+<div class="announce">
+  <span class="announce-tag">Ascendion × Everest</span>
+  <span class="announce-text">Leader in Intelligent Automation</span>
+  <a href="#" class="announce-link">
+    Read the Report
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+      <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
+</div>
+
+<!-- ===================================================
+     NAV  ·  bg-subtle #f4f4f4
+=================================================== -->
+<header class="nav" id="nav">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo" aria-label="Ascendion home">
+      <span class="nav-logo-text">ASCENDION</span>
+      <span class="nav-logo-tagline">Engineering to elevate life</span>
+    </a>
+    <nav class="nav-menu" id="navMenu" aria-label="Main">
+      <ul class="nav-links">
+        <li>
+          <a href="#" class="nav-link nav-link--aava">
+            AAVA<sup>™</sup>
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link">What We Do
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link">Who We Serve
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link active">How We Deliver
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link">Insights &amp; Impact
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link">Careers
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </li>
+      </ul>
+      <a href="#" class="btn btn-primary">
+        <span class="btn__label">Get In Touch</span>
+        <span class="btn__icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ===================================================
+     HERO — FULL BANNER  ·  bg-dark #000
+=================================================== -->
+<section class="hero" id="s-hero">
+  <div class="container">
+    <div class="hero-inner">
+      <nav class="hero-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <a href="#">How We Deliver</a>
+        <svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Engineering<sup>AI</sup> in Mexico</span>
+      </nav>
+      <h1>Engineering<sup>AI</sup><br>in Mexico</h1>
+      <span class="hero-line" aria-hidden="true"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================
+     OPENING INTRO  ·  bg-default #fff
+=================================================== -->
+<section class="opening-section" id="s-opening">
+  <div class="container">
+    <div class="opening-grid">
+
+      <!-- Left: stat -->
+      <div class="opening-stat rv">
+        <div class="opening-stat-top">Global</div>
+        <div class="opening-stat-num">2000</div>
+        <div class="opening-stat-label">Clients</div>
+        <span class="opening-stat-rule" aria-hidden="true"></span>
+      </div>
+
+      <!-- Right: body text -->
+      <div class="opening-body rv d1">
+        <p>Monterrey's innovation spirit made it the perfect choice for Ascendion's Latin America headquarters and AI-augmented engineering hub. Here, our skilled engineers and AAVA agents collaborate—blending technical craftsmanship with intelligent automation to accelerate delivery, fortify quality, and scale modern software programs. And this is only the beginning.</p>
+        <a href="#s-delivery" class="btn btn-primary">
+          <span class="btn__label">Explore delivery models</span>
+          <span class="btn__icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================
+     DELIVERY MODELS  ·  bg-subtle #f4f4f4
+=================================================== -->
+<section class="delivery-section" id="s-delivery">
+  <div class="container">
+    <div class="s-head rv">
+      <div class="lbl lbl--dark">Unlocking LATAM potential</div>
+      <p class="delivery-intro">We offer multiple models to ensure clients have the ideal global and nearshore delivery structure for their business.</p>
+    </div>
+    <!-- Row 1: image left, text right -->
+    <div class="delivery-row rv">
+      <div class="delivery-img">
+        <div class="delivery-img-inner" style="background-image: url('assets/images/globaldelmex/Section-unlocking-latam-img01.png');"></div>
+      </div>
+      <div class="delivery-text">
+        <div class="delivery-text-num">Model 01</div>
+        <h3>Team-based engagements</h3>
+        <p class="delivery-text-intro">Highly scalable, collaborative teams. This model offers benefits such as:</p>
+        <div class="delivery-stat-inline">
+          <span class="stat-n">50%</span>
+          <span class="stat-d">Labor arbitrage<br>(higher with agentic AI arbitrage)</span>
+        </div>
+        <ul class="delivery-list">
+          <li>Scalable to project demands</li>
+          <li>Labor arbitrage of up to 50% (higher with agentic AI arbitrage)</li>
+          <li>Balanced delivery risk between the client and Ascendion</li>
+          <li>Flexible commercial arrangements (SOW-based PODs or managed capacity)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Row 2: text left, image right -->
+    <div class="delivery-row rv d1">
+      <div class="delivery-text">
+        <div class="delivery-text-num">Model 02</div>
+        <h3>Strategic talent engagements</h3>
+        <p class="delivery-text-intro">This model caters to specific, long-term needs and provides:</p>
+        <div class="delivery-stat-inline">
+          <span class="stat-n">30%</span>
+          <span class="stat-d">Cost arbitrage advantage</span>
+        </div>
+        <ul class="delivery-list">
+          <li>Client direct control over project delivery</li>
+          <li>Ideal for time and material contracts</li>
+          <li>Cost arbitrage advantage of 30%</li>
+        </ul>
+      </div>
+      <div class="delivery-img">
+        <div class="delivery-img-inner" style="background-image: url('assets/images/globaldelmex/Section-unlocking-latam-img02.png');"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================
+     VIDEO  ·  bg-dark #000
+=================================================== -->
+<section class="video-section" id="s-video">
+  <div class="container">
+    <div class="s-head rv">
+      <div class="lbl">Ascendion Mexico</div>
+      <h3 style="color:var(--text-inv)">Ascendion Mexico launch</h3>
+    </div>
+  </div>
+  <div class="video-wrap rv d1">
+    <div class="video-player" id="vimeoPlayer" role="button" tabindex="0" aria-label="Play: Ascendion Mexico launch">
+      <img class="video-poster" src="assets/images/globaldelmex/Screenshot.png" alt="Ascendion Mexico launch" />
+      <div class="video-play-btn" aria-hidden="true">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================
+     BUILDING TEAMS  ·  bg-subtle #f4f4f4
+=================================================== -->
+<section class="teams-section" id="s-teams">
+  <div class="container">
+    <div class="s-head rv">
+      <div class="lbl lbl--dark">Building High-Performing Teams</div>
+      <p class="teams-intro">Ascendion's talent processes leverage AI technology to align top talent perfectly to client business needs. Here's how:</p>
+    </div>
+    <div class="teams-grid">
+
+      <div class="teams-card rv">
+        <div class="teams-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+            <path d="M18 8h2M20 6v4"/>
+          </svg>
+        </div>
+        <h4>Agentic AI-Powered Sourcing</h4>
+        <p>We utilize agentic AI to identify the best candidates, streamlining the selection process.</p>
+      </div>
+
+      <div class="teams-card rv d1">
+        <div class="teams-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 3 21 3 21 9"/>
+            <polyline points="9 21 3 21 3 15"/>
+            <line x1="21" y1="3" x2="14" y2="10"/>
+            <line x1="3" y1="21" x2="10" y2="14"/>
+          </svg>
+        </div>
+        <h4>Core-Flex Capacity</h4>
+        <p>We can rapidly scale our recruitment capacity to meet your needs, doubling it within two weeks.</p>
+      </div>
+
+      <div class="teams-card rv d2">
+        <div class="teams-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </div>
+        <h4>Competitive Offers</h4>
+        <p>We attract top talent with full-time employment, attractive compensation packages exceeding market averages, and comprehensive benefits.</p>
+      </div>
+
+      <div class="teams-card rv d3">
+        <div class="teams-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+          </svg>
+        </div>
+        <h4>AI Workforce Transformation</h4>
+        <p>With Ascendion University, we assess technical readiness, identify capability gaps, and deliver precision, real-world learning that builds the skills, judgment, and mindset to apply AI responsibly and effectively.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================
+     TALENT HUB  ·  bg-dark #000
+=================================================== -->
+<section class="talent-section" id="s-talent">
+  <div class="container">
+    <div class="s-head rv">
+      <div class="lbl">Mexico is a hub for top talent in LATAM</div>
+    </div>
+
+    <div class="talent-stat-hero rv d1">
+      <div class="talent-map">
+        <img src="assets/images/globaldelmex/SVG/Asset 1.svg" alt="Map of Mexico" />
+      </div>
+      <div class="talent-num-wrap">
+        <span class="talent-big-num" data-count="80">0</span><span class="talent-big-pct">%</span>
+        <p class="talent-stat-label">Offer acceptance rate</p>
+      </div>
+    </div>
+
+    <div class="talent-body-grid rv">
+      <!-- Left: body copy -->
+      <h3 class="talent-sub-intro" id="talentIntro">Our talent experts consistently achieve outstanding results, ensuring a seamless process for connecting ideal talent to digital demand. We offer industry-leading velocity with:</h3>
+
+      <!-- Right: stacked list -->
+      <div class="talent-items">
+        <div class="talent-item active">
+          <span class="talent-item-title">Pre-vetted professionals</span>
+          <span class="talent-item-desc">A deep reservoir of pre-vetted professionals ready for immediate deployment.</span>
+        </div>
+        <div class="talent-item">
+          <span class="talent-item-title">Digital speed</span>
+          <span class="talent-item-desc">Accelerated talent processes so work can begin at "digital speed."</span>
+        </div>
+        <div class="talent-item">
+          <span class="talent-item-title">80%+ offer acceptance</span>
+          <span class="talent-item-desc">Highly sought-after employment opportunities by top talent, with an impressive offer acceptance rate exceeding 80%.</span>
+        </div>
+        <div class="talent-item">
+          <span class="talent-item-title">University partnerships</span>
+          <span class="talent-item-desc">Strategic partnerships with leading universities help us attract high-potential leaders in one of the top markets for technical talent.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================
+     PRESS / MEDIA  ·  bg-subtle #f4f4f4
+=================================================== -->
+<section class="press-section" id="s-press">
+  <div class="container">
+    <div class="s-head rv">
+      <div class="lbl lbl--dark">EngineeringAI in Mexico</div>
+    </div>
+
+    <!-- Filter tabs -->
+    <div class="press-tabs rv d1">
+      <button class="press-tab active" data-filter="all">All</button>
+      <button class="press-tab" data-filter="video">Video</button>
+      <button class="press-tab" data-filter="press">Press Release</button>
+      <button class="press-tab" data-filter="article">Article</button>
+    </div>
+
+    <div class="press-cards rv d2" id="pressGrid">
+
+      <article class="ins-card" data-cat="video">
+        <div class="ins-img" aria-hidden="true"></div>
+        <div class="ins-body">
+          <div class="ins-type">Video</div>
+          <h3 class="ins-title">EngineeringAI in Mexico</h3>
+          <a href="https://vimeo.com/995875129" class="btn btn-text" target="_blank" rel="noopener noreferrer">
+            <span class="btn__label">Watch</span>
+            <span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </a>
+        </div>
+      </article>
+
+      <article class="ins-card" data-cat="video">
+        <div class="ins-img" aria-hidden="true"></div>
+        <div class="ins-body">
+          <div class="ins-type">Video</div>
+          <h3 class="ins-title">Check out our Monterrey Latin America HQ office launch!</h3>
+          <a href="https://vimeo.com/855288286" class="btn btn-text" target="_blank" rel="noopener noreferrer">
+            <span class="btn__label">Watch</span>
+            <span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </a>
+        </div>
+      </article>
+
+      <article class="ins-card" data-cat="press">
+        <div class="ins-img" aria-hidden="true"></div>
+        <div class="ins-body">
+          <div class="ins-type">Press Release</div>
+          <h3 class="ins-title">Ascendion Sponsors AI &amp; Innovation Science Fair at Tecnológico de Monterrey in Mexico</h3>
+          <a href="https://ascendion.com/press-releases/ascendion-sponsors-ai-innovation-science-fair-at-tecnologico-de-monterrey-in-mexico/" class="btn btn-text" target="_blank" rel="noopener noreferrer">
+            <span class="btn__label">Read more</span>
+            <span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </a>
+        </div>
+      </article>
+
+      <article class="ins-card" data-cat="article">
+        <div class="ins-img" aria-hidden="true"></div>
+        <div class="ins-body">
+          <div class="ins-type">Article</div>
+          <h3 class="ins-title">Ascendion launches new hub in Monterrey, Mexico, to accelerate global software innovation</h3>
+          <a href="https://ascendion.com/press/ascendion-launches-new-hub-in-monterrey-mexico-to-accelerate-global-software-innovation" class="btn btn-text" target="_blank" rel="noopener noreferrer">
+            <span class="btn__label">Read more</span>
+            <span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </a>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Bottom navigation: dots left, arrows right -->
+    <div class="ins-bottom rv d2">
+      <div class="ins-dots" id="pressDots"></div>
+      <div class="ins-arrows">
+        <button class="ins-arrow" aria-label="Previous" id="pressPrev" disabled>
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="none">
+            <path d="M10 4l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button class="ins-arrow" aria-label="Next" id="pressNext">
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="none">
+            <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================================================
+     FOOTER  ·  bg-default #ffffff
+=================================================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-cols">
+      <div>
+        <div class="footer-col-head">What We Do</div>
+        <ul class="footer-links">
+          <li><a href="#" class="footer-link">Applied AI</a></li>
+          <li><a href="#" class="footer-link">GCC<sup>AI</sup></a></li>
+          <li><a href="#" class="footer-link">Product<sup>AI</sup></a></li>
+          <li><a href="#" class="footer-link">Data &amp; Insights<sup>AI</sup></a></li>
+          <li><a href="#" class="footer-link">Salesforce Implementation</a></li>
+          <li><a href="#" class="footer-link">Quality Engineering<sup>AI</sup></a></li>
+          <li><a href="#" class="footer-link">Experience<sup>AI</sup></a></li>
+          <li><a href="#" class="footer-link">Operations<sup>AI</sup></a></li>
+          <li><a href="#" class="footer-link">AI Workforce Transformation</a></li>
+          <li><a href="#" class="footer-link">Enterprise Platform</a></li>
+          <li><a href="#" class="footer-link">Platform Engineering<sup>AI</sup></a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-head">Industries</div>
+        <ul class="footer-links">
+          <li><a href="#" class="footer-link">Banking &amp; Financial Services</a></li>
+          <li><a href="#" class="footer-link">Communications, Media and Entertainment</a></li>
+          <li><a href="#" class="footer-link">Healthcare &amp; Life Sciences</a></li>
+          <li><a href="#" class="footer-link">Retail and Consumer Goods</a></li>
+          <li><a href="#" class="footer-link">High-tech</a></li>
+          <li><a href="#" class="footer-link">Travel and Hospitality</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-head">Who We Are</div>
+        <ul class="footer-links">
+          <li><a href="#" class="footer-link">Leadership</a></li>
+          <li><a href="#" class="footer-link">Analyst Recognition</a></li>
+          <li><a href="#" class="footer-link">Certifications</a></li>
+          <li><a href="#" class="footer-link">Locations</a></li>
+          <li><a href="#" class="footer-link">ESG</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-head">Quick Links</div>
+        <ul class="footer-links">
+          <li><a href="#" class="footer-link">Insights and impact</a></li>
+          <li><a href="#" class="footer-link">Careers India</a></li>
+          <li><a href="#" class="footer-link">Careers North America</a></li>
+          <li><a href="#" class="footer-link">Careers Europe</a></li>
+          <li><a href="#" class="footer-link">Careers Asia Pacific</a></li>
+          <li><a href="#" class="footer-link">Global Delivery Hubs</a></li>
+          <li><a href="#" class="footer-link">Contact us</a></li>
+        </ul>
+      </div>
+      <div style="padding-top:40px">
+        <div class="footer-social">
+          <a href="#" class="footer-social-link footer-social-link--linkedin" aria-label="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+          </a>
+          <a href="#" class="footer-social-link footer-social-link--youtube" aria-label="YouTube">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+            </svg>
+          </a>
+          <a href="#" class="footer-social-link footer-social-link--instagram" aria-label="Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">Copyright 2026, ASCENDION. All rights reserved.</span>
+      <div class="footer-legal">
+        <a href="#" class="footer-legal-link">Privacy Policy</a>
+        <span class="footer-sep">|</span>
+        <a href="#" class="footer-legal-link">Terms of Use</a>
+        <span class="footer-sep">|</span>
+        <a href="#" class="footer-legal-link">Accessibility Disclosure</a>
+        <span class="footer-sep">|</span>
+        <a href="#" class="footer-legal-link">AI-enhanced Content Notice</a>
+        <span class="footer-sep">|</span>
+        <a href="#" class="footer-legal-link">Security Disclosure Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ===================================================
+     JAVASCRIPT
+=================================================== -->
+<script>
+(function () {
+  'use strict';
+
+  /* ── NAV SCROLL SHADOW ─────────────────────────────── */
+  var nav = document.getElementById('nav');
+  window.addEventListener('scroll', function () {
+    nav.classList.toggle('scrolled', window.scrollY > 10);
+  }, { passive: true });
+
+  /* ── MOBILE NAV TOGGLE ─────────────────────────────── */
+  var toggle = document.getElementById('navToggle');
+  var menu   = document.getElementById('navMenu');
+  toggle.addEventListener('click', function () {
+    var open = menu.classList.toggle('open');
+    toggle.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+
+  /* ── SCROLL REVEAL ─────────────────────────────────── */
+  var rvObs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('in'); rvObs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -48px 0px' });
+  document.querySelectorAll('.rv').forEach(function (el) { rvObs.observe(el); });
+
+  /* ── SECTION NAV ─────────────────────────────────────── */
+  (function () {
+    var subnav = document.getElementById('subnav');
+    if (!subnav) return;
+    var subnavLinks = Array.from(subnav.querySelectorAll('.subnav-link'));
+    var hero = document.querySelector('.hero');
+
+    // Show subnav once hero scrolls out of view
+    if (hero) {
+      var heroObs = new IntersectionObserver(function (entries) {
+        subnav.classList.toggle('visible', !entries[0].isIntersecting);
+      }, { threshold: 0 });
+      heroObs.observe(hero);
+    }
+
+    // Spy: highlight active link based on section in viewport
+    var spySections = subnavLinks.map(function (l) {
+      return document.querySelector(l.getAttribute('href'));
+    }).filter(Boolean);
+
+    var spyObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.id;
+          subnavLinks.forEach(function (l) {
+            l.classList.toggle('active', l.getAttribute('href') === '#' + id);
+          });
+        }
+      });
+    }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+
+    spySections.forEach(function (s) { spyObs.observe(s); });
+
+    // Smooth scroll with offset (nav 86px + subnav 52px + gap 16px)
+    subnavLinks.forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        var target = document.querySelector(link.getAttribute('href'));
+        if (target) {
+          var offset = 86 + 52 + 16;
+          window.scrollTo({ top: target.offsetTop - offset, behavior: 'smooth' });
+        }
+      });
+    });
+  })();
+
+  /* ── TALENT ITEM ACTIVE STATE ────────────────────────── */
+  (function () {
+    var items = document.querySelectorAll('.talent-item');
+    if (!items.length) return;
+    items.forEach(function (item) {
+      item.addEventListener('mouseenter', function () {
+        items.forEach(function (x) { x.classList.remove('active'); });
+        item.classList.add('active');
+      });
+      item.addEventListener('mouseleave', function () {
+        var anyHovered = Array.from(items).some(function (x) { return x.matches(':hover'); });
+        if (!anyHovered) {
+          items.forEach(function (x) { x.classList.remove('active'); });
+          items[0].classList.add('active');
+        }
+      });
+    });
+  })();
+
+  /* ── CHAR SCROLL REVEAL ──────────────────────────────── */
+  (function () {
+    var el = document.getElementById('talentIntro');
+    if (!el) return;
+
+    // Split text into char spans — spaces stay as plain text so word-wrap works
+    var text = el.textContent;
+    el.innerHTML = text.split('').map(function (ch) {
+      return ch === ' ' ? ' ' : '<span class="char">' + ch + '</span>';
+    }).join('');
+
+    var chars = el.querySelectorAll('.char');
+    var total = chars.length;
+
+    function update() {
+      var rect = el.getBoundingClientRect();
+      var wh = window.innerHeight;
+      // progress: 0 when element top hits bottom of viewport, 1 when element bottom hits top
+      var progress = 1 - (rect.bottom / (wh + rect.height));
+      progress = Math.max(0, Math.min(1, progress * 2.4)); // compress range so it finishes mid-scroll
+      var lit = Math.round(progress * total);
+      chars.forEach(function (ch, i) {
+        ch.classList.toggle('lit', i < lit);
+      });
+    }
+
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+
+  /* ── STAT COUNTER ────────────────────────────────────── */
+  (function () {
+    var counters = document.querySelectorAll('[data-count]');
+    if (!counters.length) return;
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        var target = parseInt(el.dataset.count, 10);
+        var duration = 1600;
+        var start = performance.now();
+        function tick(now) {
+          var p = Math.min((now - start) / duration, 1);
+          var ease = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(ease * target);
+          if (p < 1) requestAnimationFrame(tick);
+          else el.textContent = target;
+        }
+        requestAnimationFrame(tick);
+        obs.unobserve(el);
+      });
+    }, { threshold: 0.4 });
+    counters.forEach(function (el) { obs.observe(el); });
+  })();
+
+  /* ── PRESS GRID PAGINATION + FILTER ─────────────────── */
+  (function () {
+    var pressGrid = document.getElementById('pressGrid');
+    var pressPrev = document.getElementById('pressPrev');
+    var pressNext = document.getElementById('pressNext');
+    var pressDots = document.getElementById('pressDots');
+    var pressPage = 0;
+    var allCards  = Array.from(pressGrid.querySelectorAll('.ins-card'));
+
+    function getPerPage() {
+      if (window.innerWidth <= 600) return 1;
+      if (window.innerWidth <= 900) return 2;
+      return 3;
+    }
+
+    function getVisible(cat) {
+      return allCards.filter(function (c) {
+        return cat === 'all' || c.dataset.cat === cat;
+      });
+    }
+
+    function buildDots(total) {
+      pressDots.innerHTML = '';
+      for (var i = 0; i < total; i++) {
+        var d = document.createElement('button');
+        d.className = 'ins-dot' + (i === pressPage ? ' active' : '');
+        d.setAttribute('aria-label', 'Page ' + (i + 1));
+        (function (idx) {
+          d.addEventListener('click', function () { goToPage(idx); });
+        })(i);
+        pressDots.appendChild(d);
+      }
+    }
+
+    function goToPage(p) {
+      var cat     = (document.querySelector('.press-tab.active') || { dataset: { filter: 'all' } }).dataset.filter;
+      var visible = getVisible(cat);
+      var pp      = getPerPage();
+      var pages   = Math.ceil(visible.length / pp);
+      pressPage   = Math.max(0, Math.min(p, pages - 1));
+
+      allCards.forEach(function (c) { c.style.display = 'none'; });
+      visible.forEach(function (c, i) {
+        if (i >= pressPage * pp && i < (pressPage + 1) * pp) c.style.display = '';
+      });
+
+      pressPrev.disabled = pressPage === 0;
+      pressNext.disabled = pressPage >= pages - 1;
+
+      pressDots.querySelectorAll('.ins-dot').forEach(function (d, i) {
+        d.classList.toggle('active', i === pressPage);
+      });
+    }
+
+    function initPress(cat) {
+      cat = cat || 'all';
+      var visible = getVisible(cat);
+      var pp      = getPerPage();
+      var pages   = Math.ceil(visible.length / pp);
+      pressPage   = 0;
+      buildDots(pages);
+      goToPage(0);
+    }
+
+    document.querySelectorAll('.press-tab').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('.press-tab').forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        initPress(btn.dataset.filter);
+      });
+    });
+
+    pressPrev.addEventListener('click', function () { goToPage(pressPage - 1); });
+    pressNext.addEventListener('click', function () { goToPage(pressPage + 1); });
+    window.addEventListener('resize', function () { initPress(); });
+    initPress();
+  })();
+
+  /* ── VIMEO FACADE ────────────────────────────────────── */
+  (function () {
+    var player = document.getElementById('vimeoPlayer');
+    if (!player) return;
+
+    function activatePlayer() {
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://player.vimeo.com/video/855288286?autoplay=1&color=2ddcaa&title=0&byline=0&portrait=0#t=43s';
+      iframe.allow = 'autoplay; fullscreen; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.title = 'Ascendion Mexico launch';
+      player.innerHTML = '';
+      player.appendChild(iframe);
+      player.style.cursor = 'default';
+    }
+
+    player.addEventListener('click', activatePlayer);
+    player.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activatePlayer(); }
+    });
+  })();
+
+})();
+</script>
+
+</body>
+</html>
