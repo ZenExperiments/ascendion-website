@@ -9,7 +9,7 @@
   <style>
     @font-face {
       font-family: 'PP Neue Machina';
-      src: url('../assets/fonts/PPNeueMachina-PlainRegular.ttf') format('truetype');
+      src: url('../assets/fonts/PPNeueMachina-PlainRegular 2.ttf') format('truetype');
       font-weight: 400;
       font-style: normal;
       font-display: swap;
@@ -435,31 +435,33 @@
     .impact-grid--4col .impact-card {
       border-right: 1px solid rgba(0,0,0,0.06);
       border-bottom: none;
+      border-top: 3px solid transparent;
       /* Subgrid: each card spans 4 rows so icon/stat/heading/body align across all columns */
       display: grid;
       grid-template-rows: subgrid;
       grid-row: span 4;
+      transition: border-top-color 0.28s ease, background 0.35s ease;
     }
     .impact-grid--4col .impact-card:last-child { border-right: none; }
+    /* Bottleneck interaction: violet top stroke + violet gradient wash */
+    .impact-grid--4col .impact-card:hover {
+      border-top-color: var(--primary-500);
+      background: linear-gradient(to bottom, rgba(100,100,215,0.07) 0%, #ffffff 55%);
+    }
+    /* Suppress teal overlay for 4-col variant */
+    .impact-grid--4col .impact-card::before { display: none; }
 
-    /* Icon styling for 4-col cards */
+    /* Icon styling for 4-col cards — no bg box, black line-art */
     .impact-card-icon {
       width: 40px;
       height: 40px;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(100,100,215,0.08);
-      border-radius: 2px;
+      align-items: flex-start;
+      justify-content: flex-start;
+      background: none;
+      border-radius: 0;
       margin-bottom: 32px;
-      color: var(--primary-500);
-      position: relative;
-      z-index: 1;
-      transition: background 0.4s, color 0.4s;
-    }
-    .impact-grid--4col .impact-card:hover .impact-card-icon {
-      background: rgba(0,0,0,0.06);
-      color: #000000;
+      color: var(--neutral-900);
     }
     /* h4 inside 4-col cards */
     .impact-grid--4col .impact-card h4 {
@@ -469,9 +471,7 @@
       line-height: 1.3;
       color: var(--text-primary);
       margin-bottom: 12px;
-      transition: color 0.4s;
     }
-    .impact-grid--4col .impact-card:hover h4 { color: #000000; }
     /* Teal fade — fades in/out on hover */
     .impact-card::before {
       content: '';
@@ -514,75 +514,6 @@
       transition: color 0.4s;
     }
     .impact-card:hover p { color: var(--neutral-800); }
-
-    /* =====================================================
-       POWER OF AI  (bg-dark #000)
-    ===================================================== */
-    .powerai-section { background: var(--bg-dark); }
-    .powerai-section .s-head {
-      text-align: center;
-      margin-bottom: 56px;
-    }
-    .powerai-section .s-head p {
-      font-size: 20px;
-      color: var(--text-inv-2);
-      line-height: 1.6;
-      margin-top: 0;
-    }
-    .powerai-cols {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2px;
-    }
-    .powerai-col {
-      background: var(--bg-dark-subtle);
-      padding: 48px 40px;
-      position: relative;
-    }
-    .powerai-col::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-    }
-    .powerai-col--humans::before  { background: var(--primary-500); }
-    .powerai-col--agents::before  { background: var(--accent-100); }
-    .powerai-col-head {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 32px;
-    }
-    .powerai-col-head h4 {
-      font-family: var(--font-display);
-      font-size: 24px;
-      font-weight: 400;
-      color: var(--text-inv);
-      line-height: 1.3;
-    }
-    .powerai-col-icon {
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .powerai-col--humans .powerai-col-icon { background: rgba(100,100,215,0.15); color: var(--primary-500); }
-    .powerai-col--agents .powerai-col-icon { background: rgba(45,220,170,0.15);  color: var(--accent-100); }
-    .powerai-list { display: flex; flex-direction: column; }
-    .powerai-list li {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      padding: 14px 0;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      font-size: 16px;
-      color: var(--text-inv-2);
-      line-height: 1.6;
-    }
-    .powerai-col--humans .powerai-list li::before { content: '●'; color: var(--primary-500); font-size: 8px; flex-shrink: 0; margin-top: 6px; }
-    .powerai-col--agents .powerai-list li::before { content: '●'; color: var(--accent-100);  font-size: 8px; flex-shrink: 0; margin-top: 6px; }
 
     /* =====================================================
        CAPABILITIES — TABS  (bg-subtle #f4f4f4)
@@ -647,7 +578,9 @@
     .tab-list li::before { content: '—'; color: var(--primary-500); flex-shrink: 0; margin-top: 1px; }
     .tab-visual {
       aspect-ratio: 4 / 3;
-      background: linear-gradient(135deg, #ebebf8 0%, #e0e0f0 100%);
+      background-color: #e0e0f0;
+      background-size: cover;
+      background-position: center;
       border-radius: 2px;
     }
 
@@ -726,26 +659,29 @@
     .insights-section { background: var(--bg-default); }
     .ins-filters-bar {
       display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
+      border-bottom: 1px solid var(--neutral-200);
       margin-bottom: 40px;
+      overflow-x: auto;
+      scrollbar-width: none;
     }
+    .ins-filters-bar::-webkit-scrollbar { display: none; }
     .ins-filter {
       font-family: var(--font-primary);
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 8px 18px;
-      border-radius: 2px;
-      border: 1px solid var(--neutral-200);
-      background: transparent;
+      font-size: 14px;
+      font-weight: 400;
       color: var(--neutral-600);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: 12px 20px 12px 0;
+      margin-right: 24px;
+      margin-bottom: -1px;
       cursor: pointer;
-      transition: background 0.15s, color 0.15s, border-color 0.15s;
+      white-space: nowrap;
+      transition: color 0.2s, border-color 0.2s;
     }
-    .ins-filter:hover  { border-color: var(--primary-500); color: var(--primary-500); }
-    .ins-filter.active { background: var(--primary-500); border-color: var(--primary-500); color: var(--neutral-0); }
+    .ins-filter:hover { color: var(--text-primary); }
+    .ins-filter.active { color: var(--text-primary); border-bottom-color: var(--primary-500); font-weight: 500; }
     .ins-cards {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -774,7 +710,9 @@
     .ins-img {
       width: 100%;
       aspect-ratio: 16 / 9;
-      background: linear-gradient(135deg, #d4d4d4 0%, #f4f4f4 100%);
+      background-color: #d4d4d4;
+      background-size: cover;
+      background-position: center;
       flex-shrink: 0;
     }
     .ins-body { padding: 28px; display: flex; flex-direction: column; flex: 1; }
@@ -952,7 +890,7 @@
       h1 { font-size: 48px; }
       h2 { font-size: 36px; }
       .intro-grid,
-      .powerai-cols { grid-template-columns: 1fr; gap: 40px; }
+      .pai2-row { grid-template-columns: 1fr; gap: 32px; }
       .cs-grid { grid-template-columns: 1fr; border-top: none; }
       .cs-card { border-right: none; border-bottom: 1px solid var(--neutral-800); }
       .cs-card:last-child { border-bottom: none; }
@@ -960,6 +898,7 @@
       .ins-cards { grid-template-columns: 1fr 1fr; }
       .tab-panel.active { grid-template-columns: 1fr; gap: 40px; }
       .tab-nav { overflow-x: auto; }
+      .subnav { top: 64px; }
     }
     @media (max-width: 600px) {
       :root { --px: 24px; --py: 48px; }
@@ -991,74 +930,67 @@
        POWER OF AI — STEPS VARIANT  (bg-dark #000)
     ===================================================== */
     .pai2-section { background: var(--bg-dark); padding-top: var(--py); padding-bottom: var(--py); }
-    .pai2-section .s-head { text-align: center; margin-bottom: 56px; }
-    .pai2-section .s-head p { font-size: 18px; color: var(--text-inv-2); max-width: 640px; margin: 0 auto; }
-    .pai2-layout {
+    .pai2-body-text {
+      font-family: var(--font-primary);
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--text-inv-2);
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 64px;
+    }
+    /* Stacked rows */
+    .pai2-rows { }
+    .pai2-row {
       display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 64px;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      padding: 56px var(--px);
+      margin-left: calc(-1 * var(--px));
+      margin-right: calc(-1 * var(--px));
       align-items: start;
     }
-    .pai2-nav { display: flex; flex-direction: column; gap: 2px; }
-    .pai2-btn {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      padding: 20px 24px;
-      background: none;
-      border: none;
-      border-left: 3px solid var(--neutral-800);
-      cursor: pointer;
-      text-align: left;
-      transition: border-color 0.2s, background 0.2s;
-      width: 100%;
-    }
-    .pai2-btn:hover { background: rgba(255,255,255,0.04); border-left-color: var(--neutral-700); }
-    .pai2-btn.active { border-left-color: var(--accent-100); background: rgba(45,220,170,0.05); }
-    .pai2-num {
-      font-family: var(--font-mono);
-      font-size: 13px;
-      font-weight: 400;
-      color: var(--neutral-700);
-      min-width: 36px;
-      line-height: 1;
-      transition: color 0.2s;
-    }
-    .pai2-btn.active .pai2-num { color: var(--accent-100); }
-    .pai2-label { font-size: 20px; font-weight: 500; color: var(--neutral-600); transition: color 0.2s; }
-    .pai2-btn.active .pai2-label { color: var(--neutral-0); }
-    .pai2-panel { display: none; }
-    .pai2-panel.active { display: block; }
-    .pai2-panel h4 {
+    .pai2-row-title {
       font-family: var(--font-display);
-      font-size: 32px;
+      font-size: 36px;
       font-weight: 400;
-      color: var(--text-inv);
-      margin-bottom: 24px;
+      color: var(--accent-100);
+      line-height: 1.15;
     }
-    .pai2-list {
-      list-style: none;
-      padding: 0; margin: 0;
+    .pai2-row-title sup {
+      font-size: 18px;
+      vertical-align: super;
+      color: var(--accent-100);
+    }
+    /* Right side: bullet grid */
+    .pai2-grid {
       display: flex;
       flex-direction: column;
-      gap: 16px;
     }
-    .pai2-list li {
+    .pai2-grid-item {
+      padding: 6px 0;
       display: flex;
       align-items: flex-start;
-      gap: 14px;
-      font-size: 16px;
-      color: var(--text-inv-2);
-      line-height: 1.75;
+      gap: 12px;
     }
-    .pai2-list li::before {
-      content: '';
+    .pai2-grid-item::before {
+      content: '●';
+      color: var(--primary-500);
+      font-size: 8px;
       flex-shrink: 0;
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: var(--accent-100);
-      margin-top: 10px;
+      margin-top: 5px;
     }
+    .pai2-grid-item p {
+      font-size: 15px;
+      color: var(--text-inv-2);
+      line-height: 1.65;
+      margin: 0;
+    }
+    /* pai2 rows — cross-dim + bg swap on hover */
+    .pai2-row { transition: opacity 0.4s ease, background-color 0.4s ease; }
+    .pai2-row--humans { background-color: var(--bg-dark-subtle); }
+    .pai2-row--agents { background-color: var(--bg-dark); opacity: 0.3; }
 
     /* =====================================================
        CAPABILITIES — FULL-WIDTH ACCORDION  (bg-default #fff)
@@ -1146,65 +1078,63 @@
     /* Accordion lives inside .container — 80px side margins preserved naturally */
 
     /* =====================================================
-       SECTION NAV — fixed top bar (right-aligned)
+       SECTION NAV — sticky, white, left-aligned
     ===================================================== */
-    .secnav {
+    .subnav {
       position: fixed;
       top: 86px;
       left: 0;
       right: 0;
-      z-index: 149;
-      background: #000000;
-      border-bottom: 1px solid rgba(255,255,255,0.12);
-      display: flex;
-      align-items: stretch;
-      justify-content: flex-end;
-      padding: 0 80px;
-      height: 44px;
-      gap: 0;
+      z-index: 190;
+      background: var(--bg-default);
+      border-bottom: 1px solid var(--neutral-200);
       opacity: 0;
       pointer-events: none;
-      transform: translateY(-100%);
-      transition: opacity 0.35s ease, transform 0.35s ease;
+      transform: translateY(-4px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
     }
-    .secnav.visible {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateY(0);
+    .subnav.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    .subnav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      overflow-x: auto;
+      scrollbar-width: none;
+      gap: 0;
+      height: 52px;
     }
-    .secnav-item {
+    .subnav-inner::-webkit-scrollbar { display: none; }
+    .subnav-link {
+      flex-shrink: 0;
       font-family: var(--font-primary);
       font-size: 13px;
       font-weight: 500;
-      letter-spacing: 0.02em;
-      color: rgba(255,255,255,0.55);
-      padding: 0 16px;
-      border-radius: 0;
-      border: none;
-      background: none;
-      cursor: pointer;
-      white-space: nowrap;
-      display: flex;
+      color: var(--neutral-600);
+      padding: 0 18px;
+      height: 52px;
+      display: inline-flex;
       align-items: center;
-      transition: color 0.2s ease, background 0.2s ease;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+      white-space: nowrap;
+      text-decoration: none;
     }
-    .secnav-item:hover { color: #ffffff; }
-    .secnav-item.active {
-      background: var(--primary-500);
-      color: #ffffff;
-    }
+    .subnav-link:hover { color: var(--primary-500); }
+    .subnav-link.active { color: var(--primary-500); border-bottom-color: var(--primary-500); }
   </style>
 </head>
 <body>
 
 <!-- SECTION NAV — fixed top bar, right-aligned -->
-<nav class="secnav" id="sectionNav" aria-label="Page sections">
-  <button class="secnav-item" data-target="s-intro">Intro</button>
-  <button class="secnav-item" data-target="s-impact">Impact</button>
-  <button class="secnav-item" data-target="s-powerai">Power of AI</button>
-  <button class="secnav-item" data-target="s-cap">Capabilities</button>
-  <button class="secnav-item" data-target="s-outcomes">Client Outcomes</button>
-  <button class="secnav-item" data-target="s-insights">Insights</button>
+<nav class="subnav" id="subnav" aria-label="Page sections">
+  <div class="container subnav-inner">
+    <a href="#s-intro" class="subnav-link">Intro</a>
+    <a href="#s-impact" class="subnav-link">Impact</a>
+    <a href="#s-powerai" class="subnav-link">Power of AI</a>
+    <a href="#s-cap" class="subnav-link">Capabilities</a>
+    <a href="#s-outcomes" class="subnav-link">Client Outcomes</a>
+    <a href="#s-insights" class="subnav-link">Insights</a>
+  </div>
 </nav>
 
 <!-- ===================================================
@@ -1339,45 +1269,10 @@
 <!-- ===================================================
      IMPACT  ·  bg-dark #000000
 =================================================== -->
-<section class="impact-section" id="s-impact">
-  <div class="container">
-    <div class="s-head rv">
-      <div class="lbl lbl--dark">Impact</div>
-    </div>
-    <div class="impact-grid">
-
-      <div class="impact-card rv d1">
-        <div class="impact-card-stat">50%+</div>
-        <h3>Higher Email Open Rates</h3>
-        <p>Transform customer engagement. Automated, behavior-based journeys. Personalize at scale. Convert more with less manual effort.</p>
-      </div>
-
-      <div class="impact-card rv d2">
-        <div class="impact-card-stat">48-Hour</div>
-        <h3>Resolution Guarantee</h3>
-        <p>Digital partner portal with structured onboarding and live chat support. Structure verification. Scale engagement without adding overhead.</p>
-      </div>
-
-      <div class="impact-card rv d3">
-        <div class="impact-card-stat">Frictionless</div>
-        <h3>Partner Onboarding</h3>
-        <p>Centralized partner platform with personalized onboarding journeys. Enable mobile sales logging. Drive collaboration. Reduce operational friction.</p>
-      </div>
-
-      <div class="impact-card rv d4">
-        <div class="impact-card-stat">Drive</div>
-        <h3>Global Growth</h3>
-        <p>Unified CRM with automated quoting and real-time insights. Align business units. Improve data quality. Forecast across regions.</p>
-      </div>
-
-    </div>
-  </div>
-</section>
-
 <!-- ===================================================
-     IMPACT ALT  ·  4-column layout  ·  bg-subtle #f4f4f4
+     IMPACT  ·  4-column layout  ·  bg-subtle #f4f4f4
 =================================================== -->
-<section class="impact-section" id="s-impact2" style="border-top:1px solid rgba(0,0,0,0.06);">
+<section class="impact-section" id="s-impact">
   <div class="container">
     <div class="s-head rv">
       <div class="lbl lbl--dark">Impact</div>
@@ -1433,101 +1328,38 @@
 </section>
 
 <!-- ===================================================
-     POWER OF AI  ·  bg-dark-subtle #1a1a1a
+     POWER OF AI  ·  bg-dark #000000
 =================================================== -->
-<section class="powerai-section" id="s-powerai">
+<section class="pai2-section" id="s-powerai">
   <div class="container">
     <div class="s-head rv">
       <div class="lbl">The Power of AI</div>
-      <p>Agentforce and Salesforce AI tools deliver productivity gains, automate routine tasks, and surface insights so human teams can focus on higher-impact work.</p>
-    </div>
-    <div class="powerai-cols">
-
-      <div class="powerai-col powerai-col--humans rv d1">
-        <div class="powerai-col-head">
-          <div class="powerai-col-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
-            </svg>
-          </div>
-          <h4>Humans Own</h4>
-        </div>
-        <ul class="powerai-list">
-          <li>Identifying automation-ready workflows and setting guardrails, approval workflows, and data permissions</li>
-          <li>Complex case resolution and relationship building</li>
-          <li>Strategic decision-making</li>
-          <li>Testing, validation, and accountability for outcomes</li>
-        </ul>
-      </div>
-
-      <div class="powerai-col powerai-col--agents rv d2">
-        <div class="powerai-col-head">
-          <div class="powerai-col-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 13h6M9 17h4"/>
-            </svg>
-          </div>
-          <h4>AI Agents Handle</h4>
-        </div>
-        <ul class="powerai-list">
-          <li>24/7 omnichannel engagement</li>
-          <li>Routine customer inquiries</li>
-          <li>Lead scoring and qualification</li>
-          <li>Predictive analytics for cross-sell, upsell, and forecasting</li>
-          <li>Automated data entry, follow-ups, record updates, and customer segmentation</li>
-          <li>Real-time sentiment tracking and personalized content generation</li>
-        </ul>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ===================================================
-     POWER OF AI — STEPS VARIANT  ·  bg-dark #000000
-=================================================== -->
-<section class="pai2-section" id="s-powerai2">
-  <div class="container">
-    <div class="s-head rv">
-      <div class="lbl">The Power of AI</div>
-      <p>Agentforce and Salesforce AI tools deliver productivity gains, automate routine tasks, and surface insights so human teams can focus on higher-impact work.</p>
     </div>
 
-    <div class="pai2-layout rv d1">
-      <!-- Nav -->
-      <div class="pai2-nav" role="tablist">
-        <button class="pai2-btn active" onclick="switchPai2(0)">
-          <span class="pai2-num">01</span>
-          <span class="pai2-label">Humans Own</span>
-        </button>
-        <button class="pai2-btn" onclick="switchPai2(1)">
-          <span class="pai2-num">02</span>
-          <span class="pai2-label">AI Agents Handle</span>
-        </button>
+    <p class="pai2-body-text rv">Agentforce and Salesforce AI tools deliver productivity gains, automate routine tasks, and surface insights so human teams can focus on higher-impact work.</p>
+
+    <div class="pai2-rows">
+      <!-- Row 1: Humans Own -->
+      <div class="pai2-row pai2-row--humans rv">
+        <div class="pai2-row-title">Humans Own</div>
+        <div class="pai2-grid">
+          <div class="pai2-grid-item"><p>Identifying automation-ready workflows and setting guardrails, approval workflows, and data permissions</p></div>
+          <div class="pai2-grid-item"><p>Complex case resolution and relationship building</p></div>
+          <div class="pai2-grid-item"><p>Strategic decision-making</p></div>
+          <div class="pai2-grid-item"><p>Testing, validation, and accountability for outcomes</p></div>
+        </div>
       </div>
 
-      <!-- Panels -->
-      <div>
-        <div class="pai2-panel active" id="pai2-0">
-          <h4>Humans Own</h4>
-          <ul class="pai2-list">
-            <li>Identifying automation-ready workflows and setting guardrails, approval workflows, and data permissions</li>
-            <li>Complex case resolution and relationship building</li>
-            <li>Strategic decision-making</li>
-            <li>Testing, validation, and accountability for outcomes</li>
-          </ul>
-        </div>
-
-        <div class="pai2-panel" id="pai2-1">
-          <h4>AI Agents Handle</h4>
-          <ul class="pai2-list">
-            <li>24/7 omnichannel engagement</li>
-            <li>Routine customer inquiries</li>
-            <li>Lead scoring and qualification</li>
-            <li>Predictive analytics for cross-sell, upsell, and forecasting</li>
-            <li>Automated data entry, follow-ups, record updates, and customer segmentation</li>
-            <li>Real-time sentiment tracking and personalized content generation</li>
-          </ul>
+      <!-- Row 2: AI Agents Handle -->
+      <div class="pai2-row pai2-row--agents">
+        <div class="pai2-row-title">AI Agents Handle</div>
+        <div class="pai2-grid">
+          <div class="pai2-grid-item"><p>24/7 omnichannel engagement</p></div>
+          <div class="pai2-grid-item"><p>Routine customer inquiries</p></div>
+          <div class="pai2-grid-item"><p>Lead scoring and qualification</p></div>
+          <div class="pai2-grid-item"><p>Predictive analytics for cross-sell, upsell, and forecasting</p></div>
+          <div class="pai2-grid-item"><p>Automated data entry, follow-ups, record updates, and customer segmentation</p></div>
+          <div class="pai2-grid-item"><p>Real-time sentiment tracking and personalized content generation</p></div>
         </div>
       </div>
     </div>
@@ -1565,7 +1397,7 @@
           <li>Training and enablement</li>
         </ul>
       </div>
-      <div class="tab-visual rv d3" aria-hidden="true"></div>
+      <div class="tab-visual rv d3" style="background-image: url('../assets/images/enterprise-platform/PowerofAI-img01.jpg')" aria-hidden="true"></div>
     </div>
 
     <!-- Tab Panel 1 -->
@@ -1583,7 +1415,7 @@
           </span>
         </a>
       </div>
-      <div class="tab-visual" aria-hidden="true"></div>
+      <div class="tab-visual" style="background-image: url('../assets/images/enterprise-platform/PowerofAI-img02.png')" aria-hidden="true"></div>
     </div>
 
     <!-- Tab Panel 2 -->
@@ -1592,7 +1424,7 @@
         <h4>Salesforce Lifecycle Services</h4>
         <p>Own the full lifecycle: roadmaps, optimization, custom development, enhancements, release management, and day-to-day support. Centers of Excellence are built with governance frameworks that tie Salesforce evolution to business strategy.</p>
       </div>
-      <div class="tab-visual" aria-hidden="true"></div>
+      <div class="tab-visual" style="background-image: url('../assets/images/enterprise-platform/PowerofAI-img03.jpg')" aria-hidden="true"></div>
     </div>
 
   </div>
@@ -1766,7 +1598,7 @@
     <div class="ins-cards rv d2" id="insGrid">
 
       <article class="ins-card" data-cat="whitepaper">
-        <div class="ins-img" aria-hidden="true"></div>
+        <div class="ins-img" style="background-image: url('../assets/images/enterprise-platform/Insights-img01.avif')" aria-hidden="true"></div>
         <div class="ins-body">
           <div class="ins-type">Whitepaper</div>
           <h3 class="ins-title">The Future of AI with Salesforce's Agentforce</h3>
@@ -1783,7 +1615,7 @@
       </article>
 
       <article class="ins-card" data-cat="whitepaper">
-        <div class="ins-img" aria-hidden="true"></div>
+        <div class="ins-img" style="background-image: url('../assets/images/enterprise-platform/Insights-img02.jpg')" aria-hidden="true"></div>
         <div class="ins-body">
           <div class="ins-type">Whitepaper</div>
           <h3 class="ins-title">AI-Enhanced Employee Productivity: Using Salesforce AI to Empower Teams in the Workplace</h3>
@@ -1800,7 +1632,7 @@
       </article>
 
       <article class="ins-card" data-cat="blog">
-        <div class="ins-img" aria-hidden="true"></div>
+        <div class="ins-img" style="background-image: url('../assets/images/enterprise-platform/Insights-img03.png')" aria-hidden="true"></div>
         <div class="ins-body">
           <div class="ins-type">Blog</div>
           <h3 class="ins-title">How Salesforce's Agentforce Technology Benefits IT: A Must-Consider for Today's CTOs and CIOs</h3>
@@ -1817,7 +1649,7 @@
       </article>
 
       <article class="ins-card" data-cat="blog" style="display:none">
-        <div class="ins-img" aria-hidden="true"></div>
+        <div class="ins-img" style="background-image: url('../assets/images/enterprise-platform/Insights-img04.jpg')" aria-hidden="true"></div>
         <div class="ins-body">
           <div class="ins-type">Blog</div>
           <h3 class="ins-title">Revolutionizing Customer Service in Retail: The Impact of Salesforce's Agentforce</h3>
@@ -1834,7 +1666,7 @@
       </article>
 
       <article class="ins-card" data-cat="blog" style="display:none">
-        <div class="ins-img" aria-hidden="true"></div>
+        <div class="ins-img" style="background-image: url('../assets/images/enterprise-platform/Insights-img05.png')" aria-hidden="true"></div>
         <div class="ins-body">
           <div class="ins-type">Blog</div>
           <h3 class="ins-title">How Data Drives AI Success in the High-Tech Industry: Debunking Common Myths with Salesforce Agentforce</h3>
@@ -2015,6 +1847,30 @@
   }, { threshold: 0.1, rootMargin: '0px 0px -48px 0px' });
   document.querySelectorAll('.rv').forEach(function (el) { rvObs.observe(el); });
 
+  /* ── PAI2 ROWS — hover cross-dim + bg swap ─────────── */
+  (function () {
+    var humansRow = document.querySelector('.pai2-row--humans');
+    var agentsRow = document.querySelector('.pai2-row--agents');
+    if (!humansRow || !agentsRow) return;
+
+    function set(hOp, aOp, hBg, aBg) {
+      humansRow.style.opacity = hOp;
+      agentsRow.style.opacity = aOp;
+      humansRow.style.backgroundColor = hBg;
+      agentsRow.style.backgroundColor = aBg;
+    }
+
+    // default: humans=dark-subtle, agents=dark (dimmed)
+    humansRow.addEventListener('mouseenter', function () { set(1, 0.3, '#1a1a1a', '#000000'); });
+    agentsRow.addEventListener('mouseenter', function () { set(0.3, 1, '#000000', '#1a1a1a'); });
+    humansRow.addEventListener('mouseleave', function () {
+      if (!agentsRow.matches(':hover')) set(1, 0.3, '#1a1a1a', '#000000');
+    });
+    agentsRow.addEventListener('mouseleave', function () {
+      if (!humansRow.matches(':hover')) set(1, 0.3, '#1a1a1a', '#000000');
+    });
+  })();
+
   /* ── STAT COUNTER ──────────────────────────────────── */
   var statObs = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
@@ -2037,16 +1893,6 @@
     })(performance.now());
   }
 
-  /* ── POWER OF AI STEPS (variant 2) ─────────────────── */
-  function switchPai2(idx) {
-    document.querySelectorAll('.pai2-btn').forEach(function (b, i) {
-      b.classList.toggle('active', i === idx);
-    });
-    document.querySelectorAll('.pai2-panel').forEach(function (p, i) {
-      p.classList.toggle('active', i === idx);
-    });
-  }
-  window.switchPai2 = switchPai2;
 
   /* ── CAPABILITIES FULL-WIDTH ACCORDION (variant 2) ── */
   function toggleCap2(trigger) {
@@ -2079,49 +1925,48 @@
 
   /* ── SECTION NAV ─────────────────────────────────────── */
   (function () {
-    var nav = document.getElementById('sectionNav');
-    if (!nav) return;
+    var subnav = document.getElementById('subnav');
+    if (!subnav) return;
+    var subnavLinks = Array.from(subnav.querySelectorAll('.subnav-link'));
+    var hero = document.querySelector('.hero');
 
-    var items = Array.from(nav.querySelectorAll('.secnav-item'));
-    var sections = items.map(function (btn) {
-      return document.getElementById(btn.dataset.target);
-    });
+    // Show subnav once hero scrolls out of view
+    if (hero) {
+      var heroObs = new IntersectionObserver(function (entries) {
+        subnav.classList.toggle('visible', !entries[0].isIntersecting);
+      }, { threshold: 0 });
+      heroObs.observe(hero);
+    }
 
-    // Click scrolls to section
-    items.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var target = document.getElementById(btn.dataset.target);
-        if (target) target.scrollIntoView({ behavior: 'smooth' });
-      });
-    });
+    // Spy: highlight active link based on section in viewport
+    var spySections = subnavLinks.map(function (l) {
+      return document.querySelector(l.getAttribute('href'));
+    }).filter(Boolean);
 
-    // Show nav once hero + intro scroll out of view (i.e. when impact section arrives)
-    var introSection = document.getElementById('s-intro');
-    var showObs = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        // When intro is no longer visible, show the nav
-        if (!e.isIntersecting) {
-          nav.classList.add('visible');
-        } else {
-          nav.classList.remove('visible');
+    var spyObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.id;
+          subnavLinks.forEach(function (l) {
+            l.classList.toggle('active', l.getAttribute('href') === '#' + id);
+          });
         }
       });
-    }, { threshold: 0 });
-    if (introSection) showObs.observe(introSection);
+    }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
 
-    // Track active section
-    var sectionObs = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        var idx = sections.indexOf(e.target);
-        if (idx === -1) return;
-        if (e.isIntersecting) {
-          items.forEach(function (b) { b.classList.remove('active'); });
-          items[idx].classList.add('active');
+    spySections.forEach(function (s) { spyObs.observe(s); });
+
+    // Smooth scroll with offset (nav 86px + subnav 52px + gap 16px)
+    subnavLinks.forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        var target = document.querySelector(link.getAttribute('href'));
+        if (target) {
+          var offset = 86 + 52 + 16;
+          window.scrollTo({ top: target.offsetTop - offset, behavior: 'smooth' });
         }
       });
-    }, { threshold: 0.35 });
-
-    sections.forEach(function (s) { if (s) sectionObs.observe(s); });
+    });
   })();
 
   /* ── INSIGHTS GRID PAGINATION ───────────────────────── */
