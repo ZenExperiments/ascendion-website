@@ -1,0 +1,1629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AAVA™: A New Model for How Software Is Conceived, Built, and Managed — Ascendion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Mono:wght@400&display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'PP Neue Machina';
+      src: url('assets/fonts/PPNeueMachina-PlainRegular.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /* ─── RESET & ROOT ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      font-size: 18px;
+      line-height: 1.65;
+      color: #000;
+      background: #fff;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img { display: block; max-width: 100%; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+    /* ─── TOKENS ─── */
+    :root {
+      --font-display: 'PP Neue Machina', sans-serif;
+      --font-primary: 'Inter', sans-serif;
+      --font-mono: 'Roboto Mono', monospace;
+      --primary-500: #6464d7;
+      --primary-900: #5a37af;
+      --accent-100: #2ddcaa;
+      --accent-500: #009673;
+      --neutral-0: #ffffff;
+      --neutral-100: #f4f4f4;
+      --neutral-200: #cccccc;
+      --neutral-300: #b2b2b2;
+      --neutral-400: #999999;
+      --neutral-600: #666666;
+      --neutral-700: #333333;
+      --neutral-800: #1a1a1a;
+      --neutral-900: #000000;
+      --px: 80px;
+      --py: 80px;
+    }
+
+    /* ─── TYPOGRAPHY ─── */
+    h1, h2, h3 { font-family: var(--font-display); font-weight: 400; }
+    h4, h5 { font-family: var(--font-primary); font-weight: 400; }
+    h1 { font-size: 80px; line-height: 1.0; }
+    h2 { font-size: 48px; line-height: 1.1; }
+    h3 { font-size: 32px; line-height: 1.2; }
+    h4 { font-size: 24px; line-height: 1.3; }
+    h5 { font-size: 20px; line-height: 1.35; }
+
+    /* ─── CONTAINER ─── */
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding-left: var(--px);
+      padding-right: var(--px);
+    }
+
+    /* ─── LABEL ─── */
+    .lbl {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-100);
+      margin-bottom: 24px;
+    }
+    .lbl--dark { color: var(--primary-500); }
+    .lbl::before, .lbl::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: currentColor;
+      opacity: 0.3;
+    }
+
+    /* ─── BUTTONS ─── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-primary);
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      border-radius: 2px;
+      padding: 14px 20px;
+      line-height: 1;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+    .btn__icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+    }
+    .btn:hover .btn__icon { transform: translateX(3px); }
+    .btn-primary { background: #000; color: #fff; border: none; }
+    .btn-primary .btn__icon { color: var(--primary-500); }
+    .btn-primary:hover { background: var(--neutral-800); }
+    .btn-inverse { background: var(--accent-100); color: #000; border: none; }
+    .btn-inverse .btn__icon { color: #000; }
+    .btn-inverse:hover { background: var(--accent-500); }
+    .btn-ghost { background: transparent; color: #000; border: 1px solid #000; }
+    .btn-ghost .btn__icon { color: var(--primary-500); }
+    .btn-ghost:hover { background: var(--neutral-100); }
+    .btn-ghost-inv { background: transparent; color: #fff; border: 1px solid #fff; }
+    .btn-ghost-inv .btn__icon { color: #fff; }
+    .btn-ghost-inv:hover { background: rgba(255,255,255,0.08); }
+    .btn-text { background: none; color: var(--primary-500); padding: 0; }
+    .btn-text:hover { color: var(--primary-900); }
+    .btn-text-inv { background: none; color: var(--accent-100); padding: 0; }
+    .btn-text-inv:hover { color: var(--accent-500); }
+    .btn-sm { font-size: 14px; padding: 10px 16px; }
+
+    /* ─── SCROLL REVEAL ─── */
+    .rv {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out;
+    }
+    .rv.in { opacity: 1; transform: translateY(0); }
+    .rv.d1 { transition-delay: 0.1s; }
+    .rv.d2 { transition-delay: 0.2s; }
+    .rv.d3 { transition-delay: 0.3s; }
+    .rv.d4 { transition-delay: 0.4s; }
+
+    /* ─── ANNOUNCE BAR ─── */
+    .announce {
+      background: var(--neutral-800);
+      padding: 12px var(--px);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .announce-tag {
+      background: var(--primary-500);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+    .announce-text { color: var(--neutral-200); flex: 1; }
+    .announce-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--accent-100);
+      font-weight: 500;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+    .announce-link:hover { color: var(--accent-500); }
+
+    /* ─── NAV ─── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: var(--neutral-100);
+      height: 86px;
+      display: flex;
+      align-items: center;
+      transition: box-shadow 0.2s;
+    }
+    .nav.scrolled { box-shadow: 0 1px 0 var(--neutral-200); }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+    .nav-logo { display: flex; flex-direction: column; }
+    .nav-logo-text {
+      font-family: var(--font-primary);
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #000;
+      line-height: 1;
+    }
+    .nav-logo-tagline {
+      display: block;
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--neutral-600);
+      letter-spacing: 0;
+      line-height: 1.2;
+      margin-top: 2px;
+    }
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-right: 24px;
+    }
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 16px;
+      font-weight: 400;
+      color: #000;
+      padding: 6px 10px;
+      border-radius: 2px;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: var(--primary-900); }
+    .nav-link.active { color: var(--primary-500); }
+    .nav-link--aava { color: var(--primary-500); font-weight: 500; }
+    .nav-link--aava:hover { color: var(--primary-900); }
+    .nav-link--aava sup { font-size: 10px; vertical-align: super; }
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      padding: 8px;
+      cursor: pointer;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: #000;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ─── HERO ─── */
+    .hero {
+      background: var(--neutral-900);
+      padding: var(--py) 0;
+    }
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .hero-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--neutral-400);
+      margin-bottom: 24px;
+    }
+    .hero-breadcrumb a { color: var(--neutral-400); transition: color 0.2s; }
+    .hero-breadcrumb a:hover { color: #fff; }
+    .hero-breadcrumb-sep { color: var(--neutral-600); }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-100);
+      margin-bottom: 32px;
+    }
+    .hero-tag::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--accent-100);
+    }
+    .hero-content h1 {
+      color: #fff;
+      margin-bottom: 40px;
+    }
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: 14px;
+      color: var(--neutral-400);
+    }
+    .hero-meta-date { color: var(--neutral-300); }
+    .hero-meta-read {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .hero-meta-read svg { color: var(--neutral-600); }
+    .hero-visual {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 70%, #1a1a3e 100%);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .hero-visual-inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 32px;
+      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);
+    }
+    .hero-visual-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--accent-100);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .hero-visual-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      color: #fff;
+      line-height: 1.2;
+    }
+    /* Decorative grid lines in hero visual */
+    .hero-visual::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(100,100,215,0.15) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(100,100,215,0.15) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    .hero-visual-dot {
+      position: absolute;
+      top: 40px;
+      right: 40px;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 2px solid var(--accent-100);
+      opacity: 0.4;
+    }
+    .hero-visual-dot::after {
+      content: '';
+      position: absolute;
+      inset: 12px;
+      border-radius: 50%;
+      background: var(--primary-500);
+      opacity: 0.6;
+    }
+
+    /* ─── AUTHOR STRIP ─── */
+    .author-strip {
+      background: #fff;
+      border-bottom: 1px solid var(--neutral-200);
+      padding: 28px 0;
+    }
+    .author-strip-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+    }
+    .author-list {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .author-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .author-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, var(--primary-500) 0%, #9090e8 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+    .author-avatar--2 {
+      background: linear-gradient(135deg, var(--accent-100) 0%, var(--accent-500) 100%);
+    }
+    .author-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #000;
+      line-height: 1.2;
+    }
+    .author-role {
+      font-size: 12px;
+      color: var(--neutral-600);
+      line-height: 1.3;
+      max-width: 180px;
+    }
+    .author-strip-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-shrink: 0;
+    }
+    .read-time {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--neutral-600);
+      white-space: nowrap;
+    }
+    .share-buttons {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .share-strip-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--neutral-600);
+      margin-right: 4px;
+    }
+    .share-icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--primary-500);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      cursor: pointer;
+      border: none;
+      flex-shrink: 0;
+      transition: opacity 0.15s, transform 0.15s;
+    }
+    .share-icon-btn:hover { opacity: 0.85; transform: translateY(-2px); }
+
+    /* ─── ARTICLE BODY ─── */
+    .article-wrap {
+      background: #fff;
+      padding: var(--py) 0;
+    }
+    .article-inner {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    /* Sidebar */
+    .article-sidebar {
+      position: sticky;
+      top: 110px;
+    }
+    .toc-heading {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #000;
+      margin-bottom: 20px;
+    }
+    .toc-list { padding: 0; margin: 0; }
+    .toc-item { margin: 0; }
+    .toc-link {
+      display: block;
+      font-size: 14px;
+      color: var(--neutral-400);
+      padding: 9px 0 9px 16px;
+      border-left: 2px solid var(--neutral-200);
+      line-height: 1.4;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .toc-link:hover { color: var(--primary-500); border-left-color: var(--primary-500); }
+    .toc-link.active {
+      color: var(--primary-500);
+      border-left-color: var(--primary-500);
+      font-weight: 500;
+    }
+    .toc-divider {
+      height: 1px;
+      background: var(--neutral-200);
+      margin: 28px 0;
+    }
+    .sidebar-share-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #000;
+      margin-bottom: 14px;
+    }
+    .sidebar-share {
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+    }
+
+    /* Article content */
+    .article-content { max-width: 720px; }
+    .article-intro {
+      margin-bottom: 56px;
+      padding-bottom: 0;
+    }
+    .article-intro p {
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--neutral-700);
+      margin-bottom: 24px;
+    }
+    .article-intro p:last-child { margin-bottom: 0; }
+    .article-intro p:first-child {
+      font-size: 18px;
+      line-height: 1.6;
+      color: #000;
+      font-weight: 400;
+    }
+
+    .article-section {
+      padding-bottom: 0;
+      margin-bottom: 56px;
+    }
+    .article-section:last-of-type {
+      margin-bottom: 0;
+    }
+    .article-section h2 {
+      font-size: 32px;
+      color: #000;
+      margin-bottom: 24px;
+    }
+    .article-section p {
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--neutral-700);
+      margin-bottom: 20px;
+    }
+    .article-section p:last-child { margin-bottom: 0; }
+
+    /* Infographic placeholder */
+    .infographic-block {
+      background: var(--neutral-100);
+      border: 1px solid var(--neutral-200);
+      border-radius: 2px;
+      padding: 56px 40px;
+      margin: 40px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .infographic-block::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--primary-500);
+    }
+    .infographic-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--primary-500);
+      margin-bottom: 16px;
+    }
+    .infographic-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      color: #000;
+      margin-bottom: 40px;
+    }
+    .infographic-tiers {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--neutral-200);
+      border: 1px solid var(--neutral-200);
+      border-radius: 2px;
+      overflow: hidden;
+      text-align: left;
+    }
+    .infographic-tier {
+      background: #fff;
+      padding: 24px 20px;
+    }
+    .infographic-tier-num {
+      font-family: var(--font-display);
+      font-size: 32px;
+      color: var(--primary-500);
+      opacity: 0.3;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .infographic-tier-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #000;
+      margin-bottom: 6px;
+    }
+    .infographic-tier-desc {
+      font-size: 12px;
+      color: var(--neutral-600);
+      line-height: 1.5;
+    }
+
+    /* Video block */
+    .media-video {
+      background: var(--neutral-900);
+      border-radius: 2px;
+      aspect-ratio: 16 / 9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      margin: 56px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .media-video::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #0d0d1a 0%, #1a0d2e 50%, #0d1a0d 100%);
+    }
+    .media-video-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+    .play-btn {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 2px solid rgba(45, 220, 170, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .play-btn:hover {
+      border-color: var(--accent-100);
+      background: rgba(45, 220, 170, 0.1);
+    }
+    .media-label {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--neutral-400);
+    }
+
+    /* Podcast block */
+    .media-podcast {
+      background: var(--neutral-800);
+      border-radius: 2px;
+      padding: 40px;
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      margin: 48px 0;
+    }
+    .podcast-art {
+      width: 100px;
+      height: 100px;
+      border-radius: 2px;
+      background: linear-gradient(135deg, var(--primary-500) 0%, #2d2d8a 100%);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .podcast-info { flex: 1; }
+    .podcast-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-100);
+      margin-bottom: 8px;
+    }
+    .podcast-title {
+      font-family: var(--font-display);
+      font-size: 18px;
+      color: #fff;
+      margin-bottom: 20px;
+      line-height: 1.3;
+    }
+
+    /* ─── ABOUT AUTHORS (pai2 pattern) ─── */
+    .authors-section {
+      background: var(--neutral-900);
+      padding: var(--py) 0;
+    }
+    .authors-section .lbl { color: var(--accent-100); }
+    .authors-section .s-head { text-align: center; margin-bottom: 56px; }
+    .authors-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .authors-nav { display: flex; flex-direction: column; gap: 2px; }
+    .author-nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 20px 0;
+      border: none;
+      background: none;
+      cursor: pointer;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      text-align: left;
+      width: 100%;
+      transition: opacity 0.2s;
+    }
+    .author-nav-btn:last-child { border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .author-nav-btn:not(.active) { opacity: 0.5; }
+    .author-nav-btn:hover { opacity: 1; }
+    .author-nav-num {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--neutral-600);
+      transition: color 0.2s;
+      flex-shrink: 0;
+    }
+    .author-nav-btn.active .author-nav-num { color: var(--accent-100); }
+    .author-nav-name {
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--neutral-600);
+      transition: color 0.2s;
+      line-height: 1.3;
+    }
+    .author-nav-btn.active .author-nav-name { color: #fff; }
+    .author-panel { display: none; }
+    .author-panel.active { display: block; }
+    .author-panel-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+    .author-panel-avatar--1 { background: linear-gradient(135deg, var(--primary-500) 0%, #9090e8 100%); }
+    .author-panel-avatar--2 { background: linear-gradient(135deg, var(--accent-100) 0%, var(--accent-500) 100%); }
+    .author-panel-name {
+      font-family: var(--font-display);
+      font-size: 32px;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .author-panel-role {
+      font-size: 14px;
+      color: var(--accent-100);
+      font-weight: 500;
+      margin-bottom: 28px;
+    }
+    .author-panel-bio {
+      font-size: 16px;
+      color: var(--neutral-300);
+      line-height: 1.75;
+    }
+
+    /* ─── RELATED POSTS ─── */
+    .related-section {
+      background: var(--neutral-100);
+      padding: var(--py) 0;
+    }
+    .related-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 40px;
+    }
+    .related-head-left h2 { font-size: 32px; color: #000; }
+    .rel-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .rel-card {
+      background: #fff;
+      border: 1px solid var(--neutral-200);
+      border-radius: 2px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .rel-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: transparent;
+      transition: background 0.4s;
+    }
+    .rel-card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(0,0,0,0.07); }
+    .rel-card:hover::after { background: var(--primary-500); }
+    .rel-img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: linear-gradient(135deg, #d4d4d4 0%, #f4f4f4 100%);
+      flex-shrink: 0;
+    }
+    .rel-body { padding: 28px; display: flex; flex-direction: column; flex: 1; }
+    .rel-type {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--primary-500);
+      margin-bottom: 12px;
+    }
+    .rel-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 400;
+      color: #000;
+      line-height: 1.35;
+      flex: 1;
+      margin-bottom: 24px;
+    }
+
+    /* ─── FOOTER ─── */
+    .footer {
+      background: #fff;
+      border-top: 1px solid var(--neutral-200);
+      padding: 80px 0;
+    }
+    .footer-cols {
+      display: grid;
+      grid-template-columns: 2fr 2fr 1.5fr 1.5fr auto;
+      gap: 80px;
+      margin-bottom: 60px;
+    }
+    .footer-col-head {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #000;
+      margin-bottom: 20px;
+    }
+    .footer-links { padding: 0; }
+    .footer-link {
+      display: block;
+      font-size: 14px;
+      color: var(--neutral-700);
+      padding: 5px 0;
+      line-height: 1.4;
+      transition: color 0.2s;
+    }
+    .footer-link:hover { color: var(--primary-900); }
+    .footer-link sup { font-size: 9px; vertical-align: super; }
+    .footer-social {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .footer-social-link {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      transition: opacity 0.15s, transform 0.15s;
+    }
+    .footer-social-link:hover { opacity: 0.85; transform: translateY(-2px); }
+    .footer-social-link--linkedin { background: #6464d7; }
+    .footer-social-link--youtube { background: #6464d7; }
+    .footer-social-link--instagram { background: #6464d7; }
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--neutral-200);
+      padding-top: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-copy { font-size: 14px; color: var(--neutral-600); }
+    .footer-legal { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .footer-legal-link { font-size: 13px; color: var(--neutral-600); transition: color 0.2s; }
+    .footer-legal-link:hover { color: var(--neutral-700); }
+    .footer-sep { color: var(--neutral-300); font-size: 13px; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1200px) {
+      :root { --px: 60px; }
+      h1 { font-size: 64px; }
+    }
+    @media (max-width: 900px) {
+      :root { --px: 32px; --py: 60px; }
+      h1 { font-size: 48px; }
+      h2 { font-size: 40px; }
+      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      .hero-visual { order: -1; aspect-ratio: 16/9; }
+      .article-inner { grid-template-columns: 1fr; gap: 48px; }
+      .article-sidebar { position: static; }
+      .author-strip-inner { flex-direction: column; align-items: flex-start; gap: 20px; }
+      .author-list { flex-direction: column; gap: 16px; }
+      .footer-cols { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+      .authors-layout { grid-template-columns: 1fr; gap: 40px; }
+      .rel-cards { grid-template-columns: 1fr 1fr; }
+      .related-head { flex-direction: column; align-items: flex-start; gap: 20px; }
+    }
+    @media (max-width: 600px) {
+      :root { --px: 24px; --py: 48px; }
+      h1 { font-size: 40px; }
+      h2 { font-size: 32px; }
+      .announce { padding: 10px var(--px); }
+      .footer-cols { grid-template-columns: 1fr; gap: 32px; }
+      .hero-inner { gap: 32px; }
+      .infographic-tiers { grid-template-columns: 1fr 1fr; }
+      .media-podcast { flex-direction: column; }
+      .author-strip-right { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .rel-cards { grid-template-columns: 1fr; }
+    }
+
+    /* Mobile nav drawer */
+    @media (max-width: 900px) {
+      .nav-menu {
+        position: fixed;
+        top: 86px; left: 0; right: 0;
+        background: var(--neutral-100);
+        border-top: 1px solid var(--neutral-200);
+        flex-direction: column;
+        align-items: stretch;
+        padding: 16px var(--px) 24px;
+        gap: 4px;
+        transform: translateY(-100%);
+        opacity: 0;
+        pointer-events: none;
+        transition: transform 0.3s, opacity 0.3s;
+        z-index: 199;
+      }
+      .nav-menu.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+      .nav-links { flex-direction: column; margin-right: 0; margin-bottom: 12px; }
+      .nav-links { display: flex; }
+      .nav-link { padding: 10px 0; }
+    }
+
+    /* ─── REDUCED MOTION ─── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ANNOUNCE BAR -->
+  <div class="announce">
+    <span class="announce-tag">Ascendion × Everest</span>
+    <span class="announce-text">Ascendion named a Leader in the 2025 Everest Group Engineering Services PEAK Matrix®</span>
+    <a href="#" class="announce-link">
+      Read the Report
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- NAV -->
+  <header class="nav" id="nav">
+    <div class="container nav-inner">
+      <a href="/" class="nav-logo" aria-label="Ascendion home">
+        <span class="nav-logo-text">ASCENDION</span>
+        <span class="nav-logo-tagline">Engineering to elevate life</span>
+      </a>
+      <nav class="nav-menu" id="navMenu" aria-label="Main">
+        <ul class="nav-links">
+          <li>
+            <a href="#" class="nav-link nav-link--aava">
+              AAVA<sup>™</sup>
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link">What We Do
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link">Who We Serve
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link">How We Deliver
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link active">Insights &amp; Impact
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link">Careers
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </li>
+        </ul>
+        <a href="#" class="btn btn-primary">
+          <span class="btn__label">Get In Touch</span>
+          <span class="btn__icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <!-- Left: Content -->
+        <div class="hero-content">
+          <div class="hero-breadcrumb">
+            <a href="#">Home</a>
+            <span class="hero-breadcrumb-sep">/</span>
+            <a href="#">Insights &amp; Impact</a>
+            <span class="hero-breadcrumb-sep">/</span>
+            <span style="color:var(--neutral-600)">Point of View</span>
+          </div>
+          <div class="hero-tag">Point of View</div>
+          <h1>AAVA™: A New Model for How Software Is Conceived, Built, and Managed</h1>
+          <div class="hero-meta">
+            <span class="hero-meta-date">April 1, 2026</span>
+            <span class="hero-meta-read">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M8 5v3.5l2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              7 min read
+            </span>
+          </div>
+        </div>
+        <!-- Right: Visual -->
+        <div class="hero-visual" aria-hidden="true">
+          <div class="hero-visual-dot"></div>
+          <div class="hero-visual-inner">
+            <div class="hero-visual-label">AAVA™ Platform</div>
+            <div class="hero-visual-title">Orchestrating the full<br>engineering lifecycle</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUTHOR STRIP -->
+  <div class="author-strip">
+    <div class="container">
+      <div class="author-strip-inner">
+        <!-- Authors -->
+        <div class="author-list">
+          <div class="author-item">
+            <div class="author-avatar">KG</div>
+            <div>
+              <div class="author-name">Karthikeyan Girijanandan</div>
+              <div class="author-role">Global Head of Technology &amp; Architecture</div>
+            </div>
+          </div>
+          <div class="author-item">
+            <div class="author-avatar author-avatar--2">AV</div>
+            <div>
+              <div class="author-name">Arun Varadarajan</div>
+              <div class="author-role">Chief Commercial Officer &amp; Co-Founder</div>
+            </div>
+          </div>
+        </div>
+        <!-- Share + meta -->
+        <div class="author-strip-right">
+          <div class="share-buttons">
+            <span class="share-strip-label">Share:</span>
+            <button class="share-icon-btn" onclick="shareLinkedIn()" aria-label="Share on LinkedIn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </button>
+            <button class="share-icon-btn" onclick="shareX()" aria-label="Share on X">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+            </button>
+            <button class="share-icon-btn" onclick="copyLink()" aria-label="Copy link">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <rect x="5" y="1" width="9" height="11" rx="1" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M11 12v2a1 1 0 01-1 1H2a1 1 0 01-1-1V5a1 1 0 011-1h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARTICLE BODY -->
+  <section class="article-wrap">
+    <div class="container">
+      <div class="article-inner">
+
+        <!-- SIDEBAR -->
+        <aside class="article-sidebar" aria-label="Table of contents">
+          <div class="toc-heading">In This Article</div>
+          <ul class="toc-list">
+            <li class="toc-item">
+              <a href="#s1" class="toc-link">Friction Doesn't Live in One Stage</a>
+            </li>
+            <li class="toc-item">
+              <a href="#s2" class="toc-link">AI Agents Designed for Precision</a>
+            </li>
+            <li class="toc-item">
+              <a href="#s3" class="toc-link">Agents First. Humans in Control.</a>
+            </li>
+            <li class="toc-item">
+              <a href="#s4" class="toc-link">Designed for Adoption from Day One</a>
+            </li>
+            <li class="toc-item">
+              <a href="#s5" class="toc-link">Engineering for Outcomes</a>
+            </li>
+            <li class="toc-item">
+              <a href="#s6" class="toc-link">Engineering to Impact a Billion Lives</a>
+            </li>
+          </ul>
+
+          <div class="toc-divider"></div>
+
+          <div class="sidebar-share-label">Share</div>
+          <div class="sidebar-share">
+            <button class="share-icon-btn" onclick="shareLinkedIn()" aria-label="Share on LinkedIn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </button>
+            <button class="share-icon-btn" onclick="shareX()" aria-label="Share on X">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+            </button>
+            <button class="share-icon-btn" onclick="copyLink()" aria-label="Copy link">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <rect x="5" y="1" width="9" height="11" rx="1" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M11 12v2a1 1 0 01-1 1H2a1 1 0 01-1-1V5a1 1 0 011-1h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
+        </aside>
+
+        <!-- MAIN ARTICLE CONTENT -->
+        <div class="article-content">
+
+          <!-- Intro -->
+          <div class="article-intro rv">
+            <p>Some organizations accept the chaos of software delivery as the nature of the work. It isn't. It's a process problem, and it's specific enough to map.</p>
+            <p>Every engineering organization runs a version of the software delivery process. Requirements come through, design begins, code gets written, testing runs, something breaks, and it starts over. What looks linear in the methodology is back-and-forth in practice; designs get revised mid-build, gaps surface in testing that were missed upstream, and the cost of that pattern accumulates long before it appears on any project dashboard.</p>
+            <p>When designing Ascendion's agentic AI platform, AAVA, the full engineering lifecycle was mapped end to end, from ideation through production operations. That analysis surfaced approximately a hundred to a hundred and fifty distinct friction points that were causing rework, delays, unnecessary costs, and forcing more labor than the work required. Nearly all of it traced back to the same root causes: inconsistency in how work gets completed, gaps in standards, and governance that weakens under pressure. These are structural problems that accumulate silently across the lifecycle until they show up as quality gaps, cost, and delay.</p>
+          </div>
+
+          <!-- Section 1 -->
+          <div class="article-section rv" id="s1">
+            <h2>Friction Doesn't Live in One Stage</h2>
+            <p>The tendency in applying AI to engineering has been to target individual stages and attack them. Better code generation. Smarter testing. Faster deployment. Each improvement is valuable, but none address the inefficiency that compounds across the whole lifecycle.</p>
+            <p>Think of engineering as a supply chain—raw materials gathering through last-mile delivery in operations. Every stage in that chain depends on the quality of what came before it. A gap that passes unresolved from requirements through design and into code doesn't stay contained. By the time it surfaces in testing, it has traveled through everything built on top of it. The further a gap travels, the more it takes down with it. That compounding action is what makes engineering expensive, and it runs across the full chain. Addressing one stage leaves the underlying inefficiency untouched.</p>
+            <p>AAVA is the orchestration engine for the entire chain, from the first moment a capability is conceived through production operations and ongoing management. When we built the platform, that scope was deliberate and rooted in a simple observation: friction doesn't live in one stage. It accumulates across all of them.</p>
+            <p>When AAVA becomes that engine for our clients, the first thing they have to do is reimagine their engineering processes. Today, many organizations run processes that were designed for humans to move through each stage sequentially. They were not designed for agentic orchestration. Our goal with AAVA is to simplify and orchestrate that process. Consistency and uniformity are brought to every stage of the software delivery lifecycle in a way that human-managed handoffs have never been able to sustain reliably at scale.</p>
+          </div>
+
+          <!-- Section 2 -->
+          <div class="article-section rv" id="s2">
+            <h2>AI Agents Designed for Precision</h2>
+            <p>Our AI agent design follows a single responsibility principle. Every agent has one task, covering a small surface area, and can perform with genuine precision within that task. The more responsibilities assigned to a single agent, the more its accuracy across all of them degrades.</p>
+            <p>What makes these agents genuinely capable is how they understand context. We developed and embedded a knowledge hierarchy in AAVA agents that's modeled on how the human brain stores and applies knowledge: tiered and context sensitive. AAVA agents carry four tiers of knowledge:</p>
+
+            <!-- Infographic -->
+            <div class="infographic-block rv">
+              <div class="infographic-label">Visual Component</div>
+              <div class="infographic-title">AAVA Knowledge Hierarchy — Tiered Architecture</div>
+              <div class="infographic-tiers">
+                <div class="infographic-tier">
+                  <div class="infographic-tier-num">01</div>
+                  <div class="infographic-tier-name">General Knowledge</div>
+                  <div class="infographic-tier-desc">Universal principles applicable in any context or domain</div>
+                </div>
+                <div class="infographic-tier">
+                  <div class="infographic-tier-num">02</div>
+                  <div class="infographic-tier-name">Domain Context</div>
+                  <div class="infographic-tier-desc">Industry-specific knowledge that shapes how general principles are applied</div>
+                </div>
+                <div class="infographic-tier">
+                  <div class="infographic-tier-num">03</div>
+                  <div class="infographic-tier-name">Application Layer</div>
+                  <div class="infographic-tier-desc">Client-specific tools, systems, and environmental constraints</div>
+                </div>
+                <div class="infographic-tier">
+                  <div class="infographic-tier-num">04</div>
+                  <div class="infographic-tier-name">Task Execution</div>
+                  <div class="infographic-tier-desc">Precise action within the bounded surface area of the assigned task</div>
+                </div>
+              </div>
+            </div>
+
+            <p>General knowledge can be applied anywhere. For example, before you cross a road, you wait for traffic to stop and look both ways. But crossing a road in India is different from crossing one in Manhattan or crossing one in a small town. That is the domain context, and it changes how general knowledge gets applied. Then there is the application layer. The shoes you're wearing matter. In heels, you watch for drainage grates in the pavement, whereas, if you're wearing sneakers, you may not even acknowledge the grates. Each layer changes what the right action is, even though the underlying task is the same.</p>
+            <p>An agent built for a retail banking organization reflects retail banking specifics as opposed to commercial banking, without needing another explanation with every prompt. It also knows the specific tools within the client's ecosystem that it needs to perform its task. When a new joiner gets onboarded on an account, they undergo document reviews, training, and gradual exposure all before genuine domain expertise develops. That takes years. An agent absorbs it faster, and once it has it, consistently holds it in a way that individual contributors working across different engagements simply cannot.</p>
+          </div>
+
+          <!-- Section 3 -->
+          <div class="article-section rv" id="s3">
+            <h2>Agents First. Humans in Control.</h2>
+            <p>The default assumption about humans and agents in engineering is that humans produce and agents review. AAVA was built with the opposite idea in mind. Agents go first. They produce the artifact, whether that is a user story, a block of code, a test case, or an architecture document. The human comes in as the reviewer and decision-maker. They own the judgment.</p>
+            <p>A travel agent can book your flight. But your preferences (aisle seat, exit row, specific departure time) are yours to specify. The travel agent operates within the parameters you set. In the same way, an AI agent works for the engineer, and that relationship has to be designed in from the start.</p>
+            <p>Agents enforce engineering rigor and discipline, as well as the structural work of executing tasks consistently, holding to guidelines, and producing output that doesn't drift. Humans apply judgment, situational expertise, and governance. Every consequential decision and checkpoint stays with people.</p>
+          </div>
+
+          <!-- Section 4 -->
+          <div class="article-section rv" id="s4">
+            <h2>Designed for Adoption from Day One</h2>
+            <p>Any technology organization does a finite set of things. The engineering processes that run through those organizations, such as the way software gets conceived, designed, built, and managed, are knowable and mappable. From day one, AAVA diffuses AI across the software delivery lifecycle, rather than adding it in as an afterthought. It comes with out-of-the-box agentic engineering processes that teams can use immediately, without needing to understand the design behind them. The moment it is deployed, the team is already working with something useful.</p>
+            <p>From that foundation, Ascendion works with teams to design with AI, teaching them to build and adapt their own agentic processes to their specific context and needs, without requiring deep AI knowledge to do so. People work confidently when they feel in control, and confidence comes from using something that already works. That supported progression, from user to designer, is what makes adoption hold over time.</p>
+          </div>
+
+          <!-- Video Block -->
+          <div class="media-video rv" aria-label="Video placeholder">
+            <div class="media-video-content">
+              <div class="play-btn" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M8 5.5l11 6.5-11 6.5V5.5z" fill="#2ddcaa"/>
+                </svg>
+              </div>
+              <div class="media-label">Video</div>
+              <a href="#" class="btn btn-inverse btn-sm">
+                <span class="btn__label">Watch the full video</span>
+                <span class="btn__icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Section 5 -->
+          <div class="article-section rv" id="s5">
+            <h2>Engineering for Outcomes</h2>
+            <p>In many enterprises, engineering still moves in stage-based timelines. Each stage has its own metric, its own definition of "complete". Optimizing individual stages doesn't necessarily produce a better outcome at the end. A team can hit every stage metric and still deliver late, over budget, and be misaligned with what the business actually needed.</p>
+            <p>The more useful measure is the business outcome. When does this capability need to be in the hands of customers? What does the business need to be true in two months, or six? Engineering's job is to work backward from that, to orchestrate every stage of the supply chain in service of that end result rather than in service of its own internal metrics.</p>
+            <p>This is what changes when the full lifecycle is orchestrated rather than managed stage by stage. The question shifts from how long does each phase take to what does the business need and when. Technology change becomes something an organization can execute, at the pace its market demands. The organizations that struggled most during the digital transformation era weren't short on strategy. They knew what needed to change. What they couldn't do was move technology fast enough and affordably enough to keep pace with it. That is the gap a well-orchestrated engineering lifecycle closes.</p>
+          </div>
+
+          <!-- Podcast Block -->
+          <div class="media-podcast rv" aria-label="Podcast placeholder">
+            <div class="podcast-art" aria-hidden="true">
+              <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                <circle cx="18" cy="18" r="10" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+                <circle cx="18" cy="18" r="4" fill="rgba(255,255,255,0.6)"/>
+                <path d="M18 4v4M18 28v4M4 18h4M28 18h4" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="podcast-info">
+              <div class="podcast-label">Podcast</div>
+              <div class="podcast-title">AAVA™: Engineering to Elevate Life</div>
+              <a href="#" class="btn btn-inverse btn-sm">
+                <span class="btn__label">Watch the full episode here</span>
+                <span class="btn__icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Section 6 -->
+          <div class="article-section rv" id="s6">
+            <h2>Engineering to Impact a Billion Lives</h2>
+            <p>The people on the other side of software delivery feel the impact of how well engineering works. Fifty thousand new Medicare members gaining access to health coverage every quarter. Over fifty-four million athletes whose records power a more personal experience. More than fifteen thousand auto dealers with access to a bug-free digital portal. That is why engineering cycles that run too long, cost too much, and still fall short of what the business needs are worth agonizing over.</p>
+            <p>AI is the best available means of addressing that today. Tomorrow it may be quantum computing, or something that doesn't have a name yet. The tools will change. The drive to solve it won't.</p>
+          </div>
+
+        </div><!-- /article-content -->
+      </div><!-- /article-inner -->
+    </div><!-- /container -->
+  </section>
+
+  <!-- ABOUT THE AUTHORS -->
+  <section class="authors-section">
+    <div class="container">
+      <div class="s-head rv">
+        <div class="lbl">About the Authors</div>
+      </div>
+      <div class="authors-layout rv d1">
+        <!-- Left nav -->
+        <div class="authors-nav" role="tablist">
+          <button class="author-nav-btn active" onclick="switchAuthor(0)" role="tab">
+            <span class="author-nav-num">01</span>
+            <span class="author-nav-name">Arun Varadarajan</span>
+          </button>
+          <button class="author-nav-btn" onclick="switchAuthor(1)" role="tab">
+            <span class="author-nav-num">02</span>
+            <span class="author-nav-name">Karthikeyan Girijanandan</span>
+          </button>
+        </div>
+        <!-- Right panels -->
+        <div>
+          <div class="author-panel active" id="author-0">
+            <div class="author-panel-avatar author-panel-avatar--2">AV</div>
+            <div class="author-panel-name">Arun Varadarajan</div>
+            <div class="author-panel-role">Chief Commercial Officer &amp; Co-Founder</div>
+            <p class="author-panel-bio">Arun Varadarajan is Chief Commercial Officer at Ascendion, where he leads global growth and drives the commercial strategy behind AAVA. Previously VP and Global Head of Data at Cognizant, he built a $1.1B high-growth data practice and accelerated digital transformations for Fortune 500 clients. With deep technical acumen and a career spanning startups, global tech giants, and large-scale transformations, Arun brings a rare combination of engineering depth and business instinct to every engagement. His focus has always been the same: technology that produces outcomes, at the pace and scale organizations need to be winners in their markets.</p>
+          </div>
+          <div class="author-panel" id="author-1">
+            <div class="author-panel-avatar author-panel-avatar--1">KG</div>
+            <div class="author-panel-name">Karthikeyan Girijanandan</div>
+            <div class="author-panel-role">Global Head of Technology &amp; Architecture</div>
+            <p class="author-panel-bio">Karthikeyan Girijanandan (KG) is Global Head of Technology &amp; Architecture at Ascendion, where he leads the technology roadmap for AAVA, across North America, APAC, and Europe. With nearly two decades of experience spanning enterprise architecture, digital commerce, and cloud-native transformation, he has architected solutions for global organizations across retail, financial services, and healthcare. KG's work sits at the intersection of AI strategy and engineering execution, translating emerging technology into systems that deliver measurable business outcomes. He is a recognized thought leader in GenAI adoption, human-AI collaboration, and responsible AI implementation at enterprise scale.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RELATED POSTS -->
+  <section class="related-section">
+    <div class="container">
+      <div class="related-head rv">
+        <div class="related-head-left">
+          <h2>Related Posts</h2>
+        </div>
+        <a href="#" class="btn btn-ghost">
+          <span class="btn__label">View All</span>
+          <span class="btn__icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </a>
+      </div>
+      <div class="rel-cards">
+        <article class="rel-card rv d1">
+          <div class="rel-img" aria-hidden="true"></div>
+          <div class="rel-body">
+            <div class="rel-type">Point of View</div>
+            <h3 class="rel-title">The Engineering Supply Chain: Why Fixing One Stage Is Never Enough</h3>
+            <a href="#" class="btn btn-text">
+              <span class="btn__label">Read more</span>
+              <span class="btn__icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </a>
+          </div>
+        </article>
+        <article class="rel-card rv d2">
+          <div class="rel-img" aria-hidden="true"></div>
+          <div class="rel-body">
+            <div class="rel-type">Whitepaper</div>
+            <h3 class="rel-title">Agents First: Designing Human-AI Collaboration for Engineering Teams</h3>
+            <a href="#" class="btn btn-text">
+              <span class="btn__label">Read more</span>
+              <span class="btn__icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </a>
+          </div>
+        </article>
+        <article class="rel-card rv d3">
+          <div class="rel-img" aria-hidden="true"></div>
+          <div class="rel-body">
+            <div class="rel-type">Blog</div>
+            <h3 class="rel-title">From Stage Metrics to Business Outcomes: A New Way to Measure Engineering</h3>
+            <a href="#" class="btn btn-text">
+              <span class="btn__label">Read more</span>
+              <span class="btn__icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-cols">
+        <div>
+          <div class="footer-col-head">What We Do</div>
+          <ul class="footer-links">
+            <li><a href="#" class="footer-link">Applied AI</a></li>
+            <li><a href="#" class="footer-link">GCC<sup>AI</sup></a></li>
+            <li><a href="#" class="footer-link">Product<sup>AI</sup></a></li>
+            <li><a href="#" class="footer-link">Data &amp; Insights<sup>AI</sup></a></li>
+            <li><a href="#" class="footer-link">Salesforce Implementation</a></li>
+            <li><a href="#" class="footer-link">Quality Engineering<sup>AI</sup></a></li>
+            <li><a href="#" class="footer-link">Experience<sup>AI</sup></a></li>
+            <li><a href="#" class="footer-link">Operations<sup>AI</sup></a></li>
+            <li><a href="#" class="footer-link">AI Workforce Transformation</a></li>
+            <li><a href="#" class="footer-link">Enterprise Platform</a></li>
+            <li><a href="#" class="footer-link">Platform Engineering<sup>AI</sup></a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-head">Industries</div>
+          <ul class="footer-links">
+            <li><a href="#" class="footer-link">Banking &amp; Financial Services</a></li>
+            <li><a href="#" class="footer-link">Communications, Media and Entertainment</a></li>
+            <li><a href="#" class="footer-link">Healthcare &amp; Life Sciences</a></li>
+            <li><a href="#" class="footer-link">Retail and Consumer Goods</a></li>
+            <li><a href="#" class="footer-link">High-tech</a></li>
+            <li><a href="#" class="footer-link">Travel and Hospitality</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-head">Who We Are</div>
+          <ul class="footer-links">
+            <li><a href="#" class="footer-link">Leadership</a></li>
+            <li><a href="#" class="footer-link">Analyst Recognition</a></li>
+            <li><a href="#" class="footer-link">Certifications</a></li>
+            <li><a href="#" class="footer-link">Locations</a></li>
+            <li><a href="#" class="footer-link">ESG</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-head">Quick Links</div>
+          <ul class="footer-links">
+            <li><a href="#" class="footer-link">Insights and impact</a></li>
+            <li><a href="#" class="footer-link">Careers India</a></li>
+            <li><a href="#" class="footer-link">Careers North America</a></li>
+            <li><a href="#" class="footer-link">Careers Europe</a></li>
+            <li><a href="#" class="footer-link">Careers Asia Pacific</a></li>
+            <li><a href="#" class="footer-link">Global Delivery Hubs</a></li>
+            <li><a href="#" class="footer-link">Contact us</a></li>
+          </ul>
+        </div>
+        <div style="padding-top:40px">
+          <div class="footer-social">
+            <a href="#" class="footer-social-link footer-social-link--linkedin" aria-label="LinkedIn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+            <a href="#" class="footer-social-link footer-social-link--youtube" aria-label="YouTube">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+              </svg>
+            </a>
+            <a href="#" class="footer-social-link footer-social-link--instagram" aria-label="Instagram">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">Copyright 2026, ASCENDION. All rights reserved.</span>
+        <div class="footer-legal">
+          <a href="#" class="footer-legal-link">Privacy Policy</a>
+          <span class="footer-sep">|</span>
+          <a href="#" class="footer-legal-link">Terms of Use</a>
+          <span class="footer-sep">|</span>
+          <a href="#" class="footer-legal-link">Accessibility Disclosure</a>
+          <span class="footer-sep">|</span>
+          <a href="#" class="footer-legal-link">AI-enhanced Content Notice</a>
+          <span class="footer-sep">|</span>
+          <a href="#" class="footer-legal-link">Security Disclosure Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ─── NAV SCROLL SHADOW ───
+    var nav = document.getElementById('nav');
+    window.addEventListener('scroll', function() {
+      nav.classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+
+    // ─── MOBILE NAV TOGGLE ───
+    var navToggle = document.getElementById('navToggle');
+    var navMenu = document.getElementById('navMenu');
+    navToggle.addEventListener('click', function() {
+      var isOpen = navMenu.classList.toggle('open');
+      navToggle.classList.toggle('open', isOpen);
+      navToggle.setAttribute('aria-expanded', isOpen);
+    });
+
+    // ─── SCROLL REVEAL ───
+    (function() {
+      var els = document.querySelectorAll('.rv');
+      if (!els.length) return;
+      var obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -48px 0px' });
+      els.forEach(function(el) { obs.observe(el); });
+    })();
+
+    // ─── TOC ACTIVE TRACKING ───
+    (function() {
+      var sections = document.querySelectorAll('[id^="s"]');
+      var tocLinks = document.querySelectorAll('.toc-link');
+      if (!sections.length || !tocLinks.length) return;
+
+      var activeId = null;
+
+      var obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            activeId = entry.target.id;
+            tocLinks.forEach(function(link) {
+              var href = link.getAttribute('href').replace('#', '');
+              link.classList.toggle('active', href === activeId);
+            });
+          }
+        });
+      }, { threshold: 0.3, rootMargin: '-86px 0px -40% 0px' });
+
+      sections.forEach(function(s) { obs.observe(s); });
+    })();
+
+    // ─── SHARE FUNCTIONS ───
+    function shareLinkedIn() {
+      var url = encodeURIComponent(window.location.href);
+      window.open('https://www.linkedin.com/sharing/share-offsite/?url=' + url, '_blank', 'width=600,height=500');
+    }
+    function shareX() {
+      var url = encodeURIComponent(window.location.href);
+      var text = encodeURIComponent('AAVA™: A New Model for How Software Is Conceived, Built, and Managed — via @Ascendion');
+      window.open('https://twitter.com/intent/tweet?url=' + url + '&text=' + text, '_blank', 'width=600,height=400');
+    }
+    // ─── AUTHOR PANEL SWITCH ───
+    function switchAuthor(idx) {
+      document.querySelectorAll('.author-nav-btn').forEach(function(b, i) {
+        b.classList.toggle('active', i === idx);
+      });
+      document.querySelectorAll('.author-panel').forEach(function(p, i) {
+        p.classList.toggle('active', i === idx);
+      });
+    }
+
+    function copyLink() {
+      navigator.clipboard.writeText(window.location.href).then(function() {
+        var btns = document.querySelectorAll('[onclick="copyLink()"]');
+        btns.forEach(function(btn) {
+          var orig = btn.innerHTML;
+          btn.innerHTML = btn.innerHTML.replace(/Copy link/i, 'Copied!');
+          btn.style.color = 'var(--accent-500)';
+          btn.style.borderColor = 'var(--accent-500)';
+          setTimeout(function() {
+            btn.innerHTML = orig;
+            btn.style.color = '';
+            btn.style.borderColor = '';
+          }, 2000);
+        });
+      });
+    }
+  </script>
+</body>
+</html>
