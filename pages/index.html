@@ -1,0 +1,4500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ascendion | Engineering to Elevate Life</title>
+
+  <style>
+    @font-face {
+      font-family: 'PP Neue Machina';
+      src: url('assets/fonts/PPNeueMachina-PlainRegular 2.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+  </style>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* =====================================================
+       DESIGN TOKENS
+    ===================================================== */
+    :root {
+      --primary-500: #6464d7;
+      --primary-100: #968cfa;
+      --primary-900: #5a37af;
+      --accent-100:  #2ddcaa;
+      --accent-500:  #009673;
+      --neutral-0:   #ffffff;
+      --neutral-100: #f4f4f4;
+      --neutral-200: #cccccc;
+      --neutral-300: #b2b2b2;
+      --neutral-400: #999999;
+      --neutral-600: #666666;
+      --neutral-700: #333333;
+      --neutral-800: #1a1a1a;
+      --neutral-900: #000000;
+
+      --bg-default:     #ffffff;
+      --bg-subtle:      #f4f4f4;
+      --bg-dark:        #000000;
+      --bg-dark-subtle: #1a1a1a;
+      --bg-dark-2:      #333333;
+      --bg-violet:      #6464d7;
+      --bg-accent:      #2ddcaa;
+      --text-primary:   #000000;
+      --text-secondary: #333333;
+      --text-inv:       #ffffff;
+      --text-inv-2:     #cccccc;
+      --text-highlight: #6464d7;
+      --text-hi-inv:    #2ddcaa;
+      --text-disabled:  #666666;
+      --border:         #999999;
+
+      --font-display: 'PP Neue Machina', sans-serif;
+      --font-primary: 'Inter', sans-serif;
+      --font-mono:    'Roboto Mono', monospace;
+
+      --px: 80px;
+      --py: 80px;
+    }
+
+    /* =====================================================
+       RESET & BASE
+    ===================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-primary);
+      font-size: 18px;
+      color: var(--text-primary);
+      background: var(--bg-default);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img, svg { display: block; }
+    sup { font-size: 9px; vertical-align: super; }
+
+    /* =====================================================
+       LAYOUT
+    ===================================================== */
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding-left: var(--px);
+      padding-right: var(--px);
+    }
+    section { padding-top: var(--py); padding-bottom: var(--py); }
+    .s-head { margin-bottom: 56px; }
+
+    /* =====================================================
+       LABEL STYLE
+    ===================================================== */
+    .lbl {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      font-family: var(--font-primary);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-100);
+      margin-bottom: 24px;
+    }
+    .lbl--dark { color: var(--primary-500); }
+    .lbl::before,
+    .lbl::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: currentColor;
+      opacity: 0.3;
+    }
+
+    /* =====================================================
+       TYPOGRAPHY
+    ===================================================== */
+    h1, h2, h3 { font-family: var(--font-display); font-weight: 400; }
+    h4, h5     { font-family: var(--font-primary);  font-weight: 400; }
+    h1 { font-size: 80px; line-height: 1.0; }
+    h2 { font-size: 40px; line-height: 1.1; }
+    h3 { font-size: 32px; line-height: 1.2; }
+    h4 { font-size: 24px; line-height: 1.3; }
+    h5 { font-size: 20px; line-height: 1.35; }
+
+    /* =====================================================
+       BUTTONS
+    ===================================================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-primary);
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      border-radius: 2px;
+      padding: 14px 20px;
+      line-height: 1;
+      white-space: nowrap;
+      cursor: pointer;
+      border: none;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+    .btn__icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+    }
+    .btn:hover .btn__icon { transform: translateX(3px); }
+    .btn-primary        { background: var(--neutral-900); color: var(--neutral-0); }
+    .btn-primary .btn__icon { color: var(--primary-500); }
+    .btn-primary:hover  { background: var(--neutral-800); }
+    .btn-inverse        { background: var(--accent-100); color: var(--neutral-900); }
+    .btn-inverse .btn__icon { color: var(--neutral-900); }
+    .btn-inverse:hover  { background: var(--accent-500); }
+    .btn-ghost          { background: transparent; color: var(--neutral-900); border: 1px solid var(--neutral-900); }
+    .btn-ghost .btn__icon { color: var(--primary-500); }
+    .btn-ghost:hover    { background: var(--neutral-100); }
+    .btn-ghost-inv      { background: transparent; color: var(--neutral-0); border: 1px solid var(--neutral-0); }
+    .btn-ghost-inv .btn__icon { color: var(--neutral-0); }
+    .btn-ghost-inv:hover { background: rgba(255,255,255,0.08); }
+    .btn-text           { background: none; color: var(--primary-500); padding: 0; }
+    .btn-text .btn__icon { color: var(--primary-500); }
+    .btn-text:hover     { color: var(--primary-900); }
+    .btn-text-inv       { background: none; color: var(--accent-100); padding: 0; }
+    .btn-text-inv .btn__icon { color: var(--accent-100); }
+    .btn-text-inv:hover { color: var(--accent-500); }
+    .btn-sm { font-size: 14px; padding: 10px 16px; }
+
+    /* =====================================================
+       ANNOUNCE BAR
+    ===================================================== */
+    .announce {
+      background: var(--bg-dark-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 10px var(--px);
+      flex-wrap: wrap;
+    }
+    .announce-tag {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--primary-500);
+      color: var(--neutral-0);
+      padding: 2px 8px;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+    .announce-text { font-size: 14px; color: var(--text-inv-2); }
+    .announce-link {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--accent-100);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: color 0.15s;
+      white-space: nowrap;
+    }
+    .announce-link:hover { color: var(--accent-500); }
+
+    /* =====================================================
+       NAV
+    ===================================================== */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: var(--bg-subtle);
+      height: 86px;
+      transition: box-shadow 0.2s;
+    }
+    .nav.scrolled { box-shadow: 0 1px 0 var(--neutral-200); }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 86px;
+    }
+    .nav-logo { display: flex; flex-direction: column; }
+    .nav-logo-text {
+      font-family: var(--font-primary);
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--neutral-900);
+      line-height: 1;
+    }
+    .nav-logo-tagline {
+      display: block;
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--neutral-600);
+      letter-spacing: 0;
+      line-height: 1.2;
+      margin-top: 2px;
+    }
+    .nav-menu { display: flex; align-items: center; gap: 4px; }
+    .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; margin-right: 16px; }
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--neutral-900);
+      padding: 6px 10px;
+      border-radius: 2px;
+      transition: color 0.15s;
+    }
+    .nav-link:hover { color: var(--primary-900); }
+    .nav-link.active { color: var(--primary-500); }
+    .nav-link--aava { color: var(--primary-500); font-weight: 500; }
+    .nav-link--aava:hover { color: var(--primary-900); }
+    .nav-link--aava sup { font-size: 10px; vertical-align: super; }
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+    .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--neutral-900); transition: all 0.3s; }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* =====================================================
+       HERO  (bg-dark #000  ·  multi-slide carousel)
+    ===================================================== */
+    .hero-section {
+      background: var(--bg-dark);
+      height: 100vh;
+      min-height: 640px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    /* City skyline background image */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://www.figma.com/api/mcp/asset/4aa23ae6-c0f5-4c09-8ba6-3dac72775a8f');
+      background-size: cover;
+      background-position: center top;
+      opacity: 0.25;
+      z-index: 0;
+    }
+    /* Left-to-right gradient overlay so text remains legible */
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.65) 100%);
+      z-index: 1;
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 48px;
+      height: 100%;
+      padding: 0 var(--px) 72px;
+    }
+
+    /* ── LEFT COLUMN: slides ─────────────────────────── */
+    .hero-slides-wrap {
+      flex: 1;
+      position: relative;
+      height: 100%;
+      padding-right: 60px;
+      max-width: 860px;
+    }
+    /* Each slide fills the full column height, content anchored to bottom */
+    .hero-slides {
+      position: absolute;
+      inset: 0;
+    }
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding-top: 56px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.65s ease;
+    }
+    .hero-slide.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    /* eyebrow label */
+    .hero-slide-label {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-100);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hero-slide-label::before {
+      content: '';
+      width: 28px;
+      height: 1px;
+      background: var(--accent-100);
+      flex-shrink: 0;
+    }
+    /* Heading */
+    .hero-slide-h1 {
+      font-family: var(--font-display);
+      font-size: 72px;
+      font-weight: 400;
+      line-height: 1.0;
+      color: var(--text-inv);
+      margin-bottom: 20px;
+    }
+    /* Body copy */
+    .hero-slide-body {
+      font-size: 18px;
+      line-height: 1.65;
+      color: var(--text-inv-2);
+      margin-bottom: 32px;
+      max-width: 640px;
+    }
+    /* CTA button — white filled, 8px radius (Figma spec) */
+    .btn-hero {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-primary);
+      font-size: 16px;
+      font-weight: 400;
+      background: #ffffff;
+      color: #000000;
+      border: none;
+      border-radius: 8px;
+      padding: 16px 24px;
+      line-height: 1;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+      white-space: nowrap;
+      align-self: flex-start;
+    }
+    .btn-hero:hover { background: var(--accent-100); }
+    .btn-hero svg { flex-shrink: 0; }
+
+    /* Scroll to Explore — sits below the CTA, part of the active slide */
+    .hero-scroll-row {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0;
+      cursor: pointer;
+      transition: color 0.2s;
+      text-decoration: none;
+    }
+    .hero-scroll-row:hover { color: rgba(255,255,255,0.9); }
+    .hero-scroll-arrow {
+      width: 12px; height: 19px;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .hero-scroll-arrow::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('https://www.figma.com/api/mcp/asset/31ecc044-ecfd-4427-be97-84aff44f57df') no-repeat center/contain;
+    }
+
+    /* ── RIGHT COLUMN: nav list ──────────────────────── */
+    .hero-nav {
+      width: 312px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      justify-content: flex-end;
+      padding-bottom: 4px;
+    }
+    .hero-nav-item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      cursor: pointer;
+    }
+    /* Progress line */
+    .hero-nav-line {
+      width: 100%;
+      height: 2px;
+      background: rgba(255,255,255,0.18);
+      border-radius: 1px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-nav-fill {
+      position: absolute;
+      inset: 0;
+      background: var(--accent-100);
+      width: 0%;
+      border-radius: 1px;
+    }
+    .hero-nav-item.active .hero-nav-fill {
+      transition: width 5s linear;
+      width: 100%;
+    }
+    /* Label row */
+    .hero-nav-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    /* Arrow chevron (visible on active item only) */
+    .hero-nav-arrow {
+      width: 24px; height: 15px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      opacity: 0;
+      transition: opacity 0.3s;
+      color: var(--accent-100);
+    }
+    .hero-nav-item.active .hero-nav-arrow { opacity: 1; }
+    .hero-nav-label {
+      font-size: 14px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.4;
+      transition: color 0.3s;
+      flex: 1;
+    }
+    .hero-nav-item.active .hero-nav-label { color: #ffffff; }
+    .hero-nav-item:hover .hero-nav-label { color: rgba(255,255,255,0.85); }
+
+    /* =====================================================
+       TICKER BAND  (bg-dark #000)
+    ===================================================== */
+    .ticker-section {
+      background: var(--primary-500);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 20px 0;
+      overflow: hidden;
+    }
+    .ticker-track {
+      display: flex;
+      gap: 0;
+      width: max-content;
+      animation: ticker-scroll 28s linear infinite;
+    }
+    .ticker-track:hover { animation-play-state: paused; }
+    @keyframes ticker-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .ticker-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      padding: 0 48px;
+      white-space: nowrap;
+    }
+    .ticker-stat {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 400;
+      color: #ffffff;
+    }
+    .ticker-copy { font-size: 14px; color: rgba(255,255,255,0.75); }
+    .ticker-sep {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--accent-100);
+      flex-shrink: 0;
+    }
+
+    /* =====================================================
+       INTRO SECTION  (bg-default #fff)
+    ===================================================== */
+    .intro-section {
+      background: var(--bg-default);
+      position: relative;
+      overflow: visible;
+      text-align: center;
+      padding-bottom: 0;
+    }
+    /* Interactive dot grid canvas */
+    .intro-grid-canvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      display: block;
+      z-index: 0;
+      pointer-events: none;
+    }
+/* Underline reveal for "Engineering to the Power of AI" */
+    /* Body phrase char reveal — dim → violet, same pattern as H2 */
+    .body-char {
+      color: #D5D1FD;
+      transition: color 0.18s ease;
+      display: inline;
+    }
+    .body-char.in { color: #6464d7; }
+    .intro-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .intro-heading {
+      font-family: var(--font-display);
+      font-size: 44px;
+      font-weight: 400;
+      line-height: 1.18;
+      max-width: 680px;
+      margin: 0 auto 24px;
+    }
+    /* One block per line */
+    .intro-h2-line { display: block; }
+    /* Each character starts dim, transitions to violet as scroll advances */
+    .intro-char {
+      color: #D5D1FD;
+      transition: color 0.18s ease;
+      display: inline;
+    }
+    .intro-char.in { color: #6464d7; }
+    .intro-body {
+      font-size: 20px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 56px;
+    }
+    .intro-connector {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 40px;
+      position: relative;
+      z-index: 10;
+    }
+    .intro-dot {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--accent-100);
+      opacity: 0;
+      transform: scale(0);
+      transform-origin: center;
+    }
+    .intro-line {
+      width: 1px; height: 80px;
+      background: var(--accent-100);
+      transform: scaleY(0);
+      transform-origin: top center;
+    }
+    .stats-line {
+      width: 1px; height: 80px;
+      background: var(--accent-100);
+      transform: scaleY(0);
+      transform-origin: top center;
+      margin: 0 auto 60px;
+    }
+
+    /* =====================================================
+       STATS GRID  (bg-default #fff)
+    ===================================================== */
+    .stats-section { background: var(--bg-subtle); padding-top: 0; }
+    .stats-copy {
+      max-width: 960px;
+      margin: 0 auto 64px;
+      text-align: center;
+    }
+    .stats-copy p {
+      font-size: 20px;
+      line-height: 1.8;
+      color: var(--text-secondary);
+    }
+    .stats-copy-aava {
+      display: block;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary-500);
+      line-height: 1.4;
+    }
+    .stats-copy-aava sup {
+      font-size: 14px;
+      vertical-align: super;
+      font-weight: 400;
+    }
+    .stats-copy-line {
+      display: block;
+      font-size: 20px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: auto auto auto 1fr;
+      align-items: stretch;
+    }
+    .stats-card {
+      padding: 36px 32px;
+      background: var(--bg-default);
+      border-right: 1px solid rgba(0,0,0,0.07);
+      border-top: 3px solid transparent;
+      display: grid;
+      grid-template-rows: subgrid;
+      grid-row: span 4;
+      position: relative;
+      transition: border-top-color 0.28s ease, background 0.35s ease;
+    }
+    .stats-card:last-child { border-right: none; }
+    .stats-card:hover {
+      border-top-color: var(--primary-500);
+      background: linear-gradient(to bottom, rgba(100,100,215,0.07) 0%, #ffffff 60%);
+    }
+    .stats-card-icon {
+      width: 36px; height: 36px;
+      display: flex; align-items: flex-start;
+      color: var(--neutral-900);
+      margin-bottom: 28px;
+    }
+    .stats-card-num {
+      font-family: var(--font-display);
+      font-size: 52px;
+      font-weight: 400;
+      line-height: 1.0;
+      color: var(--primary-500);   /* purple */
+      margin-bottom: 10px;
+    }
+    .stats-card-title {
+      font-family: var(--font-primary);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .stats-card-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    /* =====================================================
+       REAL IMPACT  (bg-default #fff)
+    ===================================================== */
+    /* ── Impact — sticky scroll ── */
+    /*
+     * Layout:
+     *   60px spacer (.impact-intro) — section sticks after this 60px scroll
+     *   100vh sticky section — label+body at top (80px), h2 centred, cards animate
+     * Total track: 450vh → sticky window ≈ 350vh for 6 cards
+     */
+    .impact-scroll-track { height: 450vh; }
+
+    /*
+     * Intro (non-sticky): 80px top padding → label → body copy → 80px bottom padding.
+     * Scrolls normally. Sticky section starts immediately after.
+     */
+    .impact-intro {
+      padding: 80px var(--px);
+      background: var(--bg-dark);
+    }
+    .impact-top { text-align: center; }
+    .impact-desc {
+      font-size: 18px;
+      color: var(--text-inv-2);
+      margin: 16px auto 0;
+    }
+
+    /* Sticky section — pins the moment the intro container exits the viewport top */
+    .impact-section {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--bg-dark);
+    }
+    /* "Real Impact" — always centred; cards travel OVER it (cards have higher z-index) */
+    .impact-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      z-index: 5;
+      pointer-events: none;
+      width: 100%;
+    }
+    .impact-h2 {
+      font-family: var(--font-display);
+      font-size: clamp(64px, 9vw, 128px);
+      font-weight: 400;
+      color: var(--text-inv);
+      line-height: 1.05;
+    }
+    /* 3-column grid — fills full section height; each card is centred in its column */
+    .impact-cols {
+      position: absolute;
+      top: 0; bottom: 0;
+      left: var(--px);
+      right: var(--px);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      z-index: 10;   /* above h2's z-index: 5 — cards cover the heading */
+    }
+    .impact-col {
+      position: relative;
+      height: 100%;
+    }
+    /* Each card: fixed height, centred in column, JS drives translateY */
+    .imp-card {
+      position: absolute;
+      top: 50%;
+      left: -50px;
+      right: -50px;
+      height: 392px;
+      border-radius: 2px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 32px;
+      cursor: pointer;
+      will-change: transform;
+      transform: translateY(calc(-50% + 90vh));   /* initial: hidden below */
+    }
+    /* Default dark card */
+    .imp-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: linear-gradient(160deg, #111827 0%, #0f172a 100%);
+    }
+    /* Photo layer — sits above the solid gradient, below the overlay */
+    .imp-card-img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.35;
+      z-index: 1;
+    }
+    /* Right-aligned image: photo covers full card, scaled up 44% */
+    .imp-card--img-right .imp-card-img {
+      left: 0;
+      width: 100%;
+      opacity: 0.4;
+      object-position: 0% 0%;
+      transform: scale(1.2);
+      transform-origin: 0% 100%;
+    }
+    .imp-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 55%, transparent 100%);
+    }
+    /* No overlay on right-image cards */
+    .imp-card--img-right::after { display: none; }
+    /* Pink card — Research */
+    .imp-card--violet::before { background: #F50F7D; }
+    .imp-card--violet::after  { background: linear-gradient(to top, rgba(0,0,0,0.25) 0%, transparent 60%); }
+    /* Violet card — Enterprise */
+    .imp-card--teal::before   { background: var(--primary-500); }
+    .imp-card--teal::after    { display: none; }
+
+    .imp-card-inner { position: relative; z-index: 3; }
+    .imp-tag {
+      display: inline-block;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--neutral-0);
+      background: none;
+      padding: 0;
+      border-radius: 0;
+      margin-bottom: 80px;
+    }
+    .imp-card--teal .imp-tag { color: var(--neutral-0); }
+    .imp-stat {
+      font-family: var(--font-display);
+      font-size: 64px;
+      font-weight: 400;
+      color: var(--text-inv);
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+    .imp-card--teal .imp-stat { color: var(--neutral-0); }
+    .imp-title {
+      font-family: var(--font-primary);
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--text-inv);
+      line-height: 1.3;
+      margin: 0 0 12px;
+    }
+    .imp-card--teal .imp-title { color: var(--neutral-0); }
+    .imp-body {
+      font-family: var(--font-primary);
+      font-size: 16px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.55;
+      margin: 0;
+    }
+    .imp-card--teal   .imp-body { color: rgba(255,255,255,0.75); }
+    .imp-card--violet .imp-body { color: rgba(255,255,255,0.75); }
+
+    /* =====================================================
+       WHAT WE DO  (bg-default #fff)
+    ===================================================== */
+    .wwd-section { background: var(--bg-subtle); padding-bottom: 80px; }
+    .wwd-head { text-align: center; max-width: 640px; margin: 0 auto 56px; }
+    .wwd-head h2 { color: var(--text-primary); margin-bottom: 16px; }
+    .wwd-sub { font-size: 18px; color: var(--text-secondary); line-height: 1.65; }
+    .wwd-accordion { border-top: 1px solid var(--neutral-200); }
+    /* Row: [icon+title trigger] [body — right col] [chevron toggle — far right] */
+    .wwd-item {
+      display: flex;
+      align-items: flex-start;
+      border-bottom: 1px solid var(--neutral-200);
+    }
+    /* Left: Lucide icon + title, no chevron */
+    .wwd-trigger {
+      flex: 0 0 44%;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 28px 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+    }
+    .wwd-trigger:hover .wwd-title { color: var(--primary-900); }
+    /* Lucide icon — no box, just the icon itself */
+    .wwd-lead-icon {
+      flex-shrink: 0;
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--primary-500);
+    }
+    .wwd-title {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--text-primary);
+      flex: 1;
+      transition: color 0.25s;
+      line-height: 1.2;
+    }
+    .wwd-item.open { background: var(--primary-500); border-bottom-color: var(--primary-500); padding-left: 32px; padding-right: 32px; }
+    .wwd-item.open .wwd-title { color: #ffffff; }
+    .wwd-item.open .wwd-trigger:hover .wwd-title { color: rgba(255,255,255,0.85); }
+    .wwd-item.open .wwd-lead-icon { color: rgba(255,255,255,0.85); }
+    /* Middle: body copy + CTA */
+    .wwd-body {
+      flex: 1;
+      overflow: hidden;
+      max-height: 0;
+      padding-left: 40px;
+      padding-top: 0;
+      padding-bottom: 0;
+      transition: max-height 0.45s ease, padding-top 0.45s ease, padding-bottom 0.45s ease;
+    }
+    .wwd-item.open .wwd-body {
+      max-height: 400px;
+      padding-top: 28px;
+      padding-bottom: 40px;
+    }
+    .wwd-body-inner p { font-size: 16px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 24px; }
+    .wwd-item.open .wwd-body-inner p { color: rgba(255,255,255,0.85); }
+    .wwd-item.open .btn-text {
+      background: #000000;
+      color: #ffffff;
+      padding: 14px 20px;
+      border-radius: 2px;
+    }
+    .wwd-item.open .btn-text .btn__icon { color: var(--primary-500); }
+    /* Far right: chevron toggle button — 160px margin keeps it clear of body copy */
+    .wwd-toggle {
+      flex-shrink: 0;
+      width: 40px; height: 40px;
+      margin-top: 24px;
+      margin-left: 160px;
+      border: 1px solid var(--neutral-200);
+      border-radius: 50%;
+      background: none;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--neutral-600);
+      transition: background 0.3s, border-color 0.3s, color 0.3s, transform 0.35s;
+    }
+    .wwd-item.open .wwd-toggle {
+      background: rgba(255,255,255,0.2);
+      border-color: rgba(255,255,255,0.4);
+      color: #fff;
+      transform: rotate(180deg);
+    }
+
+    /* =====================================================
+       AAVA SECTION  (bg-default #fff)
+    ===================================================== */
+    .aava-section { background: var(--bg-default); padding-bottom: 80px; position: relative; overflow: hidden; }
+    /* Canvas at z-index 0; all content layers at z-index 10 above it */
+    .aava-section > .container,
+    .aava-section > .aava-disperse-outer { position: relative; z-index: 10; }
+    #aavaGridCanvas {
+      -webkit-mask-image: radial-gradient(ellipse 75% 70% at 50% 50%, black 40%, transparent 90%);
+      mask-image: radial-gradient(ellipse 75% 70% at 50% 50%, black 40%, transparent 90%);
+    }
+    .aava-inner { text-align: center; }
+    .aava-h2 {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 400;
+      color: var(--text-primary);
+      line-height: 1.1;
+      max-width: 760px;
+      margin: 0 auto 24px;
+    }
+    .aava-body {
+      font-size: 18px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      max-width: 640px;
+      margin: 0 auto 48px;
+    }
+    /* Dot + vertical line connector */
+    .aava-connector {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .aava-conn-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--primary-500);
+    }
+    .aava-conn-line {
+      width: 1px;
+      height: 48px;
+      background: var(--neutral-300);
+    }
+    /* AAVA diamond wrap */
+    .aava-diamond-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 203px;
+      height: 150px;
+      margin: 0 auto 0;
+    }
+    .aava-diamond-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+    }
+    .aava-label-text {
+      font-family: var(--font-display);
+      font-size: 36px;
+      color: var(--primary-500);
+      letter-spacing: -0.02em;
+      position: relative;
+      z-index: 1;
+      line-height: 1;
+      margin-top: -16px;
+    }
+    .aava-label-text sup { font-size: 14px; vertical-align: super; }
+    .aava-sub-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 0;
+    }
+    .aava-sub-line {
+      width: 1px;
+      height: 32px;
+      background: var(--primary-500);
+      transform: scaleY(0);
+      transform-origin: top center;
+    }
+    .aava-sub-line-bottom {
+      width: 1px;
+      height: 32px;
+      background: var(--primary-500);
+      transform: scaleY(0);
+      transform-origin: top center;
+      margin: 0 auto;
+    }
+    .aava-sub {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      border: 1px solid var(--primary-500);
+      padding: 16px;
+      border-radius: 2px;
+    }
+    /* Lower wrap — reference point from connector dot downwards */
+    .aava-lower-wrap {
+      position: relative;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    /* Mid group — diamond + sub-wrap centred column */
+    .aava-mid-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+    /* Terminal panel — JS sets left based on sub-box right edge + 60px gap */
+    .aava-terminal {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 300px;
+      background: var(--bg-default);
+      border: 1px solid var(--primary-500);
+      border-radius: 2px;
+      padding: 32px 28px;
+      overflow: hidden;
+      overflow-y: scroll;
+      scrollbar-width: none;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .aava-term-line {
+      display: none;
+      align-items: baseline;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 2;
+      white-space: normal;
+      word-break: break-word;
+      text-align: left;
+    }
+    .aava-term-line.tvis { display: flex; }
+    .aava-term-prompt { color: var(--primary-500); flex-shrink: 0; }
+    .aava-term-cmd    { color: var(--primary-500); }
+    .aava-term-arrow  { color: var(--neutral-400); flex-shrink: 0; }
+    .aava-term-check  { color: var(--accent-500); flex-shrink: 0; }
+    .aava-term-out    { color: var(--text-secondary); }
+    .aava-term-info   { color: var(--neutral-600); padding-left: 20px; }
+    .aava-term-div {
+      display: none;
+      border: none;
+      border-top: 1px solid var(--neutral-200);
+      margin: 2px 0;
+    }
+    .aava-term-div.tvis { display: block; }
+    #aavaTerminal::-webkit-scrollbar { display: none; }
+    .aava-term-cursor {
+      display: inline-block;
+      width: 7px;
+      height: 13px;
+      background: var(--primary-500);
+      vertical-align: text-bottom;
+      animation: blink 1s step-end infinite;
+    }
+    /* Full-width diamond disperse */
+    .aava-disperse-outer {
+      width: 100%;
+      padding: 0 0 48px;
+    }
+    .aava-disperse-hline-wrap {
+      position: relative;
+      height: 1px;
+      width: 100%;
+    }
+    .aava-disperse-hline {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 1px;
+      background: var(--primary-500);
+    }
+    .aava-disperse-stage {
+      position: relative;
+      width: 100%;
+      height: 121px;
+      margin-top: 16px;
+    }
+    .aava-dmd {
+      position: absolute;
+      top: 0;
+      width: 198px;
+      height: 121px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      will-change: left;
+    }
+    /* Each diamond is its own stacking context — SVG of card N covers text of card N-1 */
+    .aava-dmd:nth-child(1) { z-index: 1; }
+    .aava-dmd:nth-child(2) { z-index: 2; }
+    .aava-dmd:nth-child(3) { z-index: 3; }
+    .aava-dmd:nth-child(4) { z-index: 4; }
+    .aava-dmd:nth-child(5) { z-index: 5; }
+    .aava-dmd:nth-child(6) { z-index: 6; }
+    .aava-dmd > svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+    /* SVG fill transition for highlight */
+    .aava-dmd > svg path {
+      transition: fill 0.4s ease;
+    }
+    .aava-dmd--lit > svg path {
+      fill: var(--primary-500); /* violet */
+    }
+    .aava-dmd--lit .aava-dmd-label {
+      color: #ffffff;
+      transition: color 0.4s ease;
+    }
+    .aava-dmd-label {
+      position: relative;
+      z-index: 1;
+      font-family: var(--font-primary);
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 0;
+      text-transform: none;
+      color: var(--primary-500);
+      text-align: center;
+      line-height: 1.5;
+      padding: 0 20px;
+    }
+    /* keep old names for grid that no longer exist — purged below */
+    .aava-caps {
+      display: none;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0;
+      margin-bottom: 48px;
+    }
+    .aava-cap {
+      background: transparent;
+      padding: 0 24px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: background 0.25s;
+    }
+    .aava-cap:hover { background: rgba(100,100,215,0.04); }
+    /* Tick from flow line to diamond */
+    .aava-cap-tick {
+      width: 1px;
+      height: 20px;
+      background: var(--neutral-300);
+      margin-bottom: 16px;
+    }
+    .aava-cap-icon {
+      width: 44px; height: 44px;
+      transform: rotate(45deg);
+      border: 1px solid var(--neutral-300);
+      border-radius: 0;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      transition: border-color 0.25s, background 0.25s, color 0.25s;
+    }
+    .aava-cap-icon svg { transform: rotate(-45deg); }
+    .aava-cap:first-child .aava-cap-icon {
+      background: var(--accent-100);
+      border-color: var(--accent-100);
+      color: var(--neutral-900);
+    }
+    .aava-cap:hover .aava-cap-icon { border-color: var(--primary-500); color: var(--primary-500); }
+    .aava-cap-label {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+    .aava-support {
+      text-align: center;
+      font-size: 16px;
+      color: var(--neutral-400);
+      letter-spacing: 0.05em;
+      margin-bottom: 40px;
+    }
+    .aava-support span { color: var(--text-secondary); }
+    .aava-cta { text-align: center; }
+
+    /* =====================================================
+       REAL IMPACT CARDS  (bg-default #fff)
+    ===================================================== */
+    .rimp-section { background: var(--bg-default); }
+    .rimp-section .s-head { margin-bottom: 32px; }
+    /* Option 2 toggle bar */
+    .rimp-toggle-wrap {
+      background: var(--bg-default);
+      display: flex;
+      justify-content: center;
+      padding: 24px 0 8px;
+    }
+    .rimp-carousel-wrap { margin: 0; }
+    .rimp-head {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 32px;
+    }
+    .rimp-h2 {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 400;
+      color: var(--text-primary);
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+    .rimp-desc {
+      font-size: 18px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+    .rimp-filters { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 48px; }
+    .rimp-filter {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 8px 18px;
+      border-radius: 2px;
+      border: 1px solid var(--neutral-200);
+      background: transparent;
+      color: var(--neutral-600);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .rimp-filter:hover  { border-color: var(--accent-100); color: var(--accent-500); }
+    .rimp-filter.active { background: var(--accent-100); border-color: var(--accent-100); color: var(--neutral-900); }
+    /* 2.5-card carousel */
+    .rimp-carousel-wrap { overflow: hidden; width: 100%; }
+    .rimp-track { display: flex; gap: 20px; transition: transform 0.45s ease; cursor: grab; padding-left: 80px; }
+    .rimp-track.dragging { cursor: grabbing; transition: none; }
+    .rimp-card {
+      flex-shrink: 0;
+      width: calc((100vw - 40px) / 2.5);
+      aspect-ratio: 1 / 1;
+      position: relative;
+      border-radius: 2px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .rimp-nav { display: flex; gap: 12px; justify-content: center; margin-top: 40px; }
+    .rimp-arrow {
+      width: 48px; height: 48px; border-radius: 50%;
+      border: 1px solid var(--neutral-400);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; background: transparent; color: var(--neutral-900);
+      position: relative; overflow: hidden;
+      transition: border-color 0.35s, color 0.35s;
+    }
+    .rimp-arrow::before {
+      content: ''; position: absolute; inset: 0; border-radius: 50%;
+      background: var(--primary-500);
+      transform: translateX(-101%);
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+    .rimp-arrow:hover::before { transform: translateX(0); }
+    .rimp-arrow:hover { border-color: var(--primary-500); color: var(--neutral-0); }
+    .rimp-arrow svg { position: relative; z-index: 1; }
+    .rimp-arrow:disabled { opacity: 0.3; pointer-events: none; }
+    .rimp-card-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, #111827 0%, #0f172a 100%);
+      z-index: 0;
+    }
+    .rimp-card-img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.5;
+      z-index: 1;
+    }
+    /* Top-to-bottom gradient overlay */
+    .rimp-card::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.45) 55%, rgba(0,0,0,0.25) 100%);
+      z-index: 2;
+    }
+    /* Card inner: absolute-positioned elements for cross-card alignment */
+    .rimp-card-inner {
+      position: absolute; inset: 0; z-index: 3;
+    }
+    /* Fixed bottom values so all cards share the same baseline grid:
+       body=32px | title=115px | stat=188px | tag=292px */
+    .rimp-card-tag {
+      position: absolute; bottom: 292px; left: 28px; right: 28px;
+      font-size: 16px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--neutral-0); line-height: 1;
+    }
+    .rimp-stat {
+      position: absolute; bottom: 188px; left: 28px; right: 28px;
+      font-family: var(--font-display);
+      font-size: 64px; font-weight: 400; color: var(--text-inv);
+      line-height: 1;
+    }
+    .rimp-title {
+      position: absolute; bottom: 115px; left: 28px; right: 28px;
+      height: 63px; /* 2 lines × 24px × 1.3lh — fixes top edge across all cards */
+      font-family: var(--font-primary);
+      font-size: 24px; font-weight: 400; color: var(--text-inv);
+      line-height: 1.3;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .rimp-body {
+      position: absolute; bottom: 32px; left: 28px; right: 28px;
+      height: 75px; /* 3 lines × 16px × 1.55lh */
+      font-size: 16px; color: rgba(255,255,255,0.75); line-height: 1.55;
+      display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+    }
+
+    /* =====================================================
+       THREE PILLARS  (bg-default #fff)
+    ===================================================== */
+    .pillars-section { background: var(--bg-subtle); }
+    /* Tab navigation */
+    .pillars-tab-nav {
+      display: flex;
+      justify-content: flex-start;
+      border-bottom: 1px solid var(--neutral-200);
+      margin-bottom: 48px;
+    }
+    .pillars-tab-btn {
+      font-family: var(--font-primary);
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--neutral-600);
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      padding: 14px 28px;
+      margin-bottom: -1px;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+    .pillars-tab-btn:first-child { padding-left: 0; }
+    .pillars-tab-btn:hover { color: var(--primary-500); }
+    .pillars-tab-btn.active { color: var(--primary-500); border-bottom-color: var(--primary-500); }
+    /* Tab panels */
+    .pillars-tab-panel { display: none; }
+    .pillars-tab-panel.active {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .pillars-tab-content h4 {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+      line-height: 1.3;
+    }
+    .pillars-tab-content p {
+      font-size: 17px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+    .pillars-tab-content p:last-child { margin-bottom: 0; }
+    .pillars-tab-visual {
+      aspect-ratio: 4 / 3;
+      background-color: #e0e0f0;
+      background-size: cover;
+      background-position: center;
+      border-radius: 2px;
+    }
+    @media (max-width: 900px) {
+      .pillars-tab-panel.active { grid-template-columns: 1fr; gap: 40px; }
+      .pillars-tab-nav { overflow-x: auto; }
+    }
+
+    /* =====================================================
+       SCALE SECTION  (bg-subtle #f4f4f4) — numbered list layout
+    ===================================================== */
+    .scale-section { background: var(--bg-subtle); }
+    .scale-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .scale-left h2 {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 400;
+      color: var(--text-primary);
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .scale-left p {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    .scale-list { display: flex; flex-direction: column; }
+    .scale-item {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 60px;
+      align-items: start;
+      padding: 40px 0;
+      border-top: 1px solid rgba(0,0,0,0.1);
+    }
+    .scale-item:first-child { border-top: none; padding-top: 0; }
+    .scale-item:last-child { border-bottom: 1px solid rgba(0,0,0,0.1); }
+    .scale-num-wrap {
+      display: block;
+    }
+    .scale-stat {
+      font-family: var(--font-display);
+      font-size: 48px;
+      font-weight: 400;
+      color: var(--primary-500);
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+    .scale-label {
+      display: flex;
+      flex-direction: column;
+    }
+    .scale-label strong {
+      display: block;
+      font-family: var(--font-primary);
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--text-primary);
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+    .scale-label span {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+    /* old classes kept for mobile breakpoints — hidden */
+    .scale-head { display: none; }
+    .scale-grid { display: none; }
+    .scale-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 0;
+      background: var(--accent-100);
+      transition: height 0.35s ease;
+    }
+    .scale-card:hover { background: rgba(255,255,255,0.03); }
+    .scale-card:hover::before { height: 100%; }
+
+    /* =====================================================
+       SECTION TOGGLE BARS
+    ===================================================== */
+    .section-toggle-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 0;
+    }
+    .section-toggle-btn {
+      font-family: var(--font-primary);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 10px 28px;
+      border: 1px solid var(--neutral-200);
+      background: transparent;
+      color: var(--neutral-600);
+      cursor: pointer;
+      line-height: 1;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .section-toggle-btn:first-child { border-radius: 2px 0 0 2px; }
+    .section-toggle-btn:last-child  { border-radius: 0 2px 2px 0; margin-left: -1px; }
+    .section-toggle-btn.active      { background: var(--primary-500); color: #fff; border-color: var(--primary-500); z-index: 1; position: relative; }
+    .section-toggle-btn:hover:not(.active) { border-color: var(--primary-500); color: var(--primary-500); }
+
+    /* AAVA section 2 — dark bg, teal accents */
+    #s-aava-2 { background: var(--bg-dark); }
+    #s-aava-2 .aava-h2  { color: var(--text-inv); }
+    #s-aava-2 .aava-body { color: var(--text-inv-2); }
+    #s-aava-2 .lbl { color: var(--accent-100); }
+    #s-aava-2 .lbl::before, #s-aava-2 .lbl::after { background: var(--accent-100); }
+    #s-aava-2 .aava-conn-dot { background: var(--accent-100); }
+    #s-aava-2 .aava-conn-line { background: rgba(45,220,170,0.3); }
+    #s-aava-2 .aava-label-text { color: var(--accent-100); }
+    #s-aava-2 .aava-sub-line, #s-aava-2 .aava-sub-line-bottom { background: #ffffff; }
+    #s-aava-2 .aava-sub { border-color: #ffffff; color: var(--text-inv-2); }
+    #s-aava-2 .aava-terminal { background: #0d0d0d; border-color: var(--accent-100); }
+    #s-aava-2 .aava-term-prompt, #s-aava-2 .aava-term-cmd { color: var(--accent-100); }
+    #s-aava-2 .aava-term-check { color: var(--accent-100); }
+    #s-aava-2 .aava-term-out { color: rgba(45,220,170,0.75); }
+    #s-aava-2 .aava-term-info { color: rgba(45,220,170,0.5); }
+    #s-aava-2 .aava-term-div { border-color: rgba(45,220,170,0.2); }
+    #s-aava-2 .aava-term-cursor { background: var(--accent-100); }
+    #s-aava-2 .aava-dmd-label { color: #ffffff; }
+    #s-aava-2 .aava-dmd--lit > svg path { fill: var(--accent-100) !important; }
+    #s-aava-2 .aava-dmd--lit .aava-dmd-label { color: #000000 !important; }
+    #s-aava-2 .aava-disperse-hline { background: #ffffff; }
+    #s-aava-2 .aava-support { color: #ffffff; }
+    #s-aava-2 .aava-support span { color: #ffffff; }
+
+    /* =====================================================
+       INSIGHTS  (bg-default #fff)
+    ===================================================== */
+    .insights-section { background: var(--bg-default); }
+    .ins-intro { margin-bottom: 40px; text-align: center; }
+    .ins-h2 { font-family: var(--font-display); font-size: 40px; font-weight: 400; color: var(--text-primary); line-height: 1.1; margin-bottom: 12px; }
+    .ins-sub { font-size: 18px; color: var(--text-secondary); line-height: 1.65; }
+    .ins-filters-bar {
+      display: flex;
+      border-bottom: 1px solid var(--neutral-200);
+      margin-bottom: 40px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .ins-filters-bar::-webkit-scrollbar { display: none; }
+    .ins-filter {
+      font-family: var(--font-primary);
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--neutral-600);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: 12px 20px 12px 0;
+      margin-right: 24px;
+      margin-bottom: -1px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .ins-filter:hover { color: var(--text-primary); }
+    .ins-filter.active { color: var(--text-primary); border-bottom-color: var(--primary-500); font-weight: 500; }
+    .ins-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .ins-card {
+      background: var(--bg-subtle);
+      border: 1px solid var(--neutral-200);
+      border-radius: 2px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .ins-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: transparent;
+      transition: background 0.4s;
+    }
+    .ins-card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(0,0,0,0.07); }
+    .ins-card:hover::after { background: var(--primary-500); }
+    .ins-img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: linear-gradient(135deg, #d4d4d4 0%, #f4f4f4 100%);
+      background-size: cover;
+      background-position: center;
+      flex-shrink: 0;
+    }
+    .ins-body { padding: 28px; display: flex; flex-direction: column; flex: 1; }
+    .ins-type {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--primary-500);
+      margin-bottom: 12px;
+    }
+    .ins-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--text-primary);
+      line-height: 1.35;
+      flex: 1;
+      margin-bottom: 20px;
+    }
+    .ins-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 40px;
+    }
+    .ins-arrows { display: flex; gap: 12px; }
+    .ins-arrow {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--neutral-400);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      background: transparent;
+      color: var(--neutral-900);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.35s, color 0.35s;
+    }
+    .ins-arrow::before {
+      content: '';
+      position: absolute; inset: 0;
+      border-radius: 50%;
+      background: var(--primary-500);
+      transform: translateX(-101%);
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+    .ins-arrow:hover::before { transform: translateX(0); }
+    .ins-arrow:hover { border-color: var(--primary-500); color: var(--neutral-0); }
+    .ins-arrow svg { position: relative; z-index: 1; }
+    .ins-arrow:disabled { opacity: 0.3; pointer-events: none; }
+    .ins-dots { display: flex; gap: 8px; align-items: center; }
+    .ins-dot {
+      width: 24px; height: 3px;
+      border-radius: 2px;
+      background: var(--neutral-200);
+      border: none;
+      cursor: pointer;
+      transition: width 0.3s, background 0.3s;
+      padding: 0;
+    }
+    .ins-dot.active { width: 40px; background: var(--primary-500); }
+
+    /* =====================================================
+       OUTCOMES  (bg-dark #000)
+    ===================================================== */
+    .outcomes-section { background: var(--bg-dark); }
+    .outcomes-section .s-head { text-align: center; }
+    .outcomes-h2 {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 400;
+      color: var(--text-inv);
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .cs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--neutral-800);
+    }
+    .cs-card {
+      padding: 48px 36px;
+      border-right: 1px solid var(--neutral-800);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.25s;
+    }
+    .cs-card:last-child { border-right: none; }
+    .cs-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--accent-100);
+    }
+    .cs-card:hover { background: rgba(255,255,255,0.02); }
+    .cs-img-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .cs-img-inner {
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #333 0%, #1a1a1a 100%);
+      transition: transform 0.4s ease;
+    }
+    .cs-card:hover .cs-img-inner { transform: scale(1.03); }
+    .cs-tag {
+      position: absolute;
+      top: 16px; left: 16px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--neutral-900);
+      background: var(--accent-100);
+      padding: 4px 10px;
+      border-radius: 2px;
+      z-index: 2;
+    }
+    .cs-body h3 {
+      font-family: var(--font-display);
+      font-size: 20px; font-weight: 400;
+      color: var(--text-inv);
+      margin-bottom: 16px;
+      line-height: 1.35;
+    }
+    .cs-body p {
+      font-size: 15px;
+      color: var(--text-inv-2);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    /* =====================================================
+       FOOTER
+    ===================================================== */
+    .footer {
+      background: var(--bg-default);
+      border-top: 1px solid var(--neutral-200);
+      padding: 80px 0;
+    }
+    .footer-cols {
+      display: grid;
+      grid-template-columns: 2fr 2fr 1.5fr 1.5fr auto;
+      gap: 80px;
+      margin-bottom: 56px;
+    }
+    .footer-col-head {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--neutral-900);
+      margin-bottom: 20px;
+    }
+    .footer-links { display: flex; flex-direction: column; gap: 8px; }
+    .footer-link { font-size: 14px; color: var(--neutral-700); line-height: 1.4; transition: color 0.15s; }
+    .footer-link:hover { color: var(--primary-900); }
+    .footer-social { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+    .footer-social-link {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--neutral-0);
+      transition: opacity 0.15s, transform 0.15s;
+    }
+    .footer-social-link:hover { opacity: 0.85; transform: translateY(-2px); }
+    .footer-social-link--linkedin  { background: var(--primary-500); }
+    .footer-social-link--youtube   { background: var(--primary-500); }
+    .footer-social-link--instagram { background: var(--primary-500); }
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--neutral-200);
+      padding-top: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-copy { font-size: 14px; color: var(--neutral-600); }
+    .footer-legal { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .footer-legal-link { font-size: 14px; color: var(--neutral-600); transition: color 0.15s; }
+    .footer-legal-link:hover { color: var(--primary-500); }
+    .footer-sep { color: var(--neutral-400); font-size: 12px; }
+
+    /* =====================================================
+       SCROLL REVEAL
+    ===================================================== */
+    .rv {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out;
+    }
+    .rv.in  { opacity: 1; transform: translateY(0); }
+    .rv.d1  { transition-delay: 0.1s; }
+    .rv.d2  { transition-delay: 0.2s; }
+    .rv.d3  { transition-delay: 0.3s; }
+    .rv.d4  { transition-delay: 0.4s; }
+
+    /* =====================================================
+       RESPONSIVE
+    ===================================================== */
+    @media (max-width: 1200px) {
+      :root { --px: 60px; }
+      .hero-slide-h1 { font-size: 56px; }
+      .hero-nav { width: 240px; }
+      .aava-caps { grid-template-columns: repeat(3, 1fr); }
+      .scale-stat { font-size: 52px; }
+    }
+    @media (max-width: 900px) {
+      :root { --px: 32px; --py: 60px; }
+      .nav { height: 64px; }
+      .nav-inner { height: 64px; }
+      .nav-menu { display: none; }
+      .nav-menu.open {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 64px; left: 0; right: 0; bottom: 0;
+        background: var(--bg-subtle);
+        padding: 32px var(--px) 40px;
+        gap: 0;
+        z-index: 199;
+        overflow-y: auto;
+      }
+      .nav-menu.open .nav-links { flex-direction: column; align-items: flex-start; gap: 0; width: 100%; margin-right: 0; }
+      .nav-menu.open .nav-link { font-size: 18px; padding: 14px 0; width: 100%; border-bottom: 1px solid var(--neutral-200); }
+      .nav-menu.open .btn-primary { margin-top: 24px; }
+      .nav-toggle { display: flex; }
+      h1 { font-size: 48px; }
+      h2 { font-size: 32px; }
+      .hero-section { height: auto; min-height: 100vh; }
+      .hero-inner { flex-direction: column; align-items: flex-start; gap: 40px; padding: 120px var(--px) 56px; }
+      .hero-slides-wrap { position: relative; width: 100%; padding-right: 0; max-width: 100%; height: auto; }
+      .hero-slides { position: relative; inset: auto; }
+      .hero-slide { position: absolute; inset: 0; padding-top: 0; }
+      .hero-slide.active { position: relative; }
+      .hero-slide-h1 { font-size: 44px; }
+      .hero-nav { width: 100%; flex-direction: row; flex-wrap: wrap; gap: 16px 24px; }
+      .hero-nav-item { flex: 1; min-width: 140px; }
+      .pillars-grid { grid-template-columns: 1fr; gap: 16px; }
+      .scale-grid { grid-template-columns: repeat(2, 1fr); }
+      .aava-caps { grid-template-columns: repeat(2, 1fr); }
+      .footer-cols { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .ins-card { width: calc((100% - 20px) / 2); }
+    }
+    @media (max-width: 600px) {
+      :root { --px: 24px; --py: 48px; }
+      h1 { font-size: 40px; }
+      h2 { font-size: 28px; }
+      .hero-slide-h1 { font-size: 36px; }
+      .hero-slide-body { font-size: 16px; }
+      .hero-nav { flex-direction: column; gap: 12px; }
+      .scale-stat { font-size: 44px; }
+      .scale-grid { grid-template-columns: 1fr 1fr; }
+      .aava-caps { grid-template-columns: repeat(2, 1fr); }
+      .intro-heading { font-size: 32px; }
+      .footer-cols { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+      .ins-card { width: 300px; }
+    }
+
+    /* =====================================================
+       REDUCED MOTION
+    ===================================================== */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===================================================
+     ANNOUNCE BAR  ·  bg-dark-subtle #1a1a1a
+=================================================== -->
+<div class="announce">
+  <span class="announce-tag">Ascendion × Everest</span>
+  <span class="announce-text">Named a Market Leader in HFS Horizons: Agentic Services, 2026</span>
+  <a href="#" class="announce-link">
+    Read the Report
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+      <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
+</div>
+
+<!-- ===================================================
+     NAV  ·  bg-subtle #f4f4f4  ·  sticky
+=================================================== -->
+<header class="nav" id="nav">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo" aria-label="Ascendion home">
+      <span class="nav-logo-text">ASCENDION</span>
+      <span class="nav-logo-tagline">Engineering to elevate life</span>
+    </a>
+    <nav class="nav-menu" id="navMenu" aria-label="Main">
+      <ul class="nav-links">
+        <li>
+          <a href="#" class="nav-link nav-link--aava">
+            AAVA<sup>™</sup>
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link">What We Do
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link">Who We Serve
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link">How We Deliver
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link">Insights &amp; Impact
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link">Careers
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </li>
+      </ul>
+      <a href="#" class="btn btn-primary">
+        <span class="btn__label">Get In Touch</span>
+        <span class="btn__icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ===================================================
+     HERO  ·  bg-dark #000  ·  100vh  ·  multi-slide carousel
+=================================================== -->
+<section class="hero-section" id="hero" aria-label="Hero">
+
+  <div class="hero-overlay" aria-hidden="true"></div>
+
+  <div class="hero-inner">
+
+    <!-- ── LEFT: slide content ────────────────────────── -->
+    <div class="hero-slides-wrap">
+      <div class="hero-slides" id="heroSlides">
+
+        <!-- Slide 1: Ascendion x HFS -->
+        <div class="hero-slide active" data-slide="0">
+          <h1 class="hero-slide-h1">Ascendion x HFS</h1>
+          <p class="hero-slide-body">Ascendion has been named a Horizon 3 Market Leader, recognized for its agentic engineering platform, measurable SDLC acceleration, and early evidence of the shift toward Services-as-Software.</p>
+          <a href="#" class="btn-hero">
+            Read Report
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Slide 2: Ascendion X Everest -->
+        <div class="hero-slide" data-slide="1">
+          <h1 class="hero-slide-h1">Ascendion X Everest</h1>
+          <p class="hero-slide-body">AI-Powered Global Capability Centers: The New Value Engine for Global Enterprises.</p>
+          <a href="#" class="btn-hero">
+            Read Report
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Slide 3: CIO Feature -->
+        <div class="hero-slide" data-slide="2">
+          <h1 class="hero-slide-h1">Ascendion Featured on CIO: Building an AI-Powered Company</h1>
+          <p class="hero-slide-body">Karthik Krishnamurthy explains his operating-model decision to rebuild Ascendion as an AI-powered enterprise from the inside out.</p>
+          <a href="#" class="btn-hero">
+            Read More
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Slide 4: Services-as-Software -->
+        <div class="hero-slide" data-slide="3">
+          <h1 class="hero-slide-h1">The Birth of Services-as-Software</h1>
+          <p class="hero-slide-body">A podcast conversation with Phil Fersht (HFS Research) and Karthik Krishnamurthy (Ascendion) on how AI is reshaping enterprise services, closing the trust gap, and redefining what it takes to win the next decade.</p>
+          <a href="#" class="btn-hero">
+            Watch the Podcast
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+
+      </div><!-- /hero-slides -->
+
+      <!-- Scroll to Explore — pinned bottom-left, aligns with nav bottom -->
+      <a href="#s-intro" class="hero-scroll-row" aria-label="Scroll to next section">
+        Scroll to Explore <span class="hero-scroll-arrow"></span>
+      </a>
+
+    </div><!-- /hero-slides-wrap -->
+
+    <!-- ── RIGHT: nav list ────────────────────────────── -->
+    <nav class="hero-nav" aria-label="Slide navigation" id="heroNav">
+
+      <div class="hero-nav-item active" data-nav="0" role="button" tabindex="0" aria-label="Slide 1: Agentic Era Leader">
+        <div class="hero-nav-line"><div class="hero-nav-fill"></div></div>
+        <div class="hero-nav-row">
+          <span class="hero-nav-arrow" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#2ddcaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="hero-nav-label">Agentic Era Leader</span>
+        </div>
+      </div>
+
+      <div class="hero-nav-item" data-nav="1" role="button" tabindex="0" aria-label="Slide 2: AI Powered GCCs">
+        <div class="hero-nav-line"><div class="hero-nav-fill"></div></div>
+        <div class="hero-nav-row">
+          <span class="hero-nav-arrow" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#2ddcaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="hero-nav-label">AI Powered GCCs</span>
+        </div>
+      </div>
+
+      <div class="hero-nav-item" data-nav="2" role="button" tabindex="0" aria-label="Slide 3: Agentic Era Operating Model">
+        <div class="hero-nav-line"><div class="hero-nav-fill"></div></div>
+        <div class="hero-nav-row">
+          <span class="hero-nav-arrow" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#2ddcaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="hero-nav-label">Agentic Era Operating Model</span>
+        </div>
+      </div>
+
+      <div class="hero-nav-item" data-nav="3" role="button" tabindex="0" aria-label="Slide 4: Services-as-Software">
+        <div class="hero-nav-line"><div class="hero-nav-fill"></div></div>
+        <div class="hero-nav-row">
+          <span class="hero-nav-arrow" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#2ddcaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="hero-nav-label">Services-as-Software</span>
+        </div>
+      </div>
+
+    </nav>
+
+  </div><!-- /hero-inner -->
+</section>
+
+<!-- ===================================================
+     TICKER BAND  ·  bg-dark #000
+=================================================== -->
+<div class="ticker-section" aria-hidden="true">
+  <div class="ticker-track">
+    <div class="ticker-item"><span class="ticker-stat">$1B</span><span class="ticker-copy">Projected savings to Fortune 100</span><span class="ticker-sep"></span></div>
+    <div class="ticker-item"><span class="ticker-stat">39M</span><span class="ticker-copy">Lives improved through our platforms</span><span class="ticker-sep"></span></div>
+    <div class="ticker-item"><span class="ticker-stat">1,000+</span><span class="ticker-copy">Products shipped in production</span><span class="ticker-sep"></span></div>
+    <div class="ticker-item"><span class="ticker-stat">200+</span><span class="ticker-copy">Enterprise clients, 30%+ Fortune 100</span><span class="ticker-sep"></span></div>
+    <div class="ticker-item"><span class="ticker-stat">11,000+</span><span class="ticker-copy">Engineering professionals worldwide</span><span class="ticker-sep"></span></div>
+    <div class="ticker-item"><span class="ticker-stat">8,000+</span><span class="ticker-copy">AI agents deployed in AAVA</span><span class="ticker-sep"></span></div>
+    <div class="ticker-item"><span class="ticker-stat">$1B</span><span class="ticker-copy">Projected savings to Fortune 100</span><span class="ticker-sep"></span></div>
+    <div class="ticker-item"><span class="ticker-stat">39M</span><span class="ticker-copy">Lives improved through our platforms</span><span class="ticker-sep"></span></div>
+    <div class="ticker-item"><span class="ticker-stat">1,000+</span><span class="ticker-copy">Products shipped in production</span><span class="ticker-sep"></span></div>
+    <div class="ticker-item"><span class="ticker-stat">200+</span><span class="ticker-copy">Enterprise clients, 30%+ Fortune 100</span><span class="ticker-sep"></span></div>
+    <div class="ticker-item"><span class="ticker-stat">11,000+</span><span class="ticker-copy">Engineering professionals worldwide</span><span class="ticker-sep"></span></div>
+    <div class="ticker-item"><span class="ticker-stat">8,000+</span><span class="ticker-copy">AI agents deployed in AAVA</span><span class="ticker-sep"></span></div>
+  </div>
+</div>
+
+<!-- ===================================================
+     INTRO  ·  bg-default #fff
+=================================================== -->
+<section class="intro-section" id="s-intro">
+  <canvas class="intro-grid-canvas" id="introGridCanvas" aria-hidden="true"></canvas>
+  <div class="container">
+    <div class="intro-inner rv">
+      <h2 class="intro-heading" id="introH2" aria-label="We put 10,000 AI agents to work to build the software that elevates life."></h2>
+      <p class="intro-body">Better access to healthcare for millions. Trauma patients get blood faster. Improved service for banking customers. Packages arrive sooner.<br><br>This is the impact we deliver with <span id="introBodyPhrase">Engineering to the Power of AI</span>.</p>
+      <div class="intro-connector" aria-hidden="true">
+        <div class="intro-dot"></div>
+        <div class="intro-line"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================
+     STATS  ·  bg-default #fff
+=================================================== -->
+<section class="stats-section" id="s-stats">
+  <div class="container">
+    <div class="stats-line" id="statsLine" aria-hidden="true"></div>
+
+    <div class="stats-copy rv">
+      <span class="stats-copy-line">Professional technology operators are enhanced by</span>
+      <span class="stats-copy-aava">AAVA<sup>™</sup></span>
+      <span class="stats-copy-line">our Agentic AI engineering platform—to deliver impact that shapes how we work and live.</span>
+    </div>
+
+    <div class="stats-grid">
+
+      <div class="stats-card rv d1">
+        <div class="stats-card-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v2m0 16v2M6.22 4.22l1.42 1.42M16.36 16.36l1.42 1.42M2 12h2m16 0h2M4.22 19.78l1.42-1.42M16.36 7.64l1.42-1.42"/><circle cx="12" cy="12" r="4"/>
+          </svg>
+        </div>
+        <div class="stats-card-num">$1B</div>
+        <div class="stats-card-title">Projected Savings</div>
+        <p class="stats-card-desc">Projected savings delivered to Fortune 100 enterprises through AI-powered engineering.</p>
+      </div>
+
+      <div class="stats-card rv d2">
+        <div class="stats-card-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+          </svg>
+        </div>
+        <div class="stats-card-num">39M</div>
+        <div class="stats-card-title">Lives Improved</div>
+        <p class="stats-card-desc">People experiencing better healthcare, banking, and services through our platforms.</p>
+      </div>
+
+      <div class="stats-card rv d3">
+        <div class="stats-card-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+          </svg>
+        </div>
+        <div class="stats-card-num">1,000+</div>
+        <div class="stats-card-title">Products Shipped</div>
+        <p class="stats-card-desc">Production releases shipped — not prototypes, not pilots. Working software in the world.</p>
+      </div>
+
+      <div class="stats-card rv d4">
+        <div class="stats-card-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+          </svg>
+        </div>
+        <div class="stats-card-num">200+</div>
+        <div class="stats-card-title">Enterprise Clients</div>
+        <p class="stats-card-desc">Including 30%+ of the Fortune 100. Trusted at the scale where it matters most.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================
+     REAL IMPACT  ·  bg-dark #000 — sticky scroll
+=================================================== -->
+<div class="impact-scroll-track" id="impactScrollTrack">
+
+  <!--
+    Intro (non-sticky):
+      80px top padding → label → body copy → 80px bottom padding
+    Once this scrolls past the viewport top the sticky section below pins.
+  -->
+  <div class="impact-intro" id="impactIntro">
+    <div class="impact-top">
+      <div class="lbl">Engineering to the Power of AI</div>
+      <p class="impact-desc">Innovation realized. Working production systems. Measurable business outcomes.</p>
+    </div>
+  </div>
+
+  <!-- Sticky section: only "Real Impact" at centre + cards -->
+  <section class="impact-section" id="s-impact">
+
+    <!-- h2 at vertical centre; cards travel over it -->
+    <div class="impact-center">
+      <h2 class="impact-h2">Real<br>Impact</h2>
+    </div>
+
+    <!-- 3-column grid — each card travels bottom → centre → top in sequence -->
+  <div class="impact-cols">
+
+    <!-- Col 1: Banking (card 1) → Enterprise (card 5) -->
+    <div class="impact-col">
+      <article class="imp-card imp-card--img-right" id="impCard0">
+        <img class="imp-card-img" src="assets/images/home/banking-img.png" alt="">
+        <div class="imp-card-inner">
+          <span class="imp-tag">Banking</span>
+          <div class="imp-stat">$300M</div>
+          <h4 class="imp-title">Better banking service drives growth</h4>
+          <p class="imp-body">Top-five global bank transformed customer service for 10M+ customers—cutting costs while delivering faster, better experiences.</p>
+        </div>
+      </article>
+      <article class="imp-card imp-card--teal" id="impCard4">
+        <div class="imp-card-inner">
+          <span class="imp-tag">Enterprise</span>
+          <div class="imp-stat">16Mo</div>
+          <h4 class="imp-title">Portfolio exit accelerated</h4>
+          <p class="imp-body">Parallel modernization of five core products—compressing years into months, unlocking significant valuation impact.</p>
+        </div>
+      </article>
+    </div>
+
+    <!-- Col 2: Research (card 3) → Healthcare (card 6) -->
+    <div class="impact-col">
+      <article class="imp-card imp-card--violet" id="impCard2">
+        <div class="imp-card-inner">
+          <span class="imp-tag">Research</span>
+          <div class="imp-stat">600K</div>
+          <h4 class="imp-title">Researchers managing $47B in grants</h4>
+          <p class="imp-body">Platform modernization accelerating discoveries in life sciences, climate research, and public health.</p>
+        </div>
+      </article>
+      <article class="imp-card imp-card--img-right" id="impCard5">
+        <img class="imp-card-img" src="assets/images/home/HealthCare-img.png" alt="">
+        <div class="imp-card-inner">
+          <span class="imp-tag">Healthcare</span>
+          <div class="imp-stat">39M</div>
+          <h4 class="imp-title">Americans with better healthcare access</h4>
+          <p class="imp-body">Healthcare platforms transformed across 50 states—reducing wait times, lowering costs, improving care coordination.</p>
+        </div>
+      </article>
+    </div>
+
+    <!-- Col 3: Logistics (card 2) → Fintech (card 4) -->
+    <div class="impact-col">
+      <article class="imp-card imp-card--img-right" id="impCard1">
+        <img class="imp-card-img" src="assets/images/home/Logistic-img.png" alt="">
+        <div class="imp-card-inner">
+          <span class="imp-tag">Logistics</span>
+          <div class="imp-stat">40%</div>
+          <h4 class="imp-title">Accelerated delivery gets 3B packages to the right place</h4>
+          <p class="imp-body">Global logistics provider accelerated operations with AI-driven forecasting and optimization. Operational impact at unprecedented scale.</p>
+        </div>
+      </article>
+      <article class="imp-card imp-card--img-right" id="impCard3">
+        <img class="imp-card-img" src="assets/images/home/Fintech-img.png" alt="">
+        <div class="imp-card-inner">
+          <span class="imp-tag">Fintech</span>
+          <div class="imp-stat">50%</div>
+          <h4 class="imp-title">Cost reduction to improve personal economy</h4>
+          <p class="imp-body">Banking platforms serving billions in assets modernized at half the cost, one-third the time—reshaping unit economics.</p>
+        </div>
+      </article>
+    </div>
+
+  </div>
+
+</section>
+</div>
+
+<!-- Toggle bar: Real Impact options -->
+<div class="section-toggle-bar" id="rimpToggleBar" style="background: var(--bg-default);">
+  <button class="section-toggle-btn active" id="rimpBtn1">Option 1</button>
+  <button class="section-toggle-btn" id="rimpBtn2">Option 2</button>
+</div>
+
+<!-- ===================================================
+     REAL IMPACT CARDS  ·  bg-default #fff
+=================================================== -->
+<section class="rimp-section" id="s-rimp" style="display:none">
+  <div class="container">
+
+    <div class="s-head rv">
+      <div class="lbl lbl--dark">Engineering to the Power of AI</div>
+    </div>
+
+    <div class="rimp-head rv d1">
+      <h2 class="rimp-h2">Real Impact.</h2>
+      <p class="rimp-desc">Innovation realized. Working production systems. Measurable business outcomes.</p>
+    </div>
+
+    <div class="rimp-filters rv d2" id="rimpFilters">
+      <button class="rimp-filter active">Banking</button>
+      <button class="rimp-filter">Logistics</button>
+      <button class="rimp-filter">Fintech</button>
+      <button class="rimp-filter">Enterprise</button>
+      <button class="rimp-filter">Research</button>
+      <button class="rimp-filter">Healthcare</button>
+    </div>
+
+  </div><!-- /container -->
+
+  <div class="rimp-carousel-wrap rv d3">
+      <div class="rimp-track" id="rimpTrack">
+
+      <article class="rimp-card" data-category="banking">
+        <div class="rimp-card-bg"></div>
+        <img class="rimp-card-img" src="assets/images/home/banking-img.png" alt="">
+        <div class="rimp-card-inner">
+          <span class="rimp-card-tag">Banking</span>
+          <div class="rimp-stat">$300M</div>
+          <h3 class="rimp-title">Better banking service drives growth</h3>
+          <p class="rimp-body">Top-five global bank transformed customer service for 10M+ customers—cutting costs while delivering faster, better experiences.</p>
+        </div>
+      </article>
+
+      <article class="rimp-card" data-category="logistics">
+        <div class="rimp-card-bg"></div>
+        <img class="rimp-card-img" src="assets/images/home/Logistic-img.png" alt="">
+        <div class="rimp-card-inner">
+          <span class="rimp-card-tag">Logistics</span>
+          <div class="rimp-stat">40%</div>
+          <h3 class="rimp-title">Accelerated delivery gets 3B packages to the right place</h3>
+          <p class="rimp-body">Global logistics provider accelerated operations with AI-driven forecasting and optimization. Operational impact at unprecedented scale.</p>
+        </div>
+      </article>
+
+      <article class="rimp-card" data-category="fintech">
+        <div class="rimp-card-bg"></div>
+        <img class="rimp-card-img" src="assets/images/home/Fintech-img.png" alt="">
+        <div class="rimp-card-inner">
+          <span class="rimp-card-tag">Fintech</span>
+          <div class="rimp-stat">50%</div>
+          <h3 class="rimp-title">Cost reduction to improve personal economy</h3>
+          <p class="rimp-body">Banking platforms serving billions in assets modernized at half the cost, one-third the time—reshaping unit economics.</p>
+        </div>
+      </article>
+
+      <article class="rimp-card" data-category="enterprise">
+        <div class="rimp-card-bg"></div>
+        <img class="rimp-card-img" src="assets/images/Home/Enterprise.img.png" alt="">
+        <div class="rimp-card-inner">
+          <span class="rimp-card-tag">Enterprise</span>
+          <div class="rimp-stat">16Mo</div>
+          <h3 class="rimp-title">Portfolio exit accelerated</h3>
+          <p class="rimp-body">Parallel modernization of five core products—compressing years into months, unlocking significant valuation impact.</p>
+        </div>
+      </article>
+
+      <article class="rimp-card" data-category="research">
+        <div class="rimp-card-bg"></div>
+        <img class="rimp-card-img" src="assets/images/Home/Research.img.png" alt="">
+        <div class="rimp-card-inner">
+          <span class="rimp-card-tag">Research</span>
+          <div class="rimp-stat">600K</div>
+          <h3 class="rimp-title">Researchers managing $47B in grants</h3>
+          <p class="rimp-body">Platform modernization accelerating discoveries in life sciences, climate research, and public health.</p>
+        </div>
+      </article>
+
+      <article class="rimp-card" data-category="healthcare">
+        <div class="rimp-card-bg"></div>
+        <img class="rimp-card-img" src="assets/images/home/HealthCare-img.png" alt="">
+        <div class="rimp-card-inner">
+          <span class="rimp-card-tag">Healthcare</span>
+          <div class="rimp-stat">39M</div>
+          <h3 class="rimp-title">Americans with better healthcare access</h3>
+          <p class="rimp-body">Healthcare platforms transformed across 50 states—reducing wait times, lowering costs, improving care coordination.</p>
+        </div>
+      </article>
+
+      </div>
+    </div>
+
+</section>
+
+<!-- ===================================================
+     WHAT WE DO  ·  bg-subtle #f4f4f4
+=================================================== -->
+<section class="wwd-section" id="s-wwd">
+  <div class="container">
+
+    <!-- Label sits directly in container so its ruled lines extend edge-to-edge -->
+    <div class="lbl lbl--dark" style="margin-bottom: 40px;">What We Do</div>
+
+    <div class="wwd-head rv">
+      <h2>Applied AI across the software lifecycle</h2>
+      <p class="wwd-sub rv d1">Platform, product, data, quality, experience. We deliver across the full spectrum with AAVA — our agentic platform — accelerating and improving every stage.</p>
+    </div>
+
+    <div class="wwd-accordion rv d2" id="wwdAccordion">
+
+      <!-- 01 Platform Engineering AI — layers-plus -->
+      <div class="wwd-item open">
+        <button class="wwd-trigger" aria-expanded="true">
+          <span class="wwd-lead-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/><path d="M16 5v4"/><path d="M18 7h-4"/></svg>
+          </span>
+          <span class="wwd-title">Platform Engineering<sup>AI</sup></span>
+        </button>
+        <div class="wwd-body">
+          <div class="wwd-body-inner">
+            <p>Modernization, cloud migration, integration, greenfield and brownfield development. Our engineers use AAVA to accelerate delivery, quality, and transparency.</p>
+            <a href="#" class="btn btn-text"><span class="btn__label">Learn More</span><span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+          </div>
+        </div>
+        <button class="wwd-toggle" aria-label="Toggle" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+      </div>
+
+      <!-- 02 Data AI — file-text -->
+      <div class="wwd-item">
+        <button class="wwd-trigger" aria-expanded="false">
+          <span class="wwd-lead-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+          </span>
+          <span class="wwd-title">Data<sup>AI</sup></span>
+        </button>
+        <div class="wwd-body">
+          <div class="wwd-body-inner">
+            <p>Migration, quality, analytics pipelines, operations. We're transforming the end-to-end data lifecycle with AI orchestration.</p>
+            <a href="#" class="btn btn-text"><span class="btn__label">Learn More</span><span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+          </div>
+        </div>
+        <button class="wwd-toggle" aria-label="Toggle" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+      </div>
+
+      <!-- 03 Experience AI — aperture -->
+      <div class="wwd-item">
+        <button class="wwd-trigger" aria-expanded="false">
+          <span class="wwd-lead-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m14.31 8 5.74 9.94"/><path d="M9.69 8h11.48"/><path d="m7.38 12 5.74-9.94"/><path d="M9.69 16 3.95 6.06"/><path d="M14.31 16H2.83"/><path d="m16.62 12-5.74 9.94"/></svg>
+          </span>
+          <span class="wwd-title">Experience<sup>AI</sup></span>
+        </button>
+        <div class="wwd-body">
+          <div class="wwd-body-inner">
+            <p>UI/UX design, mobile development, accessibility. AI agents accelerate while designers lead.</p>
+            <a href="#" class="btn btn-text"><span class="btn__label">Learn More</span><span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+          </div>
+        </div>
+        <button class="wwd-toggle" aria-label="Toggle" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+      </div>
+
+      <!-- 04 Product AI — package -->
+      <div class="wwd-item">
+        <button class="wwd-trigger" aria-expanded="false">
+          <span class="wwd-lead-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/><path d="M12 22V12"/><path d="m3.3 7 7.7 4.4a2 2 0 0 0 2 0L20.7 7"/><path d="m7.5 4.27 9 5.15"/></svg>
+          </span>
+          <span class="wwd-title">Product<sup>AI</sup></span>
+        </button>
+        <div class="wwd-body">
+          <div class="wwd-body-inner">
+            <p>Product strategy, design, development, and evolution with AI-accelerated velocity and human judgment.</p>
+            <a href="#" class="btn btn-text"><span class="btn__label">Learn More</span><span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+          </div>
+        </div>
+        <button class="wwd-toggle" aria-label="Toggle" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+      </div>
+
+      <!-- 05 Quality Engineering AI — settings -->
+      <div class="wwd-item">
+        <button class="wwd-trigger" aria-expanded="false">
+          <span class="wwd-lead-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+          </span>
+          <span class="wwd-title">Quality Engineering<sup>AI</sup></span>
+        </button>
+        <div class="wwd-body">
+          <div class="wwd-body-inner">
+            <p>Test automation, performance testing, security validation, and defect management with AI-powered precision, quality, and safety.</p>
+            <a href="#" class="btn btn-text"><span class="btn__label">Learn More</span><span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+          </div>
+        </div>
+        <button class="wwd-toggle" aria-label="Toggle" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+      </div>
+
+      <!-- 06 GCC AI — globe -->
+      <div class="wwd-item">
+        <button class="wwd-trigger" aria-expanded="false">
+          <span class="wwd-lead-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
+          </span>
+          <span class="wwd-title">GCC<sup>AI</sup></span>
+        </button>
+        <div class="wwd-body">
+          <div class="wwd-body-inner">
+            <p>Global Capability Centers powered by AI deliver AI impact to the global enterprise. We build and scale engineering teams that deliver innovation, value, and strategic advantage.</p>
+            <a href="#" class="btn btn-text"><span class="btn__label">Learn More</span><span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+          </div>
+        </div>
+        <button class="wwd-toggle" aria-label="Toggle" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+      </div>
+
+      <!-- 07 Applied AI — bot -->
+      <div class="wwd-item">
+        <button class="wwd-trigger" aria-expanded="false">
+          <span class="wwd-lead-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M2 14h2M20 14h2M15 13v2M9 13v2"/></svg>
+          </span>
+          <span class="wwd-title">Applied AI</span>
+        </button>
+        <div class="wwd-body">
+          <div class="wwd-body-inner">
+            <p>Insight, advisory, and comprehensive solution deployment that brings the power of AI to specific business processes and problems.</p>
+            <a href="#" class="btn btn-text"><span class="btn__label">Learn More</span><span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+          </div>
+        </div>
+        <button class="wwd-toggle" aria-label="Toggle" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+      </div>
+
+      <!-- 08 AI Workforce Transformation — user-round-cog -->
+      <div class="wwd-item">
+        <button class="wwd-trigger" aria-expanded="false">
+          <span class="wwd-lead-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 21a8 8 0 0 1 10.434-7.62"/><circle cx="10" cy="8" r="4"/><circle cx="18" cy="18" r="3"/><path d="m19.5 14.3-.4.9"/><path d="m16.9 20.8.4-.9"/><path d="m21.7 19.5-.9-.4"/><path d="m15.2 16.5-.9-.4"/><path d="m21.7 16.5-.9.4"/><path d="m15.2 19.5.9.4"/><path d="m19.5 21.7-.4-.9"/><path d="m16.9 15.2-.4.9"/></svg>
+          </span>
+          <span class="wwd-title">AI Workforce Transformation</span>
+        </button>
+        <div class="wwd-body">
+          <div class="wwd-body-inner">
+            <p>Upskilling teams, evolving roles, new ways of working. We elevate the enterprise workforce to thrive in the AI era.</p>
+            <a href="#" class="btn btn-text"><span class="btn__label">Learn More</span><span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+          </div>
+        </div>
+        <button class="wwd-toggle" aria-label="Toggle" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+      </div>
+
+    </div>
+    </div>
+
+    <div style="margin-top:48px;display:flex;justify-content:center;" class="rv d3">
+      <a href="#" class="btn btn-primary">
+        <span class="btn__label">What We Do</span>
+        <span class="btn__icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- Toggle bar: How We Deliver options -->
+<div class="section-toggle-bar" id="aavaToggleBar" style="background: var(--bg-subtle);">
+  <button class="section-toggle-btn active" id="aavaBtn1">Option 1</button>
+  <button class="section-toggle-btn" id="aavaBtn2">Option 2</button>
+</div>
+
+<!-- ===================================================
+     AAVA  ·  bg-dark-subtle #1a1a1a
+=================================================== -->
+<section class="aava-section" id="s-aava">
+  <canvas class="intro-grid-canvas" id="aavaGridCanvas" aria-hidden="true"></canvas>
+
+  <!-- Text header — inside container -->
+  <div class="container aava-inner">
+
+    <div class="s-head rv">
+      <div class="lbl lbl--dark">How We Deliver</div>
+    </div>
+
+    <h2 class="aava-h2 rv d1">AAVA powers the work.<br>People deliver the impact.</h2>
+    <p class="aava-body rv d2">Our AI engineering platform orchestrates thousands of agents across the software and data lifecycle. Human experts maintain control, make decisions, and own accountability for impact.</p>
+
+    <!-- Lower wrap: connector dot is the top reference for the terminal -->
+    <div class="aava-lower-wrap">
+
+      <!-- Dot + line connector -->
+      <div class="aava-connector rv d3">
+        <div class="aava-conn-dot"></div>
+        <div class="aava-conn-line"></div>
+      </div>
+
+      <!-- Diamond + sub-section — remain centred -->
+      <div class="aava-mid-group">
+        <div class="aava-diamond-wrap rv d3">
+          <svg class="aava-diamond-svg" width="203" height="150" viewBox="0 0 203 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#aava-clip)">
+              <path d="M202.054 63.554V87.7084C202.054 90.3059 200.672 92.7092 198.416 94.0201L105.211 148.107C102.955 149.393 100.166 149.417 97.9105 148.107L4.63238 94.1415C2.37682 92.8306 0.994385 90.4273 0.994385 87.8298V63.4326H1.04289C1.43094 65.3747 2.5951 67.1711 4.53536 68.312L97.9348 122.35C100.19 123.637 102.979 123.637 105.235 122.326L198.44 68.2392C200.332 67.1468 201.472 65.4232 201.909 63.554H202.054Z" fill="#6464D7" stroke="black" stroke-width="0.75" stroke-miterlimit="10"/>
+              <path d="M201.909 63.5539C201.472 65.4231 200.332 67.1467 198.44 68.2391L105.235 122.326C102.979 123.636 100.19 123.636 97.9348 122.35L4.53537 68.312C2.59511 67.171 1.43095 65.3746 1.0429 63.4325C0.48507 60.5437 1.64923 57.3636 4.55962 55.6886L98.0318 1.86918C100.287 0.582559 103.052 0.582559 105.308 1.89345L198.44 55.6157C201.399 57.3393 202.563 60.6165 201.909 63.5539Z" fill="white" stroke="#6464D7" stroke-width="0.75" stroke-miterlimit="10"/>
+            </g>
+            <defs>
+              <clipPath id="aava-clip">
+                <rect width="203" height="150" fill="white"/>
+              </clipPath>
+            </defs>
+          </svg>
+          <span class="aava-label-text">AAVA<sup>™</sup></span>
+        </div>
+
+        <div class="aava-sub-wrap rv d4">
+          <div class="aava-sub-line" id="aavaSubLine"></div>
+          <p class="aava-sub">Our Agentic Engineering Platform to help …</p>
+          <!-- aava-sub-line-bottom is outside lower-wrap so terminal bottom = sub box bottom -->
+        </div>
+      </div><!-- /.aava-mid-group -->
+
+      <!-- Terminal — beside AAVA SVG (60px gap), top = connector dot, bottom = sub box bottom -->
+      <div class="aava-terminal" id="aavaTerminal" aria-hidden="true">
+        <div class="aava-term-line"><span class="aava-term-prompt">›</span><span class="aava-term-cmd">aava design --prototype --iterate</span></div>
+        <div class="aava-term-line"><span class="aava-term-arrow">→</span><span class="aava-term-out">Generating design variants: 8</span></div>
+        <div class="aava-term-line"><span class="aava-term-check">✓</span><span class="aava-term-out">Best variant: +32% task completion</span></div>
+        <hr class="aava-term-div">
+        <div class="aava-term-line"><span class="aava-term-prompt">›</span><span class="aava-term-cmd">aava architect --analyze --optimize</span></div>
+        <div class="aava-term-line"><span class="aava-term-arrow">→</span><span class="aava-term-out">Mapping 14 service dependencies…</span></div>
+        <div class="aava-term-line"><span class="aava-term-check">✓</span><span class="aava-term-out">Architecture validated. 3 risks resolved</span></div>
+        <hr class="aava-term-div">
+        <div class="aava-term-line"><span class="aava-term-prompt">›</span><span class="aava-term-cmd">aava code --generate --review</span></div>
+        <div class="aava-term-line"><span class="aava-term-check">✓</span><span class="aava-term-out">847 lines generated. PR ready</span></div>
+        <hr class="aava-term-div">
+        <div class="aava-term-line"><span class="aava-term-prompt">›</span><span class="aava-term-cmd">aava test --coverage --e2e</span></div>
+        <div class="aava-term-line"><span class="aava-term-check">✓</span><span class="aava-term-out">247 tests passed. Coverage: 94%</span></div>
+        <hr class="aava-term-div">
+        <div class="aava-term-line"><span class="aava-term-prompt">›</span><span class="aava-term-cmd">aava ops --deploy --monitor</span></div>
+        <div class="aava-term-line"><span class="aava-term-check">✓</span><span class="aava-term-out">Deployed. Uptime: 99.98%</span></div>
+        <hr class="aava-term-div">
+        <div class="aava-term-line"><span class="aava-term-prompt">›</span><span class="aava-term-cmd">aava data --pipeline --validate</span></div>
+        <div class="aava-term-line"><span class="aava-term-check">✓</span><span class="aava-term-out">Pipeline healthy. 0 schema errors</span></div>
+        <div class="aava-term-line"><span class="aava-term-prompt">›</span><span class="aava-term-cursor"></span></div>
+      </div>
+
+    </div><!-- /.aava-lower-wrap -->
+
+    <!-- Bottom line animates below the terminal -->
+    <div class="aava-sub-line-bottom" id="aavaSubLineBottom"></div>
+
+  </div>
+
+  <!-- Full-width diamond disperse — outside container -->
+  <div class="aava-disperse-outer">
+    <!-- Horizontal rule — grows in sync with diamond spread -->
+    <div class="aava-disperse-hline-wrap">
+      <div class="aava-disperse-hline" id="aavaDisperseHline"></div>
+    </div>
+    <div class="aava-disperse-stage" id="aavaDisperseStage">
+
+      <div class="aava-dmd">
+        <svg width="198" height="121" viewBox="0 0 198 121" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.92255 66.4348L95.3809 119.411C97.5896 120.696 100.321 120.696 102.529 119.411L193.822 66.3634C198.571 63.6027 198.548 56.7486 193.822 54.0118L102.601 1.32101C100.392 0.0596647 97.6846 0.0596647 95.4996 1.32101L3.9463 54.0594C-0.803551 56.7962 -0.8273 63.6741 3.9463 66.4348H3.92255Z" fill="#F5FAFA" stroke="#6464D7" stroke-width="0.75" stroke-miterlimit="10"/></svg>
+        <span class="aava-dmd-label">Design</span>
+      </div>
+
+      <div class="aava-dmd">
+        <svg width="198" height="121" viewBox="0 0 198 121" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.92255 66.4348L95.3809 119.411C97.5896 120.696 100.321 120.696 102.529 119.411L193.822 66.3634C198.571 63.6027 198.548 56.7486 193.822 54.0118L102.601 1.32101C100.392 0.0596647 97.6846 0.0596647 95.4996 1.32101L3.9463 54.0594C-0.803551 56.7962 -0.8273 63.6741 3.9463 66.4348H3.92255Z" fill="#F5FAFA" stroke="#6464D7" stroke-width="0.75" stroke-miterlimit="10"/></svg>
+        <span class="aava-dmd-label">Architect</span>
+      </div>
+
+      <div class="aava-dmd">
+        <svg width="198" height="121" viewBox="0 0 198 121" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.92255 66.4348L95.3809 119.411C97.5896 120.696 100.321 120.696 102.529 119.411L193.822 66.3634C198.571 63.6027 198.548 56.7486 193.822 54.0118L102.601 1.32101C100.392 0.0596647 97.6846 0.0596647 95.4996 1.32101L3.9463 54.0594C-0.803551 56.7962 -0.8273 63.6741 3.9463 66.4348H3.92255Z" fill="#F5FAFA" stroke="#6464D7" stroke-width="0.75" stroke-miterlimit="10"/></svg>
+        <span class="aava-dmd-label">Code</span>
+      </div>
+
+      <div class="aava-dmd">
+        <svg width="198" height="121" viewBox="0 0 198 121" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.92255 66.4348L95.3809 119.411C97.5896 120.696 100.321 120.696 102.529 119.411L193.822 66.3634C198.571 63.6027 198.548 56.7486 193.822 54.0118L102.601 1.32101C100.392 0.0596647 97.6846 0.0596647 95.4996 1.32101L3.9463 54.0594C-0.803551 56.7962 -0.8273 63.6741 3.9463 66.4348H3.92255Z" fill="#F5FAFA" stroke="#6464D7" stroke-width="0.75" stroke-miterlimit="10"/></svg>
+        <span class="aava-dmd-label">Test</span>
+      </div>
+
+      <div class="aava-dmd">
+        <svg width="198" height="121" viewBox="0 0 198 121" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.92255 66.4348L95.3809 119.411C97.5896 120.696 100.321 120.696 102.529 119.411L193.822 66.3634C198.571 63.6027 198.548 56.7486 193.822 54.0118L102.601 1.32101C100.392 0.0596647 97.6846 0.0596647 95.4996 1.32101L3.9463 54.0594C-0.803551 56.7962 -0.8273 63.6741 3.9463 66.4348H3.92255Z" fill="#F5FAFA" stroke="#6464D7" stroke-width="0.75" stroke-miterlimit="10"/></svg>
+        <span class="aava-dmd-label">Operations</span>
+      </div>
+
+      <div class="aava-dmd">
+        <svg width="198" height="121" viewBox="0 0 198 121" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.92255 66.4348L95.3809 119.411C97.5896 120.696 100.321 120.696 102.529 119.411L193.822 66.3634C198.571 63.6027 198.548 56.7486 193.822 54.0118L102.601 1.32101C100.392 0.0596647 97.6846 0.0596647 95.4996 1.32101L3.9463 54.0594C-0.803551 56.7962 -0.8273 63.6741 3.9463 66.4348H3.92255Z" fill="#F5FAFA" stroke="#6464D7" stroke-width="0.75" stroke-miterlimit="10"/></svg>
+        <span class="aava-dmd-label">Data engineering</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Support text + CTA — back in container -->
+  <div class="container">
+    <p class="aava-support rv d5">
+      All with <span>11,000 operators</span> &nbsp;&bull;&nbsp; <span>Agentic Delivery Managers</span> &nbsp;&bull;&nbsp; <span>AI Deployment Engineers</span>
+    </p>
+    <div class="aava-cta rv d5">
+      <a href="#" class="btn btn-primary">
+        <span class="btn__label">Explore AAVA</span>
+        <span class="btn__icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
+    </div>
+  </div>
+
+</section>
+
+<!-- ===================================================
+     AAVA OPTION 2  ·  bg-dark-subtle #1a1a1a — teal accents
+=================================================== -->
+<section class="aava-section" id="s-aava-2" style="display:none">
+  <canvas class="intro-grid-canvas" id="aavaGridCanvas2" aria-hidden="true"></canvas>
+
+  <!-- Text header -->
+  <div class="container aava-inner">
+
+    <div class="s-head rv">
+      <div class="lbl">How We Deliver</div>
+    </div>
+
+    <h2 class="aava-h2 rv d1">AAVA powers the work.<br>People deliver the impact.</h2>
+    <p class="aava-body rv d2">Our AI engineering platform orchestrates thousands of agents across the software and data lifecycle. Human experts maintain control, make decisions, and own accountability for impact.</p>
+
+    <!-- Lower wrap -->
+    <div class="aava-lower-wrap">
+
+      <div class="aava-connector rv d3">
+        <div class="aava-conn-dot"></div>
+        <div class="aava-conn-line"></div>
+      </div>
+
+      <div class="aava-mid-group">
+        <div class="aava-diamond-wrap rv d3">
+          <svg class="aava-diamond-svg" width="203" height="150" viewBox="0 0 203 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#aava-clip2)">
+              <path d="M202.054 63.554V87.7084C202.054 90.3059 200.672 92.7092 198.416 94.0201L105.211 148.107C102.955 149.393 100.166 149.417 97.9105 148.107L4.63238 94.1415C2.37682 92.8306 0.994385 90.4273 0.994385 87.8298V63.4326H1.04289C1.43094 65.3747 2.5951 67.1711 4.53536 68.312L97.9348 122.35C100.19 123.637 102.979 123.637 105.235 122.326L198.44 68.2392C200.332 67.1468 201.472 65.4232 201.909 63.554H202.054Z" fill="#2ddcaa" stroke="#000000" stroke-width="0.75" stroke-miterlimit="10"/>
+              <path d="M201.909 63.5539C201.472 65.4231 200.332 67.1467 198.44 68.2391L105.235 122.326C102.979 123.636 100.19 123.636 97.9348 122.35L4.53537 68.312C2.59511 67.171 1.43095 65.3746 1.0429 63.4325C0.48507 60.5437 1.64923 57.3636 4.55962 55.6886L98.0318 1.86918C100.287 0.582559 103.052 0.582559 105.308 1.89345L198.44 55.6157C201.399 57.3393 202.563 60.6165 201.909 63.5539Z" fill="#000000" stroke="#2ddcaa" stroke-width="0.75" stroke-miterlimit="10"/>
+            </g>
+            <defs>
+              <clipPath id="aava-clip2">
+                <rect width="203" height="150" fill="white"/>
+              </clipPath>
+            </defs>
+          </svg>
+          <span class="aava-label-text">AAVA<sup>™</sup></span>
+        </div>
+
+        <div class="aava-sub-wrap rv d4">
+          <div class="aava-sub-line" id="aavaSubLine2"></div>
+          <p class="aava-sub">Our Agentic Engineering Platform to help …</p>
+        </div>
+      </div><!-- /.aava-mid-group -->
+
+      <!-- Terminal -->
+      <div class="aava-terminal" id="aavaTerminal2" aria-hidden="true">
+        <div class="aava-term-line"><span class="aava-term-prompt">›</span><span class="aava-term-cmd">aava design --prototype --iterate</span></div>
+        <div class="aava-term-line"><span class="aava-term-arrow">→</span><span class="aava-term-out">Generating design variants: 8</span></div>
+        <div class="aava-term-line"><span class="aava-term-check">✓</span><span class="aava-term-out">Best variant: +32% task completion</span></div>
+        <hr class="aava-term-div">
+        <div class="aava-term-line"><span class="aava-term-prompt">›</span><span class="aava-term-cmd">aava architect --analyze --optimize</span></div>
+        <div class="aava-term-line"><span class="aava-term-arrow">→</span><span class="aava-term-out">Mapping 14 service dependencies…</span></div>
+        <div class="aava-term-line"><span class="aava-term-check">✓</span><span class="aava-term-out">Architecture validated. 3 risks resolved</span></div>
+        <hr class="aava-term-div">
+        <div class="aava-term-line"><span class="aava-term-prompt">›</span><span class="aava-term-cmd">aava code --generate --review</span></div>
+        <div class="aava-term-line"><span class="aava-term-check">✓</span><span class="aava-term-out">847 lines generated. PR ready</span></div>
+        <hr class="aava-term-div">
+        <div class="aava-term-line"><span class="aava-term-prompt">›</span><span class="aava-term-cmd">aava test --coverage --e2e</span></div>
+        <div class="aava-term-line"><span class="aava-term-check">✓</span><span class="aava-term-out">247 tests passed. Coverage: 94%</span></div>
+        <hr class="aava-term-div">
+        <div class="aava-term-line"><span class="aava-term-prompt">›</span><span class="aava-term-cmd">aava ops --deploy --monitor</span></div>
+        <div class="aava-term-line"><span class="aava-term-check">✓</span><span class="aava-term-out">Deployed. Uptime: 99.98%</span></div>
+        <hr class="aava-term-div">
+        <div class="aava-term-line"><span class="aava-term-prompt">›</span><span class="aava-term-cmd">aava data --pipeline --validate</span></div>
+        <div class="aava-term-line"><span class="aava-term-check">✓</span><span class="aava-term-out">Pipeline healthy. 0 schema errors</span></div>
+        <div class="aava-term-line"><span class="aava-term-prompt">›</span><span class="aava-term-cursor"></span></div>
+      </div>
+
+    </div><!-- /.aava-lower-wrap -->
+
+    <div class="aava-sub-line-bottom" id="aavaSubLineBottom2"></div>
+
+  </div>
+
+  <!-- Full-width diamond disperse -->
+  <div class="aava-disperse-outer">
+    <div class="aava-disperse-hline-wrap">
+      <div class="aava-disperse-hline" id="aavaDisperseHline2"></div>
+    </div>
+    <div class="aava-disperse-stage" id="aavaDisperseStage2">
+      <div class="aava-dmd"><svg width="198" height="121" viewBox="0 0 198 121" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.92255 66.4348L95.3809 119.411C97.5896 120.696 100.321 120.696 102.529 119.411L193.822 66.3634C198.571 63.6027 198.548 56.7486 193.822 54.0118L102.601 1.32101C100.392 0.0596647 97.6846 0.0596647 95.4996 1.32101L3.9463 54.0594C-0.803551 56.7962 -0.8273 63.6741 3.9463 66.4348H3.92255Z" fill="#000000" stroke="#ffffff" stroke-width="0.75" stroke-miterlimit="10"/></svg><span class="aava-dmd-label">Design</span></div>
+      <div class="aava-dmd"><svg width="198" height="121" viewBox="0 0 198 121" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.92255 66.4348L95.3809 119.411C97.5896 120.696 100.321 120.696 102.529 119.411L193.822 66.3634C198.571 63.6027 198.548 56.7486 193.822 54.0118L102.601 1.32101C100.392 0.0596647 97.6846 0.0596647 95.4996 1.32101L3.9463 54.0594C-0.803551 56.7962 -0.8273 63.6741 3.9463 66.4348H3.92255Z" fill="#000000" stroke="#ffffff" stroke-width="0.75" stroke-miterlimit="10"/></svg><span class="aava-dmd-label">Architect</span></div>
+      <div class="aava-dmd"><svg width="198" height="121" viewBox="0 0 198 121" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.92255 66.4348L95.3809 119.411C97.5896 120.696 100.321 120.696 102.529 119.411L193.822 66.3634C198.571 63.6027 198.548 56.7486 193.822 54.0118L102.601 1.32101C100.392 0.0596647 97.6846 0.0596647 95.4996 1.32101L3.9463 54.0594C-0.803551 56.7962 -0.8273 63.6741 3.9463 66.4348H3.92255Z" fill="#000000" stroke="#ffffff" stroke-width="0.75" stroke-miterlimit="10"/></svg><span class="aava-dmd-label">Code</span></div>
+      <div class="aava-dmd"><svg width="198" height="121" viewBox="0 0 198 121" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.92255 66.4348L95.3809 119.411C97.5896 120.696 100.321 120.696 102.529 119.411L193.822 66.3634C198.571 63.6027 198.548 56.7486 193.822 54.0118L102.601 1.32101C100.392 0.0596647 97.6846 0.0596647 95.4996 1.32101L3.9463 54.0594C-0.803551 56.7962 -0.8273 63.6741 3.9463 66.4348H3.92255Z" fill="#000000" stroke="#ffffff" stroke-width="0.75" stroke-miterlimit="10"/></svg><span class="aava-dmd-label">Test</span></div>
+      <div class="aava-dmd"><svg width="198" height="121" viewBox="0 0 198 121" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.92255 66.4348L95.3809 119.411C97.5896 120.696 100.321 120.696 102.529 119.411L193.822 66.3634C198.571 63.6027 198.548 56.7486 193.822 54.0118L102.601 1.32101C100.392 0.0596647 97.6846 0.0596647 95.4996 1.32101L3.9463 54.0594C-0.803551 56.7962 -0.8273 63.6741 3.9463 66.4348H3.92255Z" fill="#000000" stroke="#ffffff" stroke-width="0.75" stroke-miterlimit="10"/></svg><span class="aava-dmd-label">Operations</span></div>
+      <div class="aava-dmd"><svg width="198" height="121" viewBox="0 0 198 121" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.92255 66.4348L95.3809 119.411C97.5896 120.696 100.321 120.696 102.529 119.411L193.822 66.3634C198.571 63.6027 198.548 56.7486 193.822 54.0118L102.601 1.32101C100.392 0.0596647 97.6846 0.0596647 95.4996 1.32101L3.9463 54.0594C-0.803551 56.7962 -0.8273 63.6741 3.9463 66.4348H3.92255Z" fill="#000000" stroke="#ffffff" stroke-width="0.75" stroke-miterlimit="10"/></svg><span class="aava-dmd-label">Data engineering</span></div>
+    </div>
+  </div>
+
+  <!-- Support text + CTA -->
+  <div class="container">
+    <p class="aava-support rv d5">
+      All with <span>11,000 operators</span> &nbsp;&bull;&nbsp; <span>Agentic Delivery Managers</span> &nbsp;&bull;&nbsp; <span>AI Deployment Engineers</span>
+    </p>
+    <div class="aava-cta rv d5">
+      <a href="#" class="btn btn-inverse">
+        <span class="btn__label">Explore AAVA</span>
+        <span class="btn__icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
+    </div>
+  </div>
+
+</section>
+
+<!-- ===================================================
+     THREE PILLARS  ·  bg-subtle #f4f4f4
+=================================================== -->
+<section class="pillars-section" id="s-pillars">
+  <div class="container">
+
+    <!-- Tab Navigation -->
+    <div class="pillars-tab-nav rv d1" role="tablist">
+      <button class="pillars-tab-btn active" role="tab" aria-selected="true" onclick="switchPillarTab(0)">Applied AI Engineering</button>
+      <button class="pillars-tab-btn" role="tab" aria-selected="false" onclick="switchPillarTab(1)">AAVA Platform</button>
+      <button class="pillars-tab-btn" role="tab" aria-selected="false" onclick="switchPillarTab(2)">Global Delivery</button>
+    </div>
+
+    <!-- Tab Panel 0 — Applied AI Engineering -->
+    <div class="pillars-tab-panel active rv d2" id="pillar-tab-0" role="tabpanel">
+      <div class="pillars-tab-content">
+        <h4>Applied AI Engineering</h4>
+        <p>Platform, product, data, quality, and experience engineering powered by AAVA. We deliver across the full lifecycle — architecture through operations.</p>
+        <a href="#" class="btn btn-primary" style="margin-top:20px;">
+          <span class="btn__label">We Deliver Differently</span>
+          <span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+      </div>
+      <div class="pillars-tab-visual" style="background-image: url('assets/images/enterprise-platform/PowerofAI-img01.jpg')" aria-hidden="true"></div>
+    </div>
+
+    <!-- Tab Panel 1 — AAVA Platform -->
+    <div class="pillars-tab-panel" id="pillar-tab-1" role="tabpanel">
+      <div class="pillars-tab-content">
+        <h4>AAVA Platform</h4>
+        <p>Our AI engineering platform with 8,000+ agents orchestrating work across SDLC and data pipelines. Pre-configured workflows, proven patterns, a clear path to impact — all with humans at the wheel.</p>
+        <a href="#" class="btn btn-primary" style="margin-top:20px;">
+          <span class="btn__label">Explore AAVA</span>
+          <span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+      </div>
+      <div class="pillars-tab-visual" style="background-image: url('assets/images/enterprise-platform/PowerofAI-img02.png')" aria-hidden="true"></div>
+    </div>
+
+    <!-- Tab Panel 2 — Global Delivery -->
+    <div class="pillars-tab-panel" id="pillar-tab-2" role="tabpanel">
+      <div class="pillars-tab-content">
+        <h4>Global Delivery</h4>
+        <p>11,000 professionals across Engineering Circles, global delivery hubs, and partnerships. AI Deployment Engineers and Agentic Delivery Managers accountable for outcomes.</p>
+        <a href="#" class="btn btn-primary" style="margin-top:20px;">
+          <span class="btn__label">Our Global Hubs</span>
+          <span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+      </div>
+      <div class="pillars-tab-visual" style="background-image: url('assets/images/enterprise-platform/PowerofAI-img03.jpg')" aria-hidden="true"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================================================
+     INSIGHTS  ·  bg-default #fff
+=================================================== -->
+<section class="insights-section" id="s-insights">
+  <div class="container">
+
+    <div class="s-head rv">
+      <div class="lbl lbl--dark">Ideas &amp; Insights</div>
+    </div>
+
+    <div class="ins-intro rv d1">
+      <h2 class="ins-h2">Thought Leadership on Agentic AI</h2>
+      <p class="ins-sub">Explore our latest thinking on how agentic AI is reshaping software engineering.</p>
+    </div>
+
+    <div class="ins-filters-bar rv d2">
+      <button class="ins-filter active" data-filter="all">All</button>
+      <button class="ins-filter" data-filter="whitepaper">Whitepapers</button>
+      <button class="ins-filter" data-filter="blog">Blogs</button>
+    </div>
+
+    <div class="ins-cards rv d3" id="insGrid">
+      <article class="ins-card" data-cat="whitepaper">
+        <div class="ins-img" style="background-image: url('assets/images/enterprise-platform/Insights-img01.avif')" aria-hidden="true"></div>
+        <div class="ins-body">
+          <div class="ins-type">Whitepaper</div>
+          <h3 class="ins-title">The Future of AI with Salesforce's Agentforce</h3>
+          <a href="https://ascendion.com/wp-content/uploads/2025/05/Whitepaper-The-Future-of-AI-with-Salesforce-Agentforce.pdf" class="btn btn-text" target="_blank" rel="noopener"><span class="btn__label">Read more</span><span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        </div>
+      </article>
+      <article class="ins-card" data-cat="whitepaper">
+        <div class="ins-img" style="background-image: url('assets/images/enterprise-platform/Insights-img02.jpg')" aria-hidden="true"></div>
+        <div class="ins-body">
+          <div class="ins-type">Whitepaper</div>
+          <h3 class="ins-title">AI-Enhanced Employee Productivity: Using Salesforce AI to Empower Teams in the Workplace</h3>
+          <a href="https://ascendion.com/wp-content/uploads/2025/05/White-Paper_AI-Enhanced-Employee-Productivity.pdf" class="btn btn-text" target="_blank" rel="noopener"><span class="btn__label">Read more</span><span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        </div>
+      </article>
+      <article class="ins-card" data-cat="blog">
+        <div class="ins-img" style="background-image: url('assets/images/enterprise-platform/Insights-img03.png')" aria-hidden="true"></div>
+        <div class="ins-body">
+          <div class="ins-type">Blog</div>
+          <h3 class="ins-title">How Salesforce's Agentforce Technology Benefits IT: A Must-Consider for Today's CTOs and CIOs</h3>
+          <a href="https://ascendion.com/insights/how-salesforces-agentforce-technology-benefits-it-a-must-consider-for-todays-ctos-and-cios/" class="btn btn-text" target="_blank" rel="noopener"><span class="btn__label">Read more</span><span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        </div>
+      </article>
+      <article class="ins-card" data-cat="blog">
+        <div class="ins-img" style="background-image: url('assets/images/enterprise-platform/Insights-img04.jpg')" aria-hidden="true"></div>
+        <div class="ins-body">
+          <div class="ins-type">Blog</div>
+          <h3 class="ins-title">Revolutionizing Customer Service in Retail: The Impact of Salesforce's Agentforce</h3>
+          <a href="https://ascendion.com/insights/revolutionizing-customer-service-in-retail-the-impact-of-salesforces-agentforce/" class="btn btn-text" target="_blank" rel="noopener"><span class="btn__label">Read more</span><span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        </div>
+      </article>
+      <article class="ins-card" data-cat="blog">
+        <div class="ins-img" style="background-image: url('assets/images/enterprise-platform/Insights-img05.png')" aria-hidden="true"></div>
+        <div class="ins-body">
+          <div class="ins-type">Blog</div>
+          <h3 class="ins-title">How Data Drives AI Success in the High-Tech Industry: Debunking Common Myths with Salesforce Agentforce</h3>
+          <a href="https://ascendion.com/insights/debunking-common-myths-with-salesforce-agentforce/" class="btn btn-text" target="_blank" rel="noopener"><span class="btn__label">Read more</span><span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        </div>
+      </article>
+    </div>
+
+    <div class="ins-bottom rv d3">
+      <div class="ins-dots" id="insDots"></div>
+      <div class="ins-arrows">
+        <button class="ins-arrow" id="insPrev" aria-label="Previous" disabled>
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M10 4l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="ins-arrow" id="insNext" aria-label="Next">
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================================================
+     SCALE  ·  bg-subtle #f4f4f4 — numbered list layout
+=================================================== -->
+<section class="scale-section" id="s-scale">
+  <div class="container">
+
+    <div class="s-head rv">
+      <div class="lbl lbl--dark">Scale &amp; Capability</div>
+    </div>
+
+    <div class="scale-inner rv">
+
+      <!-- Left: heading + body -->
+      <div class="scale-left">
+        <h2 class="scale-left-h2">Enterprise scale.<br>Production systems.<br>Proven results.</h2>
+        <p>We deliver at Fortune 100 scale with global teams and AI-powered engineering across every major industry.</p>
+      </div>
+
+      <!-- Right: numbered stat items -->
+      <div class="scale-list">
+
+        <div class="scale-item rv d1">
+          <div class="scale-num-wrap">
+            <div class="scale-stat">11,000+</div>
+          </div>
+          <div class="scale-label">
+            <strong>Engineering Professionals</strong>
+            <span>Working with AI across global delivery hubs</span>
+          </div>
+        </div>
+
+        <div class="scale-item rv d2">
+          <div class="scale-num-wrap">
+            <div class="scale-stat">200+</div>
+          </div>
+          <div class="scale-label">
+            <strong>Enterprise Clients</strong>
+            <span>Including 30%+ of the Fortune 100</span>
+          </div>
+        </div>
+
+        <div class="scale-item rv d3">
+          <div class="scale-num-wrap">
+            <div class="scale-stat">8,000+</div>
+          </div>
+          <div class="scale-label">
+            <strong>AI Agents in AAVA</strong>
+            <span>Deployed across production workflows</span>
+          </div>
+        </div>
+
+        <div class="scale-item rv d4">
+          <div class="scale-num-wrap">
+            <div class="scale-stat">1,000+</div>
+          </div>
+          <div class="scale-label">
+            <strong>Products Shipped</strong>
+            <span>Production releases, not prototypes</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================================================
+     OUTCOMES  ·  bg-dark #000
+=================================================== -->
+<section class="outcomes-section" id="s-cta">
+  <div class="container">
+
+    <div class="s-head rv">
+      <div class="lbl">Outcomes</div>
+    </div>
+
+    <h2 class="outcomes-h2 rv d1">Impact, Now.</h2>
+
+    <div class="cs-grid">
+
+      <div class="cs-card rv d1">
+        <div class="cs-img-wrap">
+          <div class="cs-img-inner" aria-hidden="true"></div>
+          <div class="cs-tag">Banking</div>
+        </div>
+        <div class="cs-body">
+          <h3>Better banking service drives $300M growth</h3>
+          <p>Top-five global bank transformed customer service for 10M+ customers—cutting costs while delivering faster, better experiences.</p>
+          <a href="#" class="btn btn-inverse btn-sm">
+            <span class="btn__label">Read Case Study</span>
+            <span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </a>
+        </div>
+      </div>
+
+      <div class="cs-card rv d2">
+        <div class="cs-img-wrap">
+          <div class="cs-img-inner" aria-hidden="true"></div>
+          <div class="cs-tag">Enterprise</div>
+        </div>
+        <div class="cs-body">
+          <h3>Portfolio exit accelerated by 16 months</h3>
+          <p>Parallel modernization of five core products—compressing years into months, unlocking significant valuation impact.</p>
+          <a href="#" class="btn btn-inverse btn-sm">
+            <span class="btn__label">Read Case Study</span>
+            <span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </a>
+        </div>
+      </div>
+
+      <div class="cs-card rv d3">
+        <div class="cs-img-wrap">
+          <div class="cs-img-inner" aria-hidden="true"></div>
+          <div class="cs-tag">Healthcare</div>
+        </div>
+        <div class="cs-body">
+          <h3>39M Americans with better healthcare access</h3>
+          <p>Healthcare platforms transformed across 50 states—reducing wait times, lowering costs, improving care coordination.</p>
+          <a href="#" class="btn btn-inverse btn-sm">
+            <span class="btn__label">Read Case Study</span>
+            <span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================
+     FOOTER  ·  bg-default #fff
+=================================================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-cols">
+      <div>
+        <div class="footer-col-head">What We Do</div>
+        <ul class="footer-links">
+          <li><a href="#" class="footer-link">Applied AI</a></li>
+          <li><a href="#" class="footer-link">GCC<sup>AI</sup></a></li>
+          <li><a href="#" class="footer-link">Product<sup>AI</sup></a></li>
+          <li><a href="#" class="footer-link">Data &amp; Insights<sup>AI</sup></a></li>
+          <li><a href="#" class="footer-link">Salesforce Implementation</a></li>
+          <li><a href="#" class="footer-link">Quality Engineering<sup>AI</sup></a></li>
+          <li><a href="#" class="footer-link">Experience<sup>AI</sup></a></li>
+          <li><a href="#" class="footer-link">Operations<sup>AI</sup></a></li>
+          <li><a href="#" class="footer-link">AI Workforce Transformation</a></li>
+          <li><a href="#" class="footer-link">Enterprise Platform</a></li>
+          <li><a href="#" class="footer-link">Platform Engineering<sup>AI</sup></a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-head">Industries</div>
+        <ul class="footer-links">
+          <li><a href="#" class="footer-link">Banking &amp; Financial Services</a></li>
+          <li><a href="#" class="footer-link">Communications, Media and Entertainment</a></li>
+          <li><a href="#" class="footer-link">Healthcare &amp; Life Sciences</a></li>
+          <li><a href="#" class="footer-link">Retail and Consumer Goods</a></li>
+          <li><a href="#" class="footer-link">High-tech</a></li>
+          <li><a href="#" class="footer-link">Travel and Hospitality</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-head">Who We Are</div>
+        <ul class="footer-links">
+          <li><a href="#" class="footer-link">Leadership</a></li>
+          <li><a href="#" class="footer-link">Analyst Recognition</a></li>
+          <li><a href="#" class="footer-link">Certifications</a></li>
+          <li><a href="#" class="footer-link">Locations</a></li>
+          <li><a href="#" class="footer-link">ESG</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-head">Quick Links</div>
+        <ul class="footer-links">
+          <li><a href="#" class="footer-link">Insights and impact</a></li>
+          <li><a href="#" class="footer-link">Careers India</a></li>
+          <li><a href="#" class="footer-link">Careers North America</a></li>
+          <li><a href="#" class="footer-link">Careers Europe</a></li>
+          <li><a href="#" class="footer-link">Careers Asia Pacific</a></li>
+          <li><a href="#" class="footer-link">Global Delivery Hubs</a></li>
+          <li><a href="#" class="footer-link">Contact us</a></li>
+        </ul>
+      </div>
+      <div style="padding-top:40px">
+        <div class="footer-social">
+          <a href="#" class="footer-social-link footer-social-link--linkedin" aria-label="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="#" class="footer-social-link footer-social-link--youtube" aria-label="YouTube">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </a>
+          <a href="#" class="footer-social-link footer-social-link--instagram" aria-label="Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">Copyright 2026, ASCENDION. All rights reserved.</span>
+      <div class="footer-legal">
+        <a href="#" class="footer-legal-link">Privacy Policy</a>
+        <span class="footer-sep">|</span>
+        <a href="#" class="footer-legal-link">Terms of Use</a>
+        <span class="footer-sep">|</span>
+        <a href="#" class="footer-legal-link">Accessibility Disclosure</a>
+        <span class="footer-sep">|</span>
+        <a href="#" class="footer-legal-link">AI-enhanced Content Notice</a>
+        <span class="footer-sep">|</span>
+        <a href="#" class="footer-legal-link">Security Disclosure Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ===================================================
+     JAVASCRIPT
+=================================================== -->
+<script>
+/* PILLAR TABS — global so inline onclick can reach it */
+function switchPillarTab(idx) {
+  document.querySelectorAll('.pillars-tab-btn').forEach(function (b, i) {
+    b.classList.toggle('active', i === idx);
+    b.setAttribute('aria-selected', i === idx ? 'true' : 'false');
+  });
+  document.querySelectorAll('.pillars-tab-panel').forEach(function (p, i) {
+    p.classList.toggle('active', i === idx);
+  });
+}
+</script>
+
+<script>
+(function () {
+  'use strict';
+
+  /* NAV SCROLL SHADOW */
+  var nav = document.getElementById('nav');
+  window.addEventListener('scroll', function () {
+    nav.classList.toggle('scrolled', window.scrollY > 10);
+  }, { passive: true });
+
+  /* MOBILE NAV TOGGLE */
+  var toggle = document.getElementById('navToggle');
+  var menu   = document.getElementById('navMenu');
+  toggle.addEventListener('click', function () {
+    var open = menu.classList.toggle('open');
+    toggle.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+
+  /* HERO MULTI-SLIDE CAROUSEL */
+  var heroSlides   = document.querySelectorAll('.hero-slide');
+  var heroNavItems = document.querySelectorAll('.hero-nav-item');
+  var heroIndex    = 0;
+  var heroTimer;
+  var HERO_DURATION = 5000; // ms per slide
+
+  function heroGo(idx) {
+    // Deactivate all slides + nav items, reset fills
+    heroSlides.forEach(function (s) { s.classList.remove('active'); });
+    heroNavItems.forEach(function (n) {
+      n.classList.remove('active');
+      var fill = n.querySelector('.hero-nav-fill');
+      fill.style.transition = 'none';
+      fill.style.width = '0%';
+    });
+
+    // Activate target
+    heroSlides[idx].classList.add('active');
+    heroNavItems[idx].classList.add('active');
+
+    // Force reflow then start fill animation
+    heroNavItems[idx].querySelector('.hero-nav-fill').offsetWidth;
+    var fill = heroNavItems[idx].querySelector('.hero-nav-fill');
+    fill.style.transition = 'width ' + (HERO_DURATION / 1000) + 's linear';
+    fill.style.width = '100%';
+
+    heroIndex = idx;
+  }
+
+  function heroStart() {
+    clearInterval(heroTimer);
+    heroTimer = setInterval(function () {
+      heroGo((heroIndex + 1) % heroSlides.length);
+    }, HERO_DURATION);
+  }
+
+  // Click / keyboard on nav items
+  heroNavItems.forEach(function (item, i) {
+    item.addEventListener('click', function () {
+      heroGo(i);
+      heroStart();
+    });
+    item.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); heroGo(i); heroStart(); }
+    });
+  });
+
+  // Init
+  heroGo(0);
+  heroStart();
+
+  /* IMPACT STICKY SCROLL — sequential cards, bottom → centre → top */
+  (function () {
+    var track = document.getElementById('impactScrollTrack');
+    var intro  = document.getElementById('impactIntro');
+    /*
+     * Sequence: Banking → Logistics → Research → Fintech → Enterprise → Healthcare
+     * Progress is measured ONLY within the sticky window (after intro exits).
+     *
+     * Animation model — 7 equal "beats" (A = 1/7):
+     *   Card i enters  during [i·A, (i+1)·A]   — dy: 90 → 0 (ease-out)
+     *   Card i exits   during [(i+1)·A, (i+2)·A] — dy: 0 → -90 (ease-in)
+     *
+     * Overlap: card i+1 starts entering the MOMENT card i is centred
+     * ("as soon as card's bottom is seen, the next card rises").
+     * Card i keeps rising and exits simultaneously with card i+1's entry.
+     */
+    var cardOrder = [
+      document.getElementById('impCard0'),  /* Banking    — col 1 */
+      document.getElementById('impCard1'),  /* Logistics  — col 3 */
+      document.getElementById('impCard2'),  /* Research   — col 2 */
+      document.getElementById('impCard3'),  /* Fintech    — col 3 */
+      document.getElementById('impCard4'),  /* Enterprise — col 1 */
+      document.getElementById('impCard5'),  /* Healthcare — col 2 */
+    ];
+    if (!track || !intro || !cardOrder[0]) return;
+
+    /*
+     * Beat model — linear motion, "fully seen" trigger:
+     *
+     *   FT   = fraction through entry at which next card starts
+     *          Card is "fully seen" (top+bottom both in viewport) at dy ≈ 27vh,
+     *          which is 70% through the 90→0 entry phase → FT = 0.7
+     *
+     *   D    = duration of one entry phase (= one exit phase)
+     *          5 inter-card gaps + 2 final phases must sum to 1:
+     *          D = 1 / (5·FT + 2) = 1 / 5.5 ≈ 0.1818
+     *
+     *   tStart(i)  = i · FT · D      — card i begins rising
+     *   tCenter(i) = tStart(i) + D   — card i passes through centre (dy = 0)
+     *   tEnd(i)    = tStart(i) + 2D  — card i fully exited above
+     *
+     *   Entry: linear   90 → 0   over [tStart, tCenter]
+     *   Exit:  linear    0 → −90 over [tCenter, tEnd]
+     */
+    var FT = 0.7;
+    var D  = 1 / (5 * FT + 2);   /* ≈ 0.1818 */
+
+    function cardDy(i, p) {
+      var tStart  = i * FT * D;
+      var tCenter = tStart + D;
+      var tEnd    = tStart + 2 * D;
+      if (p <= tStart)  return  90;   /* waiting below  */
+      if (p >= tEnd)    return -90;   /* exited above   */
+      if (p < tCenter) {
+        /* linear entry: 90 → 0 */
+        return 90 * (1 - (p - tStart) / D);
+      } else {
+        /* linear exit: 0 → -90 */
+        return -90 * ((p - tCenter) / D);
+      }
+    }
+
+    function updateImpact() {
+      var rect        = track.getBoundingClientRect();
+      var vh          = window.innerHeight;
+      var scrolled    = -rect.top;
+      var stickyStart = intro.offsetHeight;
+
+      /*
+       * cssReleaseAt = scrolled px at which CSS sticky ACTUALLY releases.
+       * The section unpins when track.bottom === vh, i.e.
+       *   rect.top + track.offsetHeight === vh
+       *   -scrolled + track.offsetHeight === vh
+       *   scrolled === track.offsetHeight - vh
+       * (NOT stickyRange, which also subtracts intro height)
+       */
+      var cssReleaseAt = track.offsetHeight - vh;
+
+      /*
+       * OVERLAP  — first card begins 300px before the sticky trigger.
+       * RELEASE_P — fraction of animation elapsed when sticky releases.
+       *   p = RELEASE_P exactly when scrolled = cssReleaseAt.
+       *   At p ≈ 0.80 the last card's bottom edge is ~20% from the
+       *   viewport bottom (still clearly on screen) → section starts scrolling.
+       *   effectiveRange = (cssReleaseAt − animStart) / RELEASE_P  guarantees this.
+       */
+      var OVERLAP        = 600;
+      var animStart      = Math.max(0, stickyStart - OVERLAP);
+      var RELEASE_P      = 0.80;
+      var effectiveRange = (cssReleaseAt - animStart) / RELEASE_P;
+      var p = Math.max(0, Math.min(1, (scrolled - animStart) / effectiveRange));
+
+      cardOrder.forEach(function (card, i) {
+        if (!card) return;
+        card.style.transform = 'translateY(calc(-50% + ' + cardDy(i, p) + 'vh))';
+      });
+    }
+
+    window.addEventListener('scroll', updateImpact, { passive: true });
+    window.addEventListener('resize', updateImpact);
+    updateImpact();
+  })();
+
+  /* IMPACT SECTION BACKGROUND GRID — colour-only proximity, no distortion */
+  (function () {
+    var section = document.getElementById('s-impact');
+    if (!section) return;
+
+    var canvas = document.createElement('canvas');
+    canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;';
+    section.insertBefore(canvas, section.firstChild);
+    var ctx = canvas.getContext('2d');
+
+    var SPX = 56, SPY = 56, DOT_R = 0.8, COLOR_R = 150;
+    var D_BASE = [255, 255, 255];  /* white */
+    var D_ACT  = [45,  220, 170]; /* teal  */
+    var L_A_BASE = 0.15;           /* 15% opacity at rest */
+    var L_A_ACT  = 0.35;
+
+    var cols, rows, pts = [];
+    var mx = -9999, my = -9999;
+    var dpr = window.devicePixelRatio || 1;
+    var rafPending = false;
+
+    function setup() {
+      var W = section.offsetWidth  || window.innerWidth;
+      var H = section.offsetHeight || window.innerHeight;
+      canvas.width  = Math.round(W * dpr);
+      canvas.height = Math.round(H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      cols = Math.ceil(W / SPX) + 2;
+      rows = Math.ceil(H / SPY) + 2;
+      var offX = -((cols * SPX - W) / 2);
+      var offY = -((rows * SPY - H) / 2);
+      pts = [];
+      for (var r = 0; r < rows; r++) {
+        pts[r] = [];
+        for (var c = 0; c < cols; c++) {
+          pts[r][c] = { x: offX + c * SPX, y: offY + r * SPY };
+        }
+      }
+    }
+
+    function colorAt(px, py) {
+      var dx = px - mx, dy = py - my;
+      var t  = Math.max(0, 1 - Math.sqrt(dx*dx + dy*dy) / COLOR_R);
+      var r  = (D_BASE[0] + (D_ACT[0] - D_BASE[0]) * t) | 0;
+      var g  = (D_BASE[1] + (D_ACT[1] - D_BASE[1]) * t) | 0;
+      var b  = (D_BASE[2] + (D_ACT[2] - D_BASE[2]) * t) | 0;
+      var a  = L_A_BASE + (L_A_ACT - L_A_BASE) * t;  /* same for dots + lines */
+      return 'rgba(' + r + ',' + g + ',' + b + ',' + a.toFixed(3) + ')';
+    }
+
+    function draw() {
+      var W = canvas.width / dpr, H = canvas.height / dpr;
+      ctx.clearRect(0, 0, W, H);
+      ctx.lineWidth = 0.5;
+
+      /* horizontal lines */
+      for (var r = 0; r < rows; r++) {
+        for (var c = 0; c < cols - 1; c++) {
+          var p1 = pts[r][c], p2 = pts[r][c + 1];
+          ctx.strokeStyle = colorAt((p1.x + p2.x) / 2, p1.y);
+          ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+        }
+      }
+      /* vertical lines */
+      for (var c = 0; c < cols; c++) {
+        for (var r = 0; r < rows - 1; r++) {
+          var p1 = pts[r][c], p2 = pts[r + 1][c];
+          ctx.strokeStyle = colorAt(p1.x, (p1.y + p2.y) / 2);
+          ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+        }
+      }
+      /* dots at every vertex */
+      for (var r = 0; r < rows; r++) {
+        for (var c = 0; c < cols; c++) {
+          var pt = pts[r][c];
+          ctx.fillStyle = colorAt(pt.x, pt.y);
+          ctx.beginPath(); ctx.arc(pt.x, pt.y, DOT_R, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+    }
+
+    function requestDraw() {
+      if (!rafPending) {
+        rafPending = true;
+        requestAnimationFrame(function () { draw(); rafPending = false; });
+      }
+    }
+
+    /* Track mouse globally — canvas follows sticky section position */
+    document.addEventListener('mousemove', function (e) {
+      var rect   = canvas.getBoundingClientRect();
+      var inside = e.clientX >= rect.left && e.clientX <= rect.right &&
+                   e.clientY >= rect.top  && e.clientY <= rect.bottom;
+      mx = inside ? e.clientX - rect.left : -9999;
+      my = inside ? e.clientY - rect.top  : -9999;
+      requestDraw();
+    });
+
+    window.addEventListener('resize', function () { setup(); draw(); });
+    setup();
+    draw();
+  })();
+
+  /* WHAT WE DO ACCORDION — trigger (icon+title) OR far-right toggle both work */
+  document.querySelectorAll('.wwd-item').forEach(function (item) {
+    var trigger = item.querySelector('.wwd-trigger');
+    var toggle  = item.querySelector('.wwd-toggle');
+
+    function handleClick() {
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.wwd-item').forEach(function (i) {
+        i.classList.remove('open');
+        i.querySelector('.wwd-trigger').setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        trigger.setAttribute('aria-expanded', 'true');
+      }
+    }
+
+    trigger.addEventListener('click', handleClick);
+    if (toggle) toggle.addEventListener('click', handleClick);
+  });
+
+  /* REAL IMPACT CARDS — CAROUSEL */
+  (function () {
+    var track = document.getElementById('rimpTrack');
+    if (!track) return;
+    var idx = 0;
+
+    function go(newIdx) {
+      var cards = track.querySelectorAll('.rimp-card');
+      if (!cards.length) return;
+      var maxIdx = Math.max(0, cards.length - Math.floor(2.5));
+      idx = Math.max(0, Math.min(newIdx, maxIdx));
+      var cardW = cards[0].offsetWidth + 20;
+      track.style.transform = 'translateX(-' + (idx * cardW) + 'px)';
+    }
+
+    window.addEventListener('resize', function () { go(idx); });
+    go(0);
+
+    /* PILL CLICK — scroll to matching card */
+    document.querySelectorAll('#rimpFilters .rimp-filter').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('#rimpFilters .rimp-filter').forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        var category = btn.textContent.trim().toLowerCase();
+        var cards = track.querySelectorAll('.rimp-card');
+        for (var i = 0; i < cards.length; i++) {
+          if (cards[i].dataset.category === category) { go(i); break; }
+        }
+      });
+    });
+
+    /* MOUSE DRAG */
+    var dragStart = 0, dragStartTranslate = 0, dragging = false;
+
+    function getTranslate() {
+      var t = track.style.transform;
+      return t ? parseFloat(t.replace('translateX(', '')) : 0;
+    }
+
+    track.addEventListener('mousedown', function (e) {
+      dragging = true;
+      dragStart = e.pageX;
+      dragStartTranslate = getTranslate();
+      track.classList.add('dragging');
+    });
+
+    document.addEventListener('mousemove', function (e) {
+      if (!dragging) return;
+      var dx = e.pageX - dragStart;
+      track.style.transform = 'translateX(' + (dragStartTranslate + dx) + 'px)';
+    });
+
+    document.addEventListener('mouseup', function (e) {
+      if (!dragging) return;
+      dragging = false;
+      track.classList.remove('dragging');
+      track.style.transition = 'transform 0.45s ease';
+      var dx = e.pageX - dragStart;
+      var cards = track.querySelectorAll('.rimp-card');
+      var cardW = cards[0] ? cards[0].offsetWidth + 20 : 1;
+      var threshold = cardW * 0.2;
+      if (dx < -threshold) go(idx + 1);
+      else if (dx > threshold) go(idx - 1);
+      else go(idx);
+    });
+
+    /* TOUCH DRAG */
+    var touchStart = 0;
+    track.addEventListener('touchstart', function (e) {
+      touchStart = e.touches[0].pageX;
+      dragStartTranslate = getTranslate();
+      track.style.transition = 'none';
+    }, { passive: true });
+
+    track.addEventListener('touchmove', function (e) {
+      var dx = e.touches[0].pageX - touchStart;
+      track.style.transform = 'translateX(' + (dragStartTranslate + dx) + 'px)';
+    }, { passive: true });
+
+    track.addEventListener('touchend', function (e) {
+      track.style.transition = 'transform 0.45s ease';
+      var dx = e.changedTouches[0].pageX - touchStart;
+      var cards = track.querySelectorAll('.rimp-card');
+      var cardW = cards[0] ? cards[0].offsetWidth + 20 : 1;
+      if (dx < -(cardW * 0.2)) go(idx + 1);
+      else if (dx > (cardW * 0.2)) go(idx - 1);
+      else go(idx);
+    });
+  })();
+
+  /* INSIGHTS GRID PAGINATION */
+  var insGrid     = document.getElementById('insGrid');
+  var insPrev     = document.getElementById('insPrev');
+  var insNext     = document.getElementById('insNext');
+  var insDots     = document.getElementById('insDots');
+  var insPage     = 0;
+  var insAllCards = insGrid ? Array.from(insGrid.querySelectorAll('.ins-card')) : [];
+
+  function insGetPerPage() {
+    if (window.innerWidth <= 600) return 1;
+    if (window.innerWidth <= 900) return 2;
+    return 3;
+  }
+
+  function insGetVisible(cat) {
+    if (cat === 'all') return insAllCards.slice();
+    return insAllCards.filter(function (c) { return c.dataset.cat === cat; });
+  }
+
+  function insBuildDots(total) {
+    insDots.innerHTML = '';
+    for (var i = 0; i < total; i++) {
+      var d = document.createElement('button');
+      d.className = 'ins-dot' + (i === insPage ? ' active' : '');
+      d.setAttribute('aria-label', 'Page ' + (i + 1));
+      (function (idx) {
+        d.addEventListener('click', function () { insGoToPage(idx); });
+      })(i);
+      insDots.appendChild(d);
+    }
+  }
+
+  function insGoToPage(p) {
+    var cat     = (document.querySelector('.ins-filter.active') || { dataset: { filter: 'all' } }).dataset.filter;
+    var visible = insGetVisible(cat);
+    var pp      = insGetPerPage();
+    var pages   = Math.ceil(visible.length / pp);
+    insPage     = Math.max(0, Math.min(p, pages - 1));
+
+    insAllCards.forEach(function (c) { c.style.display = 'none'; });
+    visible.forEach(function (c, i) {
+      if (i >= insPage * pp && i < (insPage + 1) * pp) c.style.display = '';
+    });
+
+    insPrev.disabled = insPage === 0;
+    insNext.disabled = insPage >= pages - 1;
+
+    insDots.querySelectorAll('.ins-dot').forEach(function (d, i) {
+      d.classList.toggle('active', i === insPage);
+    });
+  }
+
+  function insInit(cat) {
+    cat = cat || 'all';
+    var visible = insGetVisible(cat);
+    var pp      = insGetPerPage();
+    var pages   = Math.ceil(visible.length / pp);
+    insPage     = 0;
+    insBuildDots(pages);
+    insGoToPage(0);
+  }
+
+  document.querySelectorAll('.ins-filter').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.ins-filter').forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      insInit(btn.dataset.filter);
+    });
+  });
+
+  if (insPrev) insPrev.addEventListener('click', function () { insGoToPage(insPage - 1); });
+  if (insNext) insNext.addEventListener('click', function () { insGoToPage(insPage + 1); });
+  window.addEventListener('resize', function () {
+    var cat = (document.querySelector('.ins-filter.active') || { dataset: { filter: 'all' } }).dataset.filter;
+    insInit(cat);
+  });
+  if (insGrid) insInit('all');
+
+  /* SCROLL REVEAL */
+  var rvObs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('in'); rvObs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -48px 0px' });
+  document.querySelectorAll('.rv').forEach(function (el) { rvObs.observe(el); });
+
+  /* AAVA — INTERACTIVE GRID (same as intro) */
+  (function () {
+    var canvas  = document.getElementById('aavaGridCanvas');
+    var section = document.getElementById('s-aava');
+    if (!canvas || !section) return;
+    var ctx = canvas.getContext('2d');
+
+    var SPX     = 48, SPY = 56, DOT_R = 0.8, COLOR_R = 150;
+    var C_BASE  = [180, 180, 180, 0.20];
+    var C_ACT   = [100, 100, 215, 1.00];  /* violet */
+
+    var W = 0, H = 0, dpr = 1;
+    var pts = [], rows = 0, cols = 0;
+    var mx = -9999, my = -9999;
+    var rafPending = false;
+
+    function colorAt(px, py) {
+      var t = Math.max(0, 1 - Math.hypot(px - mx, py - my) / COLOR_R);
+      t = t * t;
+      var r = (C_BASE[0] + (C_ACT[0] - C_BASE[0]) * t) | 0;
+      var g = (C_BASE[1] + (C_ACT[1] - C_BASE[1]) * t) | 0;
+      var b = (C_BASE[2] + (C_ACT[2] - C_BASE[2]) * t) | 0;
+      var a =  C_BASE[3] + (C_ACT[3] - C_BASE[3]) * t;
+      return 'rgba(' + r + ',' + g + ',' + b + ',' + a.toFixed(3) + ')';
+    }
+
+    function build() {
+      pts = []; cols = Math.ceil(W / SPX); rows = Math.ceil(H / SPY);
+      for (var r = 0; r <= rows; r++) {
+        pts[r] = [];
+        for (var c = 0; c <= cols; c++) {
+          pts[r][c] = { x: c * SPX, y: r * SPY };
+        }
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      ctx.lineWidth = 0.5;
+      var r, c, p1, p2;
+      for (r = 0; r <= rows; r++) {
+        for (c = 0; c < cols; c++) {
+          p1 = pts[r][c]; p2 = pts[r][c + 1];
+          ctx.strokeStyle = colorAt((p1.x + p2.x) / 2, p1.y);
+          ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+        }
+      }
+      for (c = 0; c <= cols; c++) {
+        for (r = 0; r < rows; r++) {
+          p1 = pts[r][c]; p2 = pts[r + 1][c];
+          ctx.strokeStyle = colorAt(p1.x, (p1.y + p2.y) / 2);
+          ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+        }
+      }
+      for (r = 0; r <= rows; r++) {
+        for (c = 0; c <= cols; c++) {
+          var pt = pts[r][c];
+          ctx.fillStyle = colorAt(pt.x, pt.y);
+          ctx.beginPath(); ctx.arc(pt.x, pt.y, DOT_R, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+    }
+
+    function requestDraw() {
+      if (!rafPending) { rafPending = true; requestAnimationFrame(function () { draw(); rafPending = false; }); }
+    }
+
+    function resize() {
+      dpr = window.devicePixelRatio || 1;
+      W = section.offsetWidth; H = section.offsetHeight;
+      canvas.width  = Math.round(W * dpr);
+      canvas.height = Math.round(H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      build(); draw();
+    }
+
+    section.addEventListener('mousemove', function (e) {
+      var rect = canvas.getBoundingClientRect();
+      mx = e.clientX - rect.left;
+      my = e.clientY - rect.top;
+      requestDraw();
+    });
+    section.addEventListener('mouseleave', function () { mx = -9999; my = -9999; requestDraw(); });
+    window.addEventListener('resize', resize);
+    resize();
+  })();
+
+  /* INTRO — INTERACTIVE GRID (colour-only proximity, no physics) */
+  (function () {
+    var canvas  = document.getElementById('introGridCanvas');
+    var section = document.getElementById('s-intro');
+    if (!canvas || !section) return;
+    var ctx = canvas.getContext('2d');
+
+    /* ── Config ──
+     * Base:   grey at 20% — same for dots and lines
+     * Active: violet (#6464d7 = rgb(100,100,215)) at 100%
+     */
+    var SPX     = 64, SPY = 48, DOT_R = 0.8, COLOR_R = 150;
+    var C_BASE  = [180, 180, 180, 0.20];
+    var C_ACT   = [100, 100, 215, 1.00];  /* violet, full opacity */
+
+    var W = 0, H = 0, dpr = 1;
+    var pts = [], rows = 0, cols = 0;
+    var mx = -9999, my = -9999;
+    var rafPending = false;
+
+    function colorAt(px, py) {
+      var t = Math.max(0, 1 - Math.hypot(px - mx, py - my) / COLOR_R);
+      t = t * t;   /* quadratic falloff for crisper edge */
+      var r = (C_BASE[0] + (C_ACT[0] - C_BASE[0]) * t) | 0;
+      var g = (C_BASE[1] + (C_ACT[1] - C_BASE[1]) * t) | 0;
+      var b = (C_BASE[2] + (C_ACT[2] - C_BASE[2]) * t) | 0;
+      var a =  C_BASE[3] + (C_ACT[3] - C_BASE[3]) * t;
+      return 'rgba(' + r + ',' + g + ',' + b + ',' + a.toFixed(3) + ')';
+    }
+
+    function build() {
+      pts = []; cols = Math.ceil(W / SPX); rows = Math.ceil(H / SPY);
+      for (var r = 0; r <= rows; r++) {
+        pts[r] = [];
+        for (var c = 0; c <= cols; c++) {
+          pts[r][c] = { x: c * SPX, y: r * SPY };
+        }
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      ctx.lineWidth = 0.5;
+      var r, c, p1, p2;
+      /* horizontal lines — per-segment colour */
+      for (r = 0; r <= rows; r++) {
+        for (c = 0; c < cols; c++) {
+          p1 = pts[r][c]; p2 = pts[r][c + 1];
+          ctx.strokeStyle = colorAt((p1.x + p2.x) / 2, p1.y);
+          ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+        }
+      }
+      /* vertical lines — per-segment colour */
+      for (c = 0; c <= cols; c++) {
+        for (r = 0; r < rows; r++) {
+          p1 = pts[r][c]; p2 = pts[r + 1][c];
+          ctx.strokeStyle = colorAt(p1.x, (p1.y + p2.y) / 2);
+          ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+        }
+      }
+      /* dots — per-vertex colour (same formula as lines) */
+      for (r = 0; r <= rows; r++) {
+        for (c = 0; c <= cols; c++) {
+          var pt = pts[r][c];
+          ctx.fillStyle = colorAt(pt.x, pt.y);
+          ctx.beginPath(); ctx.arc(pt.x, pt.y, DOT_R, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+    }
+
+    function requestDraw() {
+      if (!rafPending) {
+        rafPending = true;
+        requestAnimationFrame(function () { draw(); rafPending = false; });
+      }
+    }
+
+    function resize() {
+      dpr = window.devicePixelRatio || 1;
+      W = section.offsetWidth; H = section.offsetHeight;
+      canvas.width  = Math.round(W * dpr);
+      canvas.height = Math.round(H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      build(); draw();
+    }
+
+    section.addEventListener('mousemove', function (e) {
+      var rect = canvas.getBoundingClientRect();
+      mx = e.clientX - rect.left;
+      my = e.clientY - rect.top;
+      requestDraw();
+    });
+    section.addEventListener('mouseleave', function () {
+      mx = -9999; my = -9999; requestDraw();
+    });
+
+    window.addEventListener('resize', resize);
+    resize();
+  })();
+
+  /* INTRO BODY PHRASE — CHARACTER-BY-CHARACTER SCROLL REVEAL */
+  (function () {
+    var el      = document.getElementById('introBodyPhrase');
+    var section = document.getElementById('s-intro');
+    if (!el || !section) return;
+
+    /* Build char spans */
+    var text  = el.textContent;
+    var chars = [];
+    el.textContent = '';
+    text.split('').forEach(function (ch) {
+      var s = document.createElement('span');
+      s.className = 'body-char';
+      s.textContent = ch;
+      el.appendChild(s);
+      chars.push(s);
+    });
+
+    var total    = chars.length, lastIdx = -1;
+    var introDot  = document.querySelector('.intro-dot');
+    var introLine = document.querySelector('.intro-line');
+
+    function update() {
+      var rect = section.getBoundingClientRect();
+      var vh   = window.innerHeight;
+      var raw  = (vh - rect.top) / (vh * 0.55);
+
+      /* Phrase characters */
+      var prog = Math.max(0, Math.min(1, (raw - 1.05) / 0.15));
+      var idx  = Math.floor(prog * total);
+      if (idx !== lastIdx) {
+        if (idx > lastIdx) {
+          for (var i = Math.max(0, lastIdx); i < idx && i < total; i++) chars[i].classList.add('in');
+        } else {
+          for (var i = idx; i <= lastIdx && i < total; i++) chars[i].classList.remove('in');
+        }
+        lastIdx = idx;
+      }
+
+      /* Dot — fades in as phrase completes */
+      var dotProg = Math.max(0, Math.min(1, (raw - 1.18) / 0.06));
+      if (introDot) {
+        introDot.style.opacity   = dotProg;
+        introDot.style.transform = 'scale(' + dotProg + ')';
+      }
+
+      /* Line — grows downward after dot appears */
+      var lineProg = Math.max(0, Math.min(1, (raw - 1.22) / 0.1));
+      if (introLine) introLine.style.transform = 'scaleY(' + lineProg + ')';
+    }
+
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+
+  /* STATS LINE — SCROLL-DRIVEN GROW */
+  (function () {
+    var line    = document.getElementById('statsLine');
+    var section = document.getElementById('s-stats');
+    if (!line || !section) return;
+    function update() {
+      var rect = section.getBoundingClientRect();
+      var vh   = window.innerHeight;
+      /* Start growing as soon as top of section enters viewport */
+      var prog = Math.max(0, Math.min(1, (vh - rect.top) / (vh * 0.35)));
+      line.style.transform = 'scaleY(' + prog + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+
+  /* INTRO H2 — CHARACTER-BY-CHARACTER SCROLL REVEAL */
+  (function () {
+    var h2      = document.getElementById('introH2');
+    var section = document.getElementById('s-intro');
+    if (!h2 || !section) return;
+
+    /* Build line → char span structure */
+    var lineTexts = [
+      'We put 10,000 AI agents',
+      'to work to build the software',
+      'that elevates life.'
+    ];
+    var allChars = [];
+
+    lineTexts.forEach(function (text) {
+      var lineEl = document.createElement('span');
+      lineEl.className = 'intro-h2-line';
+      text.split('').forEach(function (ch) {
+        var s = document.createElement('span');
+        s.className = 'intro-char';
+        s.textContent = ch;
+        lineEl.appendChild(s);
+        allChars.push(s);
+      });
+      h2.appendChild(lineEl);
+    });
+
+    var total   = allChars.length;
+    var lastIdx = -1;
+
+    function update() {
+      var rect    = section.getBoundingClientRect();
+      var vh      = window.innerHeight;
+      /* raw progress: 0 when section top hits viewport bottom */
+      var raw     = (vh - rect.top) / (vh * 0.55);
+      /* shift start point — reveal begins only after more scrolling */
+      var charProg = (raw - 0.45) / 0.5;
+      charProg = Math.max(0, Math.min(1, charProg));
+      var idx = Math.floor(charProg * total);
+
+      if (idx === lastIdx) return;
+
+      if (idx > lastIdx) {
+        for (var i = Math.max(0, lastIdx); i < idx && i < total; i++) {
+          allChars[i].classList.add('in');
+        }
+      } else {
+        for (var i = idx; i <= lastIdx && i < total; i++) {
+          allChars[i].classList.remove('in');
+        }
+      }
+      lastIdx = idx;
+    }
+
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+
+  /* STAT COUNTER */
+  var statObs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var el     = e.target;
+      var target = parseInt(el.dataset.target);
+      var suffix = el.dataset.suffix || '';
+      var start  = performance.now();
+      var dur    = 1600;
+      (function tick(now) {
+        var p    = Math.min((now - start) / dur, 1);
+        var ease = 1 - Math.pow(1 - p, 3);
+        var val  = Math.round(ease * target);
+        el.textContent = (val >= 1000 ? Math.floor(val / 1000) + 'K' : val) + suffix;
+        if (p < 1) { requestAnimationFrame(tick); }
+        else { el.textContent = (target >= 1000 ? Math.floor(target / 1000) + 'K' : target) + suffix; }
+      })(start);
+      statObs.unobserve(el);
+    });
+  }, { threshold: 0.4 });
+  document.querySelectorAll('.scale-stat[data-target]').forEach(function (el) { statObs.observe(el); });
+
+  /* RESIZE */
+  window.addEventListener('resize', function () { impactGo(0); insGo(0); }, { passive: true });
+
+  /* AAVA DIAMOND DISPERSE — SCROLL-DRIVEN SPREAD + AUTO HIGHLIGHT */
+  (function () {
+    var stage  = document.getElementById('aavaDisperseStage');
+    var hline  = document.getElementById('aavaDisperseHline');
+    if (!stage) return;
+
+    var items      = Array.prototype.slice.call(stage.querySelectorAll('.aava-dmd'));
+    var count      = items.length;   /* 6 */
+    var dmdW       = 198;
+    var margin     = 80;
+    var hlTimer    = null;           /* setInterval handle */
+    var hlIdx      = -1;            /* currently lit card */
+    var wasSpread  = false;          /* tracks whether auto-cycle has started */
+
+    function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+
+    /* Light exactly one card */
+    function setLit(i) {
+      items.forEach(function (item, j) {
+        item.classList.toggle('aava-dmd--lit', j === i);
+      });
+      hlIdx = i;
+    }
+
+    /* Start auto-cycling once spread is complete */
+    function startHighlight() {
+      if (hlTimer) return;
+      setLit(0);
+      hlTimer = setInterval(function () {
+        setLit((hlIdx + 1) % count);
+      }, 900);
+    }
+
+    /* Stop cycling and clear all highlights */
+    function stopHighlight() {
+      if (hlTimer) { clearInterval(hlTimer); hlTimer = null; }
+      items.forEach(function (item) { item.classList.remove('aava-dmd--lit'); });
+      hlIdx = -1;
+    }
+
+    function update() {
+      var rect   = stage.getBoundingClientRect();
+      var vh     = window.innerHeight;
+      /*
+       * Start: stage.bottom reaches 95% of viewport (just fully in view)
+       * End:   stage.bottom reaches 65% of viewport
+       */
+      var prog   = Math.max(0, Math.min(1, (vh * 0.95 - rect.bottom) / (vh * 0.3)));
+      var eased  = easeOut(prog);
+
+      var stageW = stage.offsetWidth;
+      var startX = stageW / 2 - dmdW / 2;
+      var travel = stageW - 2 * margin - dmdW;
+
+      items.forEach(function (item, i) {
+        var finalX = margin + i * travel / (count - 1);
+        var x      = startX + (finalX - startX) * eased;
+        item.style.left = x + 'px';
+      });
+
+      if (hline) {
+        hline.style.width = ((stageW - 2 * margin) * eased) + 'px';
+      }
+
+      /* Kick off auto-highlight the moment spread reaches 100% */
+      if (prog >= 1 && !wasSpread) {
+        wasSpread = true;
+        startHighlight();
+      } else if (prog < 1 && wasSpread) {
+        wasSpread = false;
+        stopHighlight();
+      }
+    }
+
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  }());
+
+  /* AAVA SUB LINE (top) — SCROLL-DRIVEN GROW */
+  (function () {
+    var line    = document.getElementById('aavaSubLine');
+    var section = document.getElementById('s-aava');
+    if (!line || !section) return;
+    function update() {
+      var rect = section.getBoundingClientRect();
+      var vh   = window.innerHeight;
+      var prog = Math.max(0, Math.min(1, (vh - rect.top - vh * 0.3) / (vh * 0.25)));
+      line.style.transform = 'scaleY(' + prog + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  }());
+
+  /* AAVA SUB LINE (bottom) — SCROLL-DRIVEN GROW */
+  (function () {
+    var line    = document.getElementById('aavaSubLineBottom');
+    var section = document.getElementById('s-aava');
+    if (!line || !section) return;
+    function update() {
+      var rect = section.getBoundingClientRect();
+      var vh   = window.innerHeight;
+      var prog = Math.max(0, Math.min(1, (vh - rect.top - vh * 0.45) / (vh * 0.25)));
+      line.style.transform = 'scaleY(' + prog + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  }());
+
+  /* AAVA TERMINAL ANIMATION + POSITIONING */
+  (function () {
+    var terminal = document.getElementById('aavaTerminal');
+    if (!terminal) return;
+
+    var subBox  = document.querySelector('.aava-sub');
+    var wrap    = document.querySelector('.aava-lower-wrap');
+
+    /* Position terminal: left = sub-box right edge + 60px, relative to lower-wrap */
+    function positionTerminal() {
+      if (!subBox || !wrap) return;
+      var subRect  = subBox.getBoundingClientRect();
+      var wrapRect = wrap.getBoundingClientRect();
+      var leftPx   = (subRect.right - wrapRect.left) + 60;
+      terminal.style.left = leftPx + 'px';
+    }
+
+    positionTerminal();
+    window.addEventListener('resize', positionTerminal);
+
+    /* Animation */
+    var lines = terminal.querySelectorAll('.aava-term-line, .aava-term-div');
+    var STEP  = 480;
+    var PAUSE = 2400;
+    var timers = [];
+
+    function clearTimers() { timers.forEach(clearTimeout); timers = []; }
+
+    function runCycle() {
+      clearTimers();
+      /* Reset scroll and hide all lines */
+      terminal.scrollTop = 0;
+      lines.forEach(function (el) { el.classList.remove('tvis'); });
+      /* Reveal one by one, scrolling down after each */
+      lines.forEach(function (el, i) {
+        timers.push(setTimeout(function () {
+          el.classList.add('tvis');
+          terminal.scrollTop = terminal.scrollHeight;
+        }, i * STEP));
+      });
+      timers.push(setTimeout(runCycle, lines.length * STEP + PAUSE));
+    }
+
+    var obs = new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting) { runCycle(); obs.disconnect(); }
+    }, { threshold: 0.2 });
+    obs.observe(terminal);
+  }());
+
+  /* AAVA OPTION 2 — INTERACTIVE GRID CANVAS (teal active colour) */
+  (function () {
+    var canvas  = document.getElementById('aavaGridCanvas2');
+    var section = document.getElementById('s-aava-2');
+    if (!canvas || !section) return;
+    var ctx = canvas.getContext('2d');
+
+    var SPX    = 48, SPY = 56, DOT_R = 0.8, COLOR_R = 150;
+    var C_BASE = [255, 255, 255, 0.15];        /* white base on black */
+    var C_ACT  = [255, 255, 255, 1.00];        /* white active */
+
+    var W = 0, H = 0, dpr = 1;
+    var pts = [], rows = 0, cols = 0;
+    var mx = -9999, my = -9999;
+    var rafPending = false;
+
+    function colorAt(px, py) {
+      var t = Math.max(0, 1 - Math.hypot(px - mx, py - my) / COLOR_R);
+      t = t * t;
+      var r = (C_BASE[0] + (C_ACT[0] - C_BASE[0]) * t) | 0;
+      var g = (C_BASE[1] + (C_ACT[1] - C_BASE[1]) * t) | 0;
+      var b = (C_BASE[2] + (C_ACT[2] - C_BASE[2]) * t) | 0;
+      var a =  C_BASE[3] + (C_ACT[3] - C_BASE[3]) * t;
+      return 'rgba(' + r + ',' + g + ',' + b + ',' + a.toFixed(3) + ')';
+    }
+
+    function build() {
+      pts = []; cols = Math.ceil(W / SPX); rows = Math.ceil(H / SPY);
+      for (var r = 0; r <= rows; r++) {
+        pts[r] = [];
+        for (var c = 0; c <= cols; c++) { pts[r][c] = { x: c * SPX, y: r * SPY }; }
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      ctx.lineWidth = 0.5;
+      var r, c, p1, p2;
+      for (r = 0; r <= rows; r++) {
+        for (c = 0; c < cols; c++) {
+          p1 = pts[r][c]; p2 = pts[r][c + 1];
+          ctx.strokeStyle = colorAt((p1.x + p2.x) / 2, p1.y);
+          ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+        }
+      }
+      for (c = 0; c <= cols; c++) {
+        for (r = 0; r < rows; r++) {
+          p1 = pts[r][c]; p2 = pts[r + 1][c];
+          ctx.strokeStyle = colorAt(p1.x, (p1.y + p2.y) / 2);
+          ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+        }
+      }
+      for (r = 0; r <= rows; r++) {
+        for (c = 0; c <= cols; c++) {
+          var pt = pts[r][c];
+          ctx.fillStyle = colorAt(pt.x, pt.y);
+          ctx.beginPath(); ctx.arc(pt.x, pt.y, DOT_R, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+    }
+
+    function requestDraw() {
+      if (!rafPending) { rafPending = true; requestAnimationFrame(function () { draw(); rafPending = false; }); }
+    }
+
+    function resize2() {
+      if (section.style.display === 'none') return;
+      dpr = window.devicePixelRatio || 1;
+      W = section.offsetWidth; H = section.offsetHeight;
+      canvas.width  = Math.round(W * dpr);
+      canvas.height = Math.round(H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      build(); draw();
+    }
+
+    section.addEventListener('mousemove', function (e) {
+      var rect = canvas.getBoundingClientRect();
+      mx = e.clientX - rect.left; my = e.clientY - rect.top;
+      requestDraw();
+    });
+    section.addEventListener('mouseleave', function () { mx = -9999; my = -9999; requestDraw(); });
+    window.addEventListener('resize', resize2);
+
+    /* Expose so the toggle can trigger resize on show */
+    window._aavaGrid2Resize = resize2;
+  }());
+
+  /* AAVA OPTION 2 — DIAMOND DISPERSE */
+  var disperseUpdate2 = null;
+  (function () {
+    var stage2 = document.getElementById('aavaDisperseStage2');
+    var hline2 = document.getElementById('aavaDisperseHline2');
+    var sec2   = document.getElementById('s-aava-2');
+    if (!stage2) return;
+
+    var items2     = Array.prototype.slice.call(stage2.querySelectorAll('.aava-dmd'));
+    var count2     = items2.length;
+    var dmdW       = 198;
+    var margin     = 80;
+    var hlTimer2   = null;
+    var hlIdx2     = -1;
+    var wasSpread2 = false;
+
+    function easeOut2(t) { return 1 - Math.pow(1 - t, 3); }
+
+    function setLit2(i) {
+      items2.forEach(function (item, j) { item.classList.toggle('aava-dmd--lit', j === i); });
+      hlIdx2 = i;
+    }
+
+    function startHighlight2() {
+      if (hlTimer2) return;
+      setLit2(0);
+      hlTimer2 = setInterval(function () { setLit2((hlIdx2 + 1) % count2); }, 900);
+    }
+
+    function stopHighlight2() {
+      if (hlTimer2) { clearInterval(hlTimer2); hlTimer2 = null; }
+      items2.forEach(function (item) { item.classList.remove('aava-dmd--lit'); });
+      hlIdx2 = -1;
+    }
+
+    function update2() {
+      if (!sec2 || sec2.style.display === 'none') return;
+      var rect   = stage2.getBoundingClientRect();
+      var vh     = window.innerHeight;
+      var prog   = Math.max(0, Math.min(1, (vh * 0.95 - rect.bottom) / (vh * 0.3)));
+      var eased  = easeOut2(prog);
+
+      var stageW = stage2.offsetWidth;
+      if (stageW === 0) return;
+      var startX = stageW / 2 - dmdW / 2;
+      var travel = stageW - 2 * margin - dmdW;
+
+      items2.forEach(function (item, i) {
+        var finalX = margin + i * travel / (count2 - 1);
+        var x      = startX + (finalX - startX) * eased;
+        item.style.left = x + 'px';
+      });
+
+      if (hline2) {
+        hline2.style.width = ((stageW - 2 * margin) * eased) + 'px';
+      }
+
+      if (prog >= 1 && !wasSpread2) {
+        wasSpread2 = true; startHighlight2();
+      } else if (prog < 1 && wasSpread2) {
+        wasSpread2 = false; stopHighlight2();
+      }
+    }
+
+    disperseUpdate2 = update2;
+    window.addEventListener('scroll', update2, { passive: true });
+    window.addEventListener('resize', update2);
+  }());
+
+  /* AAVA OPTION TOGGLE */
+  (function () {
+    var btn1  = document.getElementById('aavaBtn1');
+    var btn2  = document.getElementById('aavaBtn2');
+    var sec1  = document.getElementById('s-aava');
+    var sec2  = document.getElementById('s-aava-2');
+    if (!btn1 || !btn2 || !sec2) return;
+
+    function showAava(n) {
+      if (n === 1) {
+        sec1.style.display = '';
+        sec2.style.display = 'none';
+        btn1.classList.add('active');
+        btn2.classList.remove('active');
+      } else {
+        sec1.style.display = 'none';
+        sec2.style.display = '';
+        btn1.classList.remove('active');
+        btn2.classList.add('active');
+        /* Trigger scroll-reveal and terminal for newly visible section */
+        sec2.querySelectorAll('.rv:not(.in)').forEach(function (el) { rvObs.observe(el); });
+        initTerminal2();
+        positionTerminal2();
+        /* Kick off grid canvas and disperse for option 2 */
+        if (window._aavaGrid2Resize) window._aavaGrid2Resize();
+        if (disperseUpdate2) disperseUpdate2();
+      }
+    }
+
+    btn1.addEventListener('click', function () { showAava(1); });
+    btn2.addEventListener('click', function () { showAava(2); });
+  }());
+
+  /* AAVA OPTION 2 — TERMINAL POSITIONING */
+  var terminalTimer2 = [];
+  function positionTerminal2() {
+    var terminal2 = document.getElementById('aavaTerminal2');
+    var sec2      = document.getElementById('s-aava-2');
+    if (!terminal2 || !sec2) return;
+    var subBox2  = sec2.querySelector('.aava-sub');
+    var wrap2    = sec2.querySelector('.aava-lower-wrap');
+    if (!subBox2 || !wrap2) return;
+    var subRect  = subBox2.getBoundingClientRect();
+    var wrapRect = wrap2.getBoundingClientRect();
+    terminal2.style.left = ((subRect.right - wrapRect.left) + 60) + 'px';
+  }
+  window.addEventListener('resize', positionTerminal2);
+
+  /* AAVA OPTION 2 — TERMINAL ANIMATION */
+  var term2Started = false;
+  function initTerminal2() {
+    if (term2Started) return;
+    term2Started = true;
+    var terminal2 = document.getElementById('aavaTerminal2');
+    if (!terminal2) return;
+    var lines2 = terminal2.querySelectorAll('.aava-term-line, .aava-term-div');
+    var STEP = 480, PAUSE = 2400;
+
+    function runCycle2() {
+      terminalTimer2.forEach(clearTimeout); terminalTimer2 = [];
+      terminal2.scrollTop = 0;
+      lines2.forEach(function (el) { el.classList.remove('tvis'); });
+      lines2.forEach(function (el, i) {
+        terminalTimer2.push(setTimeout(function () {
+          el.classList.add('tvis');
+          terminal2.scrollTop = terminal2.scrollHeight;
+        }, i * STEP));
+      });
+      terminalTimer2.push(setTimeout(runCycle2, lines2.length * STEP + PAUSE));
+    }
+    runCycle2();
+  }
+
+  /* AAVA OPTION 2 — SUB LINE SCROLL ANIMATION */
+  (function () {
+    var line2   = document.getElementById('aavaSubLine2');
+    var lineB2  = document.getElementById('aavaSubLineBottom2');
+    var sec2    = document.getElementById('s-aava-2');
+    if (!line2 || !sec2) return;
+    function update2() {
+      if (sec2.style.display === 'none') return;
+      var rect = sec2.getBoundingClientRect();
+      var vh   = window.innerHeight;
+      var prog = Math.max(0, Math.min(1, (vh - rect.top - vh * 0.3) / (vh * 0.25)));
+      line2.style.transform = 'scaleY(' + prog + ')';
+      if (lineB2) lineB2.style.transform = 'scaleY(' + prog + ')';
+    }
+    window.addEventListener('scroll', update2, { passive: true });
+  }());
+
+  /* REAL IMPACT TOGGLE */
+  (function () {
+    var btn1    = document.getElementById('rimpBtn1');
+    var btn2    = document.getElementById('rimpBtn2');
+    var sec1    = document.getElementById('s-impact');
+    var sec1Wrap = sec1 ? sec1.parentElement : null; /* the sticky wrapper div */
+    var sec2    = document.getElementById('s-rimp');
+    if (!btn1 || !btn2 || !sec2) return;
+
+    function showOption(n) {
+      if (n === 1) {
+        if (sec1Wrap) sec1Wrap.style.display = '';
+        sec2.style.display = 'none';
+        btn1.classList.add('active');
+        btn2.classList.remove('active');
+      } else {
+        if (sec1Wrap) sec1Wrap.style.display = 'none';
+        sec2.style.display = '';
+        btn1.classList.remove('active');
+        btn2.classList.add('active');
+        /* Trigger scroll-reveal on newly visible items */
+        sec2.querySelectorAll('.rv:not(.in)').forEach(function (el) { rvObs.observe(el); });
+      }
+    }
+
+    btn1.addEventListener('click', function () { showOption(1); });
+    btn2.addEventListener('click', function () { showOption(2); });
+  }());
+
+}());
+</script>
+
+</body>
+</html>
