@@ -451,154 +451,56 @@
       line-height: 1.6;
     }
 
-    /* Dot + stem */
-    .edge-dot-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 0;
-    }
-    .edge-dot {
-      width: 12px; height: 12px;
-      border-radius: 50%;
-      background: var(--primary-500);
-    }
-    .edge-stem {
-      width: 1px; height: 48px;
-      background: var(--primary-500);
-    }
-
-    /* Fork container — arms are absolutely positioned inside */
-    .edge-fork-wrap {
-      position: relative;
-    }
-
-    /* Left arm — ┌ shape */
-    .edge-fork-left {
-      position: absolute;
-      top: 0;
-      left: 24%;
-      right: 50%;
-      height: 80px;
-      border-top: 1px solid var(--primary-500);
-      border-left: 1px solid var(--primary-500);
-      border-top-left-radius: 24px;
-      pointer-events: none;
-    }
-
-    /* Right arm — ┐ shape (taller, matches col offset 80 + 160 = 240px) */
-    .edge-fork-right {
-      position: absolute;
-      top: 0;
-      left: 50%;
-      right: 24%;
-      height: 240px;
-      border-top: 1px solid var(--primary-500);
-      border-right: 1px solid var(--primary-500);
-      border-top-right-radius: 24px;
-      pointer-events: none;
-    }
-
     /* Cards grid */
     .edge-cards-inner {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 32px;
-      padding-top: 80px;
-      align-items: start;
+      align-items: stretch;
+      max-width: 880px;
+      margin: 0 auto;
     }
 
-    /* Column wrapper: label → line → card, all centered */
+    /* Column wrapper */
     .edge-col {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 0;
     }
 
-    /* Talent column sits lower */
-    .edge-col--right { margin-top: 160px; }
-
-    /* Bordered label container — centered above card */
+    /* Label inside card — no border */
     .edge-label {
-      display: inline-flex;
-      align-items: center;
+      display: block;
+      color: var(--primary-500);
+      margin-bottom: 14px;
+    }
+
+    .edge-label h4 {
+      margin: 0;
       font-family: var(--font-primary);
-      font-size: 20px;
+      font-size: 24px;
       font-weight: 400;
-      line-height: 1.35;
+      line-height: 1.3;
       letter-spacing: 0;
       text-transform: none;
-      color: var(--primary-500);
-      border: 1px solid var(--primary-500);
-      border-radius: 2px;
-      padding: 10px 20px;
-      background: transparent;
-    }
-
-    /* Engineering: violet stroke, no fill (default above) */
-
-    /* Talent: violet fill, white text */
-    .edge-label h5 {
-      margin: 0;
-      font-size: inherit;
-      font-weight: inherit;
-      line-height: inherit;
       color: inherit;
     }
 
     .edge-label--talent {
-      background: var(--primary-500);
-      color: var(--neutral-0);
+      color: var(--accent-100);
     }
 
-    /* 32px line connecting label bottom → card top */
+    /* hidden — kept for compat */
     .edge-col-line {
-      width: 1px;
-      height: 32px;
-      background: var(--primary-500);
+      display: none;
       flex-shrink: 0;
     }
 
-    /* ── Connector draw animation ────────────────────────
-       Initial: all hidden. .connector-drawn class reveals
-       each element in sequence: dot → stem → arms → col-lines
-    ─────────────────────────────────────────────────────── */
-    .edge-dot {
-      transform: scale(0);
-      opacity: 0;
-      transition: transform 0.25s ease, opacity 0.25s ease;
-    }
-    .edge-stem {
-      height: 0;
-      transition: height 0.3s ease 0.2s;
-    }
-    .edge-fork-left {
-      clip-path: inset(0 0 100% 0);
-      transition: clip-path 0.45s ease 0.45s;
-    }
-    .edge-fork-right {
-      clip-path: inset(0 0 100% 0);
-      transition: clip-path 0.6s ease 0.5s;
-    }
-    .edge-col-line {
-      height: 0;
-      transition: height 0.25s ease;
-    }
-    .edge-col:not(.edge-col--right) .edge-col-line { transition-delay: 0.85s; }
-    .edge-col--right .edge-col-line               { transition-delay: 1.05s; }
-
-    /* Triggered states */
-    .connector-drawn .edge-dot        { transform: scale(1); opacity: 1; }
-    .connector-drawn .edge-stem       { height: 48px; }
-    .connector-drawn .edge-fork-left  { clip-path: inset(0 0 0 0); }
-    .connector-drawn .edge-fork-right { clip-path: inset(0 0 0 0); }
-    .connector-drawn .edge-col-line   { height: 32px; }
-
-    /* Card — 75% width, centered in column */
     /* Card */
     .edge-card {
-      width: 75%;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
       position: relative;
       background: var(--bg-default);
       border: none;
@@ -639,7 +541,7 @@
     }
     .edge-card:hover .edge-card-img img { transform: scale(1.04); }
 
-    .edge-card-body { padding: 36px 32px; }
+    .edge-card-body { padding: 36px 32px; flex: 1; }
 
     .edge-card-type {
       font-size: 11px;
@@ -1304,68 +1206,51 @@
       <p class="edge-sub">There's more than one way to build a career here.</p>
     </div>
 
-    <!-- Center dot + stem -->
-    <div class="edge-dot-wrap" aria-hidden="true">
-      <div class="edge-dot"></div>
-      <div class="edge-stem"></div>
-    </div>
+    <div class="edge-cards-inner">
 
-    <!-- Fork wrap: arms + cards share the same positioned container -->
-    <div class="edge-fork-wrap">
-      <!-- Left arm: ┌ -->
-      <div class="edge-fork-left" aria-hidden="true"></div>
-      <!-- Right arm: ┐ (taller) -->
-      <div class="edge-fork-right" aria-hidden="true"></div>
-
-      <!-- Cards pushed down by padding-top matching arm heights -->
-      <div class="edge-cards-inner">
-
-        <!-- Engineering column: label → 32px line → card -->
-        <div class="edge-col rv d1">
-          <div class="edge-label"><h5>Engineering</h5></div>
-          <div class="edge-col-line" aria-hidden="true"></div>
-          <div class="edge-card">
-            <div class="edge-card-body">
-              <p>Build digital engineering solutions for global brands.</p>
-              <a href="https://ascendion.com/careers/america/#joblisting" class="btn btn-primary" target="_blank" rel="noopener">
-                <span class="btn__label">Contact</span>
-                <span class="btn__icon" aria-hidden="true">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </span>
-              </a>
-            </div>
-            <div class="edge-card-img">
-              <img src="../assets/images/Careers/Engineering-img.png" alt="Engineering at Ascendion">
-            </div>
+      <!-- Engineering column -->
+      <div class="edge-col rv d1">
+        <div class="edge-card">
+          <div class="edge-card-body">
+            <div class="edge-label"><h4>Engineering</h4></div>
+            <p>Build digital engineering solutions for global brands.</p>
+            <a href="https://ascendion.com/careers/america/#joblisting" class="btn btn-primary" target="_blank" rel="noopener">
+              <span class="btn__label">Contact</span>
+              <span class="btn__icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </a>
+          </div>
+          <div class="edge-card-img">
+            <img src="../assets/images/Careers/Engineering-img.png" alt="Engineering at Ascendion">
           </div>
         </div>
+      </div>
 
-        <!-- Talent column: label → 32px line → card (violet), offset lower -->
-        <div class="edge-col edge-col--right rv d2">
-          <div class="edge-label edge-label--talent"><h5>Talent &amp; Corporate</h5></div>
-          <div class="edge-col-line" aria-hidden="true"></div>
-          <div class="edge-card edge-card--talent">
-            <div class="edge-card-body">
-              <p>Help people reach their career goals with personalized guidance and support. Connect talent to opportunities and help grow the business.</p>
-              <a href="mailto:corporatecareers@ascendion.com" class="btn btn-primary">
-                <span class="btn__label">Contact</span>
-                <span class="btn__icon" aria-hidden="true">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </span>
-              </a>
-            </div>
-            <div class="edge-card-img">
-              <img src="../assets/images/Careers/Talent&Corporate-img.png" alt="Talent and Corporate at Ascendion">
-            </div>
+      <!-- Talent column -->
+      <div class="edge-col rv d2">
+        <div class="edge-card edge-card--talent">
+          <div class="edge-card-body">
+            <div class="edge-label edge-label--talent"><h4>Talent &amp; Corporate</h4></div>
+            <p>Help people reach their career goals with personalized guidance and support. Connect talent to opportunities and help grow the business.</p>
+            <a href="mailto:corporatecareers@ascendion.com" class="btn btn-primary">
+              <span class="btn__label">Contact</span>
+              <span class="btn__icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </a>
+          </div>
+          <div class="edge-card-img">
+            <img src="../assets/images/Careers/Talent&Corporate-img.png" alt="Talent and Corporate at Ascendion">
           </div>
         </div>
+      </div>
 
-      </div><!-- /.edge-cards-inner -->
-    </div><!-- /.edge-fork-wrap -->
+    </div><!-- /.edge-cards-inner -->
 
   </div>
 </section>
