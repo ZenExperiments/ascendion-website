@@ -287,12 +287,68 @@
     ===================================================== */
     .hero-section {
       background: var(--bg-dark);
-      height: 100vh;
-      min-height: 640px;
+      height: calc(100vh - 150px);
+      min-height: 560px;
       position: relative;
       overflow: hidden;
       display: flex;
       flex-direction: column;
+    }
+
+    /* ── HERO VIEW TOGGLE ──────────────────────────────── */
+    .hero-view-toggle {
+      position: absolute;
+      top: 96px;
+      right: var(--px);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .hero-view-btn {
+      font-family: var(--font-primary);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 8px 14px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: transparent;
+      color: rgba(255,255,255,0.45);
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.2s;
+    }
+    .hero-view-btn.active {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      border-color: rgba(255,255,255,0.5);
+    }
+    .hero-view-btn:hover:not(.active) {
+      color: rgba(255,255,255,0.75);
+      border-color: rgba(255,255,255,0.35);
+    }
+
+    /* ── OPTION 02: bottom inline nav (absolutely positioned) ── */
+    .hero-inner--opt2 .hero-slides-wrap {
+      padding-bottom: 80px; /* clear space for the absolute nav */
+    }
+    .hero-nav--bottom {
+      position: absolute !important;
+      bottom: 32px;
+      left: var(--px);
+      right: var(--px);
+      width: auto !important;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      justify-content: flex-start !important;
+      gap: 48px !important;
+      padding: 0 !important;
+    }
+    .hero-nav--bottom .hero-nav-item {
+      flex: 1;
+      flex-direction: column;
+      gap: 8px;
     }
     /* City skyline background image */
     .hero-bg {
@@ -312,23 +368,19 @@
       z-index: 1;
     }
     .hero-inner {
-      position: relative;
+      position: absolute;
+      inset: 0;
       z-index: 2;
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 48px;
-      height: 100%;
-      padding: 0 var(--px) 72px;
+      display: block;
+      padding: 0 var(--px);
     }
 
     /* ── LEFT COLUMN: slides ─────────────────────────── */
     .hero-slides-wrap {
-      flex: 1;
-      position: relative;
-      height: 100%;
+      position: absolute;
+      top: 0; bottom: 0; left: var(--px);
+      right: calc(var(--px) + 312px + 48px);
       padding-right: 60px;
-      max-width: 860px;
     }
     /* Each slide fills the full column height, content anchored to bottom */
     .hero-slides {
@@ -341,7 +393,7 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      padding-top: 56px;
+      padding-top: 96px;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.65s ease;
@@ -440,13 +492,13 @@
 
     /* ── RIGHT COLUMN: nav list ──────────────────────── */
     .hero-nav {
+      position: absolute;
+      bottom: 32px;
+      right: var(--px);
       width: 312px;
-      flex-shrink: 0;
       display: flex;
       flex-direction: column;
       gap: 32px;
-      justify-content: flex-end;
-      padding-bottom: 4px;
     }
     .hero-nav-item {
       display: flex;
@@ -722,6 +774,32 @@
      * Total track: 450vh → sticky window ≈ 350vh for 6 cards
      */
     .impact-scroll-track { height: 450vh; }
+    .impact3-scroll-track { height: 450vh; }
+    /* Option 3 — horizontal parade strip */
+    .imp3-stage { position: absolute; inset: 0; z-index: 10; }
+    .imp3-strip {
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 96px;
+      will-change: transform;
+    }
+    .imp3-strip .imp-card {
+      position: relative !important;
+      top: auto !important; left: auto !important; right: auto !important;
+      flex-shrink: 0;
+      width: calc((100vw - var(--px) * 2 - 32px) / 3 + 100px);
+      height: 392px;
+      transform: none !important;
+    }
+    /* Staggered vertical levels — each card at a distinct height */
+    .imp3-strip .imp-card:nth-child(1) { margin-top: 80px; }
+    .imp3-strip .imp-card:nth-child(2) { margin-top: 380px; }
+    .imp3-strip .imp-card:nth-child(3) { margin-top: 180px; }
+    .imp3-strip .imp-card:nth-child(4) { margin-top: 60px; }
+    .imp3-strip .imp-card:nth-child(5) { margin-top: 340px; }
+    .imp3-strip .imp-card:nth-child(6) { margin-top: 200px; }
 
     /*
      * Intro (non-sticky): 80px top padding → label → body copy → 80px bottom padding.
@@ -889,90 +967,88 @@
     .wwd-head { text-align: center; max-width: 640px; margin: 0 auto 56px; }
     .wwd-head h2 { color: var(--text-primary); margin-bottom: 16px; }
     .wwd-sub { font-size: 18px; color: var(--text-secondary); line-height: 1.65; }
-    .wwd-accordion { border-top: 1px solid var(--neutral-200); }
-    /* Row: [icon+title trigger] [body — right col] [chevron toggle — far right] */
+    /* Figma hover-expand list */
+    .wwd-list { border-top: 0.5px solid #b4b4b4; border-bottom: 0.5px solid #b4b4b4; }
     .wwd-item {
-      display: flex;
-      align-items: flex-start;
-      border-bottom: 1px solid var(--neutral-200);
+      padding: 26px 24px;
+      border-bottom: 0.5px solid #b4b4b4;
+      transition: background 0.25s ease;
     }
-    /* Left: Lucide icon + title, no chevron */
-    .wwd-trigger {
-      flex: 0 0 44%;
+    .wwd-item:last-child { border-bottom: none; }
+    .wwd-item:hover { background: var(--primary-500); }
+    .wwd-icon {
+      width: 20px;
+      height: 20px;
+      color: var(--neutral-600);
+      transition: color 0.25s ease;
+      flex-shrink: 0;
+    }
+    .wwd-item:hover .wwd-icon { color: rgba(255,255,255,0.7); }
+    .wwd-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 40px;
+    }
+    .wwd-name-group {
       display: flex;
       align-items: center;
-      gap: 16px;
-      padding: 28px 0;
-      background: none;
-      border: none;
-      cursor: pointer;
-      text-align: left;
+      gap: 12px;
     }
-    .wwd-trigger:hover .wwd-title { color: var(--primary-900); }
-    /* Lucide icon — no box, just the icon itself */
-    .wwd-lead-icon {
-      flex-shrink: 0;
-      width: 36px; height: 36px;
-      display: flex; align-items: center; justify-content: center;
-      color: var(--primary-500);
-    }
-    .wwd-title {
-      font-family: var(--font-display);
+    .wwd-name {
+      font-family: var(--font-primary);
       font-size: 24px;
       font-weight: 400;
+      line-height: 32px;
       color: var(--text-primary);
-      flex: 1;
-      transition: color 0.25s;
-      line-height: 1.2;
+      transition: color 0.25s ease;
     }
-    .wwd-item.open { background: var(--primary-500); border-bottom-color: var(--primary-500); padding-left: 32px; padding-right: 32px; }
-    .wwd-item.open .wwd-title { color: #ffffff; }
-    .wwd-item.open .wwd-trigger:hover .wwd-title { color: rgba(255,255,255,0.85); }
-    .wwd-item.open .wwd-lead-icon { color: rgba(255,255,255,0.85); }
-    /* Middle: body copy + CTA */
-    .wwd-body {
-      flex: 1;
-      overflow: hidden;
+    .wwd-item:hover .wwd-name { color: #fff; }
+    .wwd-right {
+      flex: 0 0 560px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 0;
+    }
+    .wwd-desc {
+      font-size: 16px;
+      line-height: 24px;
+      color: #212121;
+      margin: 0;
+      padding: 0;
+      transition: color 0.25s ease;
+    }
+    .wwd-item:hover .wwd-desc { color: rgba(255,255,255,0.85); }
+    /* Button wrapper — collapses to 0 when not hovered */
+    .wwd-btn-wrap {
       max-height: 0;
-      padding-left: 40px;
-      padding-top: 0;
-      padding-bottom: 0;
-      transition: max-height 0.45s ease, padding-top 0.45s ease, padding-bottom 0.45s ease;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.35s ease, opacity 0.2s ease;
     }
-    .wwd-item.open .wwd-body {
-      max-height: 400px;
-      padding-top: 28px;
-      padding-bottom: 40px;
+    .wwd-item:hover .wwd-btn-wrap {
+      max-height: 60px;
+      opacity: 1;
     }
-    .wwd-body-inner p { font-size: 16px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 24px; }
-    .wwd-item.open .wwd-body-inner p { color: rgba(255,255,255,0.85); }
-    .wwd-item.open .btn-text {
+    .wwd-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-primary);
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1;
       background: #000000;
       color: #ffffff;
-      padding: 14px 20px;
+      border: none;
       border-radius: 2px;
-    }
-    .wwd-item.open .btn-text .btn__icon { color: var(--primary-500); }
-    /* Far right: chevron toggle button — 160px margin keeps it clear of body copy */
-    .wwd-toggle {
-      flex-shrink: 0;
-      width: 40px; height: 40px;
-      margin-top: 24px;
-      margin-left: 160px;
-      border: 1px solid var(--neutral-200);
-      border-radius: 50%;
-      background: none;
+      padding: 16px 24px;
       cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      color: var(--neutral-600);
-      transition: background 0.3s, border-color 0.3s, color 0.3s, transform 0.35s;
+      text-decoration: none;
+      white-space: nowrap;
     }
-    .wwd-item.open .wwd-toggle {
-      background: rgba(255,255,255,0.2);
-      border-color: rgba(255,255,255,0.4);
-      color: #fff;
-      transform: rotate(180deg);
-    }
+    .wwd-btn:hover { background: #1a1a1a; }
 
     /* =====================================================
        AAVA SECTION  (bg-default #fff)
@@ -1562,7 +1638,8 @@
       transition: background 0.2s, color 0.2s, border-color 0.2s;
     }
     .section-toggle-btn:first-child { border-radius: 2px 0 0 2px; }
-    .section-toggle-btn:last-child  { border-radius: 0 2px 2px 0; margin-left: -1px; }
+    .section-toggle-btn + .section-toggle-btn { margin-left: -1px; border-radius: 0; }
+    .section-toggle-btn:last-child  { border-radius: 0 2px 2px 0; }
     .section-toggle-btn.active      { background: var(--primary-500); color: #fff; border-color: var(--primary-500); z-index: 1; position: relative; }
     .section-toggle-btn:hover:not(.active) { border-color: var(--primary-500); color: var(--primary-500); }
 
@@ -1932,19 +2009,6 @@
 </head>
 <body>
 
-<!-- ===================================================
-     ANNOUNCE BAR  ·  bg-dark-subtle #1a1a1a
-=================================================== -->
-<div class="announce">
-  <span class="announce-tag">Ascendion × Everest</span>
-  <span class="announce-text">Named a Market Leader in HFS Horizons: Agentic Services, 2026</span>
-  <a href="#" class="announce-link">
-    Read the Report
-    <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-      <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </a>
-</div>
 
 <!-- ===================================================
      NAV  ·  bg-subtle #f4f4f4  ·  sticky
@@ -2023,115 +2087,153 @@
 
   <div class="hero-overlay" aria-hidden="true"></div>
 
-  <div class="hero-inner">
+  <!-- View toggle — top right -->
+  <div class="hero-view-toggle">
+    <button class="hero-view-btn active" data-hero-view="opt1">Option 01</button>
+    <button class="hero-view-btn" data-hero-view="opt2">Option 02</button>
+  </div>
 
-    <!-- ── LEFT: slide content ────────────────────────── -->
+  <!-- =====================================================
+       OPTION 01 — original: slide left / nav right
+  ===================================================== -->
+  <div class="hero-inner" id="heroOpt1">
+
+    <!-- LEFT: slide content -->
     <div class="hero-slides-wrap">
-      <div class="hero-slides" id="heroSlides">
+      <div class="hero-slides" id="heroSlides1">
 
-        <!-- Slide 1: Ascendion x HFS -->
         <div class="hero-slide active" data-slide="0">
           <h1 class="hero-slide-h1">Ascendion x HFS</h1>
           <p class="hero-slide-body">Ascendion has been named a Horizon 3 Market Leader, recognized for its agentic engineering platform, measurable SDLC acceleration, and early evidence of the shift toward Services-as-Software.</p>
-          <a href="#" class="btn-hero">
-            Read Report
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
+          <a href="#" class="btn-hero">Read Report <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
 
-        <!-- Slide 2: Ascendion X Everest -->
         <div class="hero-slide" data-slide="1">
           <h1 class="hero-slide-h1">Ascendion X Everest</h1>
           <p class="hero-slide-body">AI-Powered Global Capability Centers: The New Value Engine for Global Enterprises.</p>
-          <a href="#" class="btn-hero">
-            Read Report
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
+          <a href="#" class="btn-hero">Read Report <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
 
-        <!-- Slide 3: CIO Feature -->
         <div class="hero-slide" data-slide="2">
           <h1 class="hero-slide-h1">Ascendion Featured on CIO: Building an AI-Powered Company</h1>
           <p class="hero-slide-body">Karthik Krishnamurthy explains his operating-model decision to rebuild Ascendion as an AI-powered enterprise from the inside out.</p>
-          <a href="#" class="btn-hero">
-            Read More
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
+          <a href="#" class="btn-hero">Read More <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
 
-        <!-- Slide 4: Services-as-Software -->
         <div class="hero-slide" data-slide="3">
           <h1 class="hero-slide-h1">The Birth of Services-as-Software</h1>
           <p class="hero-slide-body">A podcast conversation with Phil Fersht (HFS Research) and Karthik Krishnamurthy (Ascendion) on how AI is reshaping enterprise services, closing the trust gap, and redefining what it takes to win the next decade.</p>
-          <a href="#" class="btn-hero">
-            Watch the Podcast
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
+          <a href="#" class="btn-hero">Watch the Podcast <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
 
-      </div><!-- /hero-slides -->
-
-      <!-- Scroll to Explore — pinned bottom-left, aligns with nav bottom -->
-      <a href="#s-intro" class="hero-scroll-row" aria-label="Scroll to next section">
-        Scroll to Explore <span class="hero-scroll-arrow"></span>
-      </a>
+      </div><!-- /heroSlides1 -->
 
     </div><!-- /hero-slides-wrap -->
 
-    <!-- ── RIGHT: nav list ────────────────────────────── -->
-    <nav class="hero-nav" aria-label="Slide navigation" id="heroNav">
-
-      <div class="hero-nav-item active" data-nav="0" role="button" tabindex="0" aria-label="Slide 1: Agentic Era Leader">
+    <!-- RIGHT: vertical nav -->
+    <nav class="hero-nav" aria-label="Slide navigation" id="heroNav1">
+      <div class="hero-nav-item active" data-nav="0" role="button" tabindex="0">
         <div class="hero-nav-line"><div class="hero-nav-fill"></div></div>
         <div class="hero-nav-row">
-          <span class="hero-nav-arrow" aria-hidden="true">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#2ddcaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
+          <span class="hero-nav-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#2ddcaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           <span class="hero-nav-label">Agentic Era Leader</span>
         </div>
       </div>
-
-      <div class="hero-nav-item" data-nav="1" role="button" tabindex="0" aria-label="Slide 2: AI Powered GCCs">
+      <div class="hero-nav-item" data-nav="1" role="button" tabindex="0">
         <div class="hero-nav-line"><div class="hero-nav-fill"></div></div>
         <div class="hero-nav-row">
-          <span class="hero-nav-arrow" aria-hidden="true">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#2ddcaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
+          <span class="hero-nav-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#2ddcaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           <span class="hero-nav-label">AI Powered GCCs</span>
         </div>
       </div>
-
-      <div class="hero-nav-item" data-nav="2" role="button" tabindex="0" aria-label="Slide 3: Agentic Era Operating Model">
+      <div class="hero-nav-item" data-nav="2" role="button" tabindex="0">
         <div class="hero-nav-line"><div class="hero-nav-fill"></div></div>
         <div class="hero-nav-row">
-          <span class="hero-nav-arrow" aria-hidden="true">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#2ddcaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
+          <span class="hero-nav-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#2ddcaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           <span class="hero-nav-label">Agentic Era Operating Model</span>
         </div>
       </div>
-
-      <div class="hero-nav-item" data-nav="3" role="button" tabindex="0" aria-label="Slide 4: Services-as-Software">
+      <div class="hero-nav-item" data-nav="3" role="button" tabindex="0">
         <div class="hero-nav-line"><div class="hero-nav-fill"></div></div>
         <div class="hero-nav-row">
-          <span class="hero-nav-arrow" aria-hidden="true">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#2ddcaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
+          <span class="hero-nav-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#2ddcaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           <span class="hero-nav-label">Services-as-Software</span>
         </div>
       </div>
-
     </nav>
 
-  </div><!-- /hero-inner -->
+  </div><!-- /heroOpt1 -->
+
+  <!-- =====================================================
+       OPTION 02 — slide full width / nav bottom inline
+  ===================================================== -->
+  <div class="hero-inner hero-inner--opt2" id="heroOpt2" style="display:none">
+
+    <!-- Slide content — full width -->
+    <div class="hero-slides-wrap">
+      <div class="hero-slides" id="heroSlides2">
+
+        <div class="hero-slide active" data-slide="0">
+          <h1 class="hero-slide-h1">Ascendion x HFS</h1>
+          <p class="hero-slide-body">Ascendion has been named a Horizon 3 Market Leader, recognized for its agentic engineering platform, measurable SDLC acceleration, and early evidence of the shift toward Services-as-Software.</p>
+          <a href="#" class="btn-hero">Read Report <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+
+        <div class="hero-slide" data-slide="1">
+          <h1 class="hero-slide-h1">Ascendion X Everest</h1>
+          <p class="hero-slide-body">AI-Powered Global Capability Centers: The New Value Engine for Global Enterprises.</p>
+          <a href="#" class="btn-hero">Read Report <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+
+        <div class="hero-slide" data-slide="2">
+          <h1 class="hero-slide-h1">Ascendion Featured on CIO: Building an AI-Powered Company</h1>
+          <p class="hero-slide-body">Karthik Krishnamurthy explains his operating-model decision to rebuild Ascendion as an AI-powered enterprise from the inside out.</p>
+          <a href="#" class="btn-hero">Read More <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+
+        <div class="hero-slide" data-slide="3">
+          <h1 class="hero-slide-h1">The Birth of Services-as-Software</h1>
+          <p class="hero-slide-body">A podcast conversation with Phil Fersht (HFS Research) and Karthik Krishnamurthy (Ascendion) on how AI is reshaping enterprise services, closing the trust gap, and redefining what it takes to win the next decade.</p>
+          <a href="#" class="btn-hero">Watch the Podcast <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+
+      </div><!-- /heroSlides2 -->
+    </div><!-- /hero-slides-wrap -->
+
+    <!-- BOTTOM: horizontal inline nav -->
+    <nav class="hero-nav hero-nav--bottom" aria-label="Slide navigation" id="heroNav2">
+      <div class="hero-nav-item active" data-nav="0" role="button" tabindex="0">
+        <div class="hero-nav-line"><div class="hero-nav-fill"></div></div>
+        <div class="hero-nav-row">
+          <span class="hero-nav-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#2ddcaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="hero-nav-label">Agentic Era Leader</span>
+        </div>
+      </div>
+      <div class="hero-nav-item" data-nav="1" role="button" tabindex="0">
+        <div class="hero-nav-line"><div class="hero-nav-fill"></div></div>
+        <div class="hero-nav-row">
+          <span class="hero-nav-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#2ddcaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="hero-nav-label">AI Powered GCCs</span>
+        </div>
+      </div>
+      <div class="hero-nav-item" data-nav="2" role="button" tabindex="0">
+        <div class="hero-nav-line"><div class="hero-nav-fill"></div></div>
+        <div class="hero-nav-row">
+          <span class="hero-nav-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#2ddcaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="hero-nav-label">Agentic Era Operating Model</span>
+        </div>
+      </div>
+      <div class="hero-nav-item" data-nav="3" role="button" tabindex="0">
+        <div class="hero-nav-line"><div class="hero-nav-fill"></div></div>
+        <div class="hero-nav-row">
+          <span class="hero-nav-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#2ddcaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="hero-nav-label">Services-as-Software</span>
+        </div>
+      </div>
+    </nav>
+
+  </div><!-- /heroOpt2 -->
+
 </section>
 
 <!-- ===================================================
@@ -2237,7 +2339,7 @@
 <!-- ===================================================
      REAL IMPACT  ·  bg-dark #000 — sticky scroll
 =================================================== -->
-<div class="impact-scroll-track" id="impactScrollTrack">
+<div class="impact-scroll-track" id="impactScrollTrack" style="display:none">
 
   <!--
     Intro (non-sticky):
@@ -2265,7 +2367,7 @@
     <!-- Col 1: Banking (card 1) → Enterprise (card 5) -->
     <div class="impact-col">
       <article class="imp-card imp-card--img-right" id="impCard0">
-        <img class="imp-card-img" src="../assets/images/Home/banking-image.png" alt="">
+        <img class="imp-card-img" src="../assets/images/Home/banking-img.png" alt="">
         <div class="imp-card-inner">
           <span class="imp-tag">Banking</span>
           <div class="imp-stat">$300M</div>
@@ -2321,7 +2423,7 @@
           <span class="imp-tag">Fintech</span>
           <div class="imp-stat">50%</div>
           <h4 class="imp-title">Cost reduction to improve personal economy</h4>
-          <p class="imp-body">Banking platforms serving billions in assets modernized at half the cost, one-third the time—reshaping unit economics.</p>
+          <p class="imp-body">Banking platforms serving billions in ../assets modernized at half the cost, one-third the time—reshaping unit economics.</p>
         </div>
       </article>
     </div>
@@ -2333,8 +2435,9 @@
 
 <!-- Toggle bar: Real Impact options -->
 <div class="section-toggle-bar" id="rimpToggleBar" style="background: var(--bg-default);">
-  <button class="section-toggle-btn active" id="rimpBtn1">Option 1</button>
+  <button class="section-toggle-btn" id="rimpBtn1">Option 1</button>
   <button class="section-toggle-btn" id="rimpBtn2">Option 2</button>
+  <button class="section-toggle-btn active" id="rimpBtn3">Option 3</button>
 </div>
 
 <!-- ===================================================
@@ -2368,7 +2471,7 @@
 
       <article class="rimp-card" data-category="banking">
         <div class="rimp-card-bg"></div>
-        <img class="rimp-card-img" src="../assets/images/Home/banking-image.png" alt="">
+        <img class="rimp-card-img" src="../assets/images/Home/banking-img.png" alt="">
         <div class="rimp-card-inner">
           <span class="rimp-card-tag">Banking</span>
           <div class="rimp-stat">$300M</div>
@@ -2395,7 +2498,7 @@
           <span class="rimp-card-tag">Fintech</span>
           <div class="rimp-stat">50%</div>
           <h3 class="rimp-title">Cost reduction to improve personal economy</h3>
-          <p class="rimp-body">Banking platforms serving billions in assets modernized at half the cost, one-third the time—reshaping unit economics.</p>
+          <p class="rimp-body">Banking platforms serving billions in ../assets modernized at half the cost, one-third the time—reshaping unit economics.</p>
         </div>
       </article>
 
@@ -2438,6 +2541,91 @@
 </section>
 
 <!-- ===================================================
+     REAL IMPACT  ·  OPTION 3  —  horizontal slide (right → left)
+=================================================== -->
+<div class="impact3-scroll-track" id="impact3ScrollTrack">
+
+  <div class="impact-intro" id="impact3Intro">
+    <div class="impact-top">
+      <div class="lbl">Engineering to the Power of AI</div>
+      <p class="impact-desc">Innovation realized. Working production systems. Measurable business outcomes.</p>
+    </div>
+  </div>
+
+  <section class="impact-section" id="s-impact3">
+
+    <div class="impact-center">
+      <h2 class="impact-h2">Real<br>Impact</h2>
+    </div>
+
+    <div class="imp3-stage">
+      <div class="imp3-strip" id="imp3Strip">
+
+        <article class="imp-card imp-card--img-right">
+          <img class="imp-card-img" src="../assets/images/Home/banking-img.png" alt="">
+          <div class="imp-card-inner">
+            <span class="imp-tag">Banking</span>
+            <div class="imp-stat">$300M</div>
+            <h4 class="imp-title">Better banking service drives growth</h4>
+            <p class="imp-body">Top-five global bank transformed customer service for 10M+ customers—cutting costs while delivering faster, better experiences.</p>
+          </div>
+        </article>
+
+        <article class="imp-card imp-card--img-right">
+          <img class="imp-card-img" src="../assets/images/Home/Logistic-img.png" alt="">
+          <div class="imp-card-inner">
+            <span class="imp-tag">Logistics</span>
+            <div class="imp-stat">40%</div>
+            <h4 class="imp-title">Accelerated delivery gets 3B packages to the right place</h4>
+            <p class="imp-body">Global logistics provider accelerated operations with AI-driven forecasting and optimization. Operational impact at unprecedented scale.</p>
+          </div>
+        </article>
+
+        <article class="imp-card imp-card--violet">
+          <div class="imp-card-inner">
+            <span class="imp-tag">Research</span>
+            <div class="imp-stat">600K</div>
+            <h4 class="imp-title">Researchers managing $47B in grants</h4>
+            <p class="imp-body">Platform modernization accelerating discoveries in life sciences, climate research, and public health.</p>
+          </div>
+        </article>
+
+        <article class="imp-card imp-card--img-right">
+          <img class="imp-card-img" src="../assets/images/Home/Fintech-img.png" alt="">
+          <div class="imp-card-inner">
+            <span class="imp-tag">Fintech</span>
+            <div class="imp-stat">50%</div>
+            <h4 class="imp-title">Cost reduction to improve personal economy</h4>
+            <p class="imp-body">Banking platforms serving billions in ../assets modernized at half the cost, one-third the time—reshaping unit economics.</p>
+          </div>
+        </article>
+
+        <article class="imp-card imp-card--img-right">
+          <img class="imp-card-img" src="../assets/images/Home/HealthCare-img.png" alt="">
+          <div class="imp-card-inner">
+            <span class="imp-tag">Healthcare</span>
+            <div class="imp-stat">39M</div>
+            <h4 class="imp-title">Americans with better healthcare access</h4>
+            <p class="imp-body">Healthcare platforms transformed across 50 states—reducing wait times, lowering costs, improving care coordination.</p>
+          </div>
+        </article>
+
+        <article class="imp-card imp-card--teal">
+          <div class="imp-card-inner">
+            <span class="imp-tag">Enterprise</span>
+            <div class="imp-stat">16Mo</div>
+            <h4 class="imp-title">Portfolio exit accelerated</h4>
+            <p class="imp-body">Parallel modernization of five core products—compressing years into months, unlocking significant valuation impact.</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+  </section>
+</div>
+
+<!-- ===================================================
      WHAT WE DO  ·  bg-subtle #f4f4f4
 =================================================== -->
 <section class="wwd-section" id="s-wwd">
@@ -2451,158 +2639,126 @@
       <p class="wwd-sub rv d1">Platform, product, data, quality, experience. We deliver across the full spectrum with AAVA — our agentic platform — accelerating and improving every stage.</p>
     </div>
 
-    <div class="wwd-accordion rv d2" id="wwdAccordion">
+    <div class="wwd-list rv d2">
 
-      <!-- 01 Platform Engineering AI — layers-plus -->
-      <div class="wwd-item open">
-        <button class="wwd-trigger" aria-expanded="true">
-          <span class="wwd-lead-icon" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/><path d="M16 5v4"/><path d="M18 7h-4"/></svg>
-          </span>
-          <span class="wwd-title">Platform Engineering<sup>AI</sup></span>
-        </button>
-        <div class="wwd-body">
-          <div class="wwd-body-inner">
-            <p>Modernization, cloud migration, integration, greenfield and brownfield development. Our engineers use AAVA to accelerate delivery, quality, and transparency.</p>
-            <a href="#" class="btn btn-text"><span class="btn__label">Learn More</span><span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      <div class="wwd-item">
+        <div class="wwd-row">
+          <div class="wwd-name-group">
+            <svg class="wwd-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="16" height="5" rx="1"/><rect x="2" y="12" width="16" height="5" rx="1"/><path d="M5 5.5h.01M5 14.5h.01"/></svg>
+            <h4 class="wwd-name">Platform Engineering<sup>AI</sup></h4>
+          </div>
+          <div class="wwd-right">
+            <p class="wwd-desc">Modernization, cloud migration, integration, greenfield and brownfield development. Our engineers use AAVA to accelerate delivery, quality, and transparency.</p>
+            <div class="wwd-btn-wrap">
+              <a href="#" class="wwd-btn">Learn More <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
           </div>
         </div>
-        <button class="wwd-toggle" aria-label="Toggle" aria-hidden="true">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-        </button>
       </div>
 
-      <!-- 02 Data AI — file-text -->
       <div class="wwd-item">
-        <button class="wwd-trigger" aria-expanded="false">
-          <span class="wwd-lead-icon" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
-          </span>
-          <span class="wwd-title">Data<sup>AI</sup></span>
-        </button>
-        <div class="wwd-body">
-          <div class="wwd-body-inner">
-            <p>Migration, quality, analytics pipelines, operations. We're transforming the end-to-end data lifecycle with AI orchestration.</p>
-            <a href="#" class="btn btn-text"><span class="btn__label">Learn More</span><span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="wwd-row">
+          <div class="wwd-name-group">
+            <svg class="wwd-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="10" cy="5" rx="7" ry="2.5"/><path d="M3 5v4c0 1.38 3.13 2.5 7 2.5s7-1.12 7-2.5V5"/><path d="M3 9v4c0 1.38 3.13 2.5 7 2.5s7-1.12 7-2.5V9"/></svg>
+            <h4 class="wwd-name">Data<sup>AI</sup></h4>
+          </div>
+          <div class="wwd-right">
+            <p class="wwd-desc">Migration, quality, analytics pipelines, operations. We're transforming the end-to-end data lifecycle with AI orchestration.</p>
+            <div class="wwd-btn-wrap">
+              <a href="#" class="wwd-btn">Learn More <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
           </div>
         </div>
-        <button class="wwd-toggle" aria-label="Toggle" aria-hidden="true">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-        </button>
       </div>
 
-      <!-- 03 Experience AI — aperture -->
       <div class="wwd-item">
-        <button class="wwd-trigger" aria-expanded="false">
-          <span class="wwd-lead-icon" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m14.31 8 5.74 9.94"/><path d="M9.69 8h11.48"/><path d="m7.38 12 5.74-9.94"/><path d="M9.69 16 3.95 6.06"/><path d="M14.31 16H2.83"/><path d="m16.62 12-5.74 9.94"/></svg>
-          </span>
-          <span class="wwd-title">Experience<sup>AI</sup></span>
-        </button>
-        <div class="wwd-body">
-          <div class="wwd-body-inner">
-            <p>UI/UX design, mobile development, accessibility. AI agents accelerate while designers lead.</p>
-            <a href="#" class="btn btn-text"><span class="btn__label">Learn More</span><span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="wwd-row">
+          <div class="wwd-name-group">
+            <svg class="wwd-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="16" height="11" rx="1.5"/><path d="M7 18h6M10 15v3"/></svg>
+            <h4 class="wwd-name">Experience<sup>AI</sup></h4>
+          </div>
+          <div class="wwd-right">
+            <p class="wwd-desc">UI/UX design, mobile development, accessibility. AI agents accelerate while designers lead.</p>
+            <div class="wwd-btn-wrap">
+              <a href="#" class="wwd-btn">Learn More <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
           </div>
         </div>
-        <button class="wwd-toggle" aria-label="Toggle" aria-hidden="true">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-        </button>
       </div>
 
-      <!-- 04 Product AI — package -->
       <div class="wwd-item">
-        <button class="wwd-trigger" aria-expanded="false">
-          <span class="wwd-lead-icon" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/><path d="M12 22V12"/><path d="m3.3 7 7.7 4.4a2 2 0 0 0 2 0L20.7 7"/><path d="m7.5 4.27 9 5.15"/></svg>
-          </span>
-          <span class="wwd-title">Product<sup>AI</sup></span>
-        </button>
-        <div class="wwd-body">
-          <div class="wwd-body-inner">
-            <p>Product strategy, design, development, and evolution with AI-accelerated velocity and human judgment.</p>
-            <a href="#" class="btn btn-text"><span class="btn__label">Learn More</span><span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="wwd-row">
+          <div class="wwd-name-group">
+            <svg class="wwd-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2l7.5 4.5v7L10 18l-7.5-4.5v-7L10 2z"/><path d="M10 2v16M2.5 6.5l7.5 4 7.5-4"/></svg>
+            <h4 class="wwd-name">Product<sup>AI</sup></h4>
+          </div>
+          <div class="wwd-right">
+            <p class="wwd-desc">Product strategy, design, development, and evolution with AI-accelerated velocity and human judgment.</p>
+            <div class="wwd-btn-wrap">
+              <a href="#" class="wwd-btn">Learn More <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
           </div>
         </div>
-        <button class="wwd-toggle" aria-label="Toggle" aria-hidden="true">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-        </button>
       </div>
 
-      <!-- 05 Quality Engineering AI — settings -->
       <div class="wwd-item">
-        <button class="wwd-trigger" aria-expanded="false">
-          <span class="wwd-lead-icon" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
-          </span>
-          <span class="wwd-title">Quality Engineering<sup>AI</sup></span>
-        </button>
-        <div class="wwd-body">
-          <div class="wwd-body-inner">
-            <p>Test automation, performance testing, security validation, and defect management with AI-powered precision, quality, and safety.</p>
-            <a href="#" class="btn btn-text"><span class="btn__label">Learn More</span><span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="wwd-row">
+          <div class="wwd-name-group">
+            <svg class="wwd-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2l1.5 4.5H16l-3.75 2.75 1.5 4.5L10 11 6.25 13.75l1.5-4.5L4 6.5h4.5L10 2z"/></svg>
+            <h4 class="wwd-name">Quality Engineering<sup>AI</sup></h4>
+          </div>
+          <div class="wwd-right">
+            <p class="wwd-desc">Test automation, performance testing, security validation, and defect management with AI-powered precision, quality, and safety.</p>
+            <div class="wwd-btn-wrap">
+              <a href="#" class="wwd-btn">Learn More <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
           </div>
         </div>
-        <button class="wwd-toggle" aria-label="Toggle" aria-hidden="true">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-        </button>
       </div>
 
-      <!-- 06 GCC AI — globe -->
       <div class="wwd-item">
-        <button class="wwd-trigger" aria-expanded="false">
-          <span class="wwd-lead-icon" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
-          </span>
-          <span class="wwd-title">GCC<sup>AI</sup></span>
-        </button>
-        <div class="wwd-body">
-          <div class="wwd-body-inner">
-            <p>Global Capability Centers powered by AI deliver AI impact to the global enterprise. We build and scale engineering teams that deliver innovation, value, and strategic advantage.</p>
-            <a href="#" class="btn btn-text"><span class="btn__label">Learn More</span><span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="wwd-row">
+          <div class="wwd-name-group">
+            <svg class="wwd-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><path d="M2 10h16M10 2a13 13 0 010 16M10 2a13 13 0 000 16"/></svg>
+            <h4 class="wwd-name">GCC<sup>AI</sup></h4>
+          </div>
+          <div class="wwd-right">
+            <p class="wwd-desc">Global Capability Centers powered by AI deliver AI impact to the global enterprise. We build and scale engineering teams that deliver innovation, value, and strategic advantage.</p>
+            <div class="wwd-btn-wrap">
+              <a href="#" class="wwd-btn">Learn More <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
           </div>
         </div>
-        <button class="wwd-toggle" aria-label="Toggle" aria-hidden="true">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-        </button>
       </div>
 
-      <!-- 07 Applied AI — bot -->
       <div class="wwd-item">
-        <button class="wwd-trigger" aria-expanded="false">
-          <span class="wwd-lead-icon" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M2 14h2M20 14h2M15 13v2M9 13v2"/></svg>
-          </span>
-          <span class="wwd-title">Applied AI</span>
-        </button>
-        <div class="wwd-body">
-          <div class="wwd-body-inner">
-            <p>Insight, advisory, and comprehensive solution deployment that brings the power of AI to specific business processes and problems.</p>
-            <a href="#" class="btn btn-text"><span class="btn__label">Learn More</span><span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="wwd-row">
+          <div class="wwd-name-group">
+            <svg class="wwd-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3a4 4 0 014 4c0 2-1 3.5-2.5 4.5V13h-3v-1.5C7 10.5 6 9 6 7a4 4 0 014-4z"/><path d="M8 13h4v1.5a2 2 0 01-4 0V13z"/></svg>
+            <h4 class="wwd-name">Applied AI</h4>
+          </div>
+          <div class="wwd-right">
+            <p class="wwd-desc">Insight, advisory, and comprehensive solution deployment that brings the power of AI to specific business processes and problems.</p>
+            <div class="wwd-btn-wrap">
+              <a href="#" class="wwd-btn">Learn More <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
           </div>
         </div>
-        <button class="wwd-toggle" aria-label="Toggle" aria-hidden="true">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-        </button>
       </div>
 
-      <!-- 08 AI Workforce Transformation — user-round-cog -->
       <div class="wwd-item">
-        <button class="wwd-trigger" aria-expanded="false">
-          <span class="wwd-lead-icon" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 21a8 8 0 0 1 10.434-7.62"/><circle cx="10" cy="8" r="4"/><circle cx="18" cy="18" r="3"/><path d="m19.5 14.3-.4.9"/><path d="m16.9 20.8.4-.9"/><path d="m21.7 19.5-.9-.4"/><path d="m15.2 16.5-.9-.4"/><path d="m21.7 16.5-.9.4"/><path d="m15.2 19.5.9.4"/><path d="m19.5 21.7-.4-.9"/><path d="m16.9 15.2-.4.9"/></svg>
-          </span>
-          <span class="wwd-title">AI Workforce Transformation</span>
-        </button>
-        <div class="wwd-body">
-          <div class="wwd-body-inner">
-            <p>Upskilling teams, evolving roles, new ways of working. We elevate the enterprise workforce to thrive in the AI era.</p>
-            <a href="#" class="btn btn-text"><span class="btn__label">Learn More</span><span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="wwd-row">
+          <div class="wwd-name-group">
+            <svg class="wwd-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="6" r="2.5"/><circle cx="13" cy="6" r="2.5"/><path d="M2 17c0-3 2.24-5 5-5h6c2.76 0 5 2 5 5"/><path d="M13 12l2 2 3-3"/></svg>
+            <h4 class="wwd-name">AI Workforce Transformation</h4>
+          </div>
+          <div class="wwd-right">
+            <p class="wwd-desc">Upskilling teams, evolving roles, new ways of working. We elevate the enterprise workforce to thrive in the AI era.</p>
+            <div class="wwd-btn-wrap">
+              <a href="#" class="wwd-btn">Learn More <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
           </div>
         </div>
-        <button class="wwd-toggle" aria-label="Toggle" aria-hidden="true">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-        </button>
       </div>
 
     </div>
@@ -3264,57 +3420,63 @@ function switchPillarTab(idx) {
     document.body.style.overflow = open ? 'hidden' : '';
   });
 
-  /* HERO MULTI-SLIDE CAROUSEL */
-  var heroSlides   = document.querySelectorAll('.hero-slide');
-  var heroNavItems = document.querySelectorAll('.hero-nav-item');
-  var heroIndex    = 0;
-  var heroTimer;
-  var HERO_DURATION = 5000; // ms per slide
+  /* HERO MULTI-SLIDE CAROUSEL — factory */
+  function initHeroCarousel(slidesId, navId) {
+    var slidesEl   = document.getElementById(slidesId);
+    var navEl      = document.getElementById(navId);
+    if (!slidesEl || !navEl) return;
+    var slides     = slidesEl.querySelectorAll('.hero-slide');
+    var navItems   = navEl.querySelectorAll('.hero-nav-item');
+    var index      = 0;
+    var timer;
+    var DURATION   = 5000;
 
-  function heroGo(idx) {
-    // Deactivate all slides + nav items, reset fills
-    heroSlides.forEach(function (s) { s.classList.remove('active'); });
-    heroNavItems.forEach(function (n) {
-      n.classList.remove('active');
-      var fill = n.querySelector('.hero-nav-fill');
-      fill.style.transition = 'none';
-      fill.style.width = '0%';
+    function go(idx) {
+      slides.forEach(function (s) { s.classList.remove('active'); });
+      navItems.forEach(function (n) {
+        n.classList.remove('active');
+        var f = n.querySelector('.hero-nav-fill');
+        f.style.transition = 'none';
+        f.style.width = '0%';
+      });
+      slides[idx].classList.add('active');
+      navItems[idx].classList.add('active');
+      navItems[idx].querySelector('.hero-nav-fill').offsetWidth;
+      var fill = navItems[idx].querySelector('.hero-nav-fill');
+      fill.style.transition = 'width ' + (DURATION / 1000) + 's linear';
+      fill.style.width = '100%';
+      index = idx;
+    }
+
+    function start() {
+      clearInterval(timer);
+      timer = setInterval(function () { go((index + 1) % slides.length); }, DURATION);
+    }
+
+    navItems.forEach(function (item, i) {
+      item.addEventListener('click', function () { go(i); start(); });
+      item.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(i); start(); }
+      });
     });
 
-    // Activate target
-    heroSlides[idx].classList.add('active');
-    heroNavItems[idx].classList.add('active');
-
-    // Force reflow then start fill animation
-    heroNavItems[idx].querySelector('.hero-nav-fill').offsetWidth;
-    var fill = heroNavItems[idx].querySelector('.hero-nav-fill');
-    fill.style.transition = 'width ' + (HERO_DURATION / 1000) + 's linear';
-    fill.style.width = '100%';
-
-    heroIndex = idx;
+    go(0);
+    start();
   }
 
-  function heroStart() {
-    clearInterval(heroTimer);
-    heroTimer = setInterval(function () {
-      heroGo((heroIndex + 1) % heroSlides.length);
-    }, HERO_DURATION);
-  }
+  initHeroCarousel('heroSlides1', 'heroNav1');
+  initHeroCarousel('heroSlides2', 'heroNav2');
 
-  // Click / keyboard on nav items
-  heroNavItems.forEach(function (item, i) {
-    item.addEventListener('click', function () {
-      heroGo(i);
-      heroStart();
-    });
-    item.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); heroGo(i); heroStart(); }
+  /* HERO VIEW TOGGLE */
+  document.querySelectorAll('.hero-view-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var view = btn.dataset.heroView;
+      document.querySelectorAll('.hero-view-btn').forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById('heroOpt1').style.display = view === 'opt1' ? 'flex' : 'none';
+      document.getElementById('heroOpt2').style.display = view === 'opt2' ? 'flex' : 'none';
     });
   });
-
-  // Init
-  heroGo(0);
-  heroStart();
 
   /* IMPACT STICKY SCROLL — sequential cards, bottom → centre → top */
   (function () {
@@ -3420,8 +3582,9 @@ function switchPillarTab(idx) {
   })();
 
   /* IMPACT SECTION BACKGROUND GRID — colour-only proximity, no distortion */
-  (function () {
-    var section = document.getElementById('s-impact');
+  /* Shared factory — runs for Option 1 (s-impact) and Option 3 (s-impact3) */
+  function initImpactGrid(sectionId) {
+    var section = document.getElementById(sectionId);
     if (!section) return;
 
     var canvas = document.createElement('canvas');
@@ -3520,28 +3683,9 @@ function switchPillarTab(idx) {
     window.addEventListener('resize', function () { setup(); draw(); });
     setup();
     draw();
-  })();
-
-  /* WHAT WE DO ACCORDION — trigger (icon+title) OR far-right toggle both work */
-  document.querySelectorAll('.wwd-item').forEach(function (item) {
-    var trigger = item.querySelector('.wwd-trigger');
-    var toggle  = item.querySelector('.wwd-toggle');
-
-    function handleClick() {
-      var isOpen = item.classList.contains('open');
-      document.querySelectorAll('.wwd-item').forEach(function (i) {
-        i.classList.remove('open');
-        i.querySelector('.wwd-trigger').setAttribute('aria-expanded', 'false');
-      });
-      if (!isOpen) {
-        item.classList.add('open');
-        trigger.setAttribute('aria-expanded', 'true');
-      }
-    }
-
-    trigger.addEventListener('click', handleClick);
-    if (toggle) toggle.addEventListener('click', handleClick);
-  });
+  } /* end initImpactGrid */
+  initImpactGrid('s-impact');
+  initImpactGrid('s-impact3');
 
   /* REAL IMPACT CARDS — CAROUSEL */
   (function () {
@@ -4464,33 +4608,79 @@ function switchPillarTab(idx) {
     window.addEventListener('scroll', update2, { passive: true });
   }());
 
+  /* REAL IMPACT OPTION 3 — parade strip, horizontal slide right → left on scroll */
+  (function () {
+    var track  = document.getElementById('impact3ScrollTrack');
+    var intro  = document.getElementById('impact3Intro');
+    var strip  = document.getElementById('imp3Strip');
+    if (!track || !intro || !strip) return;
+
+    var GAP = 96;
+    var N   = 6;
+
+    function updateImpact3() {
+      var rect         = track.getBoundingClientRect();
+      var vh           = window.innerHeight;
+      var vw           = window.innerWidth;
+      var scrolled     = -rect.top;
+      var cssReleaseAt = track.offsetHeight - vh;
+      var RELEASE_P      = 0.85;
+      var effectiveRange = cssReleaseAt / RELEASE_P;
+      var p = Math.max(0, Math.min(1, scrolled / effectiveRange));
+
+      /* Match the CSS calc: (100vw - --px*2 - 32px) / 3 + 100px */
+      var CARD_W = (vw - 160 - 32) / 3 + 100;
+      var totalW = N * CARD_W + (N - 1) * GAP;
+
+      /* At p=0: card 0 is 25% visible from the right edge */
+      var startX = vw - CARD_W * 0.25;
+      /* At p=1: last card has fully exited left */
+      var endX   = -totalW;
+      var tx = startX + (endX - startX) * p;
+
+      strip.style.transform = 'translateX(' + tx + 'px)';
+    }
+
+    window.addEventListener('scroll', updateImpact3, { passive: true });
+    window.addEventListener('resize', updateImpact3);
+    updateImpact3();
+  }());
+
   /* REAL IMPACT TOGGLE */
   (function () {
-    var btn1    = document.getElementById('rimpBtn1');
-    var btn2    = document.getElementById('rimpBtn2');
-    var sec1    = document.getElementById('s-impact');
-    var sec1Wrap = sec1 ? sec1.parentElement : null; /* the sticky wrapper div */
-    var sec2    = document.getElementById('s-rimp');
+    var btn1     = document.getElementById('rimpBtn1');
+    var btn2     = document.getElementById('rimpBtn2');
+    var btn3     = document.getElementById('rimpBtn3');
+    var sec1     = document.getElementById('s-impact');
+    var sec1Wrap = sec1 ? sec1.parentElement : null; /* impact-scroll-track */
+    var sec2     = document.getElementById('s-rimp');
+    var sec3Wrap = document.getElementById('impact3ScrollTrack');
     if (!btn1 || !btn2 || !sec2) return;
 
     function showOption(n) {
+      [btn1, btn2, btn3].forEach(function (b) { if (b) b.classList.remove('active'); });
       if (n === 1) {
         if (sec1Wrap) sec1Wrap.style.display = '';
         sec2.style.display = 'none';
+        if (sec3Wrap) sec3Wrap.style.display = 'none';
         btn1.classList.add('active');
-        btn2.classList.remove('active');
-      } else {
+      } else if (n === 2) {
         if (sec1Wrap) sec1Wrap.style.display = 'none';
         sec2.style.display = '';
-        btn1.classList.remove('active');
+        if (sec3Wrap) sec3Wrap.style.display = 'none';
         btn2.classList.add('active');
-        /* Trigger scroll-reveal on newly visible items */
         sec2.querySelectorAll('.rv:not(.in)').forEach(function (el) { rvObs.observe(el); });
+      } else {
+        if (sec1Wrap) sec1Wrap.style.display = 'none';
+        sec2.style.display = 'none';
+        if (sec3Wrap) sec3Wrap.style.display = '';
+        if (btn3) btn3.classList.add('active');
       }
     }
 
     btn1.addEventListener('click', function () { showOption(1); });
     btn2.addEventListener('click', function () { showOption(2); });
+    if (btn3) btn3.addEventListener('click', function () { showOption(3); });
   }());
 
 }());
