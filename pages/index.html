@@ -24,9 +24,9 @@
        DESIGN TOKENS
     ===================================================== */
     :root {
-      --primary-500: #6464d7;
-      --primary-100: #968cfa;
-      --primary-900: #5a37af;
+      --primary-500: #008567;
+      --primary-100: #00b589;
+      --primary-900: #006b52;
       --accent-100:  #2ddcaa;
       --accent-500:  #009673;
       --neutral-0:   #ffffff;
@@ -44,13 +44,13 @@
       --bg-dark:        #000000;
       --bg-dark-subtle: #1a1a1a;
       --bg-dark-2:      #333333;
-      --bg-violet:      #6464d7;
+      --bg-violet:      #008567;
       --bg-accent:      #2ddcaa;
       --text-primary:   #000000;
       --text-secondary: #333333;
       --text-inv:       #ffffff;
       --text-inv-2:     #cccccc;
-      --text-highlight: #6464d7;
+      --text-highlight: #008567;
       --text-hi-inv:    #2ddcaa;
       --text-disabled:  #666666;
       --border:         #999999;
@@ -177,6 +177,10 @@
     .btn-text-inv .btn__icon { color: var(--accent-100); }
     .btn-text-inv:hover { color: var(--accent-500); }
     .btn-sm { font-size: 14px; padding: 10px 16px; }
+    /* Insights card "Read more" — black label, green arrow */
+    .ins-card .btn-text .btn__label { color: #000; }
+    .ins-card .btn-text .btn__icon  { color: var(--primary-500); }
+    .ins-card .btn-text:hover .btn__label { color: #000; }
 
     /* =====================================================
        ANNOUNCE BAR
@@ -283,117 +287,55 @@
     .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
     /* =====================================================
-       HERO  (bg-dark #000  ·  multi-slide carousel)
+       HERO  (bg-default #fff  ·  2-column  ·  slide carousel)
     ===================================================== */
     .hero-section {
-      background: var(--bg-dark);
-      height: calc(100vh - 150px);
-      min-height: 560px;
+      background: #fff;
+      height: 100vh;
+      min-height: 600px;
       position: relative;
       overflow: hidden;
-      display: flex;
-      flex-direction: column;
+      margin-top: -86px; /* slide behind sticky nav */
+      padding: 0;        /* cancel global section padding */
     }
-
-    /* ── HERO VIEW TOGGLE ──────────────────────────────── */
-    .hero-view-toggle {
-      position: absolute;
-      top: 96px;
-      right: var(--px);
-      z-index: 10;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .hero-view-btn {
-      font-family: var(--font-primary);
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 8px 14px;
-      border: 1px solid rgba(255,255,255,0.2);
-      background: transparent;
-      color: rgba(255,255,255,0.45);
-      cursor: pointer;
-      border-radius: 2px;
-      transition: all 0.2s;
-    }
-    .hero-view-btn.active {
-      background: rgba(255,255,255,0.1);
-      color: #fff;
-      border-color: rgba(255,255,255,0.5);
-    }
-    .hero-view-btn:hover:not(.active) {
-      color: rgba(255,255,255,0.75);
-      border-color: rgba(255,255,255,0.35);
-    }
-
-    /* ── OPTION 02: bottom inline nav (absolutely positioned) ── */
-    .hero-inner--opt2 .hero-slides-wrap {
-      padding-bottom: 80px; /* clear space for the absolute nav */
-    }
-    .hero-nav--bottom {
-      position: absolute !important;
-      bottom: 32px;
-      left: var(--px);
-      right: var(--px);
-      width: auto !important;
-      flex-direction: row !important;
-      flex-wrap: nowrap !important;
-      justify-content: flex-start !important;
-      gap: 48px !important;
-      padding: 0 !important;
-    }
-    .hero-nav--bottom .hero-nav-item {
-      flex: 1;
-      flex-direction: column;
-      gap: 8px;
-    }
-    /* City skyline background image */
-    .hero-bg {
+    /* Line grid overlay */
+    .hero-grid {
       position: absolute;
       inset: 0;
-      background-image: url('https://www.figma.com/api/mcp/asset/4aa23ae6-c0f5-4c09-8ba6-3dac72775a8f');
-      background-size: cover;
-      background-position: center top;
-      opacity: 0.25;
+      background-image:
+        linear-gradient(rgba(0,0,0,0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.055) 1px, transparent 1px);
+      background-size: 64px 64px;
+      pointer-events: none;
       z-index: 0;
     }
-    /* Left-to-right gradient overlay so text remains legible */
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to right, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.65) 100%);
+    /* 2-column grid */
+    .hero-inner-new {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      height: 100%;
+      position: relative;
       z-index: 1;
     }
-    .hero-inner {
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-      display: block;
-      padding: 0 var(--px);
+    /* LEFT: text column */
+    .hero-text-col {
+      display: flex;
+      flex-direction: column;
+      padding-top: calc(86px + 128px);
+      padding-left: var(--px);
+      padding-right: 48px;
+      padding-bottom: 40px;
     }
-
-    /* ── LEFT COLUMN: slides ─────────────────────────── */
-    .hero-slides-wrap {
-      position: absolute;
-      top: 0; bottom: 0; left: var(--px);
-      right: calc(var(--px) + 312px + 48px);
-      padding-right: 60px;
-    }
-    /* Each slide fills the full column height, content anchored to bottom */
+    /* Slide container fills remaining vertical space */
     .hero-slides {
-      position: absolute;
-      inset: 0;
+      position: relative;
+      flex: 1;
     }
     .hero-slide {
       position: absolute;
       inset: 0;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
-      padding-top: 96px;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.65s ease;
@@ -402,162 +344,103 @@
       opacity: 1;
       pointer-events: auto;
     }
-    /* eyebrow label */
-    .hero-slide-label {
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent-100);
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .hero-slide-label::before {
-      content: '';
-      width: 28px;
-      height: 1px;
-      background: var(--accent-100);
-      flex-shrink: 0;
-    }
-    /* Heading */
     .hero-slide-h1 {
       font-family: var(--font-display);
-      font-size: 72px;
+      font-size: 64px;
       font-weight: 400;
       line-height: 1.0;
-      color: var(--text-inv);
+      color: #000;
       margin-bottom: 20px;
     }
-    /* Body copy */
     .hero-slide-body {
       font-size: 18px;
       line-height: 1.65;
-      color: var(--text-inv-2);
+      color: var(--text-secondary);
       margin-bottom: 32px;
-      max-width: 640px;
+      max-width: 520px;
     }
-    /* CTA button — white filled, 8px radius (Figma spec) */
     .btn-hero {
       display: inline-flex;
       align-items: center;
       gap: 10px;
       font-family: var(--font-primary);
       font-size: 16px;
-      font-weight: 400;
-      background: #ffffff;
-      color: #000000;
+      font-weight: 500;
+      background: #000;
+      color: #fff;
       border: none;
-      border-radius: 8px;
-      padding: 16px 24px;
+      border-radius: 2px;
+      padding: 14px 20px;
       line-height: 1;
       cursor: pointer;
       text-decoration: none;
-      transition: background 0.2s, color 0.2s;
+      transition: background 0.2s;
       white-space: nowrap;
       align-self: flex-start;
     }
-    .btn-hero:hover { background: var(--accent-100); }
-    .btn-hero svg { flex-shrink: 0; }
-
-    /* Scroll to Explore — sits below the CTA, part of the active slide */
-    .hero-scroll-row {
-      position: absolute;
-      bottom: 0;
-      left: 0;
+    .btn-hero:hover { background: #1a1a1a; }
+    .btn-hero svg { flex-shrink: 0; color: #008567; }
+    /* Pagination dots — pushed to bottom of text column */
+    .hero-dots {
       display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 14px;
-      font-weight: 400;
-      color: rgba(255,255,255,0.6);
-      letter-spacing: 0;
-      cursor: pointer;
-      transition: color 0.2s;
-      text-decoration: none;
-    }
-    .hero-scroll-row:hover { color: rgba(255,255,255,0.9); }
-    .hero-scroll-arrow {
-      width: 12px; height: 19px;
-      position: relative;
-      flex-shrink: 0;
-    }
-    .hero-scroll-arrow::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: url('https://www.figma.com/api/mcp/asset/31ecc044-ecfd-4427-be97-84aff44f57df') no-repeat center/contain;
-    }
-
-    /* ── RIGHT COLUMN: nav list ──────────────────────── */
-    .hero-nav {
-      position: absolute;
-      bottom: 32px;
-      right: var(--px);
-      width: 312px;
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
-    }
-    .hero-nav-item {
-      display: flex;
-      flex-direction: column;
       gap: 8px;
-      cursor: pointer;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 40px;
     }
-    /* Progress line */
-    .hero-nav-line {
-      width: 100%;
-      height: 2px;
-      background: rgba(255,255,255,0.18);
-      border-radius: 1px;
+    .hero-dot {
+      height: 6px;
+      border-radius: 3px;
+      background: #000;
+      opacity: 0.18;
+      transition: width 0.35s ease, opacity 0.35s ease;
+      width: 6px;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+    .hero-dot.active { width: 24px; opacity: 1; }
+    /* RIGHT: image column */
+    .hero-img-col {
       position: relative;
       overflow: hidden;
     }
-    .hero-nav-fill {
+    .hero-img-fill {
       position: absolute;
       inset: 0;
-      background: var(--accent-100);
-      width: 0%;
-      border-radius: 1px;
-    }
-    .hero-nav-item.active .hero-nav-fill {
-      transition: width 5s linear;
-      width: 100%;
-    }
-    /* Label row */
-    .hero-nav-row {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    /* Arrow chevron (visible on active item only) */
-    .hero-nav-arrow {
-      width: 24px; height: 15px;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
       opacity: 0;
-      transition: opacity 0.3s;
-      color: var(--accent-100);
+      transition: opacity 0.65s ease;
     }
-    .hero-nav-item.active .hero-nav-arrow { opacity: 1; }
-    .hero-nav-label {
-      font-size: 14px;
-      font-weight: 400;
-      color: rgba(255,255,255,0.5);
-      line-height: 1.4;
-      transition: color 0.3s;
-      flex: 1;
+    .hero-img-fill.active { opacity: 1; }
+    .hero-img-fill img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
     }
-    .hero-nav-item.active .hero-nav-label { color: #ffffff; }
-    .hero-nav-item:hover .hero-nav-label { color: rgba(255,255,255,0.85); }
+    .hero-img-fill:nth-child(3) img { object-position: right center; }
+    /* Left-edge gradient fade into white */
+    .hero-img-fade {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right,
+        #ffffff 0%,
+        rgba(255,255,255,0.9) 8%,
+        rgba(255,255,255,0.75) 16%,
+        rgba(255,255,255,0.5) 26%,
+        rgba(255,255,255,0.25) 38%,
+        rgba(255,255,255,0.08) 50%,
+        transparent 65%);
+      z-index: 1;
+      pointer-events: none;
+    }
 
     /* =====================================================
        TICKER BAND  (bg-dark #000)
     ===================================================== */
     .ticker-section {
-      background: var(--primary-500);
+      background: #008567;
       border-top: 1px solid rgba(255,255,255,0.08);
       border-bottom: 1px solid rgba(255,255,255,0.08);
       padding: 20px 0;
@@ -617,11 +500,11 @@
 /* Underline reveal for "Engineering to the Power of AI" */
     /* Body phrase char reveal — dim → violet, same pattern as H2 */
     .body-char {
-      color: #D5D1FD;
+      color: rgba(0,0,0,0.15);
       transition: color 0.18s ease;
       display: inline;
     }
-    .body-char.in { color: #6464d7; }
+    .body-char.in { color: #000; }
     .intro-inner {
       position: relative;
       z-index: 1;
@@ -640,11 +523,11 @@
     .intro-h2-line { display: block; }
     /* Each character starts dim, transitions to violet as scroll advances */
     .intro-char {
-      color: #D5D1FD;
+      color: rgba(0,0,0,0.15);
       transition: color 0.18s ease;
       display: inline;
     }
-    .intro-char.in { color: #6464d7; }
+    .intro-char.in { color: #000; }
     .intro-body {
       font-size: 20px;
       color: var(--text-secondary);
@@ -662,20 +545,20 @@
     .intro-dot {
       width: 12px; height: 12px;
       border-radius: 50%;
-      background: var(--accent-100);
+      background: #008567;
       opacity: 0;
       transform: scale(0);
       transform-origin: center;
     }
     .intro-line {
       width: 1px; height: 80px;
-      background: var(--accent-100);
+      background: #008567;
       transform: scaleY(0);
       transform-origin: top center;
     }
     .stats-line {
       width: 1px; height: 80px;
-      background: var(--accent-100);
+      background: #008567;
       transform: scaleY(0);
       transform-origin: top center;
       margin: 0 auto 60px;
@@ -975,15 +858,15 @@
       transition: background 0.25s ease;
     }
     .wwd-item:last-child { border-bottom: none; }
-    .wwd-item:hover { background: var(--primary-500); }
+    .wwd-item:hover { background: linear-gradient(to right, #AFAAB9, rgba(175,170,185,0)); }
     .wwd-icon {
       width: 20px;
       height: 20px;
-      color: var(--neutral-600);
+      color: var(--primary-500);
       transition: color 0.25s ease;
       flex-shrink: 0;
     }
-    .wwd-item:hover .wwd-icon { color: rgba(255,255,255,0.7); }
+    .wwd-item:hover .wwd-icon { color: var(--primary-500); }
     .wwd-row {
       display: flex;
       justify-content: space-between;
@@ -1003,7 +886,7 @@
       color: var(--text-primary);
       transition: color 0.25s ease;
     }
-    .wwd-item:hover .wwd-name { color: #fff; }
+    .wwd-item:hover .wwd-name { color: var(--text-primary); }
     .wwd-right {
       flex: 0 0 560px;
       display: flex;
@@ -1019,7 +902,7 @@
       padding: 0;
       transition: color 0.25s ease;
     }
-    .wwd-item:hover .wwd-desc { color: rgba(255,255,255,0.85); }
+    .wwd-item:hover .wwd-desc { color: #212121; }
     /* Button wrapper — collapses to 0 when not hovered */
     .wwd-btn-wrap {
       max-height: 0;
@@ -1347,15 +1230,26 @@
     /* =====================================================
        REAL IMPACT CARDS  (bg-default #fff)
     ===================================================== */
-    .rimp-section { background: var(--bg-default); }
-    .rimp-section .s-head { margin-bottom: 32px; }
-    /* Option 2 toggle bar */
-    .rimp-toggle-wrap {
+    /* Scroll-track: provides the scroll distance */
+    .rimp-scroll-track { position: relative; background: var(--bg-default); }
+    /* Label + heading: scroll in normally */
+    .rimp-header-wrap {
+      background: var(--bg-default);
+      padding: var(--py) 0 0;
+    }
+    .rimp-header-wrap .s-head { margin-bottom: 24px; }
+    /* Filters + carousel: this is the sticky block */
+    .rimp-sticky {
+      position: sticky;
+      top: 86px;
+      height: calc(100vh - 86px);
       background: var(--bg-default);
       display: flex;
+      flex-direction: column;
       justify-content: center;
-      padding: 24px 0 8px;
+      overflow: hidden;
     }
+    .rimp-sticky .container { flex-shrink: 0; }
     .rimp-carousel-wrap { margin: 0; }
     .rimp-head {
       text-align: center;
@@ -1375,7 +1269,7 @@
       color: var(--text-secondary);
       line-height: 1.65;
     }
-    .rimp-filters { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 48px; }
+    .rimp-filters { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 32px; }
     .rimp-filter {
       font-size: 13px;
       font-weight: 600;
@@ -1393,11 +1287,10 @@
     .rimp-filter.active { background: var(--accent-100); border-color: var(--accent-100); color: var(--neutral-900); }
     /* 2.5-card carousel */
     .rimp-carousel-wrap { overflow: hidden; width: 100%; }
-    .rimp-track { display: flex; gap: 20px; transition: transform 0.45s ease; cursor: grab; padding-left: 80px; }
-    .rimp-track.dragging { cursor: grabbing; transition: none; }
+    .rimp-track { display: flex; gap: 20px; padding-left: 80px; will-change: transform; }
     .rimp-card {
       flex-shrink: 0;
-      width: calc((100vw - 40px) / 2.5);
+      width: calc((100vw - 40px) / 3.03);
       aspect-ratio: 1 / 1;
       position: relative;
       border-radius: 2px;
@@ -1938,8 +1831,7 @@
     ===================================================== */
     @media (max-width: 1200px) {
       :root { --px: 60px; }
-      .hero-slide-h1 { font-size: 56px; }
-      .hero-nav { width: 240px; }
+      .hero-slide-h1 { font-size: 52px; }
       .aava-caps { grid-template-columns: repeat(3, 1fr); }
       .scale-stat { font-size: 52px; }
     }
@@ -1965,15 +1857,12 @@
       .nav-toggle { display: flex; }
       h1 { font-size: 48px; }
       h2 { font-size: 32px; }
-      .hero-section { height: auto; min-height: 100vh; }
-      .hero-inner { flex-direction: column; align-items: flex-start; gap: 40px; padding: 120px var(--px) 56px; }
-      .hero-slides-wrap { position: relative; width: 100%; padding-right: 0; max-width: 100%; height: auto; }
-      .hero-slides { position: relative; inset: auto; }
-      .hero-slide { position: absolute; inset: 0; padding-top: 0; }
-      .hero-slide.active { position: relative; }
+      /* Hero: stack to single column on tablet */
+      .hero-section { margin-top: -64px; }
+      .hero-inner-new { grid-template-columns: 1fr; }
+      .hero-img-col { display: none; }
+      .hero-text-col { padding-top: calc(64px + 80px); padding-right: var(--px); }
       .hero-slide-h1 { font-size: 44px; }
-      .hero-nav { width: 100%; flex-direction: row; flex-wrap: wrap; gap: 16px 24px; }
-      .hero-nav-item { flex: 1; min-width: 140px; }
       .pillars-grid { grid-template-columns: 1fr; gap: 16px; }
       .scale-grid { grid-template-columns: repeat(2, 1fr); }
       .aava-caps { grid-template-columns: repeat(2, 1fr); }
@@ -1986,7 +1875,6 @@
       h2 { font-size: 28px; }
       .hero-slide-h1 { font-size: 36px; }
       .hero-slide-body { font-size: 16px; }
-      .hero-nav { flex-direction: column; gap: 12px; }
       .scale-stat { font-size: 44px; }
       .scale-grid { grid-template-columns: 1fr 1fr; }
       .aava-caps { grid-template-columns: repeat(2, 1fr); }
@@ -2085,22 +1973,16 @@
 =================================================== -->
 <section class="hero-section" id="hero" aria-label="Hero">
 
-  <div class="hero-overlay" aria-hidden="true"></div>
+  <!-- Line grid -->
+  <div class="hero-grid" aria-hidden="true"></div>
 
-  <!-- View toggle — top right -->
-  <div class="hero-view-toggle">
-    <button class="hero-view-btn active" data-hero-view="opt1">Option 01</button>
-    <button class="hero-view-btn" data-hero-view="opt2">Option 02</button>
-  </div>
+  <!-- 2-column layout -->
+  <div class="hero-inner-new">
 
-  <!-- =====================================================
-       OPTION 01 — original: slide left / nav right
-  ===================================================== -->
-  <div class="hero-inner" id="heroOpt1">
+    <!-- LEFT: text slides + pagination dots -->
+    <div class="hero-text-col">
 
-    <!-- LEFT: slide content -->
-    <div class="hero-slides-wrap">
-      <div class="hero-slides" id="heroSlides1">
+      <div class="hero-slides" id="heroSlides">
 
         <div class="hero-slide active" data-slide="0">
           <h1 class="hero-slide-h1">Ascendion x HFS</h1>
@@ -2126,113 +2008,28 @@
           <a href="#" class="btn-hero">Watch the Podcast <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
 
-      </div><!-- /heroSlides1 -->
+      </div><!-- /heroSlides -->
 
-    </div><!-- /hero-slides-wrap -->
-
-    <!-- RIGHT: vertical nav -->
-    <nav class="hero-nav" aria-label="Slide navigation" id="heroNav1">
-      <div class="hero-nav-item active" data-nav="0" role="button" tabindex="0">
-        <div class="hero-nav-line"><div class="hero-nav-fill"></div></div>
-        <div class="hero-nav-row">
-          <span class="hero-nav-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#2ddcaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <span class="hero-nav-label">Agentic Era Leader</span>
-        </div>
+      <!-- Pagination dots — flush to bottom of column -->
+      <div class="hero-dots" id="heroDots" aria-label="Slide indicators">
+        <button class="hero-dot active" aria-label="Slide 1"></button>
+        <button class="hero-dot" aria-label="Slide 2"></button>
+        <button class="hero-dot" aria-label="Slide 3"></button>
+        <button class="hero-dot" aria-label="Slide 4"></button>
       </div>
-      <div class="hero-nav-item" data-nav="1" role="button" tabindex="0">
-        <div class="hero-nav-line"><div class="hero-nav-fill"></div></div>
-        <div class="hero-nav-row">
-          <span class="hero-nav-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#2ddcaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <span class="hero-nav-label">AI Powered GCCs</span>
-        </div>
-      </div>
-      <div class="hero-nav-item" data-nav="2" role="button" tabindex="0">
-        <div class="hero-nav-line"><div class="hero-nav-fill"></div></div>
-        <div class="hero-nav-row">
-          <span class="hero-nav-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#2ddcaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <span class="hero-nav-label">Agentic Era Operating Model</span>
-        </div>
-      </div>
-      <div class="hero-nav-item" data-nav="3" role="button" tabindex="0">
-        <div class="hero-nav-line"><div class="hero-nav-fill"></div></div>
-        <div class="hero-nav-row">
-          <span class="hero-nav-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#2ddcaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <span class="hero-nav-label">Services-as-Software</span>
-        </div>
-      </div>
-    </nav>
 
-  </div><!-- /heroOpt1 -->
+    </div><!-- /hero-text-col -->
 
-  <!-- =====================================================
-       OPTION 02 — slide full width / nav bottom inline
-  ===================================================== -->
-  <div class="hero-inner hero-inner--opt2" id="heroOpt2" style="display:none">
+    <!-- RIGHT: full-height image column — one layer per slide -->
+    <div class="hero-img-col">
+      <div class="hero-img-fill active"><img src="../assets/images/Home/banner-img01.jpg" alt=""></div>
+      <div class="hero-img-fill"><img src="../assets/images/Home/banner-img02.jpg" alt=""></div>
+      <div class="hero-img-fill"><img src="../assets/images/Home/banner-img03.jpg" alt=""></div>
+      <div class="hero-img-fill"><img src="../assets/images/Home/banner-img04.png" alt=""></div>
+      <div class="hero-img-fade" aria-hidden="true"></div>
+    </div>
 
-    <!-- Slide content — full width -->
-    <div class="hero-slides-wrap">
-      <div class="hero-slides" id="heroSlides2">
-
-        <div class="hero-slide active" data-slide="0">
-          <h1 class="hero-slide-h1">Ascendion x HFS</h1>
-          <p class="hero-slide-body">Ascendion has been named a Horizon 3 Market Leader, recognized for its agentic engineering platform, measurable SDLC acceleration, and early evidence of the shift toward Services-as-Software.</p>
-          <a href="#" class="btn-hero">Read Report <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        </div>
-
-        <div class="hero-slide" data-slide="1">
-          <h1 class="hero-slide-h1">Ascendion X Everest</h1>
-          <p class="hero-slide-body">AI-Powered Global Capability Centers: The New Value Engine for Global Enterprises.</p>
-          <a href="#" class="btn-hero">Read Report <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        </div>
-
-        <div class="hero-slide" data-slide="2">
-          <h1 class="hero-slide-h1">Ascendion Featured on CIO: Building an AI-Powered Company</h1>
-          <p class="hero-slide-body">Karthik Krishnamurthy explains his operating-model decision to rebuild Ascendion as an AI-powered enterprise from the inside out.</p>
-          <a href="#" class="btn-hero">Read More <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        </div>
-
-        <div class="hero-slide" data-slide="3">
-          <h1 class="hero-slide-h1">The Birth of Services-as-Software</h1>
-          <p class="hero-slide-body">A podcast conversation with Phil Fersht (HFS Research) and Karthik Krishnamurthy (Ascendion) on how AI is reshaping enterprise services, closing the trust gap, and redefining what it takes to win the next decade.</p>
-          <a href="#" class="btn-hero">Watch the Podcast <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        </div>
-
-      </div><!-- /heroSlides2 -->
-    </div><!-- /hero-slides-wrap -->
-
-    <!-- BOTTOM: horizontal inline nav -->
-    <nav class="hero-nav hero-nav--bottom" aria-label="Slide navigation" id="heroNav2">
-      <div class="hero-nav-item active" data-nav="0" role="button" tabindex="0">
-        <div class="hero-nav-line"><div class="hero-nav-fill"></div></div>
-        <div class="hero-nav-row">
-          <span class="hero-nav-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#2ddcaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <span class="hero-nav-label">Agentic Era Leader</span>
-        </div>
-      </div>
-      <div class="hero-nav-item" data-nav="1" role="button" tabindex="0">
-        <div class="hero-nav-line"><div class="hero-nav-fill"></div></div>
-        <div class="hero-nav-row">
-          <span class="hero-nav-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#2ddcaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <span class="hero-nav-label">AI Powered GCCs</span>
-        </div>
-      </div>
-      <div class="hero-nav-item" data-nav="2" role="button" tabindex="0">
-        <div class="hero-nav-line"><div class="hero-nav-fill"></div></div>
-        <div class="hero-nav-row">
-          <span class="hero-nav-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#2ddcaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <span class="hero-nav-label">Agentic Era Operating Model</span>
-        </div>
-      </div>
-      <div class="hero-nav-item" data-nav="3" role="button" tabindex="0">
-        <div class="hero-nav-line"><div class="hero-nav-fill"></div></div>
-        <div class="hero-nav-row">
-          <span class="hero-nav-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#2ddcaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <span class="hero-nav-label">Services-as-Software</span>
-        </div>
-      </div>
-    </nav>
-
-  </div><!-- /heroOpt2 -->
+  </div><!-- /hero-inner-new -->
 
 </section>
 
@@ -2337,141 +2134,42 @@
 </section>
 
 <!-- ===================================================
-     REAL IMPACT  ·  bg-dark #000 — sticky scroll
-=================================================== -->
-<div class="impact-scroll-track" id="impactScrollTrack" style="display:none">
-
-  <!--
-    Intro (non-sticky):
-      80px top padding → label → body copy → 80px bottom padding
-    Once this scrolls past the viewport top the sticky section below pins.
-  -->
-  <div class="impact-intro" id="impactIntro">
-    <div class="impact-top">
-      <div class="lbl">Engineering to the Power of AI</div>
-      <p class="impact-desc">Innovation realized. Working production systems. Measurable business outcomes.</p>
-    </div>
-  </div>
-
-  <!-- Sticky section: only "Real Impact" at centre + cards -->
-  <section class="impact-section" id="s-impact">
-
-    <!-- h2 at vertical centre; cards travel over it -->
-    <div class="impact-center">
-      <h2 class="impact-h2">Real<br>Impact</h2>
-    </div>
-
-    <!-- 3-column grid — each card travels bottom → centre → top in sequence -->
-  <div class="impact-cols">
-
-    <!-- Col 1: Banking (card 1) → Enterprise (card 5) -->
-    <div class="impact-col">
-      <article class="imp-card imp-card--img-right" id="impCard0">
-        <img class="imp-card-img" src="../assets/images/Home/banking-image.png" alt="">
-        <div class="imp-card-inner">
-          <span class="imp-tag">Banking</span>
-          <div class="imp-stat">$300M</div>
-          <h4 class="imp-title">Better banking service drives growth</h4>
-          <p class="imp-body">Top-five global bank transformed customer service for 10M+ customers—cutting costs while delivering faster, better experiences.</p>
-        </div>
-      </article>
-      <article class="imp-card imp-card--teal" id="impCard4">
-        <div class="imp-card-inner">
-          <span class="imp-tag">Enterprise</span>
-          <div class="imp-stat">16Mo</div>
-          <h4 class="imp-title">Portfolio exit accelerated</h4>
-          <p class="imp-body">Parallel modernization of five core products—compressing years into months, unlocking significant valuation impact.</p>
-        </div>
-      </article>
-    </div>
-
-    <!-- Col 2: Research (card 3) → Healthcare (card 6) -->
-    <div class="impact-col">
-      <article class="imp-card imp-card--violet" id="impCard2">
-        <div class="imp-card-inner">
-          <span class="imp-tag">Research</span>
-          <div class="imp-stat">600K</div>
-          <h4 class="imp-title">Researchers managing $47B in grants</h4>
-          <p class="imp-body">Platform modernization accelerating discoveries in life sciences, climate research, and public health.</p>
-        </div>
-      </article>
-      <article class="imp-card imp-card--img-right" id="impCard5">
-        <img class="imp-card-img" src="../assets/images/Home/HealthCare-img.png" alt="">
-        <div class="imp-card-inner">
-          <span class="imp-tag">Healthcare</span>
-          <div class="imp-stat">39M</div>
-          <h4 class="imp-title">Americans with better healthcare access</h4>
-          <p class="imp-body">Healthcare platforms transformed across 50 states—reducing wait times, lowering costs, improving care coordination.</p>
-        </div>
-      </article>
-    </div>
-
-    <!-- Col 3: Logistics (card 2) → Fintech (card 4) -->
-    <div class="impact-col">
-      <article class="imp-card imp-card--img-right" id="impCard1">
-        <img class="imp-card-img" src="../assets/images/Home/Logistic-img.png" alt="">
-        <div class="imp-card-inner">
-          <span class="imp-tag">Logistics</span>
-          <div class="imp-stat">40%</div>
-          <h4 class="imp-title">Accelerated delivery gets 3B packages to the right place</h4>
-          <p class="imp-body">Global logistics provider accelerated operations with AI-driven forecasting and optimization. Operational impact at unprecedented scale.</p>
-        </div>
-      </article>
-      <article class="imp-card imp-card--img-right" id="impCard3">
-        <img class="imp-card-img" src="../assets/images/Home/Fintech-img.png" alt="">
-        <div class="imp-card-inner">
-          <span class="imp-tag">Fintech</span>
-          <div class="imp-stat">50%</div>
-          <h4 class="imp-title">Cost reduction to improve personal economy</h4>
-          <p class="imp-body">Banking platforms serving billions in ../assets modernized at half the cost, one-third the time—reshaping unit economics.</p>
-        </div>
-      </article>
-    </div>
-
-  </div>
-
-</section>
-</div>
-
-<!-- Toggle bar: Real Impact options -->
-<div class="section-toggle-bar" id="rimpToggleBar" style="background: var(--bg-default);">
-  <button class="section-toggle-btn" id="rimpBtn1">Option 1</button>
-  <button class="section-toggle-btn" id="rimpBtn2">Option 2</button>
-  <button class="section-toggle-btn active" id="rimpBtn3">Option 3</button>
-</div>
-
-<!-- ===================================================
      REAL IMPACT CARDS  ·  bg-default #fff
 =================================================== -->
-<section class="rimp-section" id="s-rimp" style="display:none">
-  <div class="container">
+<div class="rimp-scroll-track" id="rimpScrollTrack">
 
-    <div class="s-head rv">
-      <div class="lbl lbl--dark">Engineering to the Power of AI</div>
+  <!-- Label + heading + desc: scroll in normally, not sticky -->
+  <div class="rimp-header-wrap">
+    <div class="container">
+      <div class="s-head rv">
+        <div class="lbl lbl--dark">Engineering to the Power of AI</div>
+      </div>
+      <div class="rimp-head rv d1">
+        <h2 class="rimp-h2">Real Impact.</h2>
+        <p class="rimp-desc">Innovation realized. Working production systems. Measurable business outcomes.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters + carousel: this block is sticky -->
+  <div class="rimp-sticky" id="rimpSticky">
+    <div class="container">
+      <div class="rimp-filters rv d2" id="rimpFilters">
+        <button class="rimp-filter active">Banking</button>
+        <button class="rimp-filter">Logistics</button>
+        <button class="rimp-filter">Fintech</button>
+        <button class="rimp-filter">Enterprise</button>
+        <button class="rimp-filter">Research</button>
+        <button class="rimp-filter">Healthcare</button>
+      </div>
     </div>
 
-    <div class="rimp-head rv d1">
-      <h2 class="rimp-h2">Real Impact.</h2>
-      <p class="rimp-desc">Innovation realized. Working production systems. Measurable business outcomes.</p>
-    </div>
-
-    <div class="rimp-filters rv d2" id="rimpFilters">
-      <button class="rimp-filter active">Banking</button>
-      <button class="rimp-filter">Logistics</button>
-      <button class="rimp-filter">Fintech</button>
-      <button class="rimp-filter">Enterprise</button>
-      <button class="rimp-filter">Research</button>
-      <button class="rimp-filter">Healthcare</button>
-    </div>
-
-  </div><!-- /container -->
-
-  <div class="rimp-carousel-wrap rv d3">
+    <div class="rimp-carousel-wrap" id="s-rimp">
       <div class="rimp-track" id="rimpTrack">
 
       <article class="rimp-card" data-category="banking">
         <div class="rimp-card-bg"></div>
-        <img class="rimp-card-img" src="../assets/images/Home/banking-image.png" alt="">
+        <img class="rimp-card-img" src="../assets/images/Home/banking-img.png" alt="">
         <div class="rimp-card-inner">
           <span class="rimp-card-tag">Banking</span>
           <div class="rimp-stat">$300M</div>
@@ -2538,92 +2236,8 @@
       </div>
     </div>
 
-</section>
-
-<!-- ===================================================
-     REAL IMPACT  ·  OPTION 3  —  horizontal slide (right → left)
-=================================================== -->
-<div class="impact3-scroll-track" id="impact3ScrollTrack">
-
-  <div class="impact-intro" id="impact3Intro">
-    <div class="impact-top">
-      <div class="lbl">Engineering to the Power of AI</div>
-      <p class="impact-desc">Innovation realized. Working production systems. Measurable business outcomes.</p>
-    </div>
-  </div>
-
-  <section class="impact-section" id="s-impact3">
-
-    <div class="impact-center">
-      <h2 class="impact-h2">Real<br>Impact</h2>
-    </div>
-
-    <div class="imp3-stage">
-      <div class="imp3-strip" id="imp3Strip">
-
-        <article class="imp-card imp-card--img-right">
-          <img class="imp-card-img" src="../assets/images/Home/banking-image.png" alt="">
-          <div class="imp-card-inner">
-            <span class="imp-tag">Banking</span>
-            <div class="imp-stat">$300M</div>
-            <h4 class="imp-title">Better banking service drives growth</h4>
-            <p class="imp-body">Top-five global bank transformed customer service for 10M+ customers—cutting costs while delivering faster, better experiences.</p>
-          </div>
-        </article>
-
-        <article class="imp-card imp-card--img-right">
-          <img class="imp-card-img" src="../assets/images/Home/Logistic-img.png" alt="">
-          <div class="imp-card-inner">
-            <span class="imp-tag">Logistics</span>
-            <div class="imp-stat">40%</div>
-            <h4 class="imp-title">Accelerated delivery gets 3B packages to the right place</h4>
-            <p class="imp-body">Global logistics provider accelerated operations with AI-driven forecasting and optimization. Operational impact at unprecedented scale.</p>
-          </div>
-        </article>
-
-        <article class="imp-card imp-card--violet">
-          <div class="imp-card-inner">
-            <span class="imp-tag">Research</span>
-            <div class="imp-stat">600K</div>
-            <h4 class="imp-title">Researchers managing $47B in grants</h4>
-            <p class="imp-body">Platform modernization accelerating discoveries in life sciences, climate research, and public health.</p>
-          </div>
-        </article>
-
-        <article class="imp-card imp-card--img-right">
-          <img class="imp-card-img" src="../assets/images/Home/Fintech-img.png" alt="">
-          <div class="imp-card-inner">
-            <span class="imp-tag">Fintech</span>
-            <div class="imp-stat">50%</div>
-            <h4 class="imp-title">Cost reduction to improve personal economy</h4>
-            <p class="imp-body">Banking platforms serving billions in ../assets modernized at half the cost, one-third the time—reshaping unit economics.</p>
-          </div>
-        </article>
-
-        <article class="imp-card imp-card--img-right">
-          <img class="imp-card-img" src="../assets/images/Home/HealthCare-img.png" alt="">
-          <div class="imp-card-inner">
-            <span class="imp-tag">Healthcare</span>
-            <div class="imp-stat">39M</div>
-            <h4 class="imp-title">Americans with better healthcare access</h4>
-            <p class="imp-body">Healthcare platforms transformed across 50 states—reducing wait times, lowering costs, improving care coordination.</p>
-          </div>
-        </article>
-
-        <article class="imp-card imp-card--teal">
-          <div class="imp-card-inner">
-            <span class="imp-tag">Enterprise</span>
-            <div class="imp-stat">16Mo</div>
-            <h4 class="imp-title">Portfolio exit accelerated</h4>
-            <p class="imp-body">Parallel modernization of five core products—compressing years into months, unlocking significant valuation impact.</p>
-          </div>
-        </article>
-
-      </div>
-    </div>
-
-  </section>
-</div>
+  </div><!-- /rimp-sticky -->
+</div><!-- /rimp-scroll-track -->
 
 <!-- ===================================================
      WHAT WE DO  ·  bg-subtle #f4f4f4
@@ -2778,16 +2392,10 @@
   </div>
 </section>
 
-<!-- Toggle bar: How We Deliver options -->
-<div class="section-toggle-bar" id="aavaToggleBar" style="background: var(--bg-subtle);">
-  <button class="section-toggle-btn active" id="aavaBtn1">Option 1</button>
-  <button class="section-toggle-btn" id="aavaBtn2">Option 2</button>
-</div>
-
 <!-- ===================================================
-     AAVA  ·  bg-dark-subtle #1a1a1a
+     AAVA  ·  bg-dark-subtle #1a1a1a  (option 1 removed)
 =================================================== -->
-<section class="aava-section" id="s-aava">
+<section class="aava-section" id="s-aava" style="display:none">
   <canvas class="intro-grid-canvas" id="aavaGridCanvas" aria-hidden="true"></canvas>
 
   <!-- Text header — inside container -->
@@ -2927,7 +2535,7 @@
 <!-- ===================================================
      AAVA OPTION 2  ·  bg-dark-subtle #1a1a1a — teal accents
 =================================================== -->
-<section class="aava-section" id="s-aava-2" style="display:none">
+<section class="aava-section" id="s-aava-2">
   <canvas class="intro-grid-canvas" id="aavaGridCanvas2" aria-hidden="true"></canvas>
 
   <!-- Text header -->
@@ -3421,360 +3029,117 @@ function switchPillarTab(idx) {
   });
 
   /* HERO MULTI-SLIDE CAROUSEL — factory */
-  function initHeroCarousel(slidesId, navId) {
-    var slidesEl   = document.getElementById(slidesId);
-    var navEl      = document.getElementById(navId);
-    if (!slidesEl || !navEl) return;
-    var slides     = slidesEl.querySelectorAll('.hero-slide');
-    var navItems   = navEl.querySelectorAll('.hero-nav-item');
-    var index      = 0;
+  /* HERO CAROUSEL — dot pagination, auto-advance */
+  (function () {
+    var slidesEl = document.getElementById('heroSlides');
+    var dotsEl   = document.getElementById('heroDots');
+    var heroImg  = document.querySelector('.hero-img-col');
+    if (!slidesEl || !dotsEl) return;
+    var slides   = slidesEl.querySelectorAll('.hero-slide');
+    var dots     = dotsEl.querySelectorAll('.hero-dot');
+    var imgFills = heroImg ? heroImg.querySelectorAll('.hero-img-fill') : [];
+    var idx      = 0;
     var timer;
-    var DURATION   = 5000;
+    var DURATION = 5000;
 
-    function go(idx) {
+    function go(i) {
       slides.forEach(function (s) { s.classList.remove('active'); });
-      navItems.forEach(function (n) {
-        n.classList.remove('active');
-        var f = n.querySelector('.hero-nav-fill');
-        f.style.transition = 'none';
-        f.style.width = '0%';
-      });
-      slides[idx].classList.add('active');
-      navItems[idx].classList.add('active');
-      navItems[idx].querySelector('.hero-nav-fill').offsetWidth;
-      var fill = navItems[idx].querySelector('.hero-nav-fill');
-      fill.style.transition = 'width ' + (DURATION / 1000) + 's linear';
-      fill.style.width = '100%';
-      index = idx;
+      dots.forEach(function (d)   { d.classList.remove('active'); });
+      imgFills.forEach(function (f) { f.classList.remove('active'); });
+      slides[i].classList.add('active');
+      dots[i].classList.add('active');
+      if (imgFills[i]) imgFills[i].classList.add('active');
+      idx = i;
     }
 
     function start() {
       clearInterval(timer);
-      timer = setInterval(function () { go((index + 1) % slides.length); }, DURATION);
+      timer = setInterval(function () { go((idx + 1) % slides.length); }, DURATION);
     }
 
-    navItems.forEach(function (item, i) {
-      item.addEventListener('click', function () { go(i); start(); });
-      item.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(i); start(); }
-      });
+    dots.forEach(function (dot, i) {
+      dot.addEventListener('click', function () { go(i); start(); });
     });
 
     go(0);
     start();
-  }
+  }());
 
-  initHeroCarousel('heroSlides1', 'heroNav1');
-  initHeroCarousel('heroSlides2', 'heroNav2');
-
-  /* HERO VIEW TOGGLE */
-  document.querySelectorAll('.hero-view-btn').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var view = btn.dataset.heroView;
-      document.querySelectorAll('.hero-view-btn').forEach(function (b) { b.classList.remove('active'); });
-      btn.classList.add('active');
-      document.getElementById('heroOpt1').style.display = view === 'opt1' ? 'flex' : 'none';
-      document.getElementById('heroOpt2').style.display = view === 'opt2' ? 'flex' : 'none';
-    });
-  });
-
-  /* IMPACT STICKY SCROLL — sequential cards, bottom → centre → top */
+  /* REAL IMPACT CARDS — SCROLL CAROUSEL */
   (function () {
-    var track = document.getElementById('impactScrollTrack');
-    var intro  = document.getElementById('impactIntro');
-    /*
-     * Sequence: Banking → Logistics → Research → Fintech → Enterprise → Healthcare
-     * Progress is measured ONLY within the sticky window (after intro exits).
-     *
-     * Animation model — 7 equal "beats" (A = 1/7):
-     *   Card i enters  during [i·A, (i+1)·A]   — dy: 90 → 0 (ease-out)
-     *   Card i exits   during [(i+1)·A, (i+2)·A] — dy: 0 → -90 (ease-in)
-     *
-     * Overlap: card i+1 starts entering the MOMENT card i is centred
-     * ("as soon as card's bottom is seen, the next card rises").
-     * Card i keeps rising and exits simultaneously with card i+1's entry.
-     */
-    var cardOrder = [
-      document.getElementById('impCard0'),  /* Banking    — col 1 */
-      document.getElementById('impCard1'),  /* Logistics  — col 3 */
-      document.getElementById('impCard2'),  /* Research   — col 2 */
-      document.getElementById('impCard3'),  /* Fintech    — col 3 */
-      document.getElementById('impCard4'),  /* Enterprise — col 1 */
-      document.getElementById('impCard5'),  /* Healthcare — col 2 */
-    ];
-    if (!track || !intro || !cardOrder[0]) return;
+    var scrollTrack = document.getElementById('rimpScrollTrack');
+    var headerWrap  = scrollTrack ? scrollTrack.querySelector('.rimp-header-wrap') : null;
+    var wrap        = document.getElementById('s-rimp');
+    var track       = document.getElementById('rimpTrack');
+    var filters     = document.querySelectorAll('#rimpFilters .rimp-filter');
+    if (!scrollTrack || !headerWrap || !wrap || !track) return;
 
-    /*
-     * Beat model — linear motion, "fully seen" trigger:
-     *
-     *   FT   = fraction through entry at which next card starts
-     *          Card is "fully seen" (top+bottom both in viewport) at dy ≈ 27vh,
-     *          which is 70% through the 90→0 entry phase → FT = 0.7
-     *
-     *   D    = duration of one entry phase (= one exit phase)
-     *          5 inter-card gaps + 2 final phases must sum to 1:
-     *          D = 1 / (5·FT + 2) = 1 / 5.5 ≈ 0.1818
-     *
-     *   tStart(i)  = i · FT · D      — card i begins rising
-     *   tCenter(i) = tStart(i) + D   — card i passes through centre (dy = 0)
-     *   tEnd(i)    = tStart(i) + 2D  — card i fully exited above
-     *
-     *   Entry: linear   90 → 0   over [tStart, tCenter]
-     *   Exit:  linear    0 → −90 over [tCenter, tEnd]
-     */
-    var FT = 0.7;
-    var D  = 1 / (5 * FT + 2);   /* ≈ 0.1818 */
+    var NAV_H         = 86;
+    var totalOverhang = 0;
 
-    function cardDy(i, p) {
-      var tStart  = i * FT * D;
-      var tCenter = tStart + D;
-      var tEnd    = tStart + 2 * D;
-      if (p <= tStart)  return  90;   /* waiting below  */
-      if (p >= tEnd)    return -90;   /* exited above   */
-      if (p < tCenter) {
-        /* linear entry: 90 → 0 */
-        return 90 * (1 - (p - tStart) / D);
-      } else {
-        /* linear exit: 0 → -90 */
-        return -90 * ((p - tCenter) / D);
-      }
-    }
-
-    function updateImpact() {
-      var rect        = track.getBoundingClientRect();
-      var vh          = window.innerHeight;
-      var scrolled    = -rect.top;
-      var stickyStart = intro.offsetHeight;
-
-      /*
-       * cssReleaseAt = scrolled px at which CSS sticky ACTUALLY releases.
-       * The section unpins when track.bottom === vh, i.e.
-       *   rect.top + track.offsetHeight === vh
-       *   -scrolled + track.offsetHeight === vh
-       *   scrolled === track.offsetHeight - vh
-       * (NOT stickyRange, which also subtracts intro height)
-       */
-      var cssReleaseAt = track.offsetHeight - vh;
-
-      /*
-       * OVERLAP  — first card begins 300px before the sticky trigger.
-       * RELEASE_P — fraction of animation elapsed when sticky releases.
-       *   p = RELEASE_P exactly when scrolled = cssReleaseAt.
-       *   At p ≈ 0.80 the last card's bottom edge is ~20% from the
-       *   viewport bottom (still clearly on screen) → section starts scrolling.
-       *   effectiveRange = (cssReleaseAt − animStart) / RELEASE_P  guarantees this.
-       */
-      var OVERLAP        = 600;
-      var animStart      = Math.max(0, stickyStart - OVERLAP);
-      var RELEASE_P      = 0.80;
-      var effectiveRange = (cssReleaseAt - animStart) / RELEASE_P;
-      var p = Math.max(0, Math.min(1, (scrolled - animStart) / effectiveRange));
-
-      cardOrder.forEach(function (card, i) {
-        if (!card) return;
-        card.style.transform = 'translateY(calc(-50% + ' + cardDy(i, p) + 'vh))';
-      });
-    }
-
-    window.addEventListener('scroll', updateImpact, { passive: true });
-    window.addEventListener('resize', updateImpact);
-    updateImpact();
-  })();
-
-  /* IMPACT SECTION BACKGROUND GRID — colour-only proximity, no distortion */
-  /* Shared factory — runs for Option 1 (s-impact) and Option 3 (s-impact3) */
-  function initImpactGrid(sectionId) {
-    var section = document.getElementById(sectionId);
-    if (!section) return;
-
-    var canvas = document.createElement('canvas');
-    canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;';
-    section.insertBefore(canvas, section.firstChild);
-    var ctx = canvas.getContext('2d');
-
-    var SPX = 56, SPY = 56, DOT_R = 0.8, COLOR_R = 150;
-    var D_BASE = [255, 255, 255];  /* white */
-    var D_ACT  = [45,  220, 170]; /* teal  */
-    var L_A_BASE = 0.15;           /* 15% opacity at rest */
-    var L_A_ACT  = 0.35;
-
-    var cols, rows, pts = [];
-    var mx = -9999, my = -9999;
-    var dpr = window.devicePixelRatio || 1;
-    var rafPending = false;
-
+    /* ── Setup: measure overhang and size the scroll track ── */
     function setup() {
-      var W = section.offsetWidth  || window.innerWidth;
-      var H = section.offsetHeight || window.innerHeight;
-      canvas.width  = Math.round(W * dpr);
-      canvas.height = Math.round(H * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      cols = Math.ceil(W / SPX) + 2;
-      rows = Math.ceil(H / SPY) + 2;
-      var offX = -((cols * SPX - W) / 2);
-      var offY = -((rows * SPY - H) / 2);
-      pts = [];
-      for (var r = 0; r < rows; r++) {
-        pts[r] = [];
-        for (var c = 0; c < cols; c++) {
-          pts[r][c] = { x: offX + c * SPX, y: offY + r * SPY };
-        }
-      }
+      totalOverhang = Math.max(0, track.scrollWidth - wrap.clientWidth);
+      var headerH  = headerWrap.offsetHeight;
+      var stickyH  = window.innerHeight - NAV_H;
+      scrollTrack.style.height = (headerH + stickyH + totalOverhang) + 'px';
     }
 
-    function colorAt(px, py) {
-      var dx = px - mx, dy = py - my;
-      var t  = Math.max(0, 1 - Math.sqrt(dx*dx + dy*dy) / COLOR_R);
-      var r  = (D_BASE[0] + (D_ACT[0] - D_BASE[0]) * t) | 0;
-      var g  = (D_BASE[1] + (D_ACT[1] - D_BASE[1]) * t) | 0;
-      var b  = (D_BASE[2] + (D_ACT[2] - D_BASE[2]) * t) | 0;
-      var a  = L_A_BASE + (L_A_ACT - L_A_BASE) * t;  /* same for dots + lines */
-      return 'rgba(' + r + ',' + g + ',' + b + ',' + a.toFixed(3) + ')';
-    }
-
-    function draw() {
-      var W = canvas.width / dpr, H = canvas.height / dpr;
-      ctx.clearRect(0, 0, W, H);
-      ctx.lineWidth = 0.5;
-
-      /* horizontal lines */
-      for (var r = 0; r < rows; r++) {
-        for (var c = 0; c < cols - 1; c++) {
-          var p1 = pts[r][c], p2 = pts[r][c + 1];
-          ctx.strokeStyle = colorAt((p1.x + p2.x) / 2, p1.y);
-          ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
-        }
-      }
-      /* vertical lines */
-      for (var c = 0; c < cols; c++) {
-        for (var r = 0; r < rows - 1; r++) {
-          var p1 = pts[r][c], p2 = pts[r + 1][c];
-          ctx.strokeStyle = colorAt(p1.x, (p1.y + p2.y) / 2);
-          ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
-        }
-      }
-      /* dots at every vertex */
-      for (var r = 0; r < rows; r++) {
-        for (var c = 0; c < cols; c++) {
-          var pt = pts[r][c];
-          ctx.fillStyle = colorAt(pt.x, pt.y);
-          ctx.beginPath(); ctx.arc(pt.x, pt.y, DOT_R, 0, Math.PI * 2); ctx.fill();
-        }
-      }
-    }
-
-    function requestDraw() {
-      if (!rafPending) {
-        rafPending = true;
-        requestAnimationFrame(function () { draw(); rafPending = false; });
-      }
-    }
-
-    /* Track mouse globally — canvas follows sticky section position */
-    document.addEventListener('mousemove', function (e) {
-      var rect   = canvas.getBoundingClientRect();
-      var inside = e.clientX >= rect.left && e.clientX <= rect.right &&
-                   e.clientY >= rect.top  && e.clientY <= rect.bottom;
-      mx = inside ? e.clientX - rect.left : -9999;
-      my = inside ? e.clientY - rect.top  : -9999;
-      requestDraw();
-    });
-
-    window.addEventListener('resize', function () { setup(); draw(); });
-    setup();
-    draw();
-  } /* end initImpactGrid */
-  initImpactGrid('s-impact');
-  initImpactGrid('s-impact3');
-
-  /* REAL IMPACT CARDS — CAROUSEL */
-  (function () {
-    var track = document.getElementById('rimpTrack');
-    if (!track) return;
-    var idx = 0;
-
-    function go(newIdx) {
+    /* ── Highlight the filter matching the most-centred card ── */
+    function syncFilter(tx) {
       var cards = track.querySelectorAll('.rimp-card');
       if (!cards.length) return;
-      var maxIdx = Math.max(0, cards.length - Math.floor(2.5));
-      idx = Math.max(0, Math.min(newIdx, maxIdx));
-      var cardW = cards[0].offsetWidth + 20;
-      track.style.transform = 'translateX(-' + (idx * cardW) + 'px)';
+      var wrapCenter = wrap.clientWidth / 2;
+      var bestIdx = 0, bestDist = Infinity;
+      cards.forEach(function (card, i) {
+        var cardCenter = card.offsetLeft + tx + card.offsetWidth / 2;
+        var dist = Math.abs(cardCenter - wrapCenter);
+        if (dist < bestDist) { bestDist = dist; bestIdx = i; }
+      });
+      var activeCategory = cards[bestIdx].dataset.category;
+      filters.forEach(function (btn) {
+        btn.classList.toggle('active', btn.textContent.trim().toLowerCase() === activeCategory);
+      });
     }
 
-    window.addEventListener('resize', function () { go(idx); });
-    go(0);
+    /* ── Scroll handler ──
+       KEY FIX: stickyEl.getBoundingClientRect().top is always 86px while stuck,
+       so we measure from the TRACK instead:
+         scrolled = NAV_H − (trackRect.top + headerH)
+       When sticky first hits: trackRect.top + headerH === NAV_H → scrolled = 0 ✓
+       Each px of scroll: trackRect.top drops by 1 → scrolled rises by 1 ✓       ── */
+    function update() {
+      var trackRect = scrollTrack.getBoundingClientRect();
+      var headerH   = headerWrap.offsetHeight;
+      var scrolled  = Math.max(0, Math.min(NAV_H - (trackRect.top + headerH), totalOverhang));
+      var tx = -scrolled;
+      track.style.transform = 'translateX(' + tx + 'px)';
+      syncFilter(tx);
+    }
 
-    /* PILL CLICK — scroll to matching card */
-    document.querySelectorAll('#rimpFilters .rimp-filter').forEach(function (btn) {
+    /* ── Tab click → smooth-scroll to centre that card ── */
+    filters.forEach(function (btn) {
       btn.addEventListener('click', function () {
-        document.querySelectorAll('#rimpFilters .rimp-filter').forEach(function (b) { b.classList.remove('active'); });
-        btn.classList.add('active');
         var category = btn.textContent.trim().toLowerCase();
-        var cards = track.querySelectorAll('.rimp-card');
+        var cards    = track.querySelectorAll('.rimp-card');
         for (var i = 0; i < cards.length; i++) {
-          if (cards[i].dataset.category === category) { go(i); break; }
+          if (cards[i].dataset.category === category) {
+            var card     = cards[i];
+            var targetTx = -(card.offsetLeft - (wrap.clientWidth / 2 - card.offsetWidth / 2));
+            targetTx     = Math.max(-totalOverhang, Math.min(0, targetTx));
+            var headerH  = headerWrap.offsetHeight;
+            var targetY  = scrollTrack.offsetTop + headerH - NAV_H + (-targetTx);
+            window.scrollTo({ top: targetY, behavior: 'smooth' });
+            break;
+          }
         }
       });
     });
 
-    /* MOUSE DRAG */
-    var dragStart = 0, dragStartTranslate = 0, dragging = false;
-
-    function getTranslate() {
-      var t = track.style.transform;
-      return t ? parseFloat(t.replace('translateX(', '')) : 0;
-    }
-
-    track.addEventListener('mousedown', function (e) {
-      dragging = true;
-      dragStart = e.pageX;
-      dragStartTranslate = getTranslate();
-      track.classList.add('dragging');
-    });
-
-    document.addEventListener('mousemove', function (e) {
-      if (!dragging) return;
-      var dx = e.pageX - dragStart;
-      track.style.transform = 'translateX(' + (dragStartTranslate + dx) + 'px)';
-    });
-
-    document.addEventListener('mouseup', function (e) {
-      if (!dragging) return;
-      dragging = false;
-      track.classList.remove('dragging');
-      track.style.transition = 'transform 0.45s ease';
-      var dx = e.pageX - dragStart;
-      var cards = track.querySelectorAll('.rimp-card');
-      var cardW = cards[0] ? cards[0].offsetWidth + 20 : 1;
-      var threshold = cardW * 0.2;
-      if (dx < -threshold) go(idx + 1);
-      else if (dx > threshold) go(idx - 1);
-      else go(idx);
-    });
-
-    /* TOUCH DRAG */
-    var touchStart = 0;
-    track.addEventListener('touchstart', function (e) {
-      touchStart = e.touches[0].pageX;
-      dragStartTranslate = getTranslate();
-      track.style.transition = 'none';
-    }, { passive: true });
-
-    track.addEventListener('touchmove', function (e) {
-      var dx = e.touches[0].pageX - touchStart;
-      track.style.transform = 'translateX(' + (dragStartTranslate + dx) + 'px)';
-    }, { passive: true });
-
-    track.addEventListener('touchend', function (e) {
-      track.style.transition = 'transform 0.45s ease';
-      var dx = e.changedTouches[0].pageX - touchStart;
-      var cards = track.querySelectorAll('.rimp-card');
-      var cardW = cards[0] ? cards[0].offsetWidth + 20 : 1;
-      if (dx < -(cardW * 0.2)) go(idx + 1);
-      else if (dx > (cardW * 0.2)) go(idx - 1);
-      else go(idx);
-    });
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', function () { setup(); update(); });
+    setup();
+    update();
   })();
 
   /* INSIGHTS GRID PAGINATION */
@@ -3959,7 +3324,7 @@ function switchPillarTab(idx) {
 
     /* ── Config ──
      * Base:   grey at 20% — same for dots and lines
-     * Active: violet (#6464d7 = rgb(100,100,215)) at 100%
+     * Active: violet (#008567 = rgb(100,100,215)) at 100%
      */
     var SPX     = 64, SPY = 48, DOT_R = 0.8, COLOR_R = 150;
     var C_BASE  = [180, 180, 180, 0.20];
@@ -4518,38 +3883,6 @@ function switchPillarTab(idx) {
     window.addEventListener('resize', update2);
   }());
 
-  /* AAVA OPTION TOGGLE */
-  (function () {
-    var btn1  = document.getElementById('aavaBtn1');
-    var btn2  = document.getElementById('aavaBtn2');
-    var sec1  = document.getElementById('s-aava');
-    var sec2  = document.getElementById('s-aava-2');
-    if (!btn1 || !btn2 || !sec2) return;
-
-    function showAava(n) {
-      if (n === 1) {
-        sec1.style.display = '';
-        sec2.style.display = 'none';
-        btn1.classList.add('active');
-        btn2.classList.remove('active');
-      } else {
-        sec1.style.display = 'none';
-        sec2.style.display = '';
-        btn1.classList.remove('active');
-        btn2.classList.add('active');
-        /* Trigger scroll-reveal and terminal for newly visible section */
-        sec2.querySelectorAll('.rv:not(.in)').forEach(function (el) { rvObs.observe(el); });
-        initTerminal2();
-        positionTerminal2();
-        /* Kick off grid canvas and disperse for option 2 */
-        if (window._aavaGrid2Resize) window._aavaGrid2Resize();
-        if (disperseUpdate2) disperseUpdate2();
-      }
-    }
-
-    btn1.addEventListener('click', function () { showAava(1); });
-    btn2.addEventListener('click', function () { showAava(2); });
-  }());
 
   /* AAVA OPTION 2 — TERMINAL POSITIONING */
   var terminalTimer2 = [];
@@ -4591,6 +3924,10 @@ function switchPillarTab(idx) {
     runCycle2();
   }
 
+  /* AAVA OPTION 2 — init terminal on load (no toggle needed) */
+  positionTerminal2();
+  initTerminal2();
+
   /* AAVA OPTION 2 — SUB LINE SCROLL ANIMATION */
   (function () {
     var line2   = document.getElementById('aavaSubLine2');
@@ -4598,7 +3935,6 @@ function switchPillarTab(idx) {
     var sec2    = document.getElementById('s-aava-2');
     if (!line2 || !sec2) return;
     function update2() {
-      if (sec2.style.display === 'none') return;
       var rect = sec2.getBoundingClientRect();
       var vh   = window.innerHeight;
       var prog = Math.max(0, Math.min(1, (vh - rect.top - vh * 0.3) / (vh * 0.25)));
@@ -4606,81 +3942,6 @@ function switchPillarTab(idx) {
       if (lineB2) lineB2.style.transform = 'scaleY(' + prog + ')';
     }
     window.addEventListener('scroll', update2, { passive: true });
-  }());
-
-  /* REAL IMPACT OPTION 3 — parade strip, horizontal slide right → left on scroll */
-  (function () {
-    var track  = document.getElementById('impact3ScrollTrack');
-    var intro  = document.getElementById('impact3Intro');
-    var strip  = document.getElementById('imp3Strip');
-    if (!track || !intro || !strip) return;
-
-    var GAP = 96;
-    var N   = 6;
-
-    function updateImpact3() {
-      var rect         = track.getBoundingClientRect();
-      var vh           = window.innerHeight;
-      var vw           = window.innerWidth;
-      var scrolled     = -rect.top;
-      var cssReleaseAt = track.offsetHeight - vh;
-      var RELEASE_P      = 0.85;
-      var effectiveRange = cssReleaseAt / RELEASE_P;
-      var p = Math.max(0, Math.min(1, scrolled / effectiveRange));
-
-      /* Match the CSS calc: (100vw - --px*2 - 32px) / 3 + 100px */
-      var CARD_W = (vw - 160 - 32) / 3 + 100;
-      var totalW = N * CARD_W + (N - 1) * GAP;
-
-      /* At p=0: card 0 is 25% visible from the right edge */
-      var startX = vw - CARD_W * 0.25;
-      /* At p=1: last card has fully exited left */
-      var endX   = -totalW;
-      var tx = startX + (endX - startX) * p;
-
-      strip.style.transform = 'translateX(' + tx + 'px)';
-    }
-
-    window.addEventListener('scroll', updateImpact3, { passive: true });
-    window.addEventListener('resize', updateImpact3);
-    updateImpact3();
-  }());
-
-  /* REAL IMPACT TOGGLE */
-  (function () {
-    var btn1     = document.getElementById('rimpBtn1');
-    var btn2     = document.getElementById('rimpBtn2');
-    var btn3     = document.getElementById('rimpBtn3');
-    var sec1     = document.getElementById('s-impact');
-    var sec1Wrap = sec1 ? sec1.parentElement : null; /* impact-scroll-track */
-    var sec2     = document.getElementById('s-rimp');
-    var sec3Wrap = document.getElementById('impact3ScrollTrack');
-    if (!btn1 || !btn2 || !sec2) return;
-
-    function showOption(n) {
-      [btn1, btn2, btn3].forEach(function (b) { if (b) b.classList.remove('active'); });
-      if (n === 1) {
-        if (sec1Wrap) sec1Wrap.style.display = '';
-        sec2.style.display = 'none';
-        if (sec3Wrap) sec3Wrap.style.display = 'none';
-        btn1.classList.add('active');
-      } else if (n === 2) {
-        if (sec1Wrap) sec1Wrap.style.display = 'none';
-        sec2.style.display = '';
-        if (sec3Wrap) sec3Wrap.style.display = 'none';
-        btn2.classList.add('active');
-        sec2.querySelectorAll('.rv:not(.in)').forEach(function (el) { rvObs.observe(el); });
-      } else {
-        if (sec1Wrap) sec1Wrap.style.display = 'none';
-        sec2.style.display = 'none';
-        if (sec3Wrap) sec3Wrap.style.display = '';
-        if (btn3) btn3.classList.add('active');
-      }
-    }
-
-    btn1.addEventListener('click', function () { showOption(1); });
-    btn2.addEventListener('click', function () { showOption(2); });
-    if (btn3) btn3.addEventListener('click', function () { showOption(3); });
   }());
 
 }());
