@@ -15,6 +15,7 @@
     }
   </style>
 
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -24,9 +25,9 @@
        DESIGN TOKENS
     ===================================================== */
     :root {
-      --primary-500: #6464d7;
-      --primary-100: #968cfa;
-      --primary-900: #5a37af;
+      --primary-500: #008567;
+      --primary-100: #00b589;
+      --primary-900: #006b52;
       --accent-100:  #2ddcaa;
       --accent-500:  #009673;
       --neutral-0:   #ffffff;
@@ -44,13 +45,13 @@
       --bg-dark:        #000000;
       --bg-dark-subtle: #1a1a1a;
       --bg-dark-2:      #333333;
-      --bg-violet:      #6464d7;
+      --bg-violet:      #008567;
       --bg-accent:      #2ddcaa;
       --text-primary:   #000000;
       --text-secondary: #333333;
       --text-inv:       #ffffff;
       --text-inv-2:     #cccccc;
-      --text-highlight: #6464d7;
+      --text-highlight: #008567;
       --text-hi-inv:    #2ddcaa;
       --text-disabled:  #666666;
       --border:         #999999;
@@ -326,14 +327,13 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 80px;
-      align-items: start;
+      align-items: end;
     }
-    .chr-intro-h2 {
-      font-family: var(--font-display);
-      font-size: 40px;
-      font-weight: 400;
-      line-height: 1.1;
-      color: var(--text-primary);
+    .chr-intro-nmsdc {
+      max-width: 260px;
+      width: 100%;
+      height: auto;
+      display: block;
     }
     .chr-intro-body {
       font-size: 20px;
@@ -357,10 +357,7 @@
     }
 
     /* =====================================================
-       BUILDING IN LATIN AMERICA — sticky split
-    ===================================================== */
-    /* =====================================================
-       BUILDING IN LATIN AMERICA — dark, 2-column
+       BUILDING IN LATIN AMERICA
     ===================================================== */
     .latam-section {
       background: var(--bg-default);
@@ -370,7 +367,11 @@
       grid-template-columns: 1fr 1fr;
       gap: 80px;
       align-items: start;
-      align-items: center;
+    }
+    /* Left column: heading + staggered blocks */
+    .latam-left {
+      display: flex;
+      flex-direction: column;
     }
     .latam-h2 {
       font-family: var(--font-display);
@@ -379,6 +380,80 @@
       line-height: 1.1;
       color: var(--text-primary);
       margin-bottom: 24px;
+    }
+    /* Staggered block area: 3×160px + 2×60px gaps = 600px */
+    .latam-maps {
+      position: relative;
+      height: 600px;
+      width: 100%;
+    }
+    .latam-sq {
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      background: var(--neutral-900);
+      border-radius: 2px;
+      transition: transform 0.3s ease;
+      overflow: visible;
+    }
+    .latam-sq:hover { transform: translateY(-4px); }
+    .latam-sq--1 { top: 0;    left: 0; }
+    .latam-sq--2 { top: 220px; right: 0; }
+    .latam-sq--3 { top: 440px; left: calc(37%); }
+    /* Country label inside each block */
+    .latam-sq-label {
+      position: absolute;
+      bottom: 14px;
+      left: 14px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-100);
+      z-index: 1;
+    }
+    /* Country photo — fills the box */
+    .latam-sq-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 4px;
+    }
+    /* SVG map overlay — sits on top, hangs outside the box */
+    .latam-sq-map {
+      position: absolute;
+      height: 210px;
+      width: auto;
+      pointer-events: none;
+      z-index: 2;
+    }
+    /* Brazil: #FFCC00 yellow */
+    .latam-sq--1 .latam-sq-map {
+      left: 50%;
+      top: 25%;
+    }
+    /* Colombia: #6666CC purple */
+    .latam-sq--2 .latam-sq-map {
+      right: 70%;
+      top: 25%;
+    }
+    /* Mexico: #CC0066 pink */
+    .latam-sq--3 .latam-sq-map {
+      right: 50%;
+      top: 0;
+      height: 170px;
+    }
+    /* Right column: sticky while left scrolls */
+    .latam-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      position: sticky;
+      top: 140px;
     }
     .latam-body {
       font-size: 18px;
@@ -392,56 +467,19 @@
       gap: 16px;
       flex-wrap: wrap;
     }
-    .latam-img {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      border-radius: 2px;
-      overflow: hidden;
-    }
-    .latam-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
 
     /* =====================================================
        THE ASCENDION EDGE — white, two paths
     ===================================================== */
-    /* =====================================================
-       VIEW TOGGLE — switches between option 1 & 2
-    ===================================================== */
-    .view-toggle {
-      background: var(--bg-subtle);
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      padding: 20px var(--px) 0;
-    }
-    .view-toggle-btn {
-      font-family: var(--font-primary);
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 8px 18px;
-      border-radius: 2px;
-      border: 1px solid var(--neutral-200);
-      background: transparent;
-      color: var(--neutral-600);
-      cursor: pointer;
-      transition: background 0.15s, color 0.15s, border-color 0.15s;
-    }
-    .view-toggle-btn:hover { border-color: var(--primary-500); color: var(--primary-500); }
-    .view-toggle-btn.active { background: var(--primary-500); border-color: var(--primary-500); color: #fff; }
-
-    /* Option 1 hidden by default */
-    #edge { display: none; }
 
     /* =====================================================
        CAREER PATHS — bg-subtle, branching connector
     ===================================================== */
-    .edge-section { background: var(--bg-subtle); }
+    .edge-section {
+      background: var(--bg-subtle);
+      background-image: linear-gradient(rgba(0,0,0,0.055) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.055) 1px, transparent 1px);
+      background-size: 64px 64px;
+    }
     .edge-head { text-align: center; margin-bottom: 24px; }
     .edge-sub {
       font-size: 20px;
@@ -524,6 +562,7 @@
     .edge-card--talent {
       background: var(--primary-500);
     }
+    .edge-card--talent h4 { color: var(--neutral-0) !important; }
     .edge-card--talent p  { color: var(--neutral-0) !important; }
     .edge-card--talent:hover { box-shadow: 0 16px 40px rgba(100,100,215,0.35); }
     .edge-card--talent:hover::after { background: var(--accent-100); }
@@ -567,73 +606,77 @@
     }
 
     /* =====================================================
-       CAREER ROLES — tab layout
-    ===================================================== */
-    .roles-section { background: var(--bg-subtle); }
-    .roles-head { margin-bottom: 48px; }
-    .roles-head h2 { text-align: left; margin-bottom: 16px; }
-    .roles-intro {
-      font-size: 20px;
-      color: var(--text-secondary);
-      line-height: 1.6;
-      max-width: 560px;
-    }
-    .roles-inner {
-      display: grid;
-      grid-template-columns: 1fr 1.2fr;
-      gap: 80px;
-      align-items: start;
-    }
-    .roles-tabs { border-top: 1px solid var(--neutral-200); }
-    .roles-tab {
-      display: flex;
-      align-items: center;
-      padding: 24px 0;
-      border-bottom: 1px solid var(--neutral-200);
-      cursor: pointer;
-    }
-    .roles-tab-name {
-      font-family: var(--font-primary);
-      font-size: 24px;
-      font-weight: 400;
-      color: var(--neutral-300);
-      transition: color 0.2s;
-    }
-    .roles-tab.active .roles-tab-name { color: var(--text-primary); }
-    .roles-right { padding-top: 25px; }
-    .roles-panel { display: none; }
-    .roles-panel.active { display: block; }
-    .roles-panel-num {
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--primary-500);
-      margin-bottom: 16px;
-    }
-    .roles-panel-head {
-      font-family: var(--font-display);
-      font-size: 32px;
-      font-weight: 400;
-      color: var(--text-primary);
-      line-height: 1.2;
-      margin-bottom: 20px;
-    }
-    .roles-panel-body {
-      font-size: 18px;
-      color: var(--text-secondary);
-      line-height: 1.65;
-      margin-bottom: 36px;
-    }
-
-    /* =====================================================
        CULTURE GALLERY + D&I — carousels + center text
     ===================================================== */
-    .gallery-section {
-      background: var(--bg-dark);
+
+    /* Full-width video block */
+    .di-video-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
       overflow: hidden;
+    }
+    .di-video-wrap video,
+    .di-video-wrap iframe,
+    .di-video-thumb {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    /* Play button */
+    .di-play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.6);
+      background: rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 5;
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+      backdrop-filter: blur(4px);
+    }
+    .di-play-btn:hover {
+      background: var(--accent-100);
+      border-color: var(--accent-100);
+      transform: translate(-50%, -50%) scale(1.08);
+    }
+    .di-play-btn svg {
+      margin-left: 4px; /* optical offset for play triangle */
+      color: #fff;
+      transition: color 0.2s ease;
+    }
+    .di-play-btn:hover svg { color: #000; }
+
+    /* Subtle green tint fading in at the bottom ~40% of the video */
+    .di-video-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        transparent 60%,
+        rgba(0, 133, 103, 0.25) 100%
+      );
+      pointer-events: none;
+    }
+
+    .gallery-section {
+      background: #1a1a1a;
+      overflow: visible;   /* allow heading to bleed up into video */
       padding-top: 0;
       padding-bottom: var(--py);
+      position: relative;
     }
 
     /* Carousel strip */
@@ -670,15 +713,24 @@
       to   { transform: translateX(0); }
     }
 
-    /* Center text block between carousels */
+    /* Heading + CTAs block — heading floats up into the video */
     .gallery-center {
+      position: relative;
       text-align: center;
-      padding: var(--py) var(--px);
-      background: var(--bg-dark);
+      padding: 300px var(--px) var(--py);
+      background: #1a1a1a;
+      z-index: 10;
     }
     .gallery-center h2 {
+      position: absolute;
+      top: -56px;
+      left: var(--px);
+      right: var(--px);
+      font-size: 96px;
+      line-height: 1.1;
       color: var(--text-inv);
-      margin-bottom: 32px;
+      margin: 0;
+      z-index: 10;
     }
     .gallery-center-btns {
       display: flex;
@@ -691,10 +743,10 @@
        EXPLORE OPENINGS — white, filterable list
     ===================================================== */
     .jobs-section {
-      background: var(--bg-default);
+      background: var(--bg-dark);
     }
     .jobs-head-row { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 32px; }
-    .jobs-head-row h2 { text-align: left; margin: 0; }
+    .jobs-head-row h2 { text-align: left; margin: 0; color: var(--text-inv); }
     .jobs-dropdowns {
       display: flex;
       gap: 12px;
@@ -702,24 +754,25 @@
     .jobs-dropdown {
       font-family: var(--font-primary);
       font-size: 14px;
-      color: var(--text-primary);
-      background: var(--bg-default);
-      border: 1px solid var(--neutral-200);
+      color: var(--text-inv);
+      background: var(--bg-dark-subtle);
+      border: 1px solid var(--neutral-700);
       border-radius: 2px;
       padding: 10px 36px 10px 14px;
       cursor: pointer;
       appearance: none;
       -webkit-appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%23666666' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%23cccccc' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-position: right 12px center;
       min-width: 160px;
       transition: border-color 0.15s;
     }
-    .jobs-dropdown:hover, .jobs-dropdown:focus { border-color: var(--primary-500); outline: none; }
+    .jobs-dropdown:hover, .jobs-dropdown:focus { border-color: var(--accent-100); outline: none; }
+    .jobs-dropdown option { background: var(--bg-dark-subtle); color: var(--text-inv); }
     .jobs-filters {
       display: flex;
-      border-bottom: 1px solid var(--neutral-200);
+      border-bottom: 1px solid var(--neutral-800);
       margin-bottom: 48px;
       overflow-x: auto;
       scrollbar-width: none;
@@ -729,7 +782,7 @@
       font-family: var(--font-primary);
       font-size: 14px;
       font-weight: 400;
-      color: var(--neutral-600);
+      color: var(--neutral-400);
       background: none;
       border: none;
       border-bottom: 2px solid transparent;
@@ -740,8 +793,8 @@
       white-space: nowrap;
       transition: color 0.2s, border-color 0.2s;
     }
-    .jobs-filter:hover { color: var(--text-primary); }
-    .jobs-filter.active { color: var(--text-primary); border-bottom-color: var(--primary-500); font-weight: 500; }
+    .jobs-filter:hover { color: var(--text-inv); }
+    .jobs-filter.active { color: var(--text-inv); border-bottom-color: var(--accent-100); font-weight: 500; }
     .jobs-list {}
     .job-row {
       display: grid;
@@ -749,16 +802,16 @@
       align-items: start;
       gap: 24px;
       padding: 28px 0;
-      border-bottom: 1px solid var(--neutral-200);
+      border-bottom: 1px solid var(--neutral-800);
       transition: background 0.15s;
       cursor: pointer;
     }
-    .job-row:hover { background: var(--bg-subtle); padding-left: 24px; padding-right: 24px; margin-left: -24px; margin-right: -24px; border-radius: 2px; }
+    .job-row:hover { background: var(--bg-dark-subtle); padding-left: 24px; padding-right: 24px; margin-left: -24px; margin-right: -24px; border-radius: 2px; }
     .job-title {
       font-family: var(--font-primary);
       font-size: 20px;
       font-weight: 400;
-      color: var(--text-primary);
+      color: var(--text-inv);
       line-height: 1.35;
     }
     .job-dept-removed {
@@ -766,7 +819,7 @@
       font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--primary-500);
+      color: var(--accent-100);
     }
     .job-col-label {
       font-size: 11px;
@@ -778,11 +831,11 @@
     }
     .job-skills-text {
       font-size: 16px;
-      color: var(--text-secondary);
+      color: var(--text-inv-2);
     }
     .job-location {
       font-size: 16px;
-      color: var(--text-secondary);
+      color: var(--text-inv-2);
       line-height: 1.4;
     }
     .job-cta {
@@ -791,12 +844,12 @@
       align-self: start;
       font-size: 16px;
       font-weight: 500;
-      color: var(--primary-500);
+      color: var(--accent-100);
       gap: 6px;
       align-items: center;
       transition: color 0.15s;
     }
-    .job-row:hover .job-cta { color: var(--primary-900); }
+    .job-row:hover .job-cta { color: var(--accent-500); }
     .job-cta svg { transition: transform 0.2s ease; }
     .job-row:hover .job-cta svg { transform: translateX(4px); }
     .job-row.hidden { display: none; }
@@ -817,23 +870,23 @@
       font-size: 14px;
       font-weight: 500;
       cursor: pointer;
-      border: 1.5px solid #000;
+      border: 1.5px solid var(--neutral-700);
       background: transparent;
-      color: var(--text-primary);
+      color: var(--text-inv);
       transition: background 0.2s, border-color 0.2s, color 0.2s;
       flex-shrink: 0;
     }
-    .jobs-page-btn:hover:not(.disabled):not(.active) { border-color: var(--primary-500); color: var(--primary-500); }
-    .jobs-page-btn.active { background: var(--primary-500); border-color: var(--primary-500); color: #fff; }
-    .jobs-page-btn.disabled { color: var(--neutral-300); border-color: var(--neutral-200); cursor: default; pointer-events: none; }
-    .jobs-page-btn--arrow { color: var(--primary-500); }
-    .jobs-page-btn--arrow.disabled { color: var(--neutral-300); }
+    .jobs-page-btn:hover:not(.disabled):not(.active) { border-color: var(--accent-100); color: var(--accent-100); }
+    .jobs-page-btn.active { background: var(--accent-100); border-color: var(--accent-100); color: #000; }
+    .jobs-page-btn.disabled { color: var(--neutral-700); border-color: var(--neutral-800); cursor: default; pointer-events: none; }
+    .jobs-page-btn--arrow { color: var(--accent-100); }
+    .jobs-page-btn--arrow.disabled { color: var(--neutral-700); }
 
     /* =====================================================
        TALENT POOL FORM — dark, centered
     ===================================================== */
     .pool-section {
-      background: var(--bg-dark);
+      background: #1a1a1a;
       position: relative;
       overflow: hidden;
     }
@@ -959,7 +1012,10 @@
       .chr-hero-img { min-height: 50vh; position: relative; }
       .chr-hero-h1 { font-size: 48px; }
       .latam-inner { grid-template-columns: 1fr; }
-      .latam-img { aspect-ratio: 16/9; }
+      .latam-maps { height: 500px; }
+      .latam-sq { width: 130px; height: 130px; }
+      .latam-sq--2 { top: 190px; }
+      .latam-sq--3 { top: 380px; }
       .edge-cards-inner { grid-template-columns: 1fr; }
       .edge-col--right { margin-top: 0; }
       .edge-fork-left, .edge-fork-right { display: none; }
@@ -1125,8 +1181,8 @@
 <section class="chr-intro" id="intro">
   <div class="container">
     <div class="chr-intro-inner">
-      <!-- LEFT: headline -->
-      <h2 class="chr-intro-h2 rv">An NMSDC-certified minority business enterprise</h2>
+      <!-- LEFT: NMSDC logo -->
+      <img src="../assets/images/Careers/nmsdc.webp" alt="NMSDC-certified minority business enterprise" class="chr-intro-nmsdc rv">
       <!-- RIGHT: body copy -->
       <p class="chr-intro-body rv d1">Ascendion is an NMSDC-certified minority business enterprise, hiring across the U.S. and Mexico. We use AI across functions to deliver for Fortune 100 companies and invest in our people through embedded learning, mentorship, and career paths built for growth.</p>
     </div>
@@ -1150,21 +1206,38 @@
      BUILDING IN LATIN AMERICA — sticky split
 =================================================== -->
 <!-- ===================================================
-     BUILDING IN LATIN AMERICA — dark, 2-col
+     BUILDING IN LATIN AMERICA
 =================================================== -->
 <section class="latam-section" id="latam-track">
   <div class="container">
     <div class="latam-inner">
-      <!-- LEFT: image -->
-      <div class="latam-img rv">
-        <img src="../assets/images/Careers/Banner-img.jpg" alt="Latin America hub">
+
+      <!-- LEFT: staggered country blocks -->
+      <div class="latam-left">
+        <div class="latam-maps">
+          <!-- Block 1: Brazil — left-aligned -->
+          <div class="latam-sq latam-sq--1">
+            <img src="../assets/images/Careers/brazil-img.png" alt="Brazil" class="latam-sq-photo">
+            <img src="../assets/images/Careers/brazil-col.svg" alt="" class="latam-sq-map" aria-hidden="true">
+          </div>
+          <!-- Block 2: Colombia — right-aligned -->
+          <div class="latam-sq latam-sq--2">
+            <img src="../assets/images/Careers/colombia-img.png" alt="Colombia" class="latam-sq-photo">
+            <img src="../assets/images/Careers/colombia-col.svg" alt="" class="latam-sq-map" aria-hidden="true">
+          </div>
+          <!-- Block 3: Mexico — center -->
+          <div class="latam-sq latam-sq--3">
+            <img src="../assets/images/Careers/Mexico-img.png" alt="Mexico" class="latam-sq-photo">
+            <img src="../assets/images/Careers/mexico-col.svg" alt="" class="latam-sq-map" aria-hidden="true">
+          </div>
+        </div>
       </div>
 
-      <!-- RIGHT: headline + body + CTAs -->
-      <div>
-        <h2 class="latam-h2 rv d1">Building in Latin America</h2>
-        <p class="latam-body rv d2">Ascendion Latin America delivers nearshore digital engineering excellence through delivery centers in Mexico, Colombia, and Brazil, supported by a strong regional talent network. Since launching in Monterrey in March 2023, LATAM has become central to Ascendion's mission, scaling platform engineering, data, and Agentic AI capabilities for global enterprises.</p>
-        <div class="latam-ctas rv d3">
+      <!-- RIGHT: heading + body + CTAs -->
+      <div class="latam-right rv d2">
+        <h2 class="latam-h2">Building in Latin America</h2>
+        <p class="latam-body">Ascendion Latin America delivers nearshore digital engineering excellence through delivery centers in Mexico, Colombia, and Brazil, supported by a strong regional talent network. Since launching in Monterrey in March 2023, LATAM has become central to Ascendion's mission, scaling platform engineering, data, and Agentic AI capabilities for global enterprises.</p>
+        <div class="latam-ctas">
           <a href="https://ascendion.com/press/ascendion-launches-new-hub-in-monterrey-mexico-to-accelerate-global-software-innovation/" class="btn btn-primary" target="_blank" rel="noopener">
             <span class="btn__label">Learn More</span>
             <span class="btn__icon" aria-hidden="true">
@@ -1183,15 +1256,10 @@
           </a>
         </div>
       </div>
+
     </div>
   </div>
 </section>
-
-<!-- View toggle — always visible, switches option 1 / 2 -->
-<div class="view-toggle" id="viewToggle">
-  <button class="view-toggle-btn" data-view="edge">Option 1</button>
-  <button class="view-toggle-btn active" data-view="roles">Option 2</button>
-</div>
 
 <!-- ===================================================
      CAREER PATHS — bg-subtle, branching connector
@@ -1256,64 +1324,16 @@
 </section>
 
 <!-- ===================================================
-     CAREER ROLES — tab layout
+     D&I VIDEO — full-width placeholder (swap for real video/iframe)
 =================================================== -->
-<section class="roles-section" id="roles">
-  <div class="container">
-    <div class="lbl lbl--dark rv">Career Paths</div>
-
-    <!-- Heading + intro above the grid -->
-    <div class="roles-head rv">
-      <h2>The Ascendion Edge</h2>
-      <p class="roles-intro">There's more than one way to build a career here.</p>
-    </div>
-
-    <!-- Tab grid: tabs left aligned with panel right -->
-    <div class="roles-inner">
-
-      <!-- Left: tabs only -->
-      <div class="roles-left rv">
-        <div class="roles-tabs">
-          <div class="roles-tab active" data-role="engineering">
-            <h4 class="roles-tab-name">Engineering</h4>
-          </div>
-          <div class="roles-tab" data-role="talent">
-            <h4 class="roles-tab-name">Talent &amp; Corporate</h4>
-          </div>
-        </div>
-      </div>
-
-      <!-- Right: content panels -->
-      <div class="roles-right rv d1">
-
-        <div class="roles-panel active" id="roles-panel-engineering">
-          <p class="roles-panel-body">Build digital engineering solutions for global brands.</p>
-          <a href="https://ascendion.com/careers/america/#joblisting" class="btn btn-primary" target="_blank" rel="noopener">
-            <span class="btn__label">Contact</span>
-            <span class="btn__icon" aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </span>
-          </a>
-        </div>
-
-        <div class="roles-panel" id="roles-panel-talent">
-          <p class="roles-panel-body">Help people reach their career goals with personalized guidance and support. Connect talent to opportunities and help grow the business.</p>
-          <a href="mailto:corporatecareers@ascendion.com" class="btn btn-primary">
-            <span class="btn__label">Contact</span>
-            <span class="btn__icon" aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </span>
-          </a>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</section>
+<div class="di-video-wrap">
+  <img src="../assets/images/Home/video-img.jpg" alt="" class="di-video-thumb" aria-hidden="true">
+  <button class="di-play-btn" aria-label="Play video">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+      <polygon points="6,3 21,12 6,21"/>
+    </svg>
+  </button>
+</div>
 
 <!-- ===================================================
      CULTURE GALLERY + D&I — carousels + center text
@@ -1322,7 +1342,7 @@
 
   <!-- Center: heading + CTAs -->
   <div class="gallery-center rv">
-    <h2>Diversity, Inclusion and Social Impact</h2>
+    <h2>Diversity,<br>Inclusion and<br>Social Impact</h2>
     <div class="gallery-center-btns">
       <a href="https://ideas.ascendion.com/view/801813768/" class="btn btn-inverse" target="_blank" rel="noopener">
         <span class="btn__label">Learn more about Diversity and Inclusion at Ascendion</span>
@@ -1692,31 +1712,6 @@
     }, { threshold: 0.15 });
     connObs.observe(edgeSection);
   }
-
-  /* ── VIEW TOGGLE (option 1 / option 2) ─────────────── */
-  var edgeEl  = document.getElementById('edge');
-  var rolesEl = document.getElementById('roles');
-  document.querySelectorAll('.view-toggle-btn').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      document.querySelectorAll('.view-toggle-btn').forEach(function (b) { b.classList.remove('active'); });
-      btn.classList.add('active');
-      var view = btn.dataset.view;
-      edgeEl.style.display  = view === 'edge'  ? 'block' : 'none';
-      rolesEl.style.display = view === 'roles' ? 'block' : 'none';
-    });
-  });
-
-  /* ── ROLES TAB SWITCHER ──────────────────────────── */
-  document.querySelectorAll('.roles-tab').forEach(function (tab) {
-    tab.addEventListener('click', function () {
-      document.querySelectorAll('.roles-tab').forEach(function (t) { t.classList.remove('active'); });
-      tab.classList.add('active');
-      var role = tab.dataset.role;
-      document.querySelectorAll('.roles-panel').forEach(function (p) { p.classList.remove('active'); });
-      var panel = document.getElementById('roles-panel-' + role);
-      if (panel) panel.classList.add('active');
-    });
-  });
 
   /* ── INTERACTIVE GRID — reusable factory ───────────── */
   function attachGrid(canvas, section, dotColor, activeColor, bgOpacity) {
