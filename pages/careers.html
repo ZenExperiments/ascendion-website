@@ -327,13 +327,21 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 80px;
-      align-items: end;
+      align-items: start;
     }
     .chr-intro-nmsdc {
       max-width: 260px;
       width: 100%;
       height: auto;
       display: block;
+    }
+    .chr-intro-h2 {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 400;
+      color: var(--text-primary);
+      line-height: 1.2;
+      margin-bottom: 20px;
     }
     .chr-intro-body {
       font-size: 20px;
@@ -883,6 +891,162 @@
     .jobs-page-btn--arrow.disabled { color: var(--neutral-700); }
 
     /* =====================================================
+       EMPLOYEE TESTIMONIALS — Figma WellSky-style layout
+    ===================================================== */
+    .testimonials-section {
+      background: var(--bg-default);
+      border-top: 1px solid var(--neutral-200);
+    }
+    .tm-section-h2 {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 400;
+      color: var(--text-primary);
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    /* Main black container — flex column */
+    .tm-container {
+      background: var(--bg-dark);
+      border-radius: 2px;
+      padding: 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    /* Tab bar — avatar circles on the right, ruled line below */
+    .tm-tabs {
+      display: flex;
+      align-items: flex-end;
+      border-bottom: 1px solid #333;
+      padding-bottom: 20px;
+    }
+    .tm-tabs-spacer { flex: 1; }
+    .tm-tab-list { display: flex; gap: 12px; align-items: center; }
+    .tm-tab {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      background: #2a2a2a;
+      cursor: pointer;
+      padding: 0;
+      flex-shrink: 0;
+      transition: border-color 0.2s, transform 0.2s;
+      overflow: hidden;
+    }
+    .tm-tab img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      border-radius: 50%;
+    }
+    .tm-tab:hover { transform: scale(1.05); }
+    .tm-tab.active { border-color: var(--accent-100); transform: scale(1.08); }
+    /* Content area — image right, card overlaps from bottom-left */
+    .tm-content-area {
+      position: relative;
+      height: 400px;
+    }
+    .tm-content-img {
+      position: absolute;
+      top: 0; right: 0; bottom: 0;
+      width: 55%;
+      background: #1a1a1a;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .tm-content-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    .tm-slide { display: none; position: absolute; inset: 0; }
+    .tm-slide.active { display: block; }
+    /* Person block — name + role sit above the card, outside it */
+    .tm-person {
+      position: absolute;
+      top: 0; left: 0;
+      z-index: 2;
+      padding-bottom: 16px;
+    }
+    .tm-name {
+      font-family: var(--font-primary);
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--text-inv);
+      line-height: 1.3;
+    }
+    .tm-role {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-inv);
+      margin-top: 4px;
+    }
+    .tm-card {
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 54%;
+      background: var(--bg-dark-subtle);
+      border-radius: 2px;
+      padding: 44px 40px;
+      z-index: 2;
+      min-height: 260px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .tm-quote {
+      font-family: var(--font-primary);
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--text-inv);
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+    /* Nav row — dots left, arrows right */
+    .tm-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .tm-dots { display: flex; gap: 8px; align-items: center; }
+    .tm-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #333;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .tm-dot.active { background: var(--accent-100); transform: scale(1.35); }
+    .tm-arrows { display: flex; gap: 8px; }
+    .tm-arrow {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--neutral-0);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; background: transparent;
+      color: var(--text-inv);
+      position: relative; overflow: hidden;
+      transition: border-color 0.35s, color 0.35s;
+    }
+    .tm-arrow::before {
+      content: '';
+      position: absolute; inset: 0;
+      border-radius: 50%;
+      background: var(--accent-100);
+      transform: translateX(-101%);
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+    .tm-arrow:hover::before { transform: translateX(0); }
+    .tm-arrow:hover { border-color: var(--accent-100); color: #000; }
+    .tm-arrow svg { position: relative; z-index: 1; }
+    .tm-arrow:disabled { opacity: 0.25; pointer-events: none; border-color: #333; }
+
+    /* =====================================================
        TALENT POOL FORM — dark, centered
     ===================================================== */
     .pool-section {
@@ -1038,6 +1202,24 @@
       .nav-menu.open .nav-link { font-size: 18px; padding: 10px 0; }
       .nav-menu.open .btn { margin-top: 16px; }
       .nav-toggle { display: flex; }
+
+      /* Testimonials — stack vertically */
+      .tm-section-h2 { font-size: 32px; margin-bottom: 28px; }
+      .tm-container { padding: 36px 32px; gap: 24px; }
+      .tm-content-area { height: auto; display: flex; flex-direction: column; gap: 0; }
+      .tm-content-img {
+        position: relative; top: auto; right: auto; bottom: auto;
+        width: 100%; height: 260px; flex-shrink: 0;
+      }
+      .tm-slide { position: relative; inset: auto; display: none; }
+      .tm-slide.active { display: flex; flex-direction: column; gap: 0; }
+      .tm-person { position: relative; top: auto; left: auto; padding: 20px 0 0; }
+      .tm-card {
+        position: relative; bottom: auto; left: auto;
+        width: 100%; min-height: 0;
+        border-radius: 0 0 2px 2px;
+      }
+      .tm-name { font-size: 20px; }
     }
     @media (max-width: 600px) {
       :root { --px: 24px; --py: 48px; }
@@ -1047,6 +1229,16 @@
       .footer-cols { grid-template-columns: 1fr; gap: 32px; }
       .footer-bottom { flex-direction: column; align-items: flex-start; }
       .announce { display: none; }
+
+      /* Testimonials — tighten further */
+      .tm-section-h2 { font-size: 28px; }
+      .tm-container { padding: 28px 24px; gap: 20px; }
+      .tm-content-img { height: 180px; }
+      .tm-card { padding: 28px 24px; }
+      .tm-quote { font-size: 17px; }
+      .tm-name { font-size: 18px; }
+      .tm-tab { width: 44px; height: 44px; }
+      .tm-arrow { width: 40px; height: 40px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1176,15 +1368,120 @@
 </section>
 
 <!-- ===================================================
+     EXPLORE OPENINGS — filterable job list
+=================================================== -->
+<section class="jobs-section" id="openings">
+  <div class="container">
+    <!-- Head row: title left, dropdowns right -->
+    <div class="jobs-head-row rv">
+      <h2>Explore Openings</h2>
+      <div class="jobs-dropdowns">
+        <select class="jobs-dropdown" id="skillFilter" aria-label="Filter by skill">
+          <option value="">All Skills</option>
+          <option value="ai">Applied AI</option>
+          <option value="data">Data Engineering</option>
+          <option value="cloud">Cloud &amp; Infrastructure</option>
+          <option value="fullstack">Full Stack</option>
+          <option value="talent">Talent</option>
+          <option value="ops">Operations</option>
+        </select>
+        <select class="jobs-dropdown" id="locationFilter" aria-label="Filter by location">
+          <option value="">All Locations</option>
+          <option value="north-america">North America</option>
+          <option value="mexico">Mexico</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Filter pills -->
+    <div class="jobs-filters rv">
+      <button class="jobs-filter active" data-filter="all">All</button>
+      <button class="jobs-filter" data-filter="technology">Technology Jobs</button>
+      <button class="jobs-filter" data-filter="corporate">Corporate Jobs</button>
+    </div>
+
+    <!-- Job listings -->
+    <div class="jobs-list" id="jobsList">
+
+      <div class="job-row rv" data-dept="engineering">
+        <div class="job-title">Senior Software Engineer, Full Stack</div>
+        <div><div class="job-skills-text">React, Node.js, TypeScript, REST APIs...</div></div>
+        <div><div class="job-location">Austin, Texas, US</div></div>
+        <div class="job-cta">Apply <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+      <div class="job-row rv d1" data-dept="engineering">
+        <div class="job-title">Staff Engineer, Applied AI Platform</div>
+        <div><div class="job-skills-text">Python, LLMs, LangChain, MLOps...</div></div>
+        <div><div class="job-location">San Francisco, California, US</div></div>
+        <div class="job-cta">Apply <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+      <div class="job-row rv d2" data-dept="engineering">
+        <div class="job-title">Principal Data Engineer</div>
+        <div><div class="job-skills-text">Spark, dbt, Snowflake, Databricks...</div></div>
+        <div><div class="job-location">Mexico City, CDMX, MX</div></div>
+        <div class="job-cta">Apply <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+      <div class="job-row rv d3" data-dept="engineering">
+        <div class="job-title">Engineering Manager, Cloud &amp; Infrastructure</div>
+        <div><div class="job-skills-text">AWS, Terraform, Kubernetes, DevOps...</div></div>
+        <div><div class="job-location">New York, New York, US</div></div>
+        <div class="job-cta">Apply <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+      <div class="job-row rv" data-dept="talent">
+        <div class="job-title">Senior Talent Partner</div>
+        <div><div class="job-skills-text">technical recruiting, sourcing, ATS, stakeholder management...</div></div>
+        <div><div class="job-location">Chicago, Illinois, US</div></div>
+        <div class="job-cta">Apply <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+      <div class="job-row rv d1" data-dept="talent">
+        <div class="job-title">Career Development Coach</div>
+        <div><div class="job-skills-text">career coaching, mentorship, L&amp;D, workforce planning...</div></div>
+        <div><div class="job-location">Mexico City, CDMX, MX</div></div>
+        <div class="job-cta">Apply <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+      <div class="job-row rv d2" data-dept="talent">
+        <div class="job-title">Business Development Manager</div>
+        <div><div class="job-skills-text">B2B sales, CRM, Salesforce, pipeline management...</div></div>
+        <div><div class="job-location">Atlanta, Georgia, US</div></div>
+        <div class="job-cta">Apply <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+      <div class="job-row rv d3" data-dept="talent">
+        <div class="job-title">Operations Program Manager</div>
+        <div><div class="job-skills-text">program management, Agile, JIRA, cross-functional ops...</div></div>
+        <div><div class="job-location">Dallas, Texas, US</div></div>
+        <div class="job-cta">Apply <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+    </div>
+
+    <!-- Pagination -->
+    <div class="jobs-pagination" id="jobsPagination"></div>
+
+  </div>
+</section>
+
+<!-- ===================================================
      INTRO — NMSDC, 2-column
 =================================================== -->
 <section class="chr-intro" id="intro">
   <div class="container">
     <div class="chr-intro-inner">
-      <!-- LEFT: NMSDC logo -->
-      <img src="../assets/images/Careers/nmsdc.webp" alt="NMSDC-certified minority business enterprise" class="chr-intro-nmsdc rv">
-      <!-- RIGHT: body copy -->
-      <p class="chr-intro-body rv d1">Ascendion is an NMSDC-certified minority business enterprise, hiring across the U.S. and Mexico. We use AI across functions to deliver for Fortune 100 companies and invest in our people through embedded learning, mentorship, and career paths built for growth.</p>
+      <!-- LEFT: NMSDC logo only -->
+      <div>
+        <img src="../assets/images/Careers/nmsdc.webp" alt="NMSDC-certified minority business enterprise" class="chr-intro-nmsdc rv">
+      </div>
+      <!-- RIGHT: heading above body copy -->
+      <div>
+        <h2 class="chr-intro-h2 rv">Proud to be a minority owned business</h2>
+        <p class="chr-intro-body rv d1">Ascendion is an NMSDC-certified minority business enterprise, hiring across the U.S. and Mexico. We use AI across functions to deliver for Fortune 100 companies and invest in our people through embedded learning, mentorship, and career paths built for growth.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -1327,7 +1624,7 @@
      D&I VIDEO — full-width placeholder (swap for real video/iframe)
 =================================================== -->
 <div class="di-video-wrap">
-  <img src="../assets/images/Careers/video-img.jpg" alt="" class="di-video-thumb" aria-hidden="true">
+  <img src="../assets/images/Home/video-img.jpg" alt="" class="di-video-thumb" aria-hidden="true">
   <button class="di-play-btn" aria-label="Play video">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
       <polygon points="6,3 21,12 6,21"/>
@@ -1389,150 +1686,108 @@
 </section>
 
 <!-- ===================================================
-     EXPLORE OPENINGS — filterable job list
+     EMPLOYEE TESTIMONIALS
 =================================================== -->
-<section class="jobs-section" id="openings">
+<section class="testimonials-section" id="testimonials">
   <div class="container">
-    <!-- Head row: title left, dropdowns right -->
-    <div class="jobs-head-row rv">
-      <h2>Explore Openings</h2>
-      <div class="jobs-dropdowns">
-        <select class="jobs-dropdown" id="skillFilter" aria-label="Filter by skill">
-          <option value="">All Skills</option>
-          <option value="ai">Applied AI</option>
-          <option value="data">Data Engineering</option>
-          <option value="cloud">Cloud &amp; Infrastructure</option>
-          <option value="fullstack">Full Stack</option>
-          <option value="talent">Talent</option>
-          <option value="ops">Operations</option>
-        </select>
-        <select class="jobs-dropdown" id="locationFilter" aria-label="Filter by location">
-          <option value="">All Locations</option>
-          <option value="north-america">North America</option>
-          <option value="mexico">Mexico</option>
-        </select>
-      </div>
-    </div>
 
-    <!-- Filter pills -->
-    <div class="jobs-filters rv">
-      <button class="jobs-filter active" data-filter="all">All</button>
-      <button class="jobs-filter" data-filter="technology">Technology Jobs</button>
-      <button class="jobs-filter" data-filter="corporate">Corporate Jobs</button>
-    </div>
+    <!-- H2 centered above the container -->
+    <h2 class="tm-section-h2 rv">Life at Ascendion</h2>
 
-    <!-- Job listings -->
-    <div class="jobs-list" id="jobsList">
+    <div class="tm-container rv d1">
 
-      <div class="job-row rv" data-dept="engineering">
-        <div class="job-title">Senior Software Engineer, Full Stack</div>
-        <div>
-
-          <div class="job-skills-text">React, Node.js, TypeScript, REST APIs...</div>
+      <!-- Tab bar — circular avatar selectors on the right -->
+      <div class="tm-tabs">
+        <div class="tm-tabs-spacer"></div>
+        <div class="tm-tab-list">
+          <button class="tm-tab active" data-index="0" aria-label="Mike Samson">
+            <img src="../assets/images/Careers/Mike Samson.png" alt="Mike Samson" style="transform:scale(1.5);object-position:65% 30%;">
+          </button>
+          <button class="tm-tab" data-index="1" aria-label="Lizzy Garcia">
+            <img src="../assets/images/Careers/Lizzy Garcia.png" alt="Lizzy Garcia">
+          </button>
+          <button class="tm-tab" data-index="2" aria-label="Lee Evans">
+            <img src="../assets/images/Careers/Lee Evans.png" alt="Lee Evans">
+          </button>
         </div>
-        <div>
-
-          <div class="job-location">Austin, Texas, US</div>
-        </div>
-        <div class="job-cta">Apply <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       </div>
 
-      <div class="job-row rv d1" data-dept="engineering">
-        <div class="job-title">Staff Engineer, Applied AI Platform</div>
-        <div>
+      <!-- Content area — image right, card overlaps from bottom-left -->
+      <div class="tm-content-area">
 
-          <div class="job-skills-text">Python, LLMs, LangChain, MLOps...</div>
+        <!-- Slide 0 -->
+        <div class="tm-slide active" id="tmSlide0">
+          <!-- Image — right side -->
+          <div class="tm-content-img">
+            <img src="../assets/images/Careers/Mike Samson.png" alt="Mike Samson">
+          </div>
+          <!-- Name + role above the card -->
+          <div class="tm-person">
+            <div class="tm-name">Mike Samson</div>
+            <div class="tm-role">Head of Products and Resources</div>
+          </div>
+          <!-- Testimonial card -->
+          <div class="tm-card">
+            <p class="tm-quote">"Working at Ascendion means being at the intersection of AI and real engineering impact. I've grown more in two years here than in the five before — the learning is embedded in the work itself, and the people around you push you to think bigger every single day."</p>
+            <a href="#" class="btn btn-text-inv" style="padding-left:0;padding-right:0;font-size:14px;">
+              <span class="btn__label">Read more</span>
+              <span class="btn__icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </a>
+          </div>
         </div>
-        <div>
 
-          <div class="job-location">San Francisco, California, US</div>
+        <!-- Slide 1 -->
+        <div class="tm-slide" id="tmSlide1">
+          <div class="tm-content-img">
+            <img src="../assets/images/Careers/Lizzy Garcia.png" alt="Lizzy Garcia">
+          </div>
+          <div class="tm-person">
+            <div class="tm-name">Lizzy Garcia</div>
+            <div class="tm-role">Head of People Operations, NA</div>
+          </div>
+          <div class="tm-card">
+            <p class="tm-quote">"The culture here is unlike anything I've experienced before. Leaders genuinely invest in your path, and the mentorship isn't performative — it's built into how teams operate day to day. You always feel like your growth matters to the people above you."</p>
+            <a href="#" class="btn btn-text-inv" style="padding-left:0;padding-right:0;font-size:14px;">
+              <span class="btn__label">Read more</span>
+              <span class="btn__icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </a>
+          </div>
         </div>
-        <div class="job-cta">Apply <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- Slide 2 -->
+        <div class="tm-slide" id="tmSlide2">
+          <div class="tm-content-img">
+            <img src="../assets/images/Careers/Lee Evans.png" alt="Lee Evans">
+          </div>
+          <div class="tm-person">
+            <div class="tm-name">Lee Evans</div>
+            <div class="tm-role">Senior Program Manager</div>
+          </div>
+          <div class="tm-card">
+            <p class="tm-quote">"Ascendion's commitment to diversity isn't a checkbox — I see it in the teams I work with, in the decisions leadership makes, and in the way every voice is genuinely heard in the room. It's rare to find a company where inclusion is actually felt, not just spoken."</p>
+            <a href="#" class="btn btn-text-inv" style="padding-left:0;padding-right:0;font-size:14px;">
+              <span class="btn__label">Read more</span>
+              <span class="btn__icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </a>
+          </div>
+        </div>
+
       </div>
 
-      <div class="job-row rv d2" data-dept="engineering">
-        <div class="job-title">Principal Data Engineer</div>
-        <div>
-
-          <div class="job-skills-text">Spark, dbt, Snowflake, Databricks...</div>
+      <!-- Nav row — dots left, arrows right -->
+      <div class="tm-nav">
+        <div class="tm-dots" id="tmDots"></div>
+        <div class="tm-arrows">
+          <button class="tm-arrow" id="tmPrev" aria-label="Previous testimonial" disabled>
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M10 4l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="tm-arrow" id="tmNext" aria-label="Next testimonial">
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
         </div>
-        <div>
-
-          <div class="job-location">Mexico City, CDMX, MX</div>
-        </div>
-        <div class="job-cta">Apply <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      </div>
-
-      <div class="job-row rv d3" data-dept="engineering">
-        <div class="job-title">Engineering Manager, Cloud &amp; Infrastructure</div>
-        <div>
-
-          <div class="job-skills-text">AWS, Terraform, Kubernetes, DevOps...</div>
-        </div>
-        <div>
-
-          <div class="job-location">New York, New York, US</div>
-        </div>
-        <div class="job-cta">Apply <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      </div>
-
-      <div class="job-row rv" data-dept="talent">
-        <div class="job-title">Senior Talent Partner</div>
-        <div>
-
-          <div class="job-skills-text">technical recruiting, sourcing, ATS, stakeholder management...</div>
-        </div>
-        <div>
-
-          <div class="job-location">Chicago, Illinois, US</div>
-        </div>
-        <div class="job-cta">Apply <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      </div>
-
-      <div class="job-row rv d1" data-dept="talent">
-        <div class="job-title">Career Development Coach</div>
-        <div>
-
-          <div class="job-skills-text">career coaching, mentorship, L&amp;D, workforce planning...</div>
-        </div>
-        <div>
-
-          <div class="job-location">Mexico City, CDMX, MX</div>
-        </div>
-        <div class="job-cta">Apply <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      </div>
-
-      <div class="job-row rv d2" data-dept="talent">
-        <div class="job-title">Business Development Manager</div>
-        <div>
-
-          <div class="job-skills-text">B2B sales, CRM, Salesforce, pipeline management...</div>
-        </div>
-        <div>
-
-          <div class="job-location">Atlanta, Georgia, US</div>
-        </div>
-        <div class="job-cta">Apply <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      </div>
-
-      <div class="job-row rv d3" data-dept="talent">
-        <div class="job-title">Operations Program Manager</div>
-        <div>
-
-          <div class="job-skills-text">program management, Agile, JIRA, cross-functional ops...</div>
-        </div>
-        <div>
-
-          <div class="job-location">Dallas, Texas, US</div>
-        </div>
-        <div class="job-cta">Apply <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       </div>
 
     </div>
-
-    <!-- Pagination -->
-    <div class="jobs-pagination" id="jobsPagination"></div>
-
   </div>
 </section>
 
@@ -1895,6 +2150,69 @@
   }
 
 })();
+
+  // ── Testimonials carousel ──
+  (function () {
+    var slides    = Array.from(document.querySelectorAll('.tm-slide'));
+    var tabs      = Array.from(document.querySelectorAll('.tm-tab'));
+    var dotsEl    = document.getElementById('tmDots');
+    var prev      = document.getElementById('tmPrev');
+    var next      = document.getElementById('tmNext');
+    var container = document.querySelector('.tm-container');
+    var current   = 0;
+    var timer     = null;
+    var INTERVAL  = 5000;
+
+    // Build dots
+    var dots = slides.map(function (_, i) {
+      var d = document.createElement('button');
+      d.className = 'tm-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+      d.addEventListener('click', function () { goTo(i); resetTimer(); });
+      dotsEl.appendChild(d);
+      return d;
+    });
+
+    function goTo(idx) {
+      slides[current].classList.remove('active');
+      tabs[current] && tabs[current].classList.remove('active');
+      dots[current] && dots[current].classList.remove('active');
+      current = (idx + slides.length) % slides.length;
+      slides[current].classList.add('active');
+      tabs[current] && tabs[current].classList.add('active');
+      dots[current] && dots[current].classList.add('active');
+      prev.disabled = current === 0;
+      next.disabled = current === slides.length - 1;
+    }
+
+    function startTimer() {
+      timer = setInterval(function () {
+        goTo((current + 1) % slides.length);
+        // keep prev/next enabled when looping
+        prev.disabled = false;
+        next.disabled = false;
+      }, INTERVAL);
+    }
+
+    function resetTimer() {
+      clearInterval(timer);
+      startTimer();
+    }
+
+    tabs.forEach(function (btn) {
+      btn.addEventListener('click', function () { goTo(parseInt(btn.dataset.index)); resetTimer(); });
+    });
+
+    if (slides.length) {
+      prev.addEventListener('click', function () { goTo(current - 1); resetTimer(); });
+      next.addEventListener('click', function () { goTo(current + 1); resetTimer(); });
+    }
+
+    // Kick off
+    goTo(0);
+    startTimer();
+  })();
+
 </script>
 
 </body>
