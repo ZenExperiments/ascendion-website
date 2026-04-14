@@ -1,0 +1,3678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ascendion × IQVIA | Accelerate SDLC with AI-Powered Engineering</title>
+
+  <style>
+    @font-face {
+      font-family: 'PP Neue Machina';
+      src: url('../assets/fonts/PPNeueMachina-PlainRegular 2.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+  </style>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* =====================================================
+       DESIGN TOKENS
+    ===================================================== */
+    :root {
+      --primary-500: #008567;
+      --primary-100: #00b589;
+      --primary-900: #006b52;
+      --accent-100:  #2ddcaa;
+      --accent-500:  #009673;
+      --neutral-0:   #ffffff;
+      --neutral-100: #f4f4f4;
+      --neutral-200: #cccccc;
+      --neutral-300: #b2b2b2;
+      --neutral-400: #999999;
+      --neutral-600: #666666;
+      --neutral-700: #333333;
+      --neutral-800: #1a1a1a;
+      --neutral-900: #000000;
+
+      --bg-default:     #ffffff;
+      --bg-subtle:      #f4f4f4;
+      --bg-dark:        #000000;
+      --bg-dark-subtle: #1a1a1a;
+      --bg-dark-2:      #333333;
+      --bg-violet:      #008567;
+      --bg-accent:      #2ddcaa;
+      --text-primary:   #000000;
+      --text-secondary: #333333;
+      --text-inv:       #ffffff;
+      --text-inv-2:     #cccccc;
+      --text-highlight: #008567;
+      --text-hi-inv:    #2ddcaa;
+      --text-disabled:  #666666;
+      --border:         #999999;
+
+      --font-display: 'PP Neue Machina', sans-serif;
+      --font-primary: 'Inter', sans-serif;
+      --font-mono:    'Roboto Mono', monospace;
+
+      --px: 80px;
+      --py: 80px;
+    }
+
+    /* =====================================================
+       RESET & BASE
+    ===================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    img { border-radius: 4px; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-primary);
+      font-size: 16px;
+      color: var(--text-primary);
+      background: var(--bg-default);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img, svg { display: block; }
+    sup { font-size: 9px; vertical-align: super; }
+
+    /* =====================================================
+       LAYOUT
+    ===================================================== */
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding-left: var(--px);
+      padding-right: var(--px);
+    }
+    section { padding-top: var(--py); padding-bottom: var(--py); }
+    .s-head { margin-bottom: 56px; }
+
+    /* =====================================================
+       LABEL STYLE
+    ===================================================== */
+    .lbl {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      font-family: var(--font-primary);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-100);
+      margin-bottom: 24px;
+    }
+    .lbl--dark { color: var(--primary-500); }
+    .lbl::before,
+    .lbl::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: currentColor;
+      opacity: 0.3;
+    }
+
+    /* =====================================================
+       TYPOGRAPHY
+    ===================================================== */
+    h1, h2, h3 { font-family: var(--font-display); font-weight: 400; }
+    h4, h5     { font-family: var(--font-primary);  font-weight: 400; }
+    h1 { font-size: 80px; line-height: 1.0; }
+    h2 { font-size: 40px; line-height: 1.1; }
+    h3 { font-size: 32px; line-height: 1.2; }
+    h4 { font-size: 24px; line-height: 1.3; }
+    h5 { font-size: 20px; line-height: 1.35; }
+
+    /* =====================================================
+       BUTTONS
+    ===================================================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-primary);
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      border-radius: 2px;
+      padding: 14px 20px;
+      line-height: 1;
+      white-space: nowrap;
+      cursor: pointer;
+      border: none;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+    .btn__icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+    }
+    .btn:hover .btn__icon { transform: translateX(3px); }
+    .btn-primary        { background: var(--neutral-900); color: var(--neutral-0); }
+    .btn-primary .btn__icon { color: var(--primary-500); }
+    .btn-primary:hover  { background: var(--neutral-800); }
+    .btn-inverse        { background: var(--accent-100); color: var(--neutral-900); }
+    .btn-inverse .btn__icon { color: var(--neutral-900); }
+    .btn-inverse:hover  { background: var(--accent-500); }
+    .btn-ghost          { background: transparent; color: var(--neutral-900); border: 1px solid var(--neutral-900); }
+    .btn-ghost .btn__icon { color: var(--primary-500); }
+    .btn-ghost:hover    { background: var(--neutral-100); }
+    .btn-ghost-inv      { background: transparent; color: var(--neutral-0); border: 1px solid var(--neutral-0); }
+    .btn-ghost-inv .btn__icon { color: var(--neutral-0); }
+    .btn-ghost-inv:hover { background: rgba(255,255,255,0.08); }
+    .btn-text           { background: none; color: var(--neutral-900); padding: 0; }
+    .btn-text .btn__icon { color: var(--primary-500); }
+    .btn-text:hover     { color: var(--neutral-900); }
+    .btn-text-inv       { background: none; color: var(--accent-100); padding: 0; }
+    .btn-text-inv .btn__icon { color: var(--accent-100); }
+    .btn-text-inv:hover { color: var(--accent-500); }
+    .btn-sm { font-size: 14px; padding: 10px 16px; }
+
+    /* =====================================================
+       SCROLL REVEAL
+    ===================================================== */
+    .rv {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out;
+    }
+    .rv.in { opacity: 1; transform: translateY(0); }
+    .rv.d1 { transition-delay: 0.1s; }
+    .rv.d2 { transition-delay: 0.2s; }
+    .rv.d3 { transition-delay: 0.3s; }
+    .rv.d4 { transition-delay: 0.4s; }
+
+    /* =====================================================
+       NAV
+    ===================================================== */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: var(--bg-subtle);
+      height: 86px;
+      transition: box-shadow 0.2s;
+    }
+    .nav.scrolled { box-shadow: 0 1px 0 var(--neutral-200); }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 86px;
+    }
+    .nav-logo { display: flex; flex-direction: column; }
+    .nav-logo-text {
+      font-family: var(--font-primary);
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--neutral-900);
+      line-height: 1;
+    }
+    .nav-logo-tagline {
+      display: block;
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--neutral-600);
+      letter-spacing: 0;
+      line-height: 1.2;
+      margin-top: 2px;
+    }
+    .nav-menu { display: flex; align-items: center; gap: 4px; }
+    .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; margin-right: 16px; }
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--neutral-900);
+      padding: 6px 10px;
+      border-radius: 2px;
+      transition: color 0.15s;
+    }
+    .nav-link:hover { color: var(--primary-900); }
+    .nav-link.active { color: var(--primary-500); }
+    .nav-link--aava { color: var(--primary-500); font-weight: 500; }
+    .nav-link--aava:hover { color: var(--primary-900); }
+    .nav-link--aava sup { font-size: 10px; vertical-align: super; }
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+    .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--neutral-900); transition: all 0.3s; }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile drawer */
+    .nav-drawer {
+      display: none;
+      position: fixed;
+      top: 86px; left: 0; right: 0; bottom: 0;
+      background: var(--bg-subtle);
+      z-index: 190;
+      padding: 32px var(--px);
+      flex-direction: column;
+      gap: 8px;
+      overflow-y: auto;
+    }
+    .nav-drawer.open { display: flex; }
+    .nav-drawer .nav-link { font-size: 18px; padding: 12px 0; border-bottom: 1px solid var(--neutral-200); }
+    .nav-drawer .btn { margin-top: 24px; align-self: flex-start; }
+
+    /* =====================================================
+       HERO — SECTION 01
+    ===================================================== */
+    .hero {
+      background: var(--bg-default);
+      height: 85vh;
+      min-height: 560px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: stretch;
+      margin-top: -86px;
+      padding-top: 86px;
+    }
+
+    /* Line grid background */
+    .hero-grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,0,0,0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.055) 1px, transparent 1px);
+      background-size: 64px 64px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* LEFT — text */
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 60px 80px 80px;
+    }
+
+    /* Logo placeholder row */
+    .hero-logos {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .hero-logo-box {
+      height: 40px;
+      border-radius: 2px;
+      background: var(--neutral-100);
+      border: 1px solid var(--neutral-200);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 20px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--neutral-400);
+    }
+    .hero-logo-box--ascendion { min-width: 120px; }
+    .hero-logo-box--iqvia     { min-width: 80px; }
+    .hero-logo-sep {
+      font-size: 18px;
+      color: var(--neutral-300);
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    @keyframes ticker-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+
+    .hero-h1 {
+      font-family: var(--font-display);
+      font-size: 64px;
+      font-weight: 400;
+      line-height: 1.0;
+      color: var(--text-primary);
+      margin-bottom: 24px;
+      max-width: 600px;
+    }
+    .hero-h1 em {
+      font-style: normal;
+      color: var(--primary-500);
+    }
+
+    .hero-tagline {
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--text-secondary);
+      margin-bottom: 48px;
+      max-width: 480px;
+    }
+
+    .hero-ctas {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .hero-scroll-hint {
+      margin-top: auto;
+      padding-top: 60px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.25);
+    }
+    .hero-scroll-hint::after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: rgba(0,0,0,0.15);
+    }
+
+    /* RIGHT — terminal panel */
+    .hero-right {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 80px 60px 40px;
+      overflow: hidden;
+    }
+
+    .hero-terminal-wrap {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    /* Terminal chrome bar */
+    .hero-term-chrome {
+      background: var(--neutral-800);
+      border-radius: 2px 2px 0 0;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .hero-term-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+    }
+    .hero-term-dot:nth-child(1) { background: #ff5f57; }
+    .hero-term-dot:nth-child(2) { background: #febc2e; }
+    .hero-term-dot:nth-child(3) { background: #28c840; }
+    .hero-term-title {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.06em;
+      margin-left: auto;
+    }
+
+    /* Terminal body */
+    .hero-term-body {
+      background: var(--bg-default);
+      border: 1px solid var(--neutral-200);
+      border-top: none;
+      border-radius: 0 0 2px 2px;
+      padding: 28px 24px;
+      overflow: hidden;
+      height: 360px;
+      position: relative;
+    }
+
+    /* Scan line animation */
+    .hero-term-body::before {
+      content: '';
+      position: absolute;
+      left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, var(--primary-500) 50%, transparent 100%);
+      top: 0;
+      opacity: 0;
+      animation: hscan 5s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .hero-terminal-wrap { position: relative; }
+    @keyframes hscan {
+      0%   { top: 0; opacity: 0; }
+      3%   { opacity: 0.4; }
+      97%  { opacity: 0.4; }
+      100% { top: 100%; opacity: 0; }
+    }
+
+    .hero-term-line {
+      display: none;
+      align-items: baseline;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 2;
+      white-space: normal;
+      word-break: break-word;
+    }
+    .hero-term-line.tvis { display: flex; }
+    .hero-term-div {
+      display: none;
+      border: none;
+      border-top: 1px solid var(--neutral-200);
+      margin: 4px 0;
+    }
+    .hero-term-div.tvis { display: block; }
+
+    .hero-term-prompt { color: var(--primary-500); flex-shrink: 0; }
+    .hero-term-cmd    { color: var(--primary-500); }
+    .hero-term-arrow  { color: var(--neutral-400); flex-shrink: 0; }
+    .hero-term-check  { color: var(--accent-500); flex-shrink: 0; }
+    .hero-term-out    { color: var(--text-secondary); }
+    .hero-term-info   { color: var(--neutral-600); padding-left: 20px; font-size: 11px; }
+
+    .hero-term-cursor {
+      display: inline-block;
+      width: 7px;
+      height: 13px;
+      background: var(--primary-500);
+      vertical-align: text-bottom;
+      animation: blink 1s step-end infinite;
+      margin-left: 2px;
+    }
+
+    /* =====================================================
+       SECTION 02 — MISSION
+    ===================================================== */
+    .mission-section {
+      background: var(--bg-subtle);
+    }
+    .mission-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .mission-left {
+    }
+    .mission-h2 {
+      font-size: 40px;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+    }
+    .mission-intro {
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--text-secondary);
+    }
+    .mission-right {
+      display: flex;
+      flex-direction: column;
+      align-self: start;
+      padding-top: 0;
+    }
+    .mission-item {
+      display: flex;
+      align-items: flex-start;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--neutral-200);
+    }
+    .mission-item:first-child { padding-top: 0; }
+    .mission-item-num {
+      font-family: var(--font-display);
+      font-size: 64px;
+      font-weight: 400;
+      line-height: 1;
+      color: var(--primary-500);
+      flex-shrink: 0;
+      width: 140px;
+    }
+    .mission-item-body {
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--text-secondary);
+      padding-top: 4px;
+    }
+
+    /* =====================================================
+       SECTION 03 — VIDEO
+    ===================================================== */
+    .video-section {
+      padding: 0;
+      margin: 0;
+      display: block;
+      line-height: 0;
+    }
+    .video-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      overflow: hidden;
+    }
+    .video-thumb {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      background: linear-gradient(135deg, #1a1a1a 0%, #000 100%);
+    }
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.5) 100%);
+      pointer-events: none;
+    }
+    .video-play-btn {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.6);
+      background: rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 5;
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+      backdrop-filter: blur(4px);
+    }
+    .video-play-btn:hover {
+      background: var(--accent-100);
+      border-color: var(--accent-100);
+      transform: translate(-50%, -50%) scale(1.08);
+    }
+    .video-play-btn:hover svg { color: #000; }
+    .video-play-btn svg { margin-left: 4px; color: #fff; }
+
+    /* =====================================================
+       SECTION 04 — THE MOMENT TO ACT
+    ===================================================== */
+    .act-section {
+      background: var(--bg-default);
+    }
+    .act-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    /* 2×2 grid — images in top-right and bottom-left cells, touching at center */
+    .act-img-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      width: 100%;
+      aspect-ratio: 1;
+    }
+    .act-img-item {
+      aspect-ratio: 1;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .act-img-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .act-img-item--top {
+      grid-column: 2;
+      grid-row: 1;
+    }
+    .act-img-item--bottom {
+      grid-column: 1;
+      grid-row: 2;
+    }
+    .act-right {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .act-h2 {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--text-primary);
+    }
+    .act-h2 em {
+      font-style: normal;
+      color: var(--primary-500);
+    }
+    .act-para {
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--text-secondary);
+    }
+    .act-para strong {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    /* =====================================================
+       SECTION 06 — BOLD VISION
+    ===================================================== */
+    .vision-section {
+      background: var(--bg-dark-subtle);
+    }
+    .vision-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .vision-left {}
+    .vision-h2 {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--text-inv);
+    }
+    .vision-h2 em {
+      font-style: normal;
+      color: var(--accent-100);
+    }
+    .vision-right {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .vision-para {
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--text-inv-2);
+    }
+    .vision-para strong {
+      color: var(--text-inv);
+      font-weight: 500;
+    }
+
+    /* =====================================================
+       SECTION 07 — RESULTS & STATS (3×2 grid, dark)
+    ===================================================== */
+
+    .results-section {
+      background: var(--bg-subtle);
+    }
+
+    .results-h2 {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 56px;
+      max-width: calc((100% - 80px) * 2 / 3);
+    }
+
+    /* Outer: stats left (2/3) + outcomes right (1/3) */
+    .results-grid {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      column-gap: 80px;
+    }
+
+    /* 2×3 stats sub-grid */
+    .results-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: 48px;
+    }
+
+    /* Stat cards — no borders */
+    .results-stat {
+      padding: 48px 0;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      cursor: default;
+    }
+
+
+    .results-stat-num {
+      font-family: var(--font-display);
+      font-size: 64px;
+      font-weight: 400;
+      line-height: 1;
+      color: var(--primary-500);
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .results-stat-desc {
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      position: relative;
+      z-index: 1;
+      padding-bottom: 24px;
+    }
+    /* Neutral track — full width, always visible */
+    .results-stat-desc::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--neutral-200);
+    }
+    /* Violet line — starts short, grows to full on card hover */
+    .results-stat-desc::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 40px;
+      height: 2px;
+      background: var(--primary-500);
+      transition: width 0.4s ease;
+    }
+    .results-stat:hover .results-stat-desc::after {
+      width: 100%;
+    }
+
+    /* Key outcomes — right column, full height */
+    .results-outcomes {
+      padding: 48px 40px;
+      border-left: 1px solid var(--neutral-200);
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .results-outcomes-label {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--text-primary);
+    }
+
+    .results-outcome-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .results-outcome-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--neutral-200);
+    }
+    .results-outcome-item:first-child { padding-top: 0; }
+    .results-outcome-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .results-outcome-item-title {
+      display: grid;
+      grid-template-columns: 16px 1fr;
+      gap: 10px;
+      align-items: start;
+      font-family: var(--font-primary);
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 1.35;
+      color: var(--text-primary);
+    }
+    .results-outcome-item-title::before {
+      content: '—';
+      color: var(--primary-500);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .results-outcome-item-body {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      padding-left: 26px;
+    }
+
+    /* =====================================================
+       SECTION 08 — AAVA IN ACTION
+    ===================================================== */
+    .aava-action-section {
+      background: var(--bg-default);
+      padding-top: var(--py);
+      padding-bottom: 0;
+    }
+    .aava-action-h2 {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 48px;
+      text-align: center;
+    }
+    .aava-action-section .video-wrap {
+      width: 100%;
+      aspect-ratio: 16/9;
+      position: relative;
+      background: #000;
+    }
+
+    /* =====================================================
+       SECTION 09 — PROVEN RESULTS
+    ===================================================== */
+    .proven-section { background: var(--bg-subtle); }
+    .proven-outer {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 80px;
+      align-items: start;
+    }
+    .proven-left {
+      position: sticky;
+      top: 120px;
+    }
+    .proven-h2 {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+    }
+    .proven-intro {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 24px;
+    }
+    .proven-img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .proven-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .proven-right {}
+    .proven-item {
+      padding: 28px 0;
+      border-bottom: 1px solid var(--neutral-200);
+    }
+    .proven-item:first-child { padding-top: 0; }
+    .proven-item-title {
+      font-family: var(--font-primary);
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 1.35;
+      color: var(--primary-500);
+      margin-bottom: 6px;
+    }
+    .proven-item-desc {
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--text-secondary);
+    }
+
+    /* =====================================================
+       SECTION 10 — CLIENT IMPACT (STEPS)
+    ===================================================== */
+    .impact-acc-section { background: var(--bg-dark); }
+    .impact-acc-h2 {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 400;
+      color: var(--text-inv);
+      max-width: calc((100% - 80px) / 2);
+      margin-bottom: 56px;
+    }
+    .ci-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .ci-nav { display: flex; flex-direction: column; gap: 2px; }
+    .ci-btn {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 20px 24px;
+      background: none;
+      border: none;
+      border-left: 3px solid var(--neutral-800);
+      cursor: pointer;
+      text-align: left;
+      transition: border-color 0.2s, background 0.2s;
+      width: 100%;
+    }
+    .ci-btn:hover { background: rgba(255,255,255,0.04); border-left-color: var(--neutral-700); }
+    .ci-btn { position: relative; border-left: 3px solid var(--neutral-800); }
+    .ci-btn.active { border-left-color: #008567; background: rgba(0,133,103,0.06); }
+    .ci-num { display: none; }
+    .ci-lbl { font-size: 20px; font-weight: 400; color: var(--neutral-600); transition: color 0.2s; line-height: 1.3; }
+    .ci-btn.active .ci-lbl { color: var(--neutral-0); }
+    .ci-panel {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+      padding-top: 20px;
+      transition: opacity 0.3s ease;
+    }
+    .ci-panel.active {
+      position: relative;
+      visibility: visible;
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .ci-panels-wrap {
+      position: relative;
+    }
+    .ci-panel h4 {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 400;
+      color: var(--text-inv);
+      margin-bottom: 20px;
+    }
+    .ci-panel-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 28px;
+    }
+    .ci-sub {
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent-100);
+      margin-bottom: 10px;
+    }
+    .ci-panel-cols p { font-size: 16px; color: var(--text-inv-2); line-height: 1.7; }
+    .ci-impact {
+      background: linear-gradient(to right, rgba(0,133,103,0.5) 0%, rgba(0,133,103,0) 100%);
+      border-left: 3px solid var(--accent-100);
+      padding: 24px 28px;
+      border-radius: 0 2px 2px 0;
+    }
+    .ci-impact-lbl {
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent-100);
+      margin-bottom: 12px;
+    }
+    .ci-impact-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .ci-impact-list li {
+      font-size: 15px;
+      color: var(--text-inv-2);
+      padding-left: 28px;
+      position: relative;
+      line-height: 1.5;
+    }
+    .ci-impact-list li::before { content: '—'; position: absolute; left: 0; color: var(--accent-100); }
+    .ci-impact-list strong { color: var(--text-inv); font-weight: 600; }
+
+    /* =====================================================
+       SECTION 11 — COMMERCIAL MODELS
+    ===================================================== */
+    .commercial-section { background: var(--bg-default); }
+    .commercial-intro-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .commercial-h2 {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 400;
+      color: var(--text-primary);
+    }
+    .commercial-sub {
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--text-secondary);
+    }
+    .commercial-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 80px;
+      row-gap: 24px;
+      margin-top: 56px;
+    }
+    .commercial-row-divider {
+      grid-column: 1 / -1;
+      border: none;
+      border-top: 1px solid var(--neutral-200);
+      margin: 16px 0;
+    }
+    .commercial-card {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .commercial-card::before {
+      content: '—';
+      color: var(--primary-500);
+      font-size: 20px;
+      line-height: 1.5;
+      flex-shrink: 0;
+    }
+    .commercial-card-icon,
+    .commercial-card-num,
+    .commercial-card-title { display: none; }
+    .commercial-card-body {
+      font-size: 20px;
+      color: var(--text-primary);
+      line-height: 1.5;
+    }
+
+    /* =====================================================
+       SECTION 12 — MEET ASCENDION
+    ===================================================== */
+    .about-section { background: var(--bg-subtle); }
+    .about-intro-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      margin-bottom: 56px;
+    }
+    .about-h2 {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 400;
+      color: var(--text-primary);
+    }
+    .about-sub {
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--text-secondary);
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: auto auto 1fr;
+      align-items: stretch;
+    }
+    .about-item {
+      padding: 36px 32px;
+      background: var(--bg-default);
+      border-right: 1px solid rgba(0,0,0,0.07);
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      border-top: 3px solid transparent;
+      display: grid;
+      grid-template-rows: subgrid;
+      grid-row: span 3;
+      position: relative;
+      transition: border-top-color 0.28s ease, background 0.35s ease;
+    }
+    .about-item:last-child { border-right: none; }
+    .about-item:hover { border-top-color: var(--primary-500); background: linear-gradient(to bottom, rgba(0,133,103,0.05) 0%, var(--bg-default) 60%); }
+    .about-item-icon {
+      width: 36px; height: 36px;
+      display: flex; align-items: flex-start;
+      color: var(--neutral-900);
+      margin-bottom: 28px;
+    }
+    .about-item-text {
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 1.5;
+      color: var(--text-primary);
+    }
+
+    /* =====================================================
+       SECTION 13 — WHY ASCENDION
+    ===================================================== */
+    .why-section { background: var(--bg-default); }
+    .why-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      padding-top: 0;
+    }
+    .why-h2 {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 400;
+      color: var(--text-primary);
+    }
+    .why-list { display: flex; flex-direction: column; padding-top: 8px; }
+    .why-item:first-child { padding-top: 0; }
+    .why-item {
+      display: flex;
+      align-items: flex-start;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--neutral-200);
+    }
+    .why-img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border-radius: 2px;
+      margin-top: 28px;
+      overflow: hidden;
+    }
+    .why-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .why-item-num {
+      font-family: var(--font-display);
+      font-size: 64px;
+      font-weight: 400;
+      color: var(--primary-500);
+      line-height: 0.85;
+      flex-shrink: 0;
+      width: 140px;
+    }
+    .why-item-content { display: flex; flex-direction: column; gap: 6px; padding-top: 0; }
+    .why-item-title {
+      font-family: var(--font-primary);
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--text-primary);
+      line-height: 1.35;
+    }
+    .why-item-body {
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--text-secondary);
+    }
+
+    /* =====================================================
+       SECTION 14 — VIDEO BANNER
+    ===================================================== */
+    .video-banner-section {
+      background: #000;
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .video-banner-section .video-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #111 0%, #1a1a1a 100%);
+      z-index: 0;
+    }
+    .video-banner-section .video-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 1;
+    }
+    .video-caption-section {
+      background: var(--bg-subtle);
+      padding-bottom: 0;
+    }
+    .video-h2 {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 400;
+      color: var(--text-primary);
+      line-height: 1.05;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .video-tagline {
+      font-size: 18px;
+      color: var(--text-secondary);
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .video-play {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.08);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+      backdrop-filter: blur(4px);
+    }
+    .video-play:hover {
+      background: var(--accent-100);
+      border-color: var(--accent-100);
+      color: #000;
+      transform: translate(-50%, -50%) scale(1.08);
+    }
+
+    /* =====================================================
+       SECTION 15 — INSIGHTS
+    ===================================================== */
+    /* SECTION 15 — INSIGHTS */
+    .ms-insights-section { background: var(--bg-subtle); }
+    .ms-ins-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: end;
+      margin-bottom: 40px;
+    }
+    .ms-ins-h2 {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 400;
+      color: var(--text-primary);
+      line-height: 1.1;
+    }
+    .ms-ins-subtitle {
+      font-family: var(--font-primary);
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+    .ms-ins-filters-bar {
+      display: flex;
+      border-bottom: 1px solid var(--neutral-200);
+      margin-bottom: 40px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .ms-ins-filters-bar::-webkit-scrollbar { display: none; }
+    .ms-ins-filter {
+      font-family: var(--font-primary);
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--neutral-600);
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      padding: 12px 24px 12px 0;
+      margin-bottom: -1px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .ms-ins-filter:hover { color: var(--text-primary); }
+    .ms-ins-filter.active { color: var(--text-primary); border-bottom-color: var(--primary-500); font-weight: 500; }
+    .ms-ins-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .ms-ins-card {
+      background: var(--bg-default);
+      border: 1px solid var(--neutral-200);
+      border-radius: 2px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .ms-ins-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: transparent;
+      transition: background 0.4s;
+    }
+    .ms-ins-card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(0,0,0,0.07); }
+    .ms-ins-card:hover::after { background: var(--primary-500); }
+    .ms-ins-img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: linear-gradient(135deg, #b0b0b0 0%, #d4d4d4 100%);
+      flex-shrink: 0;
+    }
+    .ms-ins-body { padding: 24px 28px 28px; display: flex; flex-direction: column; flex: 1; }
+    .ms-ins-type {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--primary-500);
+      margin-bottom: 12px;
+    }
+    .ms-ins-title {
+      font-family: var(--font-primary);
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.35;
+      flex: 1;
+      margin-bottom: 20px;
+    }
+    .ms-ins-card .btn-text .btn__label { color: #000; }
+    .ms-ins-card .btn-text .btn__icon  { color: var(--primary-500); }
+    .ms-ins-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 40px;
+    }
+    .ms-ins-arrows { display: flex; gap: 12px; }
+    .ms-ins-arrow {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--neutral-400);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      background: transparent;
+      color: var(--neutral-900);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.35s, color 0.35s;
+    }
+    .ms-ins-arrow::before {
+      content: '';
+      position: absolute; inset: 0;
+      border-radius: 50%;
+      background: var(--primary-500);
+      transform: translateX(-101%);
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+    .ms-ins-arrow:hover::before { transform: translateX(0); }
+    .ms-ins-arrow:hover { border-color: var(--primary-500); color: var(--neutral-0); }
+    .ms-ins-arrow svg { position: relative; z-index: 1; }
+    .ms-ins-arrow:disabled { opacity: 0.3; pointer-events: none; }
+    .ms-ins-dots { display: flex; gap: 8px; align-items: center; }
+    .ms-ins-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--neutral-300);
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      padding: 0;
+    }
+    .ms-ins-dot.active { background: var(--primary-500); transform: scale(1.3); }
+
+    /* =====================================================
+       SECTION 16 — CLIENT OUTCOMES
+    ===================================================== */
+    .ms-outcomes-section { background: var(--bg-subtle); }
+    .ms-outcomes-head { text-align: left; margin-bottom: 56px; }
+    .ms-outcomes-h2 {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 400;
+      color: var(--text-primary);
+      text-align: left;
+      margin-top: 16px;
+    }
+    /* 3-col card grid */
+    .ms-cs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    /* Card */
+    .ms-cs-card {
+      background: var(--bg-default);
+      border-radius: 2px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .ms-cs-card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(0,0,0,0.07); }
+    /* Image */
+    .ms-cs-img-wrap {
+      position: relative;
+      width: 100%;
+      height: 225px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .ms-cs-img-inner {
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #bbb 0%, #ddd 100%);
+      transition: transform 0.4s ease;
+    }
+    .ms-cs-card:hover .ms-cs-img-inner { transform: scale(1.03); }
+    /* Tags overlaid on image */
+    .ms-cs-tags {
+      position: absolute;
+      top: 16px; left: 16px;
+      display: flex;
+      gap: 8px;
+      z-index: 2;
+      flex-wrap: wrap;
+    }
+    .ms-cs-tag-primary {
+      font-family: var(--font-primary);
+      font-size: 14px;
+      font-weight: 400;
+      color: #fff;
+      background: var(--primary-500);
+      padding: 6px 10px;
+      border-radius: 2px;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .ms-cs-tag-secondary {
+      font-family: var(--font-primary);
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--primary-500);
+      background: #fff;
+      padding: 6px 10px;
+      border-radius: 2px;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    /* Card body */
+    .ms-cs-body {
+      padding: 18px 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      justify-content: space-between;
+    }
+    .ms-cs-body h3 {
+      font-family: var(--font-primary);
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.35;
+      margin-bottom: 24px;
+    }
+    /* Pagination row */
+    .ms-cs-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 40px;
+    }
+    .ms-cs-arrows { display: flex; gap: 8px; }
+    .ms-cs-arrow {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--neutral-900);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      background: transparent;
+      color: var(--neutral-900);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.35s, color 0.35s;
+    }
+    .ms-cs-arrow::before {
+      content: '';
+      position: absolute; inset: 0;
+      border-radius: 50%;
+      background: var(--primary-500);
+      transform: translateX(-101%);
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+    .ms-cs-arrow:hover::before { transform: translateX(0); }
+    .ms-cs-arrow:hover { border-color: var(--primary-500); color: #fff; }
+    .ms-cs-arrow svg { position: relative; z-index: 1; }
+    .ms-cs-arrow:disabled { opacity: 0.3; pointer-events: none; }
+    .ms-cs-dots { display: flex; gap: 6px; align-items: center; }
+    .ms-cs-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--neutral-400);
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      padding: 0;
+    }
+    .ms-cs-dot.active { background: var(--primary-500); transform: scale(1.2); }
+
+    /* =====================================================
+       FOOTER
+    ===================================================== */
+    .footer {
+      background: var(--bg-default);
+      border-top: 1px solid var(--neutral-200);
+      padding: 80px 0;
+    }
+    .footer-cols {
+      display: grid;
+      grid-template-columns: 2fr 2fr 1.5fr 1.5fr auto;
+      gap: 80px;
+      margin-bottom: 56px;
+    }
+    .footer-col-head {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--neutral-900);
+      margin-bottom: 20px;
+    }
+    .footer-links { display: flex; flex-direction: column; gap: 8px; list-style: none; padding: 0; margin: 0; }
+    .footer-link { font-size: 14px; color: var(--neutral-700); line-height: 1.4; text-decoration: none; transition: color 0.15s; }
+    .footer-link:hover { color: var(--primary-900); }
+    .footer-link sup { font-size: 9px; vertical-align: super; }
+    .footer-social { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+    .footer-social-link {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      transition: opacity 0.15s, transform 0.15s;
+    }
+    .footer-social-link:hover { opacity: 0.85; transform: translateY(-2px); }
+    .footer-social-link--linkedin  { background: var(--primary-500); }
+    .footer-social-link--youtube   { background: var(--primary-500); }
+    .footer-social-link--instagram { background: var(--primary-500); }
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--neutral-200);
+      padding-top: 24px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .footer-copy { font-size: 14px; color: var(--neutral-600); }
+    .footer-legal { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .footer-legal-link { font-size: 14px; color: var(--neutral-600); text-decoration: none; transition: color 0.15s; }
+    .footer-legal-link:hover { color: var(--primary-500); }
+    .footer-sep { color: var(--neutral-400); font-size: 12px; }
+
+    /* =====================================================
+       SECTION 17 — ASCENDION ALLIES
+    ===================================================== */
+    .allies-section {
+      background: var(--bg-dark-subtle);
+      position: relative;
+      overflow: hidden;
+    }
+    .allies-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      position: relative;
+      z-index: 1;
+    }
+    .allies-grid::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .ally-card {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 40px 48px 40px 0;
+      position: relative;
+    }
+    .ally-card:nth-child(2) {
+      border-left: 1px solid rgba(255,255,255,0.07);
+      padding: 40px 0 40px 48px;
+    }
+    /* Photo + name/role grouped so photo centres to that block only */
+    .ally-header {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .ally-photo {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+      border: 2px solid #333;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .ally-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+    .ally-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      flex: 1;
+      min-width: 0;
+    }
+    .ally-name {
+      font-family: var(--font-primary);
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--text-inv);
+      line-height: 1.3;
+      margin: 0 0 6px;
+    }
+    .ally-role {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--text-inv);
+    }
+    .ally-contact-row {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 12px;
+      margin-left: 96px; /* photo width (72px) + gap (24px) */
+    }
+    .ally-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      color: var(--text-inv-2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .ally-contact:hover { color: var(--text-inv); }
+    .ally-contact-icon {
+      width: 40px; height: 40px;
+      color: var(--neutral-400);
+      flex-shrink: 0;
+      transition: color 0.2s;
+    }
+    .ally-contact:hover .ally-contact-icon { color: var(--accent-100); }
+    .ally-contact-val {
+      font-family: var(--font-primary);
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 1.35;
+      color: inherit;
+    }
+    .ally-linkedin {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--accent-100);
+      color: #000;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+      flex-shrink: 0;
+      margin-left: 96px; /* align with name */
+    }
+    .ally-linkedin:hover { background: var(--accent-500); transform: translateY(-2px); }
+
+    /* =====================================================
+       SECTION 18 — ANALYST RECOGNITION
+    ===================================================== */
+    .analyst-section { background: var(--bg-default); }
+    .analyst-head {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .analyst-filters {
+      display: flex;
+      border-bottom: 1px solid var(--neutral-200);
+      margin-bottom: 48px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .analyst-filters::-webkit-scrollbar { display: none; }
+    .analyst-filter {
+      font-family: var(--font-primary);
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--neutral-600);
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      padding: 12px 40px 12px 0;
+      margin-bottom: -1px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .analyst-filter:hover { color: var(--text-primary); }
+    .analyst-filter.active { color: var(--text-primary); border-bottom-color: var(--primary-500); font-weight: 500; }
+    .analyst-list {
+      border-bottom: 0.5px solid #b4b4b4;
+    }
+    .analyst-card {
+      padding: 36px 24px;
+      border-bottom: 0.5px solid #b4b4b4;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 40px;
+      transition: background 0.25s ease;
+      cursor: default;
+    }
+    .analyst-card:last-child { border-bottom: none; }
+    .analyst-card:hover { background: linear-gradient(to right, #AFAAB9, rgba(175,170,185,0)); }
+    .analyst-card-left {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      flex: 1;
+    }
+    .analyst-badge {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--primary-500);
+      flex-shrink: 0;
+      min-width: 80px;
+    }
+    .analyst-report {
+      font-family: var(--font-primary);
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--text-primary);
+      line-height: 1.5;
+    }
+    .analyst-recognition {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--text-secondary);
+    }
+    .analyst-btn-wrap { flex-shrink: 0; }
+    .analyst-card[style*="display: none"] { display: none !important; }
+
+    /* Analyst row hover image popup */
+    .analyst-card { position: relative; overflow: visible; }
+    .analyst-list  { overflow: visible; }
+    .analyst-img-pop {
+      position: absolute;
+      right: 240px;
+      top: 50%;
+      transform: translateY(-50%) translateX(10px) scale(0.93);
+      border-radius: 2px;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.28s ease, transform 0.28s ease;
+      z-index: 30;
+    }
+    .analyst-card:hover .analyst-img-pop {
+      opacity: 1;
+      transform: translateY(-50%) translateX(0) scale(1);
+    }
+    .analyst-img-pop img {
+      display: block;
+      max-height: 150px;
+      max-width: 260px;
+      width: auto;
+      height: auto;
+    }
+    /* Slightly randomised vertical position per row */
+    .analyst-card:nth-child(1) .analyst-img-pop { right: 230px; }
+    .analyst-card:nth-child(2) .analyst-img-pop { right: 260px; }
+    .analyst-card:nth-child(3) .analyst-img-pop { right: 220px; }
+    .analyst-card:nth-child(4) .analyst-img-pop { right: 250px; }
+    .analyst-card:nth-child(5) .analyst-img-pop { right: 160px; }
+    .analyst-card:nth-child(6) .analyst-img-pop { right: 175px; }
+    .analyst-card:nth-child(7) .analyst-img-pop { right: 255px; }
+    .analyst-card:nth-child(8) .analyst-img-pop { right: 225px; }
+    .analyst-card:nth-child(9) .analyst-img-pop { right: 245px; }
+
+    /* =====================================================
+       SECTION 19 — STRATEGIC PARTNERSHIPS
+    ===================================================== */
+    .partners-section { background: var(--bg-subtle); }
+    .partners-carousel-outer {
+      margin-top: 80px;
+      position: relative;
+    }
+    /* Left/right horizontal fade over the entire band */
+    .partners-carousel-outer::before,
+    .partners-carousel-outer::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 160px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .partners-carousel-outer::before { left: 0; background: linear-gradient(90deg, var(--bg-subtle), transparent); }
+    .partners-carousel-outer::after  { right: 0; background: linear-gradient(-90deg, var(--bg-subtle), transparent); }
+    .partners-carousel-wrap {
+      overflow-x: clip;
+      overflow-y: visible;
+      border-top: 1px solid var(--neutral-200);
+      border-bottom: 1px solid var(--neutral-200);
+    }
+    .partners-track {
+      display: flex;
+      width: max-content;
+      animation: ticker-scroll 52s linear infinite;
+    }
+    .partners-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 200px;
+      flex-shrink: 0;
+      padding: 40px 28px;
+      box-sizing: border-box;
+      position: relative;
+    }
+    .partners-item img {
+      width: 100%;
+      height: 56px;
+      object-fit: contain;
+      display: block;
+    }
+    /* Vertical divider — exceeds top/bottom borders and fades out */
+    .partners-item::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: -48px;
+      bottom: -48px;
+      width: 1px;
+      background: linear-gradient(to bottom,
+        transparent 0%,
+        var(--neutral-200) 22%,
+        var(--neutral-200) 78%,
+        transparent 100%
+      );
+    }
+    .partners-name {
+      font-family: var(--font-primary);
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--neutral-600);
+      white-space: nowrap;
+    }
+    .partners-cta { display: flex; justify-content: center; margin-top: 72px; }
+
+    /* =====================================================
+       SECTION 20 — CTA
+    ===================================================== */
+    .ms-cta-section {
+      background: var(--bg-dark);
+    }
+    .ms-cta-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .ms-cta-text { display: flex; flex-direction: column; align-items: flex-start; }
+    .ms-cta-h2 {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 400;
+      color: var(--text-inv);
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .ms-cta-sub {
+      font-size: 18px;
+      color: var(--text-inv-2);
+      line-height: 1.65;
+      margin-bottom: 40px;
+    }
+    .ms-cta-img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .ms-cta-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* =====================================================
+       RESPONSIVE
+    ===================================================== */
+    @media (max-width: 1200px) {
+      :root { --px: 60px; }
+      .hero-h1 { font-size: 52px; }
+    }
+    @media (max-width: 900px) {
+      :root { --px: 32px; --py: 60px; }
+      .nav-menu { display: none; }
+      .nav-toggle { display: flex; }
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-left { padding: 60px 32px 40px; }
+      .hero-right { display: none; }
+      .hero-h1 { font-size: 44px; }
+      .mission-inner { grid-template-columns: 1fr; gap: 40px; }
+      .mission-left { position: static; }
+      .mission-h2 { font-size: 36px; }
+      .act-inner { grid-template-columns: 1fr; gap: 40px; }
+      .act-h2 { font-size: 40px; }
+      .vision-inner { grid-template-columns: 1fr; gap: 40px; }
+      .vision-left { position: static; }
+      .vision-h2 { font-size: 36px; }
+      .results-stats { grid-template-columns: repeat(3, 1fr); }
+      .results-outcomes { grid-template-columns: 1fr; gap: 32px; }
+      .results-outcomes-label { border-right: none; padding-right: 0; border-bottom: 1px solid var(--neutral-200); padding-bottom: 24px; }
+      .allies-grid { grid-template-columns: 1fr; max-width: 480px; }
+      .footer-cols { grid-template-columns: 1fr 1fr; gap: 40px; }
+    }
+    @media (max-width: 600px) {
+      .results-stats { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      :root { --px: 24px; --py: 48px; }
+      .hero-h1 { font-size: 36px; }
+      .hero-tagline { font-size: 16px; }
+      .mission-h2 { font-size: 28px; }
+      .act-h2 { font-size: 28px; }
+      .ms-cta-inner { grid-template-columns: 1fr; gap: 40px; }
+      .ms-cta-h2 { font-size: 36px; }
+      .footer-cols { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* =====================================================
+       REDUCED MOTION
+    ===================================================== */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════
+       NAV
+  ═══════════════════════════════════════════════════ -->
+  <header class="nav" id="nav">
+    <div class="container nav-inner">
+      <a href="/" class="nav-logo" aria-label="Ascendion home">
+        <span class="nav-logo-text">ASCENDION</span>
+        <span class="nav-logo-tagline">Engineering to elevate life</span>
+      </a>
+      <nav class="nav-menu" aria-label="Main">
+        <ul class="nav-links">
+          <li>
+            <a href="#" class="nav-link nav-link--aava">
+              AAVA<sup>™</sup>
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link">What We Do
+              <svg width="10" height="10" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link">Who We Serve
+              <svg width="10" height="10" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link">How We Deliver
+              <svg width="10" height="10" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link">Insights &amp; Impact
+              <svg width="10" height="10" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link">Careers
+              <svg width="10" height="10" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </li>
+        </ul>
+        <a href="#" class="btn btn-primary">
+          <span class="btn__label">Get In Touch</span>
+          <span class="btn__icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile drawer -->
+  <div class="nav-drawer" id="navDrawer" aria-hidden="true">
+    <a href="#" class="nav-link nav-link--aava">AAVA<sup>™</sup></a>
+    <a href="#" class="nav-link">What We Do</a>
+    <a href="#" class="nav-link">Who We Serve</a>
+    <a href="#" class="nav-link">How We Deliver</a>
+    <a href="#" class="nav-link">Insights &amp; Impact</a>
+    <a href="#" class="nav-link">Careers</a>
+    <a href="#" class="btn btn-primary">
+      <span class="btn__label">Get In Touch</span>
+      <span class="btn__icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+    </a>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 01 — HERO
+  ═══════════════════════════════════════════════════ -->
+  <section class="hero" id="hero" aria-label="Hero">
+    <div class="hero-grid-bg" aria-hidden="true"></div>
+
+    <div class="hero-inner container" style="padding-left:0; padding-right:0; max-width:100%;">
+
+      <!-- LEFT: headline + CTA -->
+      <div class="hero-left">
+
+        <!-- Logo placeholder -->
+        <div class="hero-logos">
+          <img src="../assets/images/Client-microsite/Ascendion-logo.webp" alt="Ascendion" style="height:44px;width:auto;display:block;">
+          <span class="hero-logo-sep">×</span>
+          <img src="../assets/images/Client-microsite/Iqvia-logo-color.svg.png" alt="IQVIA" style="height:20px;width:auto;display:block;">
+        </div>
+
+        <h1 class="hero-h1">
+          Accelerate IQVIA's SDLC with <em>AI-Powered</em> Engineering
+        </h1>
+
+        <p class="hero-tagline">
+          Igniting Innovation Through AI-Driven Execution
+        </p>
+
+      </div>
+
+      <!-- RIGHT: terminal panel -->
+      <div class="hero-right" aria-hidden="true">
+        <div class="hero-terminal-wrap">
+
+          <!-- Chrome bar -->
+          <div class="hero-term-chrome">
+            <span class="hero-term-dot"></span>
+            <span class="hero-term-dot"></span>
+            <span class="hero-term-dot"></span>
+            <span class="hero-term-title">aava-sdlc — iqvia/production</span>
+          </div>
+
+          <!-- Terminal body -->
+          <div class="hero-term-body" id="heroTerminal">
+            <div class="hero-term-line"><span class="hero-term-prompt">›</span><span class="hero-term-cmd">aava init --client iqvia --mode sdlc-accelerate</span></div>
+            <div class="hero-term-line"><span class="hero-term-arrow">→</span><span class="hero-term-out">Connecting to IQVIA environment...</span></div>
+            <div class="hero-term-line"><span class="hero-term-check">✓</span><span class="hero-term-out">Environment authenticated</span></div>
+            <div class="hero-term-div"></div>
+            <div class="hero-term-line"><span class="hero-term-prompt">›</span><span class="hero-term-cmd">aava analyze --scope full-sdlc</span></div>
+            <div class="hero-term-line"><span class="hero-term-arrow">→</span><span class="hero-term-out">Scanning epics and user stories: 847</span></div>
+            <div class="hero-term-line"><span class="hero-term-arrow">→</span><span class="hero-term-out">Identifying automation opportunities...</span></div>
+            <div class="hero-term-line"><span class="hero-term-check">✓</span><span class="hero-term-out">68% of test cases automatable</span></div>
+            <div class="hero-term-line"><span class="hero-term-check">✓</span><span class="hero-term-out">40% effort reduction mapped</span></div>
+            <div class="hero-term-div"></div>
+            <div class="hero-term-line"><span class="hero-term-prompt">›</span><span class="hero-term-cmd">aava deploy --agent test-automation --framework selenium</span></div>
+            <div class="hero-term-line"><span class="hero-term-arrow">→</span><span class="hero-term-out">Integrating Codium + Tabnine...</span></div>
+            <div class="hero-term-line"><span class="hero-term-check">✓</span><span class="hero-term-out">Coverage: 100% functional areas</span></div>
+            <div class="hero-term-line"><span class="hero-term-info">  ↳ Neoload: active  |  Gremlin: active</span></div>
+            <div class="hero-term-div"></div>
+            <div class="hero-term-line"><span class="hero-term-prompt">›</span><span class="hero-term-cmd">aava insights --report productivity</span></div>
+            <div class="hero-term-line"><span class="hero-term-arrow">→</span><span class="hero-term-out">Developer velocity:  <strong>+65%</strong></span></div>
+            <div class="hero-term-line"><span class="hero-term-arrow">→</span><span class="hero-term-out">Cost of quality:     <strong>-60%</strong></span></div>
+            <div class="hero-term-line"><span class="hero-term-arrow">→</span><span class="hero-term-out">Time to market:      <strong>-45%</strong></span></div>
+            <div class="hero-term-line"><span class="hero-term-check">✓</span><span class="hero-term-out">Report ready <span class="hero-term-cursor"></span></span></div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 02 — EMPOWERING IQVIA'S MISSION
+  ═══════════════════════════════════════════════════ -->
+  <section class="mission-section" id="mission">
+    <div class="container">
+      <div class="mission-inner">
+
+        <!-- LEFT — sticky heading + body -->
+        <div class="mission-left rv">
+          <h2 class="mission-h2">Empowering IQVIA's Mission with AI</h2>
+          <p class="mission-intro">IQVIA's mission to accelerate innovation for a healthier world demands more from software delivery. Ascendion will partner with you, using our Engineering to the Power of AI (Engineering<sup>AI</sup>) method, to embed AI across the entire SDLC and improve end-to-end productivity. We will:</p>
+        </div>
+
+        <!-- RIGHT — 4 list items -->
+        <div class="mission-right">
+
+          <div class="mission-item rv d1">
+            <span class="mission-item-num">01</span>
+
+            <p class="mission-item-body">Integrate closely with your business priorities to deliver proactive, data-driven outcomes</p>
+          </div>
+
+          <div class="mission-item rv d2">
+            <span class="mission-item-num">02</span>
+
+            <p class="mission-item-body">Create a competitive edge through AI-led engineering: automation, predictive insights, and intelligent workflows powered by AAVA™, our agentic AI platform</p>
+          </div>
+
+          <div class="mission-item rv d3">
+            <span class="mission-item-num">03</span>
+
+            <p class="mission-item-body">Leverage AAVA™ to connect tools, increase visibility, and support automation-first delivery at scale across every phase of the SDLC</p>
+          </div>
+
+          <div class="mission-item rv d4">
+            <span class="mission-item-num">04</span>
+
+            <p class="mission-item-body">Transform the SDLC with AI — from epics and user stories through development, testing, documentation, and deployment</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 03 — FULL-WIDTH VIDEO
+  ═══════════════════════════════════════════════════ -->
+  <div class="video-section">
+    <div class="video-wrap">
+      <div class="video-thumb"></div>
+      <div class="video-overlay"></div>
+      <button class="video-play-btn" aria-label="Play — Engineering to the Power of AI" data-video="https://vimeo.com/1052022517?fl=pl&fe=vl">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <polygon points="6,3 21,12 6,21"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 04 — THE MOMENT TO ACT IS NOW
+  ═══════════════════════════════════════════════════ -->
+  <section class="act-section" id="act">
+    <div class="container">
+      <div class="act-inner">
+
+        <!-- LEFT — two diagonal images -->
+        <div class="act-img-wrap rv" aria-hidden="true">
+          <div class="act-img-item act-img-item--top">
+            <img src="../assets/images/Client-microsite/section04-01.jpg" alt="">
+          </div>
+          <div class="act-img-item act-img-item--bottom">
+            <img src="../assets/images/Client-microsite/section04-02.jpg" alt="">
+          </div>
+        </div>
+
+        <!-- RIGHT — heading + two body paragraphs -->
+        <div class="act-right rv d2">
+          <h2 class="act-h2">The Moment to <em>Act</em> Is Now</h2>
+          <p class="act-para">Traditional SDLC approaches are falling behind growing system complexity and market demands. The next step: moving from partially automated delivery to <strong>agentic AI-driven engineering</strong> — especially in life sciences, where speed-to-market, regulatory compliance, data integrity, and cost discipline are foundational.</p>
+          <p class="act-para">Ascendion's SDLC acceleration model helps IQVIA make that shift. AI-powered engineering across epics, user stories, development, documentation, testing, product development, and experience engineering are all enabled by <strong>AAVA</strong> to connect tools, increase visibility, and support automation-first delivery at scale. AAVA embeds AI and automation across the entire SDLC — from intelligent code review and automated testing to predictive analytics in project management.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 05 — FULL-WIDTH VIDEO 2
+  ═══════════════════════════════════════════════════ -->
+  <div class="video-section" id="video-2">
+    <div class="video-wrap">
+      <div class="video-thumb"></div>
+      <div class="video-overlay"></div>
+      <button class="video-play-btn" aria-label="Play — AAVA SDLC Acceleration" data-video="https://vimeo.com/1164744153?fl=pl&fe=sh">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <polygon points="6,3 21,12 6,21"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 06 — A BOLD VISION
+  ═══════════════════════════════════════════════════ -->
+  <section class="vision-section" id="vision">
+    <div class="container">
+      <div class="vision-inner">
+
+        <!-- LEFT — sticky heading -->
+        <div class="vision-left rv">
+          <h2 class="vision-h2">A Bold Vision: Where <em>AI</em> Meets Human Ingenuity</h2>
+        </div>
+
+        <!-- RIGHT — body copy -->
+        <div class="vision-right rv d2">
+          <p class="vision-para">Ascendion brings AI to life through engineered systems that improve how humans and machines work together. <strong>AAVA was built to accelerate and de-risk the SDLC</strong> across development, testing, operations, and business processes. With AAVA, teams offload repetitive operational work while keeping human judgment essential for reliability, security, compliance, and oversight. Intelligent agents work alongside engineers to orchestrate design, deployment, testing, data management, and performance tracking.</p>
+          <p class="vision-para">This <strong>human-in-the-loop model</strong> enables agentic execution in governed production settings. Ascendion has deployed thousands of agentic tasks in real client environments, operating in stable, governed production settings — enabling AI-led execution that's built for reliability.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 07 — RESULTS & STATS
+  ═══════════════════════════════════════════════════ -->
+  <section class="results-section" id="results">
+    <div class="container">
+      <h2 class="results-h2 rv">Our agentic AI approach delivers results</h2>
+      <div class="results-grid">
+
+        <!-- Left: 2×3 stats -->
+        <div class="results-stats-grid">
+          <div class="results-stat rv d1">
+            <div class="results-stat-num">65%</div>
+            <p class="results-stat-desc">Increase in developer velocity</p>
+          </div>
+          <div class="results-stat rv d2">
+            <div class="results-stat-num">40–50%</div>
+            <p class="results-stat-desc">Reduction in effort</p>
+          </div>
+          <div class="results-stat rv d1">
+            <div class="results-stat-num">45–50%</div>
+            <p class="results-stat-desc">Faster time to market</p>
+          </div>
+          <div class="results-stat rv d2">
+            <div class="results-stat-num">60%</div>
+            <p class="results-stat-desc">Reduction in cost of quality</p>
+          </div>
+          <div class="results-stat rv d1">
+            <div class="results-stat-num">100%</div>
+            <p class="results-stat-desc">Engineering transparency</p>
+          </div>
+        </div>
+
+        <!-- Right: Key outcomes -->
+        <div class="results-outcomes rv">
+          <div class="results-outcomes-label">Key outcomes include</div>
+          <div class="results-outcome-list">
+            <div class="results-outcome-item">
+              <div class="results-outcome-item-title">Offloading repetitive work</div>
+              <div class="results-outcome-item-body">Speeds time to market</div>
+            </div>
+            <div class="results-outcome-item">
+              <div class="results-outcome-item-title">Automated validation</div>
+              <div class="results-outcome-item-body">Drives accuracy and compliance</div>
+            </div>
+            <div class="results-outcome-item">
+              <div class="results-outcome-item-title">Adaptive scaling</div>
+              <div class="results-outcome-item-body">Supports future business needs</div>
+            </div>
+            <div class="results-outcome-item">
+              <div class="results-outcome-item-title">Predictive analytics and insights</div>
+              <div class="results-outcome-item-body">Reduces risk and errors</div>
+            </div>
+            <div class="results-outcome-item">
+              <div class="results-outcome-item-title">Integrated systems</div>
+              <div class="results-outcome-item-body">Reduce complexity</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 08 — AAVA IN ACTION
+  ═══════════════════════════════════════════════════ -->
+  <section class="aava-action-section" id="video-3">
+    <div class="container">
+      <h2 class="aava-action-h2 rv">AAVA™ in Action</h2>
+    </div>
+    <div class="video-wrap">
+      <div class="video-thumb"></div>
+      <div class="video-overlay"></div>
+      <button class="video-play-btn" aria-label="Play — AAVA™ in Action" data-video="https://vimeo.com/1147365666?fl=pl&fe=vl">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <polygon points="6,3 21,12 6,21"/>
+        </svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 09 — PROVEN RESULTS ACROSS LIFE SCIENCES
+  ═══════════════════════════════════════════════════ -->
+  <section class="proven-section" id="proven">
+    <div class="container">
+      <div class="proven-outer">
+
+        <!-- Left — heading + image (sticky) -->
+        <div class="proven-left rv">
+          <h2 class="proven-h2">Proven Results Across Life Sciences</h2>
+          <div class="proven-img" aria-hidden="true">
+            <img src="../assets/images/Client-microsite/section09.jpg" alt="">
+          </div>
+        </div>
+
+        <!-- Right — body copy + list -->
+        <div class="proven-right">
+          <p class="proven-intro rv">Our work in life sciences spans clinical trials, drug discovery, regulatory intelligence, manufacturing, and beyond — all powered by AAVA™.</p>
+          <div class="proven-item rv d1">
+            <div class="proven-item-title">Clinical Trials</div>
+            <p class="proven-item-desc">Genomic knowledge (ADCs) personalises treatments for individuals</p>
+          </div>
+          <div class="proven-item rv d2">
+            <div class="proven-item-title">Clinical Operations</div>
+            <p class="proven-item-desc">Accelerates planning, design, clinical SAS, data management, BioStats, operations, reporting, and regulatory submissions; auto-generated CSRs, SAPs, and narratives</p>
+          </div>
+          <div class="proven-item rv d3">
+            <div class="proven-item-title">Manufacturing 4.0</div>
+            <p class="proven-item-desc">Digital Twins, Process Twins, predictive maintenance, digital access to manuals, eOJTs, and AR/VR-enabled training</p>
+          </div>
+          <div class="proven-item rv d4">
+            <div class="proven-item-title">GxP Compliance</div>
+            <p class="proven-item-desc">65% lower quality and compliance costs across GxP reviews and CSV validations; consistent adherence to SOPs, GxP procedures, and cybersec policies; reduced patient risk</p>
+          </div>
+          <div class="proven-item rv d4">
+            <div class="proven-item-title">Drug Discovery</div>
+            <p class="proven-item-desc">AI and biomedical knowledge graphs expedite target identification, drug discovery, and drug repurposing; reduce time-to-market</p>
+          </div>
+          <div class="proven-item rv d4">
+            <div class="proven-item-title">Regulatory Intelligence</div>
+            <p class="proven-item-desc">70%+ faster regulatory query response</p>
+          </div>
+          <div class="proven-item rv d4">
+            <div class="proven-item-title">Real-World Evidence</div>
+            <p class="proven-item-desc">HCP engagement, market access, contracts management, forecasting, capture rate improvement, sample management with computer vision, field force management, and call planning</p>
+          </div>
+          <div class="proven-item rv d4">
+            <div class="proven-item-title">Pharmacovigilance</div>
+            <p class="proven-item-desc">Automated call management and triage; dramatically less manual dependency</p>
+          </div>
+          <div class="proven-item rv d4">
+            <div class="proven-item-title">Data Analytics &amp; Predictive Modeling</div>
+            <p class="proven-item-desc">Insights from large-scale datasets</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 10 — CLIENT IMPACT (ACCORDION)
+  ═══════════════════════════════════════════════════ -->
+  <section class="impact-acc-section" id="client-impact">
+    <div class="container">
+      <h2 class="impact-acc-h2 rv">Results that speak for themselves</h2>
+
+      <div class="ci-layout rv d1">
+
+        <!-- Nav -->
+        <nav class="ci-nav" role="tablist">
+          <button class="ci-btn active" onclick="switchCI(0)" role="tab">
+            <span class="ci-num">01</span>
+            <span class="ci-lbl">AAVA-AIPO MatchFinder</span>
+          </button>
+          <button class="ci-btn" onclick="switchCI(1)" role="tab">
+            <span class="ci-num">02</span>
+            <span class="ci-lbl">Salesforce Tiered Support</span>
+          </button>
+          <button class="ci-btn" onclick="switchCI(2)" role="tab">
+            <span class="ci-num">03</span>
+            <span class="ci-lbl">OCE Testing Automation</span>
+          </button>
+          <button class="ci-btn" onclick="switchCI(3)" role="tab">
+            <span class="ci-num">04</span>
+            <span class="ci-lbl">Fortune 50 Health Plan</span>
+          </button>
+          <button class="ci-btn" onclick="switchCI(4)" role="tab">
+            <span class="ci-num">05</span>
+            <span class="ci-lbl">U.S. Healthcare Leader</span>
+          </button>
+        </nav>
+
+        <!-- Panels -->
+        <div class="ci-panels-wrap">
+          <div class="ci-panel active" id="ci-0">
+            <h4>AAVA-AIPO MatchFinder ML Model</h4>
+            <div class="ci-panel-cols">
+              <div>
+                <div class="ci-sub">Challenge</div>
+                <p>Support engineers lost time searching for historical cases, slowing ticket resolution.</p>
+              </div>
+              <div>
+                <div class="ci-sub">Solution</div>
+                <p>Built MatchFinder in AAVA AIPO studio — NLP and Semantic Textual Similarity surfaces similar past tickets with confidence scores and resolution notes.</p>
+              </div>
+            </div>
+            <div class="ci-impact">
+              <div class="ci-impact-lbl">Impact</div>
+              <ul class="ci-impact-list">
+                <li>Accelerated resolution times</li>
+                <li>Automated historical search</li>
+                <li>Enhanced accuracy via confidence scoring</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="ci-panel" id="ci-1">
+            <h4>Salesforce Tiered Engineering Support (Tier 4 for OCE)</h4>
+            <div class="ci-panel-cols">
+              <div>
+                <div class="ci-sub">Challenge</div>
+                <p>Single-tier support model with inefficient triage caused delays across IQVIA's Salesforce OCE platform.</p>
+              </div>
+              <div>
+                <div class="ci-sub">Solution</div>
+                <p>Split into Tier-4A (configuration) and Tier-4B (code changes) with standardised workflows. AI-Powered Operations for incident management, SOQL Executor, and FAQ builder from chat transcripts.</p>
+              </div>
+            </div>
+            <div class="ci-impact">
+              <div class="ci-impact-lbl">Impact</div>
+              <ul class="ci-impact-list">
+                <li><strong>20% → 72%</strong> ticket closure rate</li>
+                <li><strong>150+</strong> tickets closed monthly</li>
+                <li><strong>671</strong> FAQs and <strong>171</strong> Troubleshooting docs created</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="ci-panel" id="ci-2">
+            <h4>OCE Testing Automation</h4>
+            <div class="ci-panel-cols">
+              <div>
+                <div class="ci-sub">Challenge</div>
+                <p>Manual testing couldn't cover all OCE functional areas at the productivity and quality levels needed.</p>
+              </div>
+              <div>
+                <div class="ci-sub">Solution</div>
+                <p>Selenium automation framework integrated with Codium and Tabnine for AI-enhanced productivity. Neoload for performance testing, Gremlin for chaos engineering.</p>
+              </div>
+            </div>
+            <div class="ci-impact">
+              <div class="ci-impact-lbl">Impact</div>
+              <ul class="ci-impact-list">
+                <li><strong>40%</strong> reduction in manual testing efforts</li>
+                <li>Comprehensive functional area coverage</li>
+                <li>Reduced overall cost of testing</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="ci-panel" id="ci-3">
+            <h4>Fortune 50 Health Plan</h4>
+            <div class="ci-panel-cols">
+              <div>
+                <div class="ci-sub">Challenge</div>
+                <p>Stalled Hadoop-to-GCP migration; previous SI spent $10M over 1 year, migrated 0 tables. Original estimate: 3 years, $30M.</p>
+              </div>
+              <div>
+                <div class="ci-sub">Solution</div>
+                <p>Built an integrated Duals Operating Model serving 1+ million members across 25 states while meeting Federal/State compliance.</p>
+              </div>
+            </div>
+            <div class="ci-impact">
+              <div class="ci-impact-lbl">Impact</div>
+              <ul class="ci-impact-list">
+                <li><strong>$15M</strong> cost savings over 4 years</li>
+                <li><strong>4,000+</strong> engineers empowered with scalable platform</li>
+                <li><strong>5,000+</strong> hours saved annually</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="ci-panel" id="ci-4">
+            <h4>U.S. Healthcare Leader</h4>
+            <div class="ci-panel-cols">
+              <div>
+                <div class="ci-sub">Challenge</div>
+                <p>Stalled Hadoop-to-GCP migration with significant cost and timeline overruns.</p>
+              </div>
+              <div>
+                <div class="ci-sub">Solution</div>
+                <p>Agentic AI-driven migration approach with automated validation and compliance checks at every stage.</p>
+              </div>
+            </div>
+            <div class="ci-impact">
+              <div class="ci-impact-lbl">Impact</div>
+              <ul class="ci-impact-list">
+                <li>Migration delivered on time and under budget</li>
+                <li>Zero compliance incidents post-migration</li>
+                <li>Significant reduction in infrastructure costs</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 11 — COMMERCIAL MODELS BUILT FOR THE AI AGE
+  ═══════════════════════════════════════════════════ -->
+  <section class="commercial-section" id="commercial">
+    <div class="container">
+      <div class="commercial-intro-row">
+        <h2 class="commercial-h2 rv">Commercial Models Built for the AI Age</h2>
+        <p class="commercial-sub rv">AI-Powered Engineering Requires AI-Evolved Commercials. Ascendion's commercial models are outcome-driven, transparent, and built for transformation. We blend traditional efficiencies like labor arbitrage with AI Arbitrage—freeing up capital while delivering faster returns.</p>
+      </div>
+
+      <div class="commercial-grid">
+        <div class="commercial-card rv d1">
+          <div class="commercial-card-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+            </svg>
+          </div>
+          <div class="commercial-card-num">40%</div>
+          <div class="commercial-card-title">Cost Savings</div>
+          <p class="commercial-card-body">Up to 40% cost savings over three years through AI Arbitrage and optimised delivery models.</p>
+        </div>
+
+        <div class="commercial-card rv d2">
+          <div class="commercial-card-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+          </div>
+          <div class="commercial-card-num">ROI</div>
+          <div class="commercial-card-title">Committed Metrics</div>
+          <p class="commercial-card-body">Committed ROI metrics built directly into contract terms — accountability from day one.</p>
+        </div>
+
+        <hr class="commercial-row-divider">
+
+        <div class="commercial-card rv d3">
+          <div class="commercial-card-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/>
+            </svg>
+          </div>
+          <div class="commercial-card-num">Outcome</div>
+          <div class="commercial-card-title">Outcome-Based Pricing</div>
+          <p class="commercial-card-body">Pricing based on outcomes, process gains, and reduced effort — not just hours worked.</p>
+        </div>
+
+        <div class="commercial-card rv d4">
+          <div class="commercial-card-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/>
+            </svg>
+          </div>
+          <div class="commercial-card-num">Scale</div>
+          <div class="commercial-card-title">Flexible Scaling</div>
+          <p class="commercial-card-body">Flexibility to scale across business units, risk-free — with no lock-in and full transparency.</p>
+        </div>
+      </div>
+
+      <hr class="commercial-row-divider" style="margin: 56px 0;">
+
+      <div style="text-align: center; margin-top: 0;">
+        <a href="https://www.forbes.com/councils/forbestechcouncil/2024/01/09/ai-arbitrage-is-the-next-frontier-of-value-creation/" class="btn btn-primary" target="_blank" rel="noopener">
+          <span class="btn__label">Explore How AI Arbitrage is the Next Frontier of Value Creation</span>
+          <span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 12 — MEET ASCENDION
+  ═══════════════════════════════════════════════════ -->
+  <section class="about-section" id="about">
+    <div class="container">
+      <div class="about-intro-row">
+        <h2 class="about-h2 rv">Meet Ascendion: Your Co-Engineering Ally</h2>
+        <p class="about-sub rv">We're not a vendor. We're your partner in transformation, delivering managed services discipline, AI-led operations, and engineered execution.</p>
+      </div>
+
+      <div class="about-grid">
+
+        <div class="about-item rv d1">
+          <div class="about-item-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+          <span class="about-item-text">11,000+ global engineers and technologists</span>
+        </div>
+
+        <div class="about-item rv d2">
+          <div class="about-item-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+          <span class="about-item-text">4 global AI studios + 11 delivery hubs</span>
+        </div>
+
+        <div class="about-item rv d3">
+          <div class="about-item-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg></div>
+          <span class="about-item-text">100% focused on AI-powered software services</span>
+        </div>
+
+        <div class="about-item rv d4">
+          <div class="about-item-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg></div>
+          <span class="about-item-text">400+ enterprise clients</span>
+        </div>
+
+        <div class="about-item rv d1">
+          <div class="about-item-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+          <span class="about-item-text">Deep expertise in healthcare, banking, and life sciences</span>
+        </div>
+
+        <div class="about-item rv d2">
+          <div class="about-item-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+          <span class="about-item-text">Recognized leader in Generative AI services</span>
+        </div>
+
+        <div class="about-item rv d3">
+          <div class="about-item-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+          <span class="about-item-text">AAVA™, METAI, and Agent Factory accelerators</span>
+        </div>
+
+        <div class="about-item rv d4">
+          <div class="about-item-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <span class="about-item-text">Tier 1 analyst positioning with industry recognition</span>
+        </div>
+
+        <div class="about-item rv d1">
+          <div class="about-item-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+          <span class="about-item-text">Up to 3× velocity and 150% higher productivity</span>
+        </div>
+
+        <div class="about-item rv d2">
+          <div class="about-item-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+          <span class="about-item-text">AI Arbitrage shifting value back to clients</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 13 — WHY ASCENDION
+  ═══════════════════════════════════════════════════ -->
+  <section class="why-section" id="why">
+    <div class="container">
+      <div class="why-inner">
+        <div>
+          <h2 class="why-h2 rv">Why Ascendion is the right partner for IQVIA</h2>
+          <div class="why-img rv" aria-hidden="true">
+            <img src="../assets/images/Client-microsite/section13.jpg" alt="">
+          </div>
+        </div>
+
+        <div class="why-list">
+          <div class="why-item rv d1">
+            <span class="why-item-num">01</span>
+            <div class="why-item-content">
+              <h3 class="why-item-title">IQVIA Track Record</h3>
+              <p class="why-item-body">Ongoing partnership since 2022 — a proven track record of delivery, trust, and continuous innovation together.</p>
+            </div>
+          </div>
+          <div class="why-item rv d2">
+            <span class="why-item-num">02</span>
+            <div class="why-item-content">
+              <h3 class="why-item-title">Proven AI-Driven Productivity Gains</h3>
+              <p class="why-item-body">AAVA consistently delivers &gt;20% productivity improvements: faster delivery cycles, higher code quality, measurable cost efficiencies.</p>
+            </div>
+          </div>
+          <div class="why-item rv d3">
+            <span class="why-item-num">03</span>
+            <div class="why-item-content">
+              <h3 class="why-item-title">Accelerated Delivery</h3>
+              <p class="why-item-body">Cost-effective, schedule-driven implementation without compromising quality — at every stage of the engagement.</p>
+            </div>
+          </div>
+          <div class="why-item rv d4">
+            <span class="why-item-num">04</span>
+            <div class="why-item-content">
+              <h3 class="why-item-title">Flexible Outcome-Based Engagement</h3>
+              <p class="why-item-body">Deliverable-based payment structures with competitive terms, for maximum value and alignment with business outcomes.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 14 — VIDEO BANNER
+  ═══════════════════════════════════════════════════ -->
+  <section class="video-caption-section" id="video-banner">
+    <div class="container">
+      <h2 class="video-h2 rv">With a New Kind of Company</h2>
+      <p class="video-tagline rv d1">We are Ascendion</p>
+    </div>
+    <div class="video-banner-section">
+      <div class="video-wrap">
+        <div class="video-thumb"></div>
+        <div class="video-overlay"></div>
+        <button class="video-play-btn" aria-label="Play — We are Ascendion" data-video="https://vimeo.com/744288537?fl=pl&fe=cm">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="6,3 21,12 6,21"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 15 — INSIGHTS
+  ═══════════════════════════════════════════════════ -->
+  <section class="ms-insights-section" id="ms-insights">
+    <div class="container">
+
+      <!-- Header -->
+      <div class="ms-ins-header rv">
+        <h2 class="ms-ins-h2">Insights</h2>
+      </div>
+
+      <!-- Filter tabs -->
+      <div class="ms-ins-filters-bar rv d1">
+        <button class="ms-ins-filter active" data-filter="all">All</button>
+        <button class="ms-ins-filter" data-filter="blog">Blog</button>
+        <button class="ms-ins-filter" data-filter="whitepaper">Whitepaper</button>
+        <button class="ms-ins-filter" data-filter="pov">POV</button>
+        <button class="ms-ins-filter" data-filter="article">Article</button>
+      </div>
+
+      <!-- Cards -->
+      <div class="ms-ins-cards rv d2" id="msInsGrid">
+
+        <article class="ms-ins-card" data-cat="blog">
+          <div class="ms-ins-img" aria-hidden="true"></div>
+          <div class="ms-ins-body">
+            <div class="ms-ins-type">Blog</div>
+            <h3 class="ms-ins-title">Humans at the Wheel of Agentic Change</h3>
+            <a href="https://ascendion.com/insights/humans-at-the-wheel-of-agentic-change/" class="btn btn-text" target="_blank" rel="noopener"><span class="btn__label">Read article</span><span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+          </div>
+        </article>
+
+        <article class="ms-ins-card" data-cat="blog">
+          <div class="ms-ins-img" aria-hidden="true"></div>
+          <div class="ms-ins-body">
+            <div class="ms-ins-type">Blog</div>
+            <h3 class="ms-ins-title">Engineering Evolves When People Do—and AAVA Moves with Them</h3>
+            <a href="https://ascendion.com/insights/engineering-evolves-when-people-do-and-aava-moves-with-them/" class="btn btn-text" target="_blank" rel="noopener"><span class="btn__label">Read article</span><span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+          </div>
+        </article>
+
+        <article class="ms-ins-card" data-cat="whitepaper">
+          <div class="ms-ins-img" aria-hidden="true"></div>
+          <div class="ms-ins-body">
+            <div class="ms-ins-type">Whitepaper</div>
+            <h3 class="ms-ins-title">What is Agentic AI and how is it different than traditional AI?</h3>
+            <a href="https://ascendion.com/insights/what-is-agentic-ai/" class="btn btn-text" target="_blank" rel="noopener"><span class="btn__label">Read article</span><span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+          </div>
+        </article>
+
+        <article class="ms-ins-card" data-cat="pov">
+          <div class="ms-ins-img" aria-hidden="true"></div>
+          <div class="ms-ins-body">
+            <div class="ms-ins-type">POV</div>
+            <h3 class="ms-ins-title">Agile is Dead!</h3>
+            <a href="https://ascendion.com/insights/agile-is-dead/" class="btn btn-text" target="_blank" rel="noopener"><span class="btn__label">Read article</span><span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+          </div>
+        </article>
+
+        <article class="ms-ins-card" data-cat="article">
+          <div class="ms-ins-img" aria-hidden="true"></div>
+          <div class="ms-ins-body">
+            <div class="ms-ins-type">Article</div>
+            <h3 class="ms-ins-title">AI Arbitrage is the next frontier of value creation</h3>
+            <a href="https://ascendion.com/news/ai-arbitrage-is-the-next-frontier-of-value-creation/" class="btn btn-text" target="_blank" rel="noopener"><span class="btn__label">Read article</span><span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Pagination + CTA -->
+      <div class="ms-ins-bottom rv d3">
+        <div class="ms-ins-dots" id="msInsDots"></div>
+        <a href="https://ascendion.com/insights/" class="btn btn-ghost" target="_blank" rel="noopener">
+          <span class="btn__label">Explore all insights</span>
+          <span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+        <div class="ms-ins-arrows">
+          <button class="ms-ins-arrow" id="msInsPrev" aria-label="Previous" disabled>
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M10 4l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="ms-ins-arrow" id="msInsNext" aria-label="Next">
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div style="border-top: 1px solid var(--neutral-200);"></div>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 16 — CLIENT OUTCOMES
+  ═══════════════════════════════════════════════════ -->
+  <section class="ms-outcomes-section" id="ms-outcomes">
+    <div class="container">
+
+      <div class="ms-outcomes-head rv">
+        <h2 class="ms-outcomes-h2">Client Outcome</h2>
+      </div>
+
+      <div class="ms-cs-grid" id="msCsGrid">
+
+        <div class="ms-cs-card rv d1">
+          <div class="ms-cs-img-wrap">
+            <div class="ms-cs-img-inner" aria-hidden="true"></div>
+            <div class="ms-cs-tags">
+              <span class="ms-cs-tag-primary">Healthcare</span>
+              <span class="ms-cs-tag-secondary">IT Support</span>
+            </div>
+          </div>
+          <div class="ms-cs-body">
+            <h3>A transformed IT support process led to great benefits for Elara Caring</h3>
+            <a href="https://ascendion.com/client-success/a-transformed-it-support-process-led-to-great-benefits-for-elara-caring/" class="btn btn-text" target="_blank" rel="noopener">
+              <span class="btn__label">Read more</span>
+              <span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </a>
+          </div>
+        </div>
+
+        <div class="ms-cs-card rv d2">
+          <div class="ms-cs-img-wrap">
+            <div class="ms-cs-img-inner" aria-hidden="true"></div>
+            <div class="ms-cs-tags">
+              <span class="ms-cs-tag-primary">Healthcare</span>
+              <span class="ms-cs-tag-secondary">AI Innovation</span>
+            </div>
+          </div>
+          <div class="ms-cs-body">
+            <h3>WellSky Advances Healthcare Technology with AI-Driven Innovation</h3>
+            <a href="https://ascendion.com/client-success/wellsky-advances-healthcare-technology-with-ai-driven-innovation-2/" class="btn btn-text" target="_blank" rel="noopener">
+              <span class="btn__label">Read more</span>
+              <span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </a>
+          </div>
+        </div>
+
+        <div class="ms-cs-card rv d3">
+          <div class="ms-cs-img-wrap">
+            <div class="ms-cs-img-inner" aria-hidden="true"></div>
+            <div class="ms-cs-tags">
+              <span class="ms-cs-tag-primary">Medicaid</span>
+              <span class="ms-cs-tag-secondary">Quality Engineering</span>
+            </div>
+          </div>
+          <div class="ms-cs-body">
+            <h3>Quality engineering enabled end-to-end savings for one of the largest Medicaid providers</h3>
+            <a href="https://ascendion.com/client-outcomes/quality-engineering-enabled-end-to-end-savings-for-one-of-the-largest-medicaid-providers/" class="btn btn-text" target="_blank" rel="noopener">
+              <span class="btn__label">Read more</span>
+              <span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </a>
+          </div>
+        </div>
+
+        <div class="ms-cs-card rv d4">
+          <div class="ms-cs-img-wrap">
+            <div class="ms-cs-img-inner" aria-hidden="true"></div>
+            <div class="ms-cs-tags">
+              <span class="ms-cs-tag-primary">Healthcare</span>
+              <span class="ms-cs-tag-secondary">Platform & Data</span>
+            </div>
+          </div>
+          <div class="ms-cs-body">
+            <h3>U.S. healthcare leader acquires 50,000 members per quarter with platform and data solutions</h3>
+            <a href="https://ascendion.com/client-outcomes/u-s-healthcare-leader-acquires-50000-members-per-quarter-with-platform-and-data-solutions/" class="btn btn-text" target="_blank" rel="noopener">
+              <span class="btn__label">Read more</span>
+              <span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </a>
+          </div>
+        </div>
+
+        <div class="ms-cs-card rv d1">
+          <div class="ms-cs-img-wrap">
+            <div class="ms-cs-img-inner" aria-hidden="true"></div>
+            <div class="ms-cs-tags">
+              <span class="ms-cs-tag-primary">Automation</span>
+              <span class="ms-cs-tag-secondary">Productivity</span>
+            </div>
+          </div>
+          <div class="ms-cs-body">
+            <h3>Automated framework increases productivity by 50% for a network major</h3>
+            <a href="https://ascendion.com/client-outcomes/automated-framework-increases-productivity-by-50-for-a-network-major/" class="btn btn-text" target="_blank" rel="noopener">
+              <span class="btn__label">Read more</span>
+              <span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="ms-cs-bottom rv d2">
+        <div class="ms-cs-dots" id="msCsDots"></div>
+        <a href="https://ascendion.com/client-outcomes/" class="btn btn-ghost" target="_blank" rel="noopener">
+          <span class="btn__label">Explore all client outcomes</span>
+          <span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+        <div class="ms-cs-arrows">
+          <button class="ms-cs-arrow" id="msCsPrev" aria-label="Previous" disabled>
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M10 4l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="ms-cs-arrow" id="msCsNext" aria-label="Next">
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 17 — ASCENDION ALLIES
+  ═══════════════════════════════════════════════════ -->
+  <section class="allies-section" id="allies">
+    <div class="container">
+      <div class="rv" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-bottom:32px;">
+        <h2 style="font-family:var(--font-display);font-size:40px;font-weight:400;color:var(--text-inv);line-height:1.1;margin:0;">Ascendion Allies for IQVIA</h2>
+        <p style="font-size:18px;color:var(--text-inv-2);line-height:1.65;margin:0;">We've put together a world-class team of disruptors for IQVIA. Let them say hi!</p>
+      </div>
+      <div class="allies-grid">
+
+        <div class="ally-card rv d1">
+          <div class="ally-header">
+            <div class="ally-photo"><img src="../assets/images/Client-microsite/Malle-Chamarty.webp" alt="Malle Chamarty"></div>
+            <div class="ally-info">
+              <h4 class="ally-name">Malle Chamarty</h4>
+              <div class="ally-role">Market Leader, SVP</div>
+            </div>
+          </div>
+          <div class="ally-contact-row">
+            <a href="tel:+12012203807" class="ally-contact">
+              <span class="ally-contact-val">+1 (201) 220-3807</span>
+            </a>
+            <a href="mailto:malle.c@ascendion.com" class="ally-contact">
+              <span class="ally-contact-val">malle.c@ascendion.com</span>
+            </a>
+          </div>
+          <a href="https://www.linkedin.com/in/malleswararao-chamarty-7b914324/" target="_blank" rel="noopener" class="ally-linkedin" aria-label="LinkedIn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+
+        <div class="ally-card rv d2">
+          <div class="ally-header">
+            <div class="ally-photo"><img src="../assets/images/Client-microsite/Srikanth.webp" alt="Srikanth Bogadapati"></div>
+            <div class="ally-info">
+              <h4 class="ally-name">Srikanth Bogadapati</h4>
+              <div class="ally-role">Portfolio Leader, AVP</div>
+            </div>
+          </div>
+          <div class="ally-contact-row">
+            <a href="tel:+12012203807" class="ally-contact">
+              <span class="ally-contact-val">+1 (201) 220-3807</span>
+            </a>
+            <a href="mailto:srikanth.bogadapati@ascendion.com" class="ally-contact">
+              <span class="ally-contact-val">srikanth.bogadapati@ascendion.com</span>
+            </a>
+          </div>
+          <a href="https://www.linkedin.com/in/srikanthbogadapati/" target="_blank" rel="noopener" class="ally-linkedin" aria-label="LinkedIn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 18 — ANALYST RECOGNITION
+  ═══════════════════════════════════════════════════ -->
+  <section class="analyst-section" id="analyst">
+    <div class="container">
+      <div class="s-head analyst-head rv">
+        <h2 style="font-family:var(--font-display);font-size:40px;font-weight:400;color:var(--text-primary);line-height:1.1;margin:0;">Analysts Recognize our AI-Powered Solutions</h2>
+        <p style="font-size:18px;color:var(--text-secondary);line-height:1.65;margin:0;">We are a leader in AI-Powered solutions. But don't take our word for it!</p>
+      </div>
+
+      <div class="analyst-filters rv">
+        <button class="analyst-filter active" data-filter="all">All</button>
+        <button class="analyst-filter" data-filter="hfs">HFS</button>
+        <button class="analyst-filter" data-filter="isg">ISG</button>
+        <button class="analyst-filter" data-filter="zinnov">Zinnov Zones</button>
+        <button class="analyst-filter" data-filter="gartner">Gartner</button>
+      </div>
+
+      <div class="analyst-list rv" id="analystGrid">
+
+        <div class="analyst-card" data-firm="hfs">
+          <div class="analyst-img-pop"><img src="../assets/images/Client-microsite/recognitions/HFS-Horizon-Generative Enterprise Services-2025.webp" alt="HFS Horizons 2025"></div>
+          <div class="analyst-card-left">
+            <span class="analyst-badge">HFS</span>
+            <span class="analyst-report">HFS Horizons: Generative Enterprise Services, 2025 — <span class="analyst-recognition">Market Leader</span></span>
+          </div>
+          <div class="analyst-btn-wrap">
+            <a href="https://spotlight.ascendion.com/staging/analyst-recognition/the-generative-enterprise-is-here-ascendion-leads-the-pack/" class="btn btn-text" target="_blank" rel="noopener">
+              <span class="btn__label">Read report</span>
+              <span class="btn__icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </a>
+          </div>
+        </div>
+
+        <div class="analyst-card" data-firm="hfs">
+          <div class="analyst-img-pop"><img src="../assets/images/Client-microsite/recognitions/HFS-Horizon-Digital Engineering Service Provider.webp" alt="HFS Digital Engineering 2023"></div>
+          <div class="analyst-card-left">
+            <span class="analyst-badge">HFS</span>
+            <span class="analyst-report">HFS Horizons: Digital Engineering Service Providers, 2023 — <span class="analyst-recognition">Enterprise Innovator</span></span>
+          </div>
+          <div class="analyst-btn-wrap">
+            <a href="https://spotlight.ascendion.com/staging/analyst-recognition/ascendion-named-enterprise-innovator-in-digital-engineering-study-by-hfs-research/" class="btn btn-text" target="_blank" rel="noopener">
+              <span class="btn__label">Read report</span>
+              <span class="btn__icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </a>
+          </div>
+        </div>
+
+        <div class="analyst-card" data-firm="isg">
+          <div class="analyst-img-pop"><img src="../assets/images/Client-microsite/recognitions/ISG - Digital Engineering Services.jpg" alt="ISG Digital Engineering 2024"></div>
+          <div class="analyst-card-left">
+            <span class="analyst-badge">ISG</span>
+            <span class="analyst-report">ISG Provider Lens 2024: Digital Engineering Services — <span class="analyst-recognition">Rising Star</span></span>
+          </div>
+          <div class="analyst-btn-wrap">
+            <a href="https://spotlight.ascendion.com/staging/analyst-recognition/ascendion-soars-as-a-rising-star-in-isg-provider-lens-for-digital-engineering/" class="btn btn-text" target="_blank" rel="noopener">
+              <span class="btn__label">Read report</span>
+              <span class="btn__icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </a>
+          </div>
+        </div>
+
+        <div class="analyst-card" data-firm="isg">
+          <div class="analyst-img-pop"><img src="../assets/images/Client-microsite/recognitions/ISG-logo.jpg" alt="ISG Gen AI 2024"></div>
+          <div class="analyst-card-left">
+            <span class="analyst-badge">ISG</span>
+            <span class="analyst-report">ISG Provider Lens 2024: Gen AI Services — <span class="analyst-recognition">Leader</span></span>
+          </div>
+          <div class="analyst-btn-wrap"></div>
+        </div>
+
+        <div class="analyst-card" data-firm="zinnov">
+          <div class="analyst-img-pop"><img src="../assets/images/Client-microsite/recognitions/Zinnov-Zones-Logo-2023.jpg" alt="Zinnov Zones 2023"></div>
+          <div class="analyst-card-left">
+            <span class="analyst-badge">Zinnov</span>
+            <span class="analyst-report">Zinnov Zones 2023: Digital Engineering &amp; ER&amp;D — Overall ER&amp;D — <span class="analyst-recognition">Leader</span></span>
+          </div>
+          <div class="analyst-btn-wrap">
+            <a href="https://spotlight.ascendion.com/staging/analyst-recognition/ascendions-debut-triumph-secures-recognition-in-ten-zones-in-2023-zinnov-zones-erd-services-ratings/" class="btn btn-text" target="_blank" rel="noopener">
+              <span class="btn__label">Read report</span>
+              <span class="btn__icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </a>
+          </div>
+        </div>
+
+        <div class="analyst-card" data-firm="zinnov">
+          <div class="analyst-img-pop"><img src="../assets/images/Client-microsite/recognitions/Zinnov-Zones-Logo-2023.jpg" alt="Zinnov Zones 2023"></div>
+          <div class="analyst-card-left">
+            <span class="analyst-badge">Zinnov</span>
+            <span class="analyst-report">Zinnov Zones 2023: Digital Engineering &amp; ER&amp;D — Digital Engineering Services — <span class="analyst-recognition">Leader</span></span>
+          </div>
+          <div class="analyst-btn-wrap">
+            <a href="https://spotlight.ascendion.com/staging/analyst-recognition/ascendions-debut-triumph-secures-recognition-in-ten-zones-in-2023-zinnov-zones-erd-services-ratings/" class="btn btn-text" target="_blank" rel="noopener">
+              <span class="btn__label">Read report</span>
+              <span class="btn__icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </a>
+          </div>
+        </div>
+
+        <div class="analyst-card" data-firm="gartner">
+          <div class="analyst-img-pop"><img src="../assets/images/Client-microsite/recognitions/Gartner Logo.png" alt="Gartner"></div>
+          <div class="analyst-card-left">
+            <span class="analyst-badge">Gartner</span>
+            <span class="analyst-report">Gartner Generative AI in Outsourced Software Development — AAVA™ — <span class="analyst-recognition">Featured Platform</span></span>
+          </div>
+          <div class="analyst-btn-wrap">
+            <a href="https://spotlight.ascendion.com/staging/analyst-recognition/ascendion-ava-platform-got-featured-in-gartner-generative-ai-in-outsourced-software-development-report/" class="btn btn-text" target="_blank" rel="noopener">
+              <span class="btn__label">Read report</span>
+              <span class="btn__icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </a>
+          </div>
+        </div>
+
+        <div class="analyst-card" data-firm="gartner">
+          <div class="analyst-img-pop"><img src="../assets/images/Client-microsite/recognitions/Gartner Logo.png" alt="Gartner"></div>
+          <div class="analyst-card-left">
+            <span class="analyst-badge">Gartner</span>
+            <span class="analyst-report">Gartner Magic Quadrant for Custom Software Development Services 2024 — <span class="analyst-recognition">Honorable Mention</span></span>
+          </div>
+          <div class="analyst-btn-wrap"></div>
+        </div>
+
+        <div class="analyst-card" data-firm="gartner">
+          <div class="analyst-img-pop"><img src="../assets/images/Client-microsite/recognitions/Globee.png" alt="Globee"></div>
+          <div class="analyst-card-left">
+            <span class="analyst-badge">Globee®</span>
+            <span class="analyst-report">2025 AI Service Provider of the Year — Driving transformation through AAVA™ — <span class="analyst-recognition">Gold Award</span></span>
+          </div>
+          <div class="analyst-btn-wrap"></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 19 — STRATEGIC PARTNERSHIPS
+  ═══════════════════════════════════════════════════ -->
+  <section class="partners-section" id="partnerships">
+    <div class="container">
+      <div class="s-head rv" style="text-align:center;">
+        <h2 style="font-family:var(--font-display);font-size:40px;font-weight:400;color:var(--text-primary);line-height:1.1;margin-bottom:16px;">Strategic Partnerships</h2>
+        <p style="font-size:18px;color:var(--text-secondary);line-height:1.65;max-width:620px;margin:0 auto;">Ascendion is crafting the future with industry leaders transforming tech, including 15+ of the top industry partners.</p>
+      </div>
+    </div>
+    <div class="partners-carousel-outer">
+    <div class="partners-carousel-wrap" aria-hidden="true">
+      <div class="partners-track">
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/Microsoft.png" alt="Microsoft"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/aws-tier-services.png" alt="AWS"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/google.png" alt="Google Cloud"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/Salesforce.svg" alt="Salesforce"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/Snowflake.png" alt="Snowflake" style="height:72px;width:auto;"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/databricks.svg" alt="Databricks"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/servicenow_logos.png" alt="ServiceNow"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/MongoDB.png" alt="MongoDB"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/Dynatrace.svg" alt="Dynatrace"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/Fivetran.svg" alt="Fivetran"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/Mulesoft.png" alt="MuleSoft"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/uipath-partner.png" alt="UiPath"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/workato.png" alt="Workato"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/Tricentis.png" alt="Tricentis"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/InterSystems.png" alt="InterSystems"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/Hopsworks.png" alt="Hopsworks"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/Gremlin.png" alt="Gremlin"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/Avo.svg" alt="Avo"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/DataAces-1.png" alt="DataAces"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/Decube-Data.svg" alt="Decube Data"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/ispirer.png" alt="Ispirer"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/tsri-modernization-logo.png" alt="TSRI"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/whizAi.png" alt="WhizAI"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/StabilityAi.png" alt="Stability AI"></div>
+        <!-- duplicate for seamless loop -->
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/Microsoft.png" alt="Microsoft"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/aws-tier-services.png" alt="AWS"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/google.png" alt="Google Cloud"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/Salesforce.svg" alt="Salesforce"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/Snowflake.png" alt="Snowflake" style="height:72px;width:auto;"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/databricks.svg" alt="Databricks"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/servicenow_logos.png" alt="ServiceNow"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/MongoDB.png" alt="MongoDB"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/Dynatrace.svg" alt="Dynatrace"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/Fivetran.svg" alt="Fivetran"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/Mulesoft.png" alt="MuleSoft"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/uipath-partner.png" alt="UiPath"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/workato.png" alt="Workato"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/Tricentis.png" alt="Tricentis"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/InterSystems.png" alt="InterSystems"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/Hopsworks.png" alt="Hopsworks"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/Gremlin.png" alt="Gremlin"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/Avo.svg" alt="Avo"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/DataAces-1.png" alt="DataAces"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/Decube-Data.svg" alt="Decube Data"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/ispirer.png" alt="Ispirer"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/tsri-modernization-logo.png" alt="TSRI"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/whizAi.png" alt="WhizAI"></div>
+        <div class="partners-item"><img src="../assets/images/Client-microsite/client logos/edited/StabilityAi.png" alt="Stability AI"></div>
+      </div>
+    </div>
+    </div><!-- /.partners-carousel-outer -->
+    <div class="container">
+      <div class="partners-cta rv">
+        <a href="https://ascendion.com/how-we-deliver/partnership/" class="btn btn-primary" target="_blank" rel="noopener">
+          <span class="btn__label">Know More</span>
+          <span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 20 — CTA
+  ═══════════════════════════════════════════════════ -->
+  <section class="ms-cta-section" id="cta">
+    <div class="container">
+      <div class="ms-cta-inner">
+        <!-- Left — text -->
+        <div class="ms-cta-text rv">
+          <h2 class="ms-cta-h2">Ready to Co-Engineer the Future?</h2>
+          <p class="ms-cta-sub">Ascendion is ready to embed AI across IQVIA's SDLC to ship faster, reduce effort, and prove productivity gains. Let's get started.</p>
+          <a href="mailto:malle.c@ascendion.com" class="btn btn-inverse">
+            <span class="btn__label">Get Started</span>
+            <span class="btn__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </a>
+        </div>
+        <!-- Right — image -->
+        <div class="ms-cta-img rv d1" aria-hidden="true">
+          <img src="../assets/images/Client-microsite/section20.jpg" alt="">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-cols">
+        <div>
+          <div class="footer-col-head">What We Do</div>
+          <ul class="footer-links">
+            <li><a href="#" class="footer-link">Applied AI</a></li>
+            <li><a href="#" class="footer-link">GCC<sup>AI</sup></a></li>
+            <li><a href="#" class="footer-link">Product<sup>AI</sup></a></li>
+            <li><a href="#" class="footer-link">Data &amp; Insights<sup>AI</sup></a></li>
+            <li><a href="#" class="footer-link">Salesforce Implementation</a></li>
+            <li><a href="#" class="footer-link">Quality Engineering<sup>AI</sup></a></li>
+            <li><a href="#" class="footer-link">Experience<sup>AI</sup></a></li>
+            <li><a href="#" class="footer-link">Operations<sup>AI</sup></a></li>
+            <li><a href="#" class="footer-link">AI Workforce Transformation</a></li>
+            <li><a href="#" class="footer-link">Enterprise Platform</a></li>
+            <li><a href="#" class="footer-link">Platform Engineering<sup>AI</sup></a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-head">Industries</div>
+          <ul class="footer-links">
+            <li><a href="#" class="footer-link">Banking &amp; Financial Services</a></li>
+            <li><a href="#" class="footer-link">Communications, Media and Entertainment</a></li>
+            <li><a href="#" class="footer-link">Healthcare &amp; Life Sciences</a></li>
+            <li><a href="#" class="footer-link">Retail and Consumer Goods</a></li>
+            <li><a href="#" class="footer-link">High-tech</a></li>
+            <li><a href="#" class="footer-link">Travel and Hospitality</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-head">Who We Are</div>
+          <ul class="footer-links">
+            <li><a href="#" class="footer-link">Leadership</a></li>
+            <li><a href="#" class="footer-link">Analyst Recognition</a></li>
+            <li><a href="#" class="footer-link">Certifications</a></li>
+            <li><a href="#" class="footer-link">Locations</a></li>
+            <li><a href="#" class="footer-link">ESG</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-head">Quick Links</div>
+          <ul class="footer-links">
+            <li><a href="#" class="footer-link">Insights and impact</a></li>
+            <li><a href="#" class="footer-link">Careers India</a></li>
+            <li><a href="#" class="footer-link">Careers North America</a></li>
+            <li><a href="#" class="footer-link">Careers Europe</a></li>
+            <li><a href="#" class="footer-link">Careers Asia Pacific</a></li>
+            <li><a href="#" class="footer-link">Global Delivery Hubs</a></li>
+            <li><a href="#" class="footer-link">Contact us</a></li>
+          </ul>
+        </div>
+        <div style="padding-top:40px">
+          <div class="footer-social">
+            <a href="#" class="footer-social-link footer-social-link--linkedin" aria-label="LinkedIn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="#" class="footer-social-link footer-social-link--youtube" aria-label="YouTube">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+            <a href="#" class="footer-social-link footer-social-link--instagram" aria-label="Instagram">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">Copyright 2026, ASCENDION. All rights reserved.</span>
+        <div class="footer-legal">
+          <a href="#" class="footer-legal-link">Privacy Policy</a>
+          <span class="footer-sep">|</span>
+          <a href="#" class="footer-legal-link">Terms of Use</a>
+          <span class="footer-sep">|</span>
+          <a href="#" class="footer-legal-link">Accessibility Disclosure</a>
+          <span class="footer-sep">|</span>
+          <a href="#" class="footer-legal-link">AI-enhanced Content Notice</a>
+          <span class="footer-sep">|</span>
+          <a href="#" class="footer-legal-link">Security Disclosure Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════════════
+       SCRIPTS
+  ═══════════════════════════════════════════════════ -->
+  <script>
+    // ── Nav scroll shadow ──
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+
+    // ── Mobile hamburger ──
+    const navToggle = document.getElementById('navToggle');
+    const navDrawer = document.getElementById('navDrawer');
+    navToggle.addEventListener('click', () => {
+      const open = navToggle.classList.toggle('open');
+      navDrawer.classList.toggle('open', open);
+      navToggle.setAttribute('aria-expanded', open);
+      navDrawer.setAttribute('aria-hidden', !open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+
+    // ── Section 09: align right column to top of image ──
+    function alignProvenRight() {
+      const h2 = document.querySelector('.proven-h2');
+      const right = document.querySelector('.proven-right');
+      if (!h2 || !right) return;
+      const style = getComputedStyle(h2);
+      const offset = h2.offsetHeight + parseFloat(style.marginBottom);
+      right.style.paddingTop = (offset - 4) + 'px';
+    }
+    alignProvenRight();
+    window.addEventListener('resize', alignProvenRight);
+
+    // ── Client Impact tab switcher ──
+    let ciIndex = 0;
+
+    function switchCI(index) {
+      const btns = document.querySelectorAll('.ci-btn');
+      const panels = document.querySelectorAll('.ci-panel');
+      ciIndex = index;
+      btns.forEach((b, i) => {
+        b.classList.toggle('active', i === index);
+        b.classList.remove('playing');
+      });
+      panels.forEach((p, i) => p.classList.toggle('active', i === index));
+    }
+
+    // Init — measure all panels first to lock container height
+    (function () {
+      const wrap = document.querySelector('.ci-panels-wrap');
+      const panels = document.querySelectorAll('.ci-panel');
+      if (!wrap || !panels.length) return;
+      panels.forEach(p => {
+        p.style.position = 'relative';
+        p.style.visibility = 'hidden';
+        p.style.opacity = '0';
+        p.style.pointerEvents = 'none';
+      });
+      let maxH = 0;
+      panels.forEach(p => { maxH = Math.max(maxH, p.offsetHeight); });
+      wrap.style.minHeight = maxH + 'px';
+      panels.forEach(p => {
+        p.style.position = '';
+        p.style.visibility = '';
+        p.style.opacity = '';
+        p.style.pointerEvents = '';
+      });
+    })();
+
+    switchCI(0);
+
+    // ── Video play buttons — load thumbnails + embed inline on click ──
+    document.querySelectorAll('.video-play-btn[data-video]').forEach(btn => {
+      const wrap = btn.closest('.video-wrap');
+      const url = btn.dataset.video;
+      const match = url.match(/vimeo\.com\/(\d+)/);
+      if (!match) return;
+      const videoId = match[1];
+
+      // Load thumbnail + set aspect ratio from Vimeo oEmbed
+      const thumb = wrap.querySelector('.video-thumb');
+      fetch('https://vimeo.com/api/oembed.json?url=https://vimeo.com/' + videoId + '&width=1920')
+        .then(r => r.json())
+        .then(data => {
+          // Set aspect ratio from actual video dimensions
+          if (data.width && data.height) {
+            wrap.style.aspectRatio = data.width + ' / ' + data.height;
+          }
+          // Set thumbnail
+          if (thumb && data.thumbnail_url) {
+            const hiRes = data.thumbnail_url.replace(/_\d+x\d+/, '_1920x1080');
+            thumb.style.background = 'url(' + hiRes + ') center/cover no-repeat';
+          }
+        })
+        .catch(() => {});
+
+      // Play inline on click
+      btn.addEventListener('click', () => {
+        const embedUrl = 'https://player.vimeo.com/video/' + videoId + '?autoplay=1&title=0&byline=0&portrait=0';
+        const iframe = document.createElement('iframe');
+        iframe.src = embedUrl;
+        iframe.allow = 'autoplay; fullscreen; picture-in-picture';
+        iframe.allowFullscreen = true;
+        iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:none;';
+        wrap.innerHTML = '';
+        wrap.appendChild(iframe);
+      });
+    });
+
+    // ── Scroll reveal ──
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); revealObserver.unobserve(e.target); } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -48px 0px' });
+    document.querySelectorAll('.rv').forEach(el => revealObserver.observe(el));
+
+    // ── Section 15: Insights carousel ──
+    (function () {
+      var grid     = document.getElementById('msInsGrid');
+      var prev     = document.getElementById('msInsPrev');
+      var next     = document.getElementById('msInsNext');
+      var dotsWrap = document.getElementById('msInsDots');
+      var page     = 0;
+      var allCards = grid ? Array.from(grid.querySelectorAll('.ms-ins-card')) : [];
+
+      function perPage() {
+        if (window.innerWidth <= 600) return 1;
+        if (window.innerWidth <= 900) return 2;
+        return 3;
+      }
+      function visible(cat) {
+        return cat === 'all' ? allCards.slice() : allCards.filter(c => c.dataset.cat === cat);
+      }
+      function buildDots(total) {
+        dotsWrap.innerHTML = '';
+        for (var i = 0; i < total; i++) {
+          var d = document.createElement('button');
+          d.className = 'ms-ins-dot' + (i === page ? ' active' : '');
+          d.setAttribute('aria-label', 'Page ' + (i + 1));
+          (function(idx){ d.addEventListener('click', () => goTo(idx)); })(i);
+          dotsWrap.appendChild(d);
+        }
+      }
+      function goTo(p) {
+        var cat = (document.querySelector('.ms-ins-filter.active') || {dataset:{filter:'all'}}).dataset.filter;
+        var vis = visible(cat);
+        var pp  = perPage();
+        var pages = Math.ceil(vis.length / pp);
+        page = Math.max(0, Math.min(p, pages - 1));
+        allCards.forEach(c => c.style.display = 'none');
+        vis.forEach((c, i) => { if (i >= page*pp && i < (page+1)*pp) c.style.display = ''; });
+        prev.disabled = page === 0;
+        next.disabled = page >= pages - 1;
+        dotsWrap.querySelectorAll('.ms-ins-dot').forEach((d, i) => d.classList.toggle('active', i === page));
+      }
+      function init(cat) {
+        cat = cat || 'all';
+        var pp = perPage();
+        var pages = Math.ceil(visible(cat).length / pp);
+        page = 0;
+        buildDots(pages);
+        goTo(0);
+      }
+      document.querySelectorAll('.ms-ins-filter').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.ms-ins-filter').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          init(btn.dataset.filter);
+        });
+      });
+      if (prev) prev.addEventListener('click', () => goTo(page - 1));
+      if (next) next.addEventListener('click', () => goTo(page + 1));
+      window.addEventListener('resize', () => {
+        var cat = (document.querySelector('.ms-ins-filter.active') || {dataset:{filter:'all'}}).dataset.filter;
+        init(cat);
+      });
+      if (grid) init('all');
+    })();
+
+    // ── Section 16: Outcomes carousel ──
+    (function () {
+      var grid     = document.getElementById('msCsGrid');
+      var prev     = document.getElementById('msCsPrev');
+      var next     = document.getElementById('msCsNext');
+      var dotsWrap = document.getElementById('msCsDots');
+      var page     = 0;
+      var allCards = grid ? Array.from(grid.querySelectorAll('.ms-cs-card')) : [];
+
+      function perPage() {
+        if (window.innerWidth <= 600) return 1;
+        if (window.innerWidth <= 900) return 2;
+        return 3;
+      }
+      function buildDots(total) {
+        dotsWrap.innerHTML = '';
+        for (var i = 0; i < total; i++) {
+          var d = document.createElement('button');
+          d.className = 'ms-cs-dot' + (i === page ? ' active' : '');
+          d.setAttribute('aria-label', 'Page ' + (i + 1));
+          (function(idx){ d.addEventListener('click', () => goTo(idx)); })(i);
+          dotsWrap.appendChild(d);
+        }
+      }
+      function goTo(p) {
+        var pp    = perPage();
+        var pages = Math.ceil(allCards.length / pp);
+        page = Math.max(0, Math.min(p, pages - 1));
+        allCards.forEach(c => c.style.display = 'none');
+        allCards.forEach((c, i) => { if (i >= page*pp && i < (page+1)*pp) c.style.display = ''; });
+        prev.disabled = page === 0;
+        next.disabled = page >= pages - 1;
+        dotsWrap.querySelectorAll('.ms-cs-dot').forEach((d, i) => d.classList.toggle('active', i === page));
+      }
+      function init() {
+        var pp    = perPage();
+        var pages = Math.ceil(allCards.length / pp);
+        page = 0;
+        buildDots(pages);
+        goTo(0);
+      }
+      if (prev) prev.addEventListener('click', () => goTo(page - 1));
+      if (next) next.addEventListener('click', () => goTo(page + 1));
+      window.addEventListener('resize', init);
+      if (grid) init();
+    })();
+
+    // ── Section 18: Analyst filter ──
+    (function () {
+      var filters = Array.from(document.querySelectorAll('.analyst-filter'));
+      var cards   = Array.from(document.querySelectorAll('.analyst-card'));
+      filters.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          filters.forEach(function (b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          var f = btn.dataset.filter;
+          cards.forEach(function (c) {
+            c.style.display = (f === 'all' || c.dataset.firm === f) ? '' : 'none';
+          });
+        });
+      });
+    })();
+
+    // ── Hero terminal animation ──
+    (function () {
+      const terminal = document.getElementById('heroTerminal');
+      if (!terminal) return;
+      const lines  = terminal.querySelectorAll('.hero-term-line, .hero-term-div');
+      const STEP   = 420;
+      const PAUSE  = 3200;
+      let timers   = [];
+
+      function clearTimers() { timers.forEach(clearTimeout); timers = []; }
+
+      function runCycle() {
+        clearTimers();
+        terminal.scrollTop = 0;
+        lines.forEach(el => el.classList.remove('tvis'));
+        lines.forEach((el, i) => {
+          timers.push(setTimeout(() => {
+            el.classList.add('tvis');
+            terminal.scrollTop = terminal.scrollHeight;
+          }, i * STEP));
+        });
+        timers.push(setTimeout(runCycle, lines.length * STEP + PAUSE));
+      }
+
+      const obs = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) { runCycle(); obs.disconnect(); }
+      }, { threshold: 0.2 });
+      obs.observe(terminal);
+    }());
+  </script>
+</body>
+</html>
