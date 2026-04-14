@@ -698,12 +698,29 @@
     ===================================================== */
     .vision-section {
       background: var(--bg-dark-subtle);
+      position: relative;
+      overflow: hidden;
+    }
+    .vision-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 75%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 75%);
+      pointer-events: none;
+      z-index: 0;
     }
     .vision-inner {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 80px;
       align-items: start;
+      position: relative;
+      z-index: 1;
     }
     .vision-left {}
     .vision-h2 {
@@ -761,11 +778,12 @@
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       column-gap: 48px;
+      row-gap: 0;
     }
 
     /* Stat cards — no borders */
     .results-stat {
-      padding: 48px 0;
+      padding: 20px 0;
       position: relative;
       overflow: hidden;
       display: flex;
@@ -1104,19 +1122,12 @@
       gap: 12px;
       align-items: flex-start;
     }
-    .commercial-card::before {
-      content: '—';
-      color: var(--primary-500);
-      font-size: 20px;
-      line-height: 1.5;
-      flex-shrink: 0;
-    }
     .commercial-card-icon,
     .commercial-card-num,
     .commercial-card-title { display: none; }
     .commercial-card-body {
       font-size: 20px;
-      color: var(--text-primary);
+      color: #008567;
       line-height: 1.5;
     }
 
@@ -2382,6 +2393,7 @@
         </div>
 
       </div>
+
     </div>
   </section>
 
