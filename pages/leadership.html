@@ -26,8 +26,8 @@
     }
 
     :root {
-      --primary-500: #6464d7;
-      --primary-900: #5a37af;
+      --primary-500: #008567;
+      --primary-900: #006b52;
       --accent-100:  #2ddcaa;
       --accent-500:  #009673;
       --font-display: 'PP Neue Machina', sans-serif;
@@ -96,7 +96,7 @@
       color: #2ddcaa;
       margin-bottom: 24px;
     }
-    .lbl--dark { color: #6464d7; }
+    .lbl--dark { color: #008567; }
     .lbl::before, .lbl::after {
       content: '';
       flex: 1;
@@ -132,7 +132,7 @@
     }
     .btn:hover .btn__icon { transform: translateX(3px); }
     .btn-primary { background: #000; color: #fff; }
-    .btn-primary .btn__icon { color: #6464d7; }
+    .btn-primary .btn__icon { color: #008567; }
     .btn-primary:hover { background: #1a1a1a; }
     .btn-inverse { background: #2ddcaa; color: #000; }
     .btn-inverse .btn__icon { color: #000; }
@@ -195,10 +195,10 @@
       padding: 6px 10px;
       transition: color 0.2s;
     }
-    .nav-link:hover { color: #5a37af; }
-    .nav-link.active { color: #6464d7; }
-    .nav-link--aava { color: #6464d7; font-weight: 500; }
-    .nav-link--aava:hover { color: #5a37af; }
+    .nav-link:hover { color: #006b52; }
+    .nav-link.active { color: #008567; }
+    .nav-link--aava { color: #008567; font-weight: 500; }
+    .nav-link--aava:hover { color: #006b52; }
     .nav-link--aava sup { font-size: 10px; vertical-align: super; }
     .nav-toggle {
       display: none;
@@ -245,7 +245,7 @@
       border-bottom: 1px solid #cccccc;
       transition: color 0.2s;
     }
-    .nav-drawer-link:hover { color: #6464d7; }
+    .nav-drawer-link:hover { color: #008567; }
     .nav-drawer .btn { margin-top: 28px; display: inline-flex; }
 
     @media (max-width: 900px) {
@@ -328,7 +328,7 @@
       cursor: pointer;
       position: relative;
       background: #fff;
-      border-radius: 4px;
+      border-radius: 16px;
       overflow: hidden;
       border: 1px solid #e4e4e4;
       transition: box-shadow 0.3s ease, transform 0.3s ease;
@@ -351,7 +351,7 @@
       transition: background 0.4s ease;
       z-index: 3;
     }
-    .ld-card:hover::after { background: #6464d7; }
+    .ld-card:hover::after { background: #008567; }
     .ld-photo {
       width: 100%;
       aspect-ratio: 5 / 6;
@@ -381,51 +381,7 @@
       position: relative;
       z-index: 1;
     }
-    .ld-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0);
-      transition: background 0.3s ease;
-      display: flex;
-      align-items: flex-end;
-      padding: 14px;
-      z-index: 2;
-    }
-    .ld-card:hover .ld-overlay { background: rgba(0,0,0,0.38); }
-    .ld-view-label {
-      opacity: 0;
-      transform: translateY(6px);
-      transition: opacity 0.3s ease, transform 0.3s ease;
-      /* btn-ghost-inv rules */
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-family: var(--font-primary);
-      font-size: 14px;
-      font-weight: 500;
-      letter-spacing: 0.02em;
-      color: #fff;
-      background: transparent;
-      border: 1px solid #fff;
-      border-radius: 2px;
-      padding: 10px 16px;
-      line-height: 1;
-      white-space: nowrap;
-    }
-    .ld-view-label .btn__icon {
-      display: inline-flex;
-      align-items: center;
-      transition: transform 0.2s ease;
-      flex-shrink: 0;
-    }
-    .ld-card:hover .ld-view-label {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .ld-card:hover .ld-view-label:hover {
-      background: rgba(255,255,255,0.08);
-    }
-    .ld-card:hover .ld-view-label:hover .btn__icon { transform: translateX(3px); }
+    .ld-overlay { display: none; }
     .ld-info {
       padding: 14px 16px 20px;
       background: #fff;
@@ -468,10 +424,10 @@
     /* ── Modal box ───────────────────────────────────── */
     .ld-modal {
       background: #fff;
-      border-radius: 2px;
+      border-radius: 16px;
       width: 100%;
       max-width: 960px;
-      max-height: 88vh;
+      max-height: 70vh;
       display: grid;
       grid-template-columns: 380px 1fr;
       overflow: hidden;
@@ -506,10 +462,24 @@
 
     /* Content panel */
     .ld-modal-body {
-      padding: 52px 44px 44px;
-      overflow-y: auto;
       display: flex;
       flex-direction: column;
+      min-height: 0;
+      max-height: 60vh;
+      overflow: hidden;
+    }
+    .ld-modal-header {
+      padding: 52px 44px 24px;
+      flex-shrink: 0;
+      border-bottom: 1px solid #ebebeb;
+    }
+    .ld-modal-bio {
+      padding: 24px 44px 36px;
+      overflow-y: auto;
+      flex: 1;
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.7;
     }
     .ld-modal-group {
       font-size: 11px;
@@ -525,29 +495,19 @@
       font-weight: 400;
       line-height: 1.15;
       color: var(--text-primary);
-      margin-bottom: 10px;
+      margin-bottom: 4px;
     }
     .ld-modal-desig {
       font-size: 15px;
       font-weight: 400;
       color: var(--text-disabled);
       line-height: 1.5;
-      margin-bottom: 32px;
-      padding-bottom: 32px;
-      border-bottom: 1px solid #ebebeb;
-    }
-    .ld-modal-bio {
-      font-size: 16px;
-      color: var(--text-secondary);
-      line-height: 1.7;
-      flex: 1;
-      margin-bottom: 36px;
+      margin-bottom: 20px;
     }
     .ld-modal-social {
       display: flex;
       gap: 10px;
       align-items: center;
-      margin-top: auto;
     }
     .ld-social-btn {
       width: 40px;
@@ -561,8 +521,8 @@
       transition: opacity 0.15s, transform 0.15s;
     }
     .ld-social-btn:hover { opacity: 0.82; transform: translateY(-2px); }
-    .ld-social-li { background: #0077b5; }
-    .ld-social-x  { background: #000; }
+    .ld-social-li { background: #008567; }
+    .ld-social-x  { background: #008567; }
 
     /* Close */
     .ld-modal-close {
@@ -629,7 +589,7 @@
       line-height: 1.4;
       transition: color 0.2s;
     }
-    .footer-link:hover { color: #5a37af; }
+    .footer-link:hover { color: #006b52; }
     .footer-link sup { font-size: 9px; vertical-align: super; }
     .footer-bottom {
       display: flex;
@@ -643,7 +603,7 @@
     .footer-copy { font-size: 14px; color: #666; }
     .footer-legal { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
     .footer-legal-link { font-size: 14px; color: #666; text-decoration: none; transition: color 0.2s; }
-    .footer-legal-link:hover { color: #5a37af; }
+    .footer-legal-link:hover { color: #006b52; }
     .footer-sep { color: #ccc; font-size: 14px; }
     .footer-social { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; padding-top: 40px; }
     .footer-social-link {
@@ -690,8 +650,8 @@
       white-space: nowrap;
     }
     .ld-opt-btn:first-child { padding-left: 0; }
-    .ld-opt-btn:hover { color: #6464d7; }
-    .ld-opt-btn.active { color: #6464d7; border-bottom-color: #6464d7; }
+    .ld-opt-btn:hover { color: #008567; }
+    .ld-opt-btn.active { color: #008567; border-bottom-color: #008567; }
 
     /* ── Option 2 — Tab system ───────────────────────── */
     .ld-tab-section { background: var(--bg-default); }
@@ -720,83 +680,25 @@
       transition: color 0.2s, border-color 0.2s;
       white-space: nowrap;
     }
-    .ld-tab-btn:hover { color: #6464d7; }
-    .ld-tab-btn.active { color: #6464d7; border-bottom-color: #6464d7; }
+    .ld-tab-btn:hover { color: #008567; }
+    .ld-tab-btn.active { color: #008567; border-bottom-color: #008567; }
     .ld-tab-panel { display: none; }
     .ld-tab-panel.active { display: block; }
     /* Option 02 — card spacing override */
     #ld-opt-2 .board-grid,
     #ld-opt-2 .team-grid  { row-gap: 48px; column-gap: 48px; }
 
-    /* ── Option 3 — List layout ──────────────────────── */
-    .ld-list {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      column-gap: 40px;
-      row-gap: 0;
-    }
-    .ld-list-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
-      padding: 24px 0;
-      border-bottom: 1px solid #e8e8e8;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .ld-list-item:nth-child(-n+3) { border-top: 1px solid #e8e8e8; }
-    .ld-list-item:hover .ld-list-name { color: #6464d7; }
-    .ld-list-photo-wrap {
+    /* ── Option 01 — circular profile images ─────────── */
+    #ld-opt-1 .ld-photo {
+      width: 200px;
+      height: 200px;
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      margin: 28px auto 0;
       flex-shrink: 0;
-      width: 80px;
-      align-self: stretch;
-      border-radius: 4px;
-      overflow: hidden;
-      background: #e8e8e8;
     }
-    .ld-list-photo-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: top center;
-      display: block;
-    }
-    .ld-list-initials-box {
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(145deg,#6464d7,#5a37af);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-display);
-      font-size: 20px;
-      color: rgba(255,255,255,0.6);
-    }
-    .ld-list-info {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-    .ld-list-name {
-      font-family: var(--font-primary);
-      font-size: 20px;
-      font-weight: 400;
-      color: #000;
-      line-height: 1.3;
-      transition: color 0.2s;
-    }
-    .ld-list-desig {
-      font-size: 16px;
-      font-weight: 400;
-      color: #999;
-      line-height: 1.5;
-      margin-bottom: 8px;
-    }
-    .ld-list-info .btn-text {
-      padding: 0;
-      gap: 6px;
-      font-size: 14px;
+    #ld-opt-1 .ld-info {
+      text-align: center;
     }
 
     /* ── Reduced motion ──────────────────────────────── */
@@ -828,7 +730,7 @@
         </li>
         <li><a href="#" class="nav-link">What We Do <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
         <li><a href="#" class="nav-link">Who We Serve <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
-        <li><a href="#" class="nav-link active">How We Deliver <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+        <li><a href="#" class="nav-link">How We Deliver <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
         <li><a href="#" class="nav-link">Insights &amp; Impact <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
         <li><a href="#" class="nav-link">Careers <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
       </ul>
@@ -883,7 +785,6 @@
   <div class="ld-opt-bar-inner">
     <button class="ld-opt-btn active" onclick="showLdOpt(1)">Option 01</button>
     <button class="ld-opt-btn" onclick="showLdOpt(2)">Option 02</button>
-    <button class="ld-opt-btn" onclick="showLdOpt(3)">Option 03</button>
   </div>
 </div>
 
@@ -944,34 +845,6 @@
 
 </div><!-- /opt-2 -->
 
-<!-- =====================================================
-     OPTION 03 — List layout
-===================================================== -->
-<div id="ld-opt-3" style="display:none">
-
-  <section class="board-section">
-    <div class="container">
-      <div class="s-head rv" style="text-align:left; margin-bottom:40px;">
-        <h2 style="font-family:var(--font-display);font-size:40px;font-weight:400;line-height:1.1;">Meet our board</h2>
-      </div>
-      <div class="rv d1">
-        <div class="ld-list" id="boardList"><!-- JS --></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="team-section">
-    <div class="container">
-      <div class="s-head rv" style="text-align:left; margin-bottom:40px;">
-        <h2 style="font-family:var(--font-display);font-size:40px;font-weight:400;line-height:1.1;">Leadership team</h2>
-      </div>
-      <div class="rv d1">
-        <div class="ld-list" id="teamList"><!-- JS --></div>
-      </div>
-    </div>
-  </section>
-
-</div><!-- /opt-3 -->
 
 <!-- =====================================================
      FOOTER
@@ -1076,18 +949,20 @@
 
     <!-- Right: bio -->
     <div class="ld-modal-body">
-      <div class="ld-modal-group" id="ldModalGroup"></div>
-      <h2 class="ld-modal-name" id="ldModalName"></h2>
-      <p class="ld-modal-desig" id="ldModalDesig"></p>
-      <div class="ld-modal-bio" id="ldModalBio"></div>
-      <div class="ld-modal-social">
-        <a href="#" class="ld-social-btn ld-social-li" aria-label="LinkedIn">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-        </a>
-        <a href="#" class="ld-social-btn ld-social-x" aria-label="X (Twitter)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-        </a>
+      <div class="ld-modal-header">
+        <div class="ld-modal-group" id="ldModalGroup"></div>
+        <h2 class="ld-modal-name" id="ldModalName"></h2>
+        <p class="ld-modal-desig" id="ldModalDesig"></p>
+        <div class="ld-modal-social">
+          <a href="#" class="ld-social-btn ld-social-li" aria-label="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="#" class="ld-social-btn ld-social-x" aria-label="X (Twitter)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+        </div>
       </div>
+      <div class="ld-modal-bio" id="ldModalBio"></div>
     </div>
   </div>
 </div>
@@ -1095,7 +970,8 @@
 <script>
   /* ── Leader data ─────────────────────────────────── */
   var BOARD = [
-    { name: 'Hiten Patel',              title: 'Chairman',                                                                          initials: 'HP', img: 'hitenPatel-img.png' },
+    { name: 'Hiten Patel',              title: 'Chairman',                                                                          initials: 'HP', img: 'hitenPatel-img.png',
+      bio: 'Hiten Patel is a visionary entrepreneur and transformative leader redefining the future of technology and talent, fueling Ascendion\'s momentum as an industry leader in AI-powered software engineering. As Chairman, he channels an unwavering focus on clients, a passion for building opportunity, and a belief in his Ascendion Holdings companies as a platform of possibilities for clients, team members, and investors.\n\nOver more than 25 years, Hiten has built and scaled a portfolio—including Ascendion, Collabera, Cognixia, Hyqoo, and Collabera Digital—that serves roughly 30% of the Fortune 100. His leadership has earned recognition from Gartner, HFS Research, IAOP, and Forbes, and he is a recipient of Ernst & Young\'s "Entrepreneur of the Year" award.\n\nRelentless in anticipating technology shifts and investing in skilled talent, Hiten ensures AI adoption is both ethical and transformative. Under his leadership, Ascendion is setting new benchmarks for speed, trust, and value creation in the AI economy.' },
     { name: 'Debashis (DC) Chatterjee', title: 'Board Member',                                                                      initials: 'DC', img: 'debashisChatterjee-img.jpg' },
     { name: 'Peter Harrison',           title: 'Board Member',                                                                      initials: 'PH', img: 'peterHarrison-img.jpg' },
     { name: 'Shashank Singh',           title: 'Board Member',                                                                      initials: 'SS', img: 'shashankSingh-img.png' },
@@ -1134,7 +1010,7 @@
       card.setAttribute('aria-label', 'View profile of ' + leader.name);
       var photoInner = leader.img
         ? '<img class="ld-photo-inner" src="../assets/images/Leadership/' + leader.img + '" alt="' + leader.name + '" style="width:100%;height:100%;object-fit:cover;object-position:top center;position:absolute;inset:0;">'
-        : '<div class="ld-photo-inner" style="background:linear-gradient(145deg,#6464d7,#5a37af)"></div><span class="ld-initials">' + leader.initials + '</span>';
+        : '<div class="ld-photo-inner" style="background:linear-gradient(145deg,#008567,#006b52)"></div><span class="ld-initials">' + leader.initials + '</span>';
       card.innerHTML =
         '<div class="ld-photo">' +
           photoInner +
@@ -1161,40 +1037,9 @@
   renderCards(BOARD, 'boardGrid2', 'board');
   renderCards(TEAM,  'teamGrid2',  'team');
 
-  /* ── Option 3 — list render ── */
-  function renderList(leaders, listId, group) {
-    var list = document.getElementById(listId);
-    leaders.forEach(function(leader, i) {
-      var item = document.createElement('div');
-      item.className = 'ld-list-item rv';
-      item.setAttribute('data-index', i);
-      item.setAttribute('data-group', group);
-      item.setAttribute('tabindex', '0');
-      item.setAttribute('role', 'button');
-      item.setAttribute('aria-label', 'View profile of ' + leader.name);
-      var photoHtml = leader.img
-        ? '<img src="../assets/images/Leadership/' + leader.img + '" alt="' + leader.name + '">'
-        : '<div class="ld-list-initials-box">' + leader.initials + '</div>';
-      item.innerHTML =
-        '<div class="ld-list-photo-wrap">' + photoHtml + '</div>' +
-        '<div class="ld-list-info">' +
-          '<h5 class="ld-list-name">' + leader.name + '</h5>' +
-          '<p class="ld-list-desig">' + leader.title + '</p>' +
-          '<span class="btn btn-text">' +
-            '<span class="btn__label">View Profile</span>' +
-            '<span class="btn__icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>' +
-          '</span>' +
-        '</div>';
-      list.appendChild(item);
-    });
-  }
-
-  renderList(BOARD, 'boardList', 'board');
-  renderList(TEAM,  'teamList',  'team');
-
   /* ── Option switcher ── */
   function showLdOpt(n) {
-    [1,2,3].forEach(function(i) {
+    [1,2].forEach(function(i) {
       document.getElementById('ld-opt-' + i).style.display = i === n ? '' : 'none';
     });
     document.querySelectorAll('.ld-opt-btn').forEach(function(btn, i) {
@@ -1261,14 +1106,15 @@
       imgBg.innerHTML = '<img src="../assets/images/Leadership/' + leader.img + '" alt="' + leader.name + '" style="width:100%;height:100%;object-fit:cover;object-position:top center;">';
       initEl.textContent = '';
     } else {
-      imgBg.style.background = 'linear-gradient(145deg,#6464d7,#5a37af)';
+      imgBg.style.background = 'linear-gradient(145deg,#008567,#006b52)';
       imgBg.innerHTML = '';
       initEl.textContent = leader.initials;
     }
     document.getElementById('ldModalGroup').textContent         = groupLabel;
     document.getElementById('ldModalName').textContent          = leader.name;
     document.getElementById('ldModalDesig').textContent         = leader.title;
-    document.getElementById('ldModalBio').textContent           = PLACEHOLDER_BIO.replace('{name}', leader.name.split(' ')[0]);
+    var bioText = leader.bio || PLACEHOLDER_BIO.replace('{name}', leader.name.split(' ')[0]);
+    document.getElementById('ldModalBio').innerHTML = bioText.split('\n\n').map(function(p) { return '<p style="margin-bottom:16px;">' + p + '</p>'; }).join('');
     document.body.style.overflow = 'hidden';
     backdrop.classList.add('open');
     document.getElementById('ldClose').focus();
@@ -1286,6 +1132,11 @@
       var group  = card.getAttribute('data-group');
       var idx    = parseInt(card.getAttribute('data-index'), 10);
       var leader = group === 'board' ? BOARD[idx] : TEAM[idx];
+      /* DC Chatterjee navigates to dedicated profile page */
+      if (leader.name === 'Debashis (DC) Chatterjee') {
+        window.location.href = 'leadership-dc.html';
+        return;
+      }
       var label  = group === 'board' ? 'Board of Directors' : 'Leadership Team';
       openModal(leader, label);
       return;
