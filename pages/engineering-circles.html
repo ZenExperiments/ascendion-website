@@ -1,0 +1,2125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ascendion Circles | Mastery Drives Impact</title>
+
+  <style>
+    @font-face {
+      font-family: 'PP Neue Machina';
+      src: url('../assets/fonts/PPNeueMachina-PlainRegular 2.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+  </style>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* =====================================================
+       DESIGN TOKENS
+    ===================================================== */
+    :root {
+      --primary-500: #008567;
+      --primary-100: #00b589;
+      --primary-900: #006b52;
+      --accent-100:  #2ddcaa;
+      --accent-500:  #009673;
+      --neutral-0:   #ffffff;
+      --neutral-100: #f4f4f4;
+      --neutral-200: #cccccc;
+      --neutral-300: #b2b2b2;
+      --neutral-400: #999999;
+      --neutral-600: #666666;
+      --neutral-700: #333333;
+      --neutral-800: #1a1a1a;
+      --neutral-900: #000000;
+
+      --bg-default:     #ffffff;
+      --bg-subtle:      #f4f4f4;
+      --bg-dark:        #000000;
+      --bg-dark-subtle: #1a1a1a;
+      --bg-dark-2:      #333333;
+      --bg-violet:      #008567;
+      --bg-accent:      #2ddcaa;
+      --text-primary:   #000000;
+      --text-secondary: #333333;
+      --text-inv:       #ffffff;
+      --text-inv-2:     #cccccc;
+      --text-highlight: #008567;
+      --text-hi-inv:    #2ddcaa;
+      --text-disabled:  #666666;
+      --border:         #999999;
+
+      --font-display: 'PP Neue Machina', sans-serif;
+      --font-primary: 'Inter', sans-serif;
+      --font-mono:    'Roboto Mono', monospace;
+
+      --px: 80px;
+      --py: 80px;
+    }
+
+    /* =====================================================
+       RESET & BASE
+    ===================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-primary);
+      font-size: 16px;
+      color: var(--text-primary);
+      background: var(--bg-default);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img, svg { display: block; }
+    sup { font-size: 9px; vertical-align: super; }
+
+    /* =====================================================
+       LAYOUT
+    ===================================================== */
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding-left: var(--px);
+      padding-right: var(--px);
+    }
+    section { padding-top: var(--py); padding-bottom: var(--py); }
+    .s-head { margin-bottom: 56px; }
+
+    /* =====================================================
+       LABEL STYLE
+    ===================================================== */
+    .lbl {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      font-family: var(--font-primary);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-100);
+      margin-bottom: 24px;
+    }
+    .lbl--dark { color: var(--primary-500); }
+    .lbl::before,
+    .lbl::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: currentColor;
+      opacity: 0.3;
+    }
+
+    /* =====================================================
+       TYPOGRAPHY
+    ===================================================== */
+    h1, h2, h3 { font-family: var(--font-display); font-weight: 400; }
+    h4, h5     { font-family: var(--font-primary);  font-weight: 400; }
+    h1 { font-size: 80px; line-height: 1.0; }
+    h2 { font-size: 40px; line-height: 1.1; }
+    h3 { font-size: 32px; line-height: 1.2; }
+    h4 { font-size: 24px; line-height: 1.3; }
+    h5 { font-size: 20px; line-height: 1.35; }
+
+    /* =====================================================
+       BUTTONS
+    ===================================================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-primary);
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      border-radius: 2px;
+      padding: 14px 20px;
+      line-height: 1;
+      white-space: nowrap;
+      cursor: pointer;
+      border: none;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+    .btn__icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+    }
+    .btn:hover .btn__icon { transform: translateX(3px); }
+    .btn-primary        { background: var(--neutral-900); color: var(--neutral-0); }
+    .btn-primary .btn__icon { color: var(--primary-500); }
+    .btn-primary:hover  { background: var(--neutral-800); }
+    .btn-inverse        { background: var(--accent-100); color: var(--neutral-900); }
+    .btn-inverse .btn__icon { color: var(--neutral-900); }
+    .btn-inverse:hover  { background: var(--accent-500); }
+    .btn-ghost          { background: transparent; color: var(--neutral-900); border: 1px solid var(--neutral-900); }
+    .btn-ghost .btn__icon { color: var(--primary-500); }
+    .btn-ghost:hover    { background: var(--neutral-100); }
+    .btn-ghost-inv      { background: transparent; color: var(--neutral-0); border: 1px solid var(--neutral-0); }
+    .btn-ghost-inv .btn__icon { color: var(--neutral-0); }
+    .btn-ghost-inv:hover { background: rgba(255,255,255,0.08); }
+    .btn-text           { background: none; color: var(--neutral-900); padding: 0; }
+    .btn-text .btn__icon { color: var(--primary-500); }
+    .btn-text:hover     { color: var(--neutral-900); }
+    .btn-text-inv       { background: none; color: var(--accent-100); padding: 0; }
+    .btn-text-inv .btn__icon { color: var(--accent-100); }
+    .btn-text-inv:hover { color: var(--accent-500); }
+    .btn-sm { font-size: 14px; padding: 10px 16px; }
+
+    /* =====================================================
+       SCROLL REVEAL
+    ===================================================== */
+    .rv {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out;
+    }
+    .rv.in { opacity: 1; transform: translateY(0); }
+    .rv.d1 { transition-delay: 0.1s; }
+    .rv.d2 { transition-delay: 0.2s; }
+    .rv.d3 { transition-delay: 0.3s; }
+    .rv.d4 { transition-delay: 0.4s; }
+
+    /* =====================================================
+       NAV
+    ===================================================== */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: var(--bg-subtle);
+      height: 86px;
+      transition: box-shadow 0.2s;
+    }
+    .nav.scrolled { box-shadow: 0 1px 0 var(--neutral-200); }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 86px;
+    }
+    .nav-logo { display: flex; flex-direction: column; }
+    .nav-logo-text {
+      font-family: var(--font-primary);
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--neutral-900);
+      line-height: 1;
+    }
+    .nav-logo-tagline {
+      display: block;
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--neutral-600);
+      letter-spacing: 0;
+      line-height: 1.2;
+      margin-top: 2px;
+    }
+    .nav-menu { display: flex; align-items: center; gap: 4px; }
+    .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; margin-right: 16px; }
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--neutral-900);
+      padding: 6px 10px;
+      border-radius: 2px;
+      transition: color 0.15s;
+    }
+    .nav-link:hover { color: var(--primary-900); }
+    .nav-link.active { color: var(--primary-500); }
+    .nav-link--aava { color: var(--primary-500); font-weight: 500; }
+    .nav-link--aava:hover { color: var(--primary-900); }
+    .nav-link--aava sup { font-size: 10px; vertical-align: super; }
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+    .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--neutral-900); transition: all 0.3s; }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile drawer */
+    .nav-drawer {
+      display: none;
+      position: fixed;
+      top: 86px; left: 0; right: 0; bottom: 0;
+      background: var(--bg-subtle);
+      z-index: 190;
+      padding: 32px var(--px);
+      flex-direction: column;
+      gap: 8px;
+      overflow-y: auto;
+    }
+    .nav-drawer.open { display: flex; }
+    .nav-drawer .nav-link { font-size: 18px; padding: 12px 0; border-bottom: 1px solid var(--neutral-200); }
+    .nav-drawer .btn { margin-top: 24px; align-self: flex-start; }
+
+    /* =====================================================
+       SECTION 01 — HERO (white bg, 2-col, grid-line bg)
+    ===================================================== */
+    .hero {
+      background: var(--bg-default);
+      height: 85vh;
+      min-height: 560px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: stretch;
+      margin-top: -86px;
+      padding-top: 86px;
+    }
+    .hero-grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,0,0,0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.07) 1px, transparent 1px);
+      background-size: 64px 64px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      width: 100%;
+      height: 100%;
+      flex: 1;
+      align-self: stretch;
+    }
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 60px 80px 80px;
+    }
+    .hero-h1 {
+      font-family: var(--font-display);
+      font-size: 80px;
+      font-weight: 400;
+      line-height: 1.0;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+    }
+    .hero-h2 {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+    }
+    .hero-body {
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--text-secondary);
+      margin-bottom: 0;
+      max-width: 640px;
+      padding-left: 0;
+    }
+    .hero-right {
+      display: flex;
+      align-items: center;
+      padding: 48px 80px 48px 0;
+    }
+    .hero-img-placeholder {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .hero-img-placeholder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* =====================================================
+       SECTION 02 — CAPABILITIES (bg #f4f4f4)
+    ===================================================== */
+    .capabilities-section {
+      background: var(--bg-subtle);
+      padding-top: var(--py);
+      padding-bottom: var(--py);
+    }
+    .cap-heading {
+      max-width: 50%;
+      margin-bottom: 48px;
+    }
+    .cap-heading h2 {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--text-inv);
+    }
+    .cap-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    /* Section is always black */
+    .cap-list-section { background: var(--bg-dark); padding-top: var(--py); padding-bottom: var(--py); position: relative; }
+
+    /* Toggle bar — outside sections, centred */
+    .cap-toggle-bar {
+      position: absolute;
+      top: var(--py);
+      right: var(--px);
+      z-index: 10;
+    }
+
+    /* ── Cap list rows ── */
+    .cap-list { display: flex; flex-direction: column; }
+
+    .cap-item {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      padding: 36px 0;
+      border-top: 1px solid rgba(255,255,255,0.15);
+      transition: transform 0.25s ease;
+      overflow: hidden;
+    }
+    .cap-item:last-child { border-bottom: 1px solid rgba(255,255,255,0.15); }
+
+    /* Teal accent bar on hover (dark section) */
+    .cap-item::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: transparent;
+      transition: background 0.3s ease;
+    }
+    .cap-item:hover { transform: translateY(-2px); }
+    .cap-item:hover::after { background: var(--accent-100); }
+
+    .cap-row { display: contents; }
+
+    .cap-name-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .cap-icon {
+      width: 20px;
+      height: 20px;
+      color: var(--accent-100);
+      flex-shrink: 0;
+    }
+    .cap-name {
+      font-family: var(--font-primary);
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--text-inv);
+      line-height: 1.2;
+    }
+    .cap-desc {
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--text-inv-2);
+      margin: 0;
+    }
+
+    /* =====================================================
+       VIEW TOGGLE
+    ===================================================== */
+    .view-toggle {
+      display: flex;
+      gap: 4px;
+      background: var(--neutral-800);
+      border: 1px solid #333333;
+      border-radius: 2px;
+      padding: 4px;
+      width: fit-content;
+      margin: 0;
+    }
+    .vt-btn {
+      font-family: var(--font-primary);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 8px 20px;
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      background: transparent;
+      color: var(--neutral-600);
+      transition: background 0.2s, color 0.2s;
+      white-space: nowrap;
+      line-height: 1;
+    }
+    .vt-btn.active {
+      background: var(--accent-100);
+      color: var(--neutral-900);
+    }
+    .vt-btn:hover:not(.active) {
+      color: var(--text-inv);
+    }
+
+    /* =====================================================
+       OPTION 02 — CIRCLES (scroll-jacked horizontal)
+    ===================================================== */
+
+    /* Section zeroes its own padding in circles mode */
+    .cap-list-section.mode-circles { padding-top: 86px; padding-bottom: 0; }
+
+    /* Tall wrapper captures scroll space */
+    .cc-wrapper {
+      position: relative;
+      height: calc(100vh - 86px + 2600px);
+    }
+
+    /* Sticky panel */
+    .cc-sticky {
+      position: sticky;
+      top: 86px;
+      height: calc(100vh - 86px);
+      min-height: 560px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-dark);
+    }
+
+    /* Interactive grid canvas */
+    .cc-grid-canvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      display: block;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Heading — 1 column width, no toggle here */
+    .cc-head {
+      position: relative;
+      z-index: 2;
+      padding: 48px var(--px) 28px;
+      flex-shrink: 0;
+    }
+    .cc-head h2 {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--text-inv);
+      margin: 0;
+      max-width: 50%;
+    }
+
+    /* Circles track area fills remaining height */
+    .cc-track-area {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    /* Horizontal track — translateX driven by scroll JS */
+    .cc-track {
+      display: flex;
+      align-items: flex-start;
+      position: relative;
+      will-change: transform;
+      flex-shrink: 0;
+      padding-bottom: 20px;
+    }
+
+    /* Each item: circle + desc stacked */
+    .cc-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+      position: relative;
+    }
+    /* Overlap each circle by 50px (half the original 100px) */
+    .cc-item + .cc-item { margin-left: -50px; }
+
+    /* Circle SVG wrapper — 340px */
+    .cc-ring-wrap {
+      position: relative;
+      width: 340px;
+      height: 340px;
+      flex-shrink: 0;
+    }
+    .cc-svg {
+      width: 340px;
+      height: 340px;
+      display: block;
+    }
+    /* r=160 → circumference = 2π×160 ≈ 1005 */
+    .cc-ring {
+      fill: none;
+      stroke: var(--accent-100);
+      stroke-width: 0.75;
+      stroke-dasharray: 1005;
+      stroke-dashoffset: 1005;
+      transform-box: fill-box;
+      transform-origin: center;
+      transform: rotate(-90deg);
+      transition: stroke-dashoffset 1.1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .cc-item.cc-in .cc-ring { stroke-dashoffset: 0; }
+
+    /* Title + icon centered inside ring */
+    .cc-title-wrap {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 44px;
+      pointer-events: none;
+    }
+    .cc-icon {
+      width: 24px;
+      height: 24px;
+      color: var(--accent-100);
+      flex-shrink: 0;
+      opacity: 0;
+      transform: scale(0.88);
+      transition: opacity 0.45s ease 0.7s, transform 0.45s ease 0.7s;
+    }
+    .cc-item.cc-in .cc-icon { opacity: 1; transform: scale(1); }
+    .cc-title {
+      font-family: var(--font-primary);
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 1.3;
+      color: var(--text-inv);
+      text-align: center;
+      margin: 0;
+      opacity: 0;
+      transform: scale(0.88);
+      transition: opacity 0.45s ease 0.9s, transform 0.45s ease 0.9s;
+    }
+    .cc-item.cc-in .cc-title { opacity: 1; transform: scale(1); }
+
+    /* Vertical connector — grows top→bottom after circle forms */
+    .cc-ring-wrap::after {
+      content: '';
+      position: absolute;
+      /* top at circle bottom (330px) minus half height so centre overlaps circle edge */
+      top: 298px;    /* 330 - 32 */
+      left: 50%;
+      transform: translateX(-50%) scaleY(0);
+      transform-origin: top center;
+      width: 1px;
+      height: 64px;
+      background: #ffffff;
+      opacity: 0.8;
+      transition: transform 0.35s ease 1.15s;
+    }
+    .cc-item.cc-in .cc-ring-wrap::after {
+      transform: translateX(-50%) scaleY(1);
+    }
+
+    /* Desc below circle — appears after line finishes (1.15 + 0.35 = 1.5s) */
+    .cc-desc-outer {
+      margin-top: 24px;
+      width: 280px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.4s ease 1.5s, transform 0.4s ease 1.5s;
+    }
+    .cc-item.cc-in .cc-desc-outer { opacity: 1; transform: translateY(0); }
+    .cc-desc-outer p {
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--text-inv-2);
+      margin: 0;
+    }
+
+    /* =====================================================
+       SECTION 03 — EMPOWER (bg #ffffff, light)
+    ===================================================== */
+    .empower-section {
+      background: var(--bg-subtle);
+    }
+    .empower-outer {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 80px;
+      align-items: start;
+    }
+    .empower-left {}
+    .empower-h2 {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--text-primary);
+      margin-bottom: 40px;
+    }
+    .empower-img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border-radius: 2px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #e8e8e8 0%, #f4f4f4 100%);
+    }
+    /* Two diagonal images — matches act-img-wrap */
+    .empower-img-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      width: 100%;
+      aspect-ratio: 1;
+    }
+    .empower-img-item {
+      aspect-ratio: 1;
+      border-radius: 2px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #e8e8e8 0%, #f4f4f4 100%);
+    }
+    .empower-img-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .empower-img-item--top {
+      grid-column: 2;
+      grid-row: 1;
+    }
+    .empower-img-item--bottom {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    .empower-right {}
+    .empower-item {
+      padding: 28px 0;
+      border-bottom: 1px solid var(--neutral-200);
+    }
+    .empower-item:first-child { padding-top: 0; }
+    .empower-item-title {
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      gap: 10px;
+      align-items: start;
+      font-family: var(--font-primary);
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 1.35;
+      color: var(--primary-500);
+      margin-bottom: 6px;
+    }
+    .empower-item-title::before {
+      content: '—';
+      color: var(--primary-500);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .empower-item-desc {
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--text-secondary);
+      padding-left: 30px;
+    }
+
+    /* =====================================================
+       SECTION 04 — MASTERY (bg #ffffff, grid + char reveal)
+    ===================================================== */
+    .mastery-section {
+      background: var(--bg-default);
+      position: relative;
+      overflow: hidden;
+    }
+    .mastery-grid-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      display: block;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .mastery-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .mastery-heading {
+      font-family: var(--font-display);
+      font-size: 56px;
+      font-weight: 400;
+      line-height: 1.15;
+      margin: 0 auto;
+    }
+    .mastery-h2-line { display: block; }
+    .mastery-char {
+      color: rgba(0,0,0,0.12);
+      transition: color 0.18s ease;
+      display: inline;
+    }
+    .mastery-char.in { color: #000000; }
+    /* Connector — dot + growing line */
+    .mastery-connector {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 56px;
+    }
+    .mastery-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--primary-500);
+      opacity: 0;
+      transform: scale(0);
+      transform-origin: center;
+    }
+    .mastery-line {
+      width: 1px;
+      height: 80px;
+      background: var(--primary-500);
+      transform: scaleY(0);
+      transform-origin: top center;
+    }
+
+    /* =====================================================
+       SECTION 05 — VIDEO (bg #000000, full-bleed)
+    ===================================================== */
+    .video-section {
+      background: var(--bg-default);
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    .video-section-head {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .video-section-head .lbl { margin-bottom: 24px; }
+    .video-h2 {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--text-primary);
+    }
+    .video-tagline-band {
+      background-color: var(--bg-dark);
+      background-image:
+        linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
+      background-size: 64px 48px;
+      padding: var(--py) 0;
+    }
+    .video-tagline {
+      font-family: var(--font-primary);
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 1.4;
+      color: var(--accent-100);
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .video-fullbleed {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+    .video-container {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+      border-radius: 2px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .video-thumb {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: opacity 0.3s ease;
+    }
+    .video-thumb-placeholder {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #1a1a1a 0%, #333333 100%);
+    }
+    .video-play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.6);
+      border: 2px solid rgba(255,255,255,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+      z-index: 2;
+      cursor: pointer;
+    }
+    .video-container:hover .video-play-btn {
+      background: var(--primary-500);
+      border-color: var(--primary-500);
+      transform: translate(-50%, -50%) scale(1.08);
+    }
+    .video-play-btn svg {
+      width: 28px;
+      height: 28px;
+      color: #ffffff;
+      margin-left: 4px;
+    }
+    .video-caption {
+      margin-top: 24px;
+      text-align: center;
+      font-family: var(--font-primary);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--neutral-400);
+    }
+    .video-iframe-wrap {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      display: none;
+    }
+    .video-iframe-wrap.active { display: block; }
+    .video-iframe-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* =====================================================
+       SECTION 05 — JOIN (bg #ffffff)
+    ===================================================== */
+    .join-section {
+      position: relative;
+      padding-top: 160px;
+      padding-bottom: 160px;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    /* Background image layers — one per region, crossfade on hover */
+    .join-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    .join-bg.active { opacity: 1; }
+    /* Dark overlay so text stays readable */
+    .join-section::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.62);
+      z-index: 1;
+    }
+    .join-section .container {
+      position: relative;
+      z-index: 2;
+    }
+    .join-head {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .join-h2 {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--text-inv);
+    }
+    .join-ctas {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* =====================================================
+       FOOTER
+    ===================================================== */
+    .footer {
+      background: var(--bg-default);
+      border-top: 1px solid var(--neutral-200);
+      padding: 80px 0;
+    }
+    .footer-cols {
+      display: grid;
+      grid-template-columns: 2fr 2fr 1.5fr 1.5fr auto;
+      gap: 80px;
+      margin-bottom: 56px;
+    }
+    .footer-col-head {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--neutral-900);
+      margin-bottom: 20px;
+    }
+    .footer-links { display: flex; flex-direction: column; gap: 8px; }
+    .footer-link { font-size: 14px; color: var(--neutral-700); line-height: 1.4; transition: color 0.15s; }
+    .footer-link:hover { color: var(--primary-900); }
+    .footer-social { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+    .footer-social-link {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--neutral-0);
+      transition: opacity 0.15s, transform 0.15s;
+    }
+    .footer-social-link:hover { opacity: 0.85; transform: translateY(-2px); }
+    .footer-social-link--linkedin  { background: var(--primary-500); }
+    .footer-social-link--youtube   { background: var(--primary-500); }
+    .footer-social-link--instagram { background: var(--primary-500); }
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--neutral-200);
+      padding-top: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-copy { font-size: 14px; color: var(--neutral-600); }
+    .footer-legal { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .footer-legal-link { font-size: 14px; color: var(--neutral-600); transition: color 0.15s; }
+    .footer-legal-link:hover { color: var(--primary-500); }
+    .footer-sep { color: var(--neutral-400); font-size: 12px; }
+
+    /* =====================================================
+       RESPONSIVE BREAKPOINTS
+    ===================================================== */
+    @media (max-width: 1200px) {
+      :root { --px: 60px; --py: 80px; }
+      .hero-h1 { font-size: 64px; }
+      .hero-h2 { font-size: 32px; }
+      .cap-grid { grid-template-columns: repeat(2, 1fr); }
+      .cap-grid-bottom { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 900px) {
+      :root { --px: 32px; --py: 60px; }
+      .nav-menu { display: none; }
+      .nav-toggle { display: flex; }
+      .hero { height: auto; min-height: auto; margin-top: 0; padding-top: 0; }
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-left { padding: 60px 32px; }
+      .hero-right { display: none; }
+      .hero-h1 { font-size: 48px; }
+      .hero-h2 { font-size: 28px; }
+      .empower-inner { grid-template-columns: 1fr; gap: 48px; }
+      .empower-statement { font-size: 32px; }
+      .empower-h2 { font-size: 32px; }
+      .cap-intro { grid-template-columns: 1fr; gap: 24px; }
+      .cap-grid { grid-template-columns: 1fr; }
+      .cap-grid-bottom { grid-template-columns: 1fr; }
+      .join-ctas { flex-direction: column; align-items: stretch; }
+      .join-ctas .btn { justify-content: center; }
+      .footer-cols { grid-template-columns: 1fr 1fr; gap: 40px; }
+    }
+    @media (max-width: 600px) {
+      :root { --px: 24px; --py: 48px; }
+      .hero-h1 { font-size: 40px; }
+      .hero-h2 { font-size: 24px; }
+      h2 { font-size: 32px; }
+      .empower-statement { font-size: 28px; }
+      .footer-cols { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+      .video-play-btn { width: 60px; height: 60px; }
+    }
+
+    /* =====================================================
+       REDUCED MOTION
+    ===================================================== */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===================================================
+     NAV
+=================================================== -->
+<header class="nav" id="nav">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo" aria-label="Ascendion home">
+      <span class="nav-logo-text">ASCENDION</span>
+      <span class="nav-logo-tagline">Engineering to elevate life</span>
+    </a>
+    <nav class="nav-menu" id="navMenu" aria-label="Main">
+      <ul class="nav-links">
+        <li>
+          <a href="#" class="nav-link nav-link--aava">
+            AAVA<sup>™</sup>
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link">What We Do
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link">Who We Serve
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link">How We Deliver
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link">Insights &amp; Impact
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link active">Careers
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </li>
+      </ul>
+      <a href="#" class="btn btn-primary">
+        <span class="btn__label">Get In Touch</span>
+        <span class="btn__icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile drawer -->
+<div class="nav-drawer" id="navDrawer" aria-hidden="true">
+  <a href="#" class="nav-link nav-link--aava">AAVA<sup>™</sup></a>
+  <a href="#" class="nav-link">What We Do</a>
+  <a href="#" class="nav-link">Who We Serve</a>
+  <a href="#" class="nav-link">How We Deliver</a>
+  <a href="#" class="nav-link">Insights &amp; Impact</a>
+  <a href="#" class="nav-link active">Careers</a>
+  <a href="#" class="btn btn-primary">
+    <span class="btn__label">Get In Touch</span>
+    <span class="btn__icon" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+  </a>
+</div>
+
+<!-- ===================================================
+     SECTION 01 — HERO (white bg, 2-col, grid-line bg)
+=================================================== -->
+<!-- ===================================================
+     HERO — ASCENDION CIRCLES
+=================================================== -->
+<section class="hero" id="hero" aria-label="Hero">
+  <div class="hero-grid-bg" aria-hidden="true"></div>
+
+  <div class="hero-inner">
+    <!-- LEFT: text -->
+    <div class="hero-left">
+      <h1 class="hero-h1">Ascendion Circles</h1>
+    </div>
+
+    <!-- RIGHT: image placeholder -->
+    <div class="hero-right" aria-hidden="true">
+      <div class="hero-img-placeholder">
+        <img src="../assets/images/Engineering-circles/banner-img.jpg" alt="Ascendion Circles">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================
+     SECTION 01 — MASTERY DRIVES IMPACT
+=================================================== -->
+<section class="capabilities-section" aria-label="Mastery Drives Impact">
+  <div class="container">
+    <div class="cap-intro rv">
+      <h2 class="hero-h2">Mastery Drives Impact</h2>
+      <p class="hero-body">Software engineering is a craft. Art plus science. Exceptional work requires deep expertise, continuous evolution, and focused communities of practice.<br><br>Ascendion Circles are global networks of technical specialists aligned to critical capabilities—the exact skills clients need to deliver impact.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================
+     SECTION 02 — CAPABILITIES LIST (bg default)
+=================================================== -->
+<section class="cap-list-section" id="capSection">
+
+  <!-- Toggle — top right corner -->
+  <div class="cap-toggle-bar">
+    <div class="view-toggle" role="group" aria-label="View options">
+      <button class="vt-btn" data-view="1" aria-pressed="false">01 — List</button>
+      <button class="vt-btn active" data-view="2" aria-pressed="true">02 — Circles</button>
+    </div>
+  </div>
+
+  <!-- ── Option 01: stacked list ── -->
+  <div id="capView01" style="display:none" aria-hidden="true">
+    <div class="container">
+      <div class="cap-heading rv">
+        <h2>Communities Aligned to Critical Capabilities.</h2>
+      </div>
+    </div>
+    <div class="container">
+    <div class="cap-list">
+
+      <div class="cap-item rv">
+        <div class="cap-row">
+          <div class="cap-name-group">
+            <svg class="cap-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2l7.5 4.5v7L10 18l-7.5-4.5v-7L10 2z"/><path d="M10 2v16M2.5 6.5l7.5 4 7.5-4"/></svg>
+            <h4 class="cap-name">Ascendion Products</h4>
+          </div>
+          <p class="cap-desc">Agentic AI-driven platform strategy for next-generation software.</p>
+        </div>
+      </div>
+
+      <div class="cap-item rv d1">
+        <div class="cap-row">
+          <div class="cap-name-group">
+            <svg class="cap-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="16" height="5" rx="1"/><rect x="2" y="12" width="16" height="5" rx="1"/><path d="M5 5.5h.01M5 14.5h.01"/></svg>
+            <h4 class="cap-name">Platform Engineering</h4>
+          </div>
+          <p class="cap-desc">Designing foundations for scalable, resilient applications.</p>
+        </div>
+      </div>
+
+      <div class="cap-item rv d2">
+        <div class="cap-row">
+          <div class="cap-name-group">
+            <svg class="cap-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="16" height="11" rx="1.5"/><path d="M7 18h6M10 15v3"/></svg>
+            <h4 class="cap-name">Experience Engineering</h4>
+          </div>
+          <p class="cap-desc">Creating immersive human-centric digital experience for gamers, consumers, and enterprise workers.</p>
+        </div>
+      </div>
+
+      <div class="cap-item rv d3">
+        <div class="cap-row">
+          <div class="cap-name-group">
+            <svg class="cap-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h14M3 10h14M3 14h10"/></svg>
+            <h4 class="cap-name">Enterprise Solutions</h4>
+          </div>
+          <p class="cap-desc">Building and maintaining robust, mission-critical systems.</p>
+        </div>
+      </div>
+
+      <div class="cap-item rv d4">
+        <div class="cap-row">
+          <div class="cap-name-group">
+            <svg class="cap-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><path d="M2 10h16M10 2a13 13 0 010 16M10 2a13 13 0 000 16"/></svg>
+            <h4 class="cap-name">Platform Operations</h4>
+          </div>
+          <p class="cap-desc">Operating platforms that power innovation at scale.</p>
+        </div>
+      </div>
+
+      <div class="cap-item rv d1">
+        <div class="cap-row">
+          <div class="cap-name-group">
+            <svg class="cap-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="10" cy="5" rx="7" ry="2.5"/><path d="M3 5v4c0 1.38 3.13 2.5 7 2.5s7-1.12 7-2.5V5"/><path d="M3 9v4c0 1.38 3.13 2.5 7 2.5s7-1.12 7-2.5V9"/></svg>
+            <h4 class="cap-name">Data and Insights</h4>
+          </div>
+          <p class="cap-desc">Engineering data systems that unlock strategic value.</p>
+        </div>
+      </div>
+
+      <div class="cap-item rv d2">
+        <div class="cap-row">
+          <div class="cap-name-group">
+            <svg class="cap-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3a4 4 0 014 4c0 2-1 3.5-2.5 4.5V13h-3v-1.5C7 10.5 6 9 6 7a4 4 0 014-4z"/><path d="M8 13h4v1.5a2 2 0 01-4 0V13z"/></svg>
+            <h4 class="cap-name">AI &amp; Data Science</h4>
+          </div>
+          <p class="cap-desc">ML, AI, and agentic solutions for transformative decisions.</p>
+        </div>
+      </div>
+
+    </div><!-- /cap-list -->
+    </div><!-- /container -->
+  </div><!-- /capView01 -->
+
+  <!-- ── Option 02: scroll-jacked circles ── -->
+  <div class="cc-wrapper" id="capView02" aria-hidden="false">
+    <div class="cc-sticky" id="ccStickyPanel">
+      <!-- Interactive grid canvas -->
+      <canvas class="cc-grid-canvas" id="ccGridCanvas" aria-hidden="true"></canvas>
+
+      <!-- Heading (sticky, 1 column width) -->
+      <div class="cc-head">
+        <h2>Communities Aligned to Critical Capabilities.</h2>
+      </div>
+
+      <!-- Circles track -->
+      <div class="cc-track-area">
+      <div class="cc-track" id="ccTrack">
+
+        <div class="cc-item">
+          <div class="cc-ring-wrap">
+            <svg class="cc-svg" viewBox="0 0 340 340" aria-hidden="true">
+              <circle class="cc-ring" cx="170" cy="170" r="160"/>
+            </svg>
+            <div class="cc-title-wrap">
+              <svg class="cc-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2l7.5 4.5v7L10 18l-7.5-4.5v-7L10 2z"/><path d="M10 2v16M2.5 6.5l7.5 4 7.5-4"/></svg>
+              <h4 class="cc-title">Ascendion<br>Products</h4>
+            </div>
+          </div>
+          <div class="cc-desc-outer"><p>Agentic AI-driven platform strategy for next-generation software.</p></div>
+        </div>
+
+        <div class="cc-item">
+          <div class="cc-ring-wrap">
+            <svg class="cc-svg" viewBox="0 0 340 340" aria-hidden="true">
+              <circle class="cc-ring" cx="170" cy="170" r="160"/>
+            </svg>
+            <div class="cc-title-wrap">
+              <svg class="cc-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="16" height="5" rx="1"/><rect x="2" y="12" width="16" height="5" rx="1"/><path d="M5 5.5h.01M5 14.5h.01"/></svg>
+              <h4 class="cc-title">Platform<br>Engineering</h4>
+            </div>
+          </div>
+          <div class="cc-desc-outer"><p>Designing foundations for scalable, resilient applications.</p></div>
+        </div>
+
+        <div class="cc-item">
+          <div class="cc-ring-wrap">
+            <svg class="cc-svg" viewBox="0 0 340 340" aria-hidden="true">
+              <circle class="cc-ring" cx="170" cy="170" r="160"/>
+            </svg>
+            <div class="cc-title-wrap">
+              <svg class="cc-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="16" height="11" rx="1.5"/><path d="M7 18h6M10 15v3"/></svg>
+              <h4 class="cc-title">Experience<br>Engineering</h4>
+            </div>
+          </div>
+          <div class="cc-desc-outer"><p>Creating immersive human-centric digital experience for gamers, consumers, and enterprise workers.</p></div>
+        </div>
+
+        <div class="cc-item">
+          <div class="cc-ring-wrap">
+            <svg class="cc-svg" viewBox="0 0 340 340" aria-hidden="true">
+              <circle class="cc-ring" cx="170" cy="170" r="160"/>
+            </svg>
+            <div class="cc-title-wrap">
+              <svg class="cc-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h14M3 10h14M3 14h10"/></svg>
+              <h4 class="cc-title">Enterprise<br>Solutions</h4>
+            </div>
+          </div>
+          <div class="cc-desc-outer"><p>Building and maintaining robust, mission-critical systems.</p></div>
+        </div>
+
+        <div class="cc-item">
+          <div class="cc-ring-wrap">
+            <svg class="cc-svg" viewBox="0 0 340 340" aria-hidden="true">
+              <circle class="cc-ring" cx="170" cy="170" r="160"/>
+            </svg>
+            <div class="cc-title-wrap">
+              <svg class="cc-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><path d="M2 10h16M10 2a13 13 0 010 16M10 2a13 13 0 000 16"/></svg>
+              <h4 class="cc-title">Platform<br>Operations</h4>
+            </div>
+          </div>
+          <div class="cc-desc-outer"><p>Operating platforms that power innovation at scale.</p></div>
+        </div>
+
+        <div class="cc-item">
+          <div class="cc-ring-wrap">
+            <svg class="cc-svg" viewBox="0 0 340 340" aria-hidden="true">
+              <circle class="cc-ring" cx="170" cy="170" r="160"/>
+            </svg>
+            <div class="cc-title-wrap">
+              <svg class="cc-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="10" cy="5" rx="7" ry="2.5"/><path d="M3 5v4c0 1.38 3.13 2.5 7 2.5s7-1.12 7-2.5V5"/><path d="M3 9v4c0 1.38 3.13 2.5 7 2.5s7-1.12 7-2.5V9"/></svg>
+              <h4 class="cc-title">Data and<br>Insights</h4>
+            </div>
+          </div>
+          <div class="cc-desc-outer"><p>Engineering data systems that unlock strategic value.</p></div>
+        </div>
+
+        <div class="cc-item">
+          <div class="cc-ring-wrap">
+            <svg class="cc-svg" viewBox="0 0 340 340" aria-hidden="true">
+              <circle class="cc-ring" cx="170" cy="170" r="160"/>
+            </svg>
+            <div class="cc-title-wrap">
+              <svg class="cc-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3a4 4 0 014 4c0 2-1 3.5-2.5 4.5V13h-3v-1.5C7 10.5 6 9 6 7a4 4 0 014-4z"/><path d="M8 13h4v1.5a2 2 0 01-4 0V13z"/></svg>
+              <h4 class="cc-title">AI &amp;<br>Data Science</h4>
+            </div>
+          </div>
+          <div class="cc-desc-outer"><p>ML, AI, and agentic solutions for transformative decisions.</p></div>
+        </div>
+
+      </div><!-- /ccTrack -->
+      </div><!-- /cc-track-area -->
+    </div><!-- /cc-sticky -->
+  </div><!-- /capView02 -->
+
+</section>
+
+<!-- ===================================================
+     SECTION 03 — EMPOWER (bg #1a1a1a, dark)
+=================================================== -->
+<section class="empower-section" aria-label="What You Gain">
+  <div class="container">
+    <div class="empower-outer">
+
+      <!-- Left: two diagonal images (sticky, top-aligned with h2) -->
+      <div class="empower-left rv d1">
+        <div class="empower-img-wrap" aria-hidden="true">
+          <div class="empower-img-item empower-img-item--top">
+            <img src="../assets/images/Client-microsite/section03-img01.jpg" alt="">
+          </div>
+          <div class="empower-img-item empower-img-item--bottom">
+            <img src="../assets/images/Client-microsite/section03-img02.jpg" alt="">
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: h2 + 5 benefit items -->
+      <div class="empower-right">
+        <h2 class="empower-h2 rv">Circles empower engineers</h2>
+
+        <div class="empower-item rv d1">
+          <div class="empower-item-title">Expert mentorship</div>
+          <p class="empower-item-desc">from seasoned practitioners</p>
+        </div>
+
+        <div class="empower-item rv d2">
+          <div class="empower-item-title">Knowledge sharing</div>
+          <p class="empower-item-desc">across global teams</p>
+        </div>
+
+        <div class="empower-item rv d3">
+          <div class="empower-item-title">Thought leadership</div>
+          <p class="empower-item-desc">development and IP creation</p>
+        </div>
+
+        <div class="empower-item rv d4">
+          <div class="empower-item-title">Continuous learning</div>
+          <p class="empower-item-desc">on emerging technologies</p>
+        </div>
+
+        <div class="empower-item rv d1">
+          <div class="empower-item-title">Cross-pollination</div>
+          <p class="empower-item-desc">of ideas and approaches</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================
+     SECTION 04 — MASTERY (white bg, grid + char reveal)
+=================================================== -->
+<section class="mastery-section" id="sMastery" aria-label="Mastery">
+  <canvas class="mastery-grid-canvas" id="masteryGridCanvas" aria-hidden="true"></canvas>
+  <div class="container">
+    <div class="mastery-inner">
+      <h2 class="mastery-heading" id="masteryH2" aria-label="Mastery isn't accidental. It's built through community, discipline, focus, and hands-on work."></h2>
+      <div class="mastery-connector" aria-hidden="true">
+        <div class="mastery-dot"></div>
+        <div class="mastery-line"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================
+     SECTION 05 — VIDEO (bg #000000, full-bleed)
+=================================================== -->
+<section class="video-section" aria-label="See Circles in Action">
+
+  <!-- Heading block -->
+  <div class="container">
+    <div class="video-section-head">
+      <div class="lbl lbl--dark rv">See Circles in Action</div>
+      <h2 class="video-h2 rv d1">Ascendion Circles develop engineering practitioners</h2>
+    </div>
+  </div>
+
+  <!-- Full-width video — no container, no margin -->
+  <div class="video-fullbleed rv" id="videoContainer" role="button" tabindex="0" aria-label="Play video: Ascendion Circles develop engineering practitioners">
+    <div class="video-thumb-placeholder" id="videoThumbPlaceholder"></div>
+    <img class="video-thumb" id="videoThumb" src="" alt="Ascendion Circles video thumbnail" style="display:none;">
+    <button class="video-play-btn" id="videoPlayBtn" aria-label="Play video" tabindex="-1">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M8 5v14l11-7z"/>
+      </svg>
+    </button>
+    <div class="video-iframe-wrap" id="videoIframeWrap"></div>
+  </div>
+
+  <!-- Tagline below video — dark band -->
+  <div class="video-tagline-band">
+    <div class="container">
+      <p class="video-tagline rv">Ascendion Engineers master their domain, share knowledge, and push the boundaries of what's possible.</p>
+    </div>
+  </div>
+
+</section>
+
+<!-- ===================================================
+     SECTION 05 — JOIN (bg #ffffff)
+=================================================== -->
+<section class="join-section" id="join" aria-label="Join a Circle">
+
+  <!-- Background image layers -->
+  <div class="join-bg active" id="joinBgNorthAmerica" style="background-image:url('../assets/images/Engineering-circles/careers-NorthAmerica.jpg')"></div>
+  <div class="join-bg" id="joinBgIndia"        style="background-image:url('../assets/images/Engineering-circles/careers-India.jpg')"></div>
+  <div class="join-bg" id="joinBgAsiaPacific"  style="background-image:url('../assets/images/Engineering-circles/careers-AsiaPacific.jpg')"></div>
+  <div class="join-bg" id="joinBgEurope"       style="background-image:url('../assets/images/Engineering-circles/careers-Europe.jpg')"></div>
+
+  <div class="container">
+    <div class="join-head">
+      <h2 class="join-h2 rv">Join a Circle</h2>
+    </div>
+    <div class="join-ctas rv d2">
+      <a href="https://ascendion.com/careers/india/" class="btn btn-inverse" data-region="India" target="_blank" rel="noopener">
+        <span class="btn__label">Careers in India</span>
+        <span class="btn__icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
+      <a href="https://ascendion.com/careers/america/" class="btn btn-inverse" data-region="NorthAmerica" target="_blank" rel="noopener">
+        <span class="btn__label">Careers in North America</span>
+        <span class="btn__icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
+      <a href="https://ascendion.com/careers/asia-pacific/" class="btn btn-inverse" data-region="AsiaPacific" target="_blank" rel="noopener">
+        <span class="btn__label">Careers in Asia Pacific</span>
+        <span class="btn__icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
+      <a href="https://ascendion.com/careers/europe/" class="btn btn-inverse" data-region="Europe" target="_blank" rel="noopener">
+        <span class="btn__label">Careers in Europe</span>
+        <span class="btn__icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================
+     FOOTER
+=================================================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-cols">
+      <div>
+        <div class="footer-col-head">What We Do</div>
+        <ul class="footer-links">
+          <li><a href="#" class="footer-link">Applied AI</a></li>
+          <li><a href="#" class="footer-link">GCC<sup>AI</sup></a></li>
+          <li><a href="#" class="footer-link">Product<sup>AI</sup></a></li>
+          <li><a href="#" class="footer-link">Data &amp; Insights<sup>AI</sup></a></li>
+          <li><a href="#" class="footer-link">Salesforce Implementation</a></li>
+          <li><a href="#" class="footer-link">Quality Engineering<sup>AI</sup></a></li>
+          <li><a href="#" class="footer-link">Experience<sup>AI</sup></a></li>
+          <li><a href="#" class="footer-link">Operations<sup>AI</sup></a></li>
+          <li><a href="#" class="footer-link">AI Workforce Transformation</a></li>
+          <li><a href="#" class="footer-link">Enterprise Platform</a></li>
+          <li><a href="#" class="footer-link">Platform Engineering<sup>AI</sup></a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-head">Industries</div>
+        <ul class="footer-links">
+          <li><a href="#" class="footer-link">Banking &amp; Financial Services</a></li>
+          <li><a href="#" class="footer-link">Communications, Media and Entertainment</a></li>
+          <li><a href="#" class="footer-link">Healthcare &amp; Life Sciences</a></li>
+          <li><a href="#" class="footer-link">Retail and Consumer Goods</a></li>
+          <li><a href="#" class="footer-link">High-tech</a></li>
+          <li><a href="#" class="footer-link">Travel and Hospitality</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-head">Who We Are</div>
+        <ul class="footer-links">
+          <li><a href="#" class="footer-link">Leadership</a></li>
+          <li><a href="#" class="footer-link">Analyst Recognition</a></li>
+          <li><a href="#" class="footer-link">Certifications</a></li>
+          <li><a href="#" class="footer-link">Locations</a></li>
+          <li><a href="#" class="footer-link">ESG</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-head">Quick Links</div>
+        <ul class="footer-links">
+          <li><a href="#" class="footer-link">Insights and impact</a></li>
+          <li><a href="#" class="footer-link">Careers India</a></li>
+          <li><a href="#" class="footer-link">Careers North America</a></li>
+          <li><a href="#" class="footer-link">Careers Europe</a></li>
+          <li><a href="#" class="footer-link">Careers Asia Pacific</a></li>
+          <li><a href="#" class="footer-link">Global Delivery Hubs</a></li>
+          <li><a href="#" class="footer-link">Contact us</a></li>
+        </ul>
+      </div>
+      <div style="padding-top:40px">
+        <div class="footer-social">
+          <a href="#" class="footer-social-link footer-social-link--linkedin" aria-label="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="#" class="footer-social-link footer-social-link--youtube" aria-label="YouTube">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </a>
+          <a href="#" class="footer-social-link footer-social-link--instagram" aria-label="Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">Copyright 2026, ASCENDION. All rights reserved.</span>
+      <div class="footer-legal">
+        <a href="#" class="footer-legal-link">Privacy Policy</a>
+        <span class="footer-sep">|</span>
+        <a href="#" class="footer-legal-link">Terms of Use</a>
+        <span class="footer-sep">|</span>
+        <a href="#" class="footer-legal-link">Accessibility Disclosure</a>
+        <span class="footer-sep">|</span>
+        <a href="#" class="footer-legal-link">AI-enhanced Content Notice</a>
+        <span class="footer-sep">|</span>
+        <a href="#" class="footer-legal-link">Security Disclosure Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ===================================================
+     JAVASCRIPT
+=================================================== -->
+<script>
+(function () {
+  'use strict';
+
+  /* NAV SCROLL SHADOW */
+  var nav = document.getElementById('nav');
+  window.addEventListener('scroll', function () {
+    nav.classList.toggle('scrolled', window.scrollY > 10);
+  }, { passive: true });
+
+  /* MOBILE NAV TOGGLE */
+  var toggle  = document.getElementById('navToggle');
+  var drawer  = document.getElementById('navDrawer');
+  toggle.addEventListener('click', function () {
+    var open = drawer.classList.toggle('open');
+    toggle.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    drawer.setAttribute('aria-hidden', String(!open));
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+
+  /* ── VIEW TOGGLE ── */
+  (function () {
+    var section    = document.getElementById('capSection');
+    var view01     = document.getElementById('capView01');
+    var view02     = document.getElementById('capView02');
+    var activeView = 2;
+    section.classList.add('mode-circles');
+
+    function switchView(v) {
+      if (v === activeView) return;
+      activeView = v;
+      /* Update ALL toggle buttons on the page */
+      document.querySelectorAll('.vt-btn').forEach(function (b) {
+        var isActive = parseInt(b.dataset.view) === v;
+        b.classList.toggle('active', isActive);
+        b.setAttribute('aria-pressed', String(isActive));
+      });
+      if (v === 1) {
+        view01.style.display = '';
+        view02.style.display = 'none';
+        view02.setAttribute('aria-hidden', 'true');
+        section.classList.remove('mode-circles');
+        ccStop();
+      } else {
+        view01.style.display = 'none';
+        view02.style.display = '';
+        view02.setAttribute('aria-hidden', 'false');
+        section.classList.add('mode-circles');
+        /* Instantly scroll so section top is at viewport top — sticky fires immediately */
+        window.scrollTo({ top: section.offsetTop, behavior: 'instant' });
+        ccInit();
+      }
+    }
+
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('.vt-btn');
+      if (btn) switchView(parseInt(btn.dataset.view));
+    });
+  })();
+
+  /* ── INTERACTIVE GRID (option 02) ── */
+  var ccGrid = (function () {
+    var canvas, ctx, sticky;
+    var SPX = 64, SPY = 48, DOT_R = 0.8, COLOR_R = 160;
+    /* Base: white 10%; Active: teal #2ddcaa full opacity */
+    var C_BASE = [255, 255, 255, 0.10];
+    var C_ACT  = [45,  220, 170, 1.00];
+    var W = 0, H = 0, dpr = 1;
+    var pts = [], rows = 0, cols = 0;
+    var mx = -9999, my = -9999;
+    var rafPending = false;
+    var active = false;
+
+    function colorAt(px, py) {
+      var t = Math.max(0, 1 - Math.hypot(px - mx, py - my) / COLOR_R);
+      t = t * t;
+      var r = (C_BASE[0] + (C_ACT[0] - C_BASE[0]) * t) | 0;
+      var g = (C_BASE[1] + (C_ACT[1] - C_BASE[1]) * t) | 0;
+      var b = (C_BASE[2] + (C_ACT[2] - C_BASE[2]) * t) | 0;
+      var a =  C_BASE[3] + (C_ACT[3] - C_BASE[3]) * t;
+      return 'rgba(' + r + ',' + g + ',' + b + ',' + a.toFixed(3) + ')';
+    }
+
+    function build() {
+      pts = []; cols = Math.ceil(W / SPX); rows = Math.ceil(H / SPY);
+      for (var r = 0; r <= rows; r++) {
+        pts[r] = [];
+        for (var c = 0; c <= cols; c++) { pts[r][c] = { x: c * SPX, y: r * SPY }; }
+      }
+    }
+
+    function draw() {
+      if (!ctx) return;
+      ctx.clearRect(0, 0, W, H);
+      ctx.lineWidth = 0.5;
+      var r, c, p1, p2;
+      for (r = 0; r <= rows; r++) {
+        for (c = 0; c < cols; c++) {
+          p1 = pts[r][c]; p2 = pts[r][c + 1];
+          ctx.strokeStyle = colorAt((p1.x + p2.x) / 2, p1.y);
+          ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+        }
+      }
+      for (c = 0; c <= cols; c++) {
+        for (r = 0; r < rows; r++) {
+          p1 = pts[r][c]; p2 = pts[r + 1][c];
+          ctx.strokeStyle = colorAt(p1.x, (p1.y + p2.y) / 2);
+          ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+        }
+      }
+      for (r = 0; r <= rows; r++) {
+        for (c = 0; c <= cols; c++) {
+          var pt = pts[r][c];
+          ctx.fillStyle = colorAt(pt.x, pt.y);
+          ctx.beginPath(); ctx.arc(pt.x, pt.y, DOT_R, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+    }
+
+    function requestDraw() {
+      if (!rafPending) { rafPending = true; requestAnimationFrame(function () { draw(); rafPending = false; }); }
+    }
+
+    function resize() {
+      dpr = window.devicePixelRatio || 1;
+      W = sticky.offsetWidth; H = sticky.offsetHeight;
+      canvas.width  = Math.round(W * dpr);
+      canvas.height = Math.round(H * dpr);
+      canvas.style.width  = W + 'px';
+      canvas.style.height = H + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      build(); draw();
+    }
+
+    function onMouseMove(e) {
+      var rect = canvas.getBoundingClientRect();
+      mx = e.clientX - rect.left;
+      my = e.clientY - rect.top;
+      requestDraw();
+    }
+    function onMouseLeave() { mx = -9999; my = -9999; requestDraw(); }
+
+    return {
+      start: function () {
+        if (active) return;
+        canvas = document.getElementById('ccGridCanvas');
+        sticky = document.getElementById('ccStickyPanel');
+        if (!canvas || !sticky) return;
+        ctx = canvas.getContext('2d');
+        active = true;
+        resize();
+        sticky.addEventListener('mousemove', onMouseMove);
+        sticky.addEventListener('mouseleave', onMouseLeave);
+        window.addEventListener('resize', resize);
+      },
+      stop: function () {
+        if (!active) return;
+        active = false;
+        if (sticky) {
+          sticky.removeEventListener('mousemove', onMouseMove);
+          sticky.removeEventListener('mouseleave', onMouseLeave);
+        }
+        window.removeEventListener('resize', resize);
+        if (ctx && W && H) ctx.clearRect(0, 0, W, H);
+      }
+    };
+  })();
+
+  /* ── CIRCLES SCROLL DRIVER ── */
+  var ccScrollActive = false;
+
+  function ccInit() {
+    ccScrollActive = true;
+    ccTick();
+    window.addEventListener('scroll', ccTick, { passive: true });
+    window.addEventListener('resize', ccTick, { passive: true });
+    ccGrid.start();
+  }
+  function ccStop() {
+    ccScrollActive = false;
+    window.removeEventListener('scroll', ccTick);
+    window.removeEventListener('resize', ccTick);
+    ccGrid.stop();
+    document.querySelectorAll('.cc-item').forEach(function (el) { el.classList.remove('cc-in'); });
+  }
+
+  function ccTick() {
+    if (!ccScrollActive) return;
+    var wrapper = document.getElementById('capView02');
+    var track   = document.getElementById('ccTrack');
+    if (!wrapper || !track) return;
+
+    var NAV_H           = 86;
+    var CIRCLE_D        = 340;
+    var STEP            = 290;
+    var SCROLL_PER_ITEM = 400;
+    var TOTAL_SCROLL    = 6 * SCROLL_PER_ITEM;
+
+    var rect       = wrapper.getBoundingClientRect();
+    var progress   = Math.max(0, Math.min(TOTAL_SCROLL, NAV_H - rect.top));
+    var smoothStep = progress / SCROLL_PER_ITEM;
+
+    /* Pan track to keep latest circle centred */
+    var tx = window.innerWidth / 2 - smoothStep * STEP - CIRCLE_D / 2;
+    track.style.transform = 'translateX(' + tx + 'px)';
+
+    /* Reveal circles */
+    track.querySelectorAll('.cc-item').forEach(function (item, i) {
+      if (smoothStep >= i - 0.4) item.classList.add('cc-in');
+    });
+  }
+
+  /* SCROLL REVEAL */
+  var rvEls = document.querySelectorAll('.rv');
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -48px 0px' });
+    rvEls.forEach(function (el) { observer.observe(el); });
+  } else {
+    rvEls.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  /* VIMEO OEMBED THUMBNAIL */
+  var VIMEO_ID = '824883221';
+  var thumb    = document.getElementById('videoThumb');
+  var placeholder = document.getElementById('videoThumbPlaceholder');
+
+  fetch('https://vimeo.com/api/oembed.json?url=https%3A%2F%2Fvimeo.com%2F' + VIMEO_ID + '&width=1280')
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      if (data && data.thumbnail_url) {
+        thumb.src = data.thumbnail_url;
+        thumb.style.display = 'block';
+        if (placeholder) placeholder.style.display = 'none';
+      }
+    })
+    .catch(function () { /* fall through to gradient placeholder */ });
+
+  /* VIDEO PLAY — inject Vimeo iframe inline */
+  var container  = document.getElementById('videoContainer');
+  var iframeWrap = document.getElementById('videoIframeWrap');
+  var playBtn    = document.getElementById('videoPlayBtn');
+
+  function playVideo () {
+    iframeWrap.innerHTML =
+      '<iframe src="https://player.vimeo.com/video/' + VIMEO_ID + '?autoplay=1&title=0&byline=0&portrait=0" ' +
+      'allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
+    iframeWrap.classList.add('active');
+    if (playBtn) playBtn.style.display = 'none';
+    if (thumb) thumb.style.opacity = '0';
+    if (placeholder) placeholder.style.display = 'none';
+    container.style.cursor = 'default';
+    container.removeEventListener('click', playVideo);
+    container.removeEventListener('keydown', handleKey);
+  }
+
+  function handleKey (e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      playVideo();
+    }
+  }
+
+  container.addEventListener('click', playVideo);
+  container.addEventListener('keydown', handleKey);
+
+  /* Default to circles view — deferred so ccGrid is fully initialised */
+  ccInit();
+
+  /* JOIN SECTION — hover-driven background image swap */
+  (function () {
+    var bgs = {
+      NorthAmerica: document.getElementById('joinBgNorthAmerica'),
+      India:        document.getElementById('joinBgIndia'),
+      AsiaPacific:  document.getElementById('joinBgAsiaPacific'),
+      Europe:       document.getElementById('joinBgEurope')
+    };
+    var DEFAULT = 'NorthAmerica';
+
+    function showBg(region) {
+      Object.keys(bgs).forEach(function (key) {
+        bgs[key].classList.toggle('active', key === region);
+      });
+    }
+
+    document.querySelectorAll('.btn[data-region]').forEach(function (btn) {
+      btn.addEventListener('mouseenter', function () { showBg(btn.dataset.region); });
+      btn.addEventListener('mouseleave', function () { showBg(DEFAULT); });
+    });
+  })();
+
+})();
+
+/* =====================================================
+   MASTERY SECTION — interactive grid canvas
+===================================================== */
+(function () {
+  var canvas  = document.getElementById('masteryGridCanvas');
+  var section = document.getElementById('sMastery');
+  if (!canvas || !section) return;
+  var ctx = canvas.getContext('2d');
+
+  var SPX = 64, SPY = 48, DOT_R = 0.8, COLOR_R = 150;
+  var C_BASE = [180, 180, 180, 0.18];
+  var C_ACT  = [0, 133, 103, 1.00]; /* primary-500 */
+
+  var W = 0, H = 0, dpr = 1;
+  var pts = [], rows = 0, cols = 0;
+  var mx = -9999, my = -9999;
+  var rafPending = false;
+
+  function colorAt(px, py) {
+    var t = Math.max(0, 1 - Math.hypot(px - mx, py - my) / COLOR_R);
+    t = t * t;
+    var r = (C_BASE[0] + (C_ACT[0] - C_BASE[0]) * t) | 0;
+    var g = (C_BASE[1] + (C_ACT[1] - C_BASE[1]) * t) | 0;
+    var b = (C_BASE[2] + (C_ACT[2] - C_BASE[2]) * t) | 0;
+    var a =  C_BASE[3] + (C_ACT[3] - C_BASE[3]) * t;
+    return 'rgba(' + r + ',' + g + ',' + b + ',' + a.toFixed(3) + ')';
+  }
+
+  function build() {
+    pts = []; cols = Math.ceil(W / SPX); rows = Math.ceil(H / SPY);
+    for (var r = 0; r <= rows; r++) {
+      pts[r] = [];
+      for (var c = 0; c <= cols; c++) pts[r][c] = { x: c * SPX, y: r * SPY };
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.lineWidth = 0.5;
+    var r, c, p1, p2;
+    for (r = 0; r <= rows; r++) {
+      for (c = 0; c < cols; c++) {
+        p1 = pts[r][c]; p2 = pts[r][c + 1];
+        ctx.strokeStyle = colorAt((p1.x + p2.x) / 2, p1.y);
+        ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+      }
+    }
+    for (c = 0; c <= cols; c++) {
+      for (r = 0; r < rows; r++) {
+        p1 = pts[r][c]; p2 = pts[r + 1][c];
+        ctx.strokeStyle = colorAt(p1.x, (p1.y + p2.y) / 2);
+        ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+      }
+    }
+    for (r = 0; r <= rows; r++) {
+      for (c = 0; c <= cols; c++) {
+        var pt = pts[r][c];
+        ctx.fillStyle = colorAt(pt.x, pt.y);
+        ctx.beginPath(); ctx.arc(pt.x, pt.y, DOT_R, 0, Math.PI * 2); ctx.fill();
+      }
+    }
+  }
+
+  function requestDraw() {
+    if (!rafPending) { rafPending = true; requestAnimationFrame(function () { draw(); rafPending = false; }); }
+  }
+
+  function resize() {
+    dpr = window.devicePixelRatio || 1;
+    W = section.offsetWidth; H = section.offsetHeight;
+    canvas.width  = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    build(); draw();
+  }
+
+  section.addEventListener('mousemove', function (e) {
+    var rect = canvas.getBoundingClientRect();
+    mx = e.clientX - rect.left; my = e.clientY - rect.top;
+    requestDraw();
+  });
+  section.addEventListener('mouseleave', function () { mx = -9999; my = -9999; requestDraw(); });
+  window.addEventListener('resize', resize);
+  resize();
+})();
+
+/* =====================================================
+   MASTERY SECTION — character-by-character scroll reveal + dot/line
+===================================================== */
+(function () {
+  var h2      = document.getElementById('masteryH2');
+  var section = document.getElementById('sMastery');
+  if (!h2 || !section) return;
+
+  var lineTexts = [
+    'Mastery isn\u2019t accidental.',
+    'It\u2019s built through community,',
+    'discipline, focus, and hands-on work.'
+  ];
+  var allChars = [];
+
+  lineTexts.forEach(function (text) {
+    var lineEl = document.createElement('span');
+    lineEl.className = 'mastery-h2-line';
+    text.split('').forEach(function (ch) {
+      var s = document.createElement('span');
+      s.className = 'mastery-char';
+      s.textContent = ch;
+      lineEl.appendChild(s);
+      allChars.push(s);
+    });
+    h2.appendChild(lineEl);
+  });
+
+  var total   = allChars.length;
+  var lastIdx = -1;
+  var dot  = section.querySelector('.mastery-dot');
+  var line = section.querySelector('.mastery-line');
+
+  function update() {
+    var rect = section.getBoundingClientRect();
+    var vh   = window.innerHeight;
+    var raw  = (vh - rect.top) / (vh * 0.6);
+
+    /* Characters */
+    var charProg = Math.max(0, Math.min(1, (raw - 1.0) / 0.5));
+    var idx = Math.floor(charProg * total);
+    if (idx !== lastIdx) {
+      if (idx > lastIdx) {
+        for (var i = Math.max(0, lastIdx); i < idx && i < total; i++) allChars[i].classList.add('in');
+      } else {
+        for (var i = idx; i <= lastIdx && i < total; i++) allChars[i].classList.remove('in');
+      }
+      lastIdx = idx;
+    }
+
+    /* Dot — appears as chars complete */
+    var dotProg = Math.max(0, Math.min(1, (raw - 1.52) / 0.08));
+    if (dot) { dot.style.opacity = dotProg; dot.style.transform = 'scale(' + dotProg + ')'; }
+
+    /* Line — grows after dot */
+    var lineProg = Math.max(0, Math.min(1, (raw - 1.58) / 0.12));
+    if (line) line.style.transform = 'scaleY(' + lineProg + ')';
+  }
+
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+})();
+</script>
+
+</body>
+</html>
