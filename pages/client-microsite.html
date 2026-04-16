@@ -771,6 +771,7 @@
       display: grid;
       grid-template-columns: 3fr 2fr;
       column-gap: 80px;
+      align-items: start;
     }
 
     /* 2×3 stats sub-grid */
@@ -837,7 +838,7 @@
 
     /* Key outcomes — right column, full height */
     .results-outcomes {
-      padding: 48px 40px;
+      padding: 16px 40px 48px;
       border-left: 1px solid var(--neutral-200);
       display: flex;
       flex-direction: column;
@@ -1134,13 +1135,32 @@
     /* =====================================================
        SECTION 12 — MEET ASCENDION
     ===================================================== */
-    .about-section { background: var(--bg-subtle); }
+    .about-section {
+      background: var(--bg-subtle);
+      padding-bottom: var(--py);
+      position: relative;
+      overflow: hidden;
+    }
+    .about-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
     .about-intro-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: start;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
       margin-bottom: 56px;
+      gap: 16px;
     }
     .about-h2 {
       font-family: var(--font-display);
@@ -1152,38 +1172,114 @@
       font-size: 16px;
       line-height: 1.65;
       color: var(--text-secondary);
+      max-width: 620px;
     }
-    .about-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: auto auto 1fr;
-      align-items: stretch;
+    /* Ticker */
+    .about-ticker-controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 32px;
     }
-    .about-item {
-      padding: 36px 32px;
-      background: var(--bg-default);
-      border-right: 1px solid rgba(0,0,0,0.07);
-      border-bottom: 1px solid rgba(0,0,0,0.07);
-      border-top: 3px solid transparent;
-      display: grid;
-      grid-template-rows: subgrid;
-      grid-row: span 3;
+    .about-ticker-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--neutral-400);
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-primary);
+      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+      flex-shrink: 0;
+    }
+    .about-ticker-btn:hover {
+      background: var(--primary-500);
+      border-color: var(--primary-500);
+      color: #fff;
+    }
+    /* Outer wrapper — fades on left/right like partners section */
+    .about-ticker-outer {
       position: relative;
-      transition: border-top-color 0.28s ease, background 0.35s ease;
+      margin-top: 0;
     }
-    .about-item:last-child { border-right: none; }
-    .about-item:hover { border-top-color: var(--primary-500); background: linear-gradient(to bottom, rgba(0,133,103,0.05) 0%, var(--bg-default) 60%); }
-    .about-item-icon {
-      width: 36px; height: 36px;
-      display: flex; align-items: flex-start;
-      color: var(--neutral-900);
-      margin-bottom: 28px;
+    .about-ticker-outer::before,
+    .about-ticker-outer::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 120px;
+      z-index: 2;
+      pointer-events: none;
     }
-    .about-item-text {
+    .about-ticker-outer::before { left: 0;  background: linear-gradient(90deg,  var(--bg-subtle), transparent); }
+    .about-ticker-outer::after  { right: 0; background: linear-gradient(-90deg, var(--bg-subtle), transparent); }
+    .about-ticker-wrap {
+      overflow-x: clip;
+      overflow-y: visible;
+      border-top: 1px solid var(--neutral-200);
+      border-bottom: 1px solid var(--neutral-200);
+      cursor: default;
+    }
+    .about-ticker {
+      display: flex;
+      align-items: stretch;
+      width: max-content;
+      will-change: transform;
+    }
+    .about-ticker-item {
+      flex-shrink: 0;
+      width: 20vw;
+      padding: 28px 28px 32px;
+      background: var(--bg-subtle);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      text-align: center;
+      gap: 10px;
+      position: relative;
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+    /* Vertical divider — flush within item bounds */
+    .about-ticker-item::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: var(--neutral-200);
+    }
+    /* Active / centre item */
+    .about-ticker-item.active {
+      background: var(--bg-subtle);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08), inset 0 2px 0 var(--primary-500);
+      z-index: 1;
+    }
+    .about-ticker-item.active .about-ticker-item-text {
+      color: var(--primary-500);
+      font-weight: 500;
+    }
+    .about-ticker-item-num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--neutral-400);
+      letter-spacing: 0.08em;
+      transition: color 0.4s ease;
+    }
+    .about-ticker-item.active .about-ticker-item-num {
+      color: var(--primary-500);
+    }
+    .about-ticker-item-text {
       font-size: 20px;
       font-weight: 400;
       line-height: 1.5;
       color: var(--text-primary);
+      transition: color 0.4s ease, font-weight 0.4s ease;
     }
 
     /* =====================================================
@@ -1197,6 +1293,26 @@
       align-items: start;
       padding-top: 0;
     }
+    .why-left {
+      position: relative;
+      overflow: hidden;
+      min-height: 480px;
+    }
+    .why-left::before {
+      content: '';
+      position: absolute;
+      top: 140px; /* below h2 + gap */
+      left: 0; right: 0; bottom: 0;
+      background-image:
+        linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: linear-gradient(to bottom, transparent 0%, black 48px, black 100%);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 48px, black 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .why-left > * { position: relative; z-index: 1; }
     .why-h2 {
       font-family: var(--font-display);
       font-size: 40px;
@@ -1653,14 +1769,7 @@
       position: relative;
       overflow: hidden;
     }
-    .allies-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-      position: relative;
-      z-index: 1;
-    }
-    .allies-grid::before {
+    .allies-section::before {
       content: '';
       position: absolute;
       inset: 0;
@@ -1673,25 +1782,54 @@
       pointer-events: none;
       z-index: 0;
     }
+    .allies-carousel-wrap {
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+    .allies-grid {
+      display: flex;
+      gap: 0;
+      position: relative;
+      transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+    }
     .ally-card {
+      flex-shrink: 0;
+      width: 33.333%;
+      box-sizing: border-box;
       display: flex;
       flex-direction: column;
-      gap: 16px;
-      padding: 40px 48px 40px 0;
+      gap: 20px;
+      padding: 40px 48px;
       position: relative;
+      background: #222222;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 2px;
+      transition: background 0.35s ease, border-color 0.35s ease;
+      overflow: hidden;
     }
-    .ally-card:nth-child(2) {
-      border-left: 1px solid rgba(255,255,255,0.07);
-      padding: 40px 0 40px 48px;
+    .ally-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0,133,103,0.18) 0%, rgba(0,133,103,0.04) 60%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      pointer-events: none;
+      z-index: 0;
     }
-    /* Photo + name/role grouped so photo centres to that block only */
+    .ally-card:hover { border-color: rgba(0,133,103,0.4); }
+    .ally-card:hover::before { opacity: 1; }
+    .ally-card > * { position: relative; z-index: 1; }
+    /* Photo above name */
     .ally-header {
       display: flex;
-      align-items: center;
-      gap: 24px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
     }
     .ally-photo {
-      width: 72px; height: 72px;
+      width: 80px; height: 80px;
       border-radius: 50%;
       background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
       border: 2px solid #333;
@@ -1699,12 +1837,17 @@
       overflow: hidden;
     }
     .ally-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+    .ally-initials {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display);
+      font-size: 24px;
+      color: rgba(255,255,255,0.2);
+    }
     .ally-info {
       display: flex;
       flex-direction: column;
-      gap: 0;
-      flex: 1;
-      min-width: 0;
+      gap: 4px;
     }
     .ally-name {
       font-family: var(--font-primary);
@@ -1712,19 +1855,18 @@
       font-weight: 400;
       color: var(--text-inv);
       line-height: 1.3;
-      margin: 0 0 6px;
+      margin: 0;
     }
     .ally-role {
       font-size: 16px;
       font-weight: 400;
-      color: var(--text-inv);
+      color: var(--text-inv-2);
     }
     .ally-contact-row {
       display: flex;
       flex-direction: column;
-      gap: 16px;
-      margin-bottom: 12px;
-      margin-left: 96px; /* photo width (72px) + gap (24px) */
+      gap: 12px;
+      margin-bottom: 8px;
     }
     .ally-contact {
       display: flex;
@@ -1735,16 +1877,9 @@
       transition: color 0.2s;
     }
     .ally-contact:hover { color: var(--text-inv); }
-    .ally-contact-icon {
-      width: 40px; height: 40px;
-      color: var(--neutral-400);
-      flex-shrink: 0;
-      transition: color 0.2s;
-    }
-    .ally-contact:hover .ally-contact-icon { color: var(--accent-100); }
     .ally-contact-val {
       font-family: var(--font-primary);
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 400;
       line-height: 1.35;
       color: inherit;
@@ -1760,9 +1895,26 @@
       text-decoration: none;
       transition: background 0.2s, transform 0.2s;
       flex-shrink: 0;
-      margin-left: 96px; /* align with name */
     }
     .ally-linkedin:hover { background: var(--accent-500); transform: translateY(-2px); }
+    /* Prev/next controls */
+    .allies-controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 40px;
+    }
+    .allies-btn {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: transparent;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      color: var(--text-inv);
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .allies-btn:hover { background: var(--primary-500); border-color: var(--primary-500); }
 
     /* =====================================================
        SECTION 18 — ANALYST RECOGNITION
@@ -1798,87 +1950,123 @@
     }
     .analyst-filter:hover { color: var(--text-primary); }
     .analyst-filter.active { color: var(--text-primary); border-bottom-color: var(--primary-500); font-weight: 500; }
-    .analyst-list {
-      border-bottom: 0.5px solid #b4b4b4;
+
+    /* Carousel wrapper */
+    .analyst-carousel-wrap {
+      overflow-x: clip;
+      overflow-y: visible;
+      padding-top: 8px;
+      margin-top: -8px;
     }
+    .analyst-track {
+      display: flex;
+      gap: 24px;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Card */
     .analyst-card {
-      padding: 36px 24px;
-      border-bottom: 0.5px solid #b4b4b4;
+      flex-shrink: 0;
+      width: calc(33.333% - 16px);
+      box-sizing: border-box;
+      background: var(--bg-subtle);
+      border: 1px solid var(--neutral-200);
+      border-radius: 2px;
+      overflow: hidden;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 40px;
-      transition: background 0.25s ease;
-      cursor: default;
+      flex-direction: column;
+      position: relative;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
-    .analyst-card:last-child { border-bottom: none; }
-    .analyst-card:hover { background: linear-gradient(to right, #AFAAB9, rgba(175,170,185,0)); }
-    .analyst-card-left {
+    .analyst-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+    }
+    .analyst-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: transparent;
+      transition: background 0.3s ease;
+    }
+    .analyst-card:hover::after { background: var(--primary-500); }
+
+    /* Card image */
+    .analyst-card-img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      flex-shrink: 0;
+      background: #f4f4f4;
+      position: relative;
+      overflow: hidden;
+    }
+    .analyst-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Card body */
+    .analyst-card-body {
+      padding: 28px 28px 32px;
       display: flex;
-      align-items: center;
-      gap: 32px;
+      flex-direction: column;
       flex: 1;
+      gap: 8px;
     }
     .analyst-badge {
-      font-size: 16px;
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      font-size: 11px;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--primary-500);
-      flex-shrink: 0;
-      min-width: 80px;
+      background: #ffffff;
+      padding: 4px 10px;
+      border-radius: 2px;
+      z-index: 2;
     }
     .analyst-report {
       font-family: var(--font-primary);
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 400;
       color: var(--text-primary);
-      line-height: 1.5;
+      line-height: 1.55;
+      flex: 1;
     }
     .analyst-recognition {
-      font-size: 16px;
+      font-size: inherit;
       font-weight: 400;
-      color: var(--text-secondary);
+      color: inherit;
     }
-    .analyst-btn-wrap { flex-shrink: 0; }
-    .analyst-card[style*="display: none"] { display: none !important; }
+    .analyst-btn-wrap { margin-top: 8px; }
 
-    /* Analyst row hover image popup */
-    .analyst-card { position: relative; overflow: visible; }
-    .analyst-list  { overflow: visible; }
-    .analyst-img-pop {
-      position: absolute;
-      right: 240px;
-      top: 50%;
-      transform: translateY(-50%) translateX(10px) scale(0.93);
-      border-radius: 2px;
-      overflow: hidden;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.28s ease, transform 0.28s ease;
-      z-index: 30;
+    /* Controls */
+    .analyst-controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 40px;
     }
-    .analyst-card:hover .analyst-img-pop {
-      opacity: 1;
-      transform: translateY(-50%) translateX(0) scale(1);
+    .analyst-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--neutral-400);
+      background: transparent;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
     }
-    .analyst-img-pop img {
-      display: block;
-      max-height: 150px;
-      max-width: 260px;
-      width: auto;
-      height: auto;
-    }
-    /* Slightly randomised vertical position per row */
-    .analyst-card:nth-child(1) .analyst-img-pop { right: 230px; }
-    .analyst-card:nth-child(2) .analyst-img-pop { right: 260px; }
-    .analyst-card:nth-child(3) .analyst-img-pop { right: 220px; }
-    .analyst-card:nth-child(4) .analyst-img-pop { right: 250px; }
-    .analyst-card:nth-child(5) .analyst-img-pop { right: 160px; }
-    .analyst-card:nth-child(6) .analyst-img-pop { right: 175px; }
-    .analyst-card:nth-child(7) .analyst-img-pop { right: 255px; }
-    .analyst-card:nth-child(8) .analyst-img-pop { right: 225px; }
-    .analyst-card:nth-child(9) .analyst-img-pop { right: 245px; }
+    .analyst-btn:hover { background: var(--primary-500); border-color: var(--primary-500); color: #fff; }
+    .analyst-btn[disabled], .analyst-btn.disabled { opacity: 0.35; pointer-events: none; }
 
     /* =====================================================
        SECTION 19 — STRATEGIC PARTNERSHIPS
@@ -2018,7 +2206,7 @@
       .results-stats { grid-template-columns: repeat(3, 1fr); }
       .results-outcomes { grid-template-columns: 1fr; gap: 32px; }
       .results-outcomes-label { border-right: none; padding-right: 0; border-bottom: 1px solid var(--neutral-200); padding-bottom: 24px; }
-      .allies-grid { grid-template-columns: 1fr; max-width: 480px; }
+      .ally-card { width: 100%; }
       .footer-cols { grid-template-columns: 1fr 1fr; gap: 40px; }
     }
     @media (max-width: 600px) {
@@ -2699,66 +2887,51 @@
        SECTION 12 — MEET ASCENDION
   ═══════════════════════════════════════════════════ -->
   <section class="about-section" id="about">
-    <div class="container">
+    <div class="container" style="position:relative;z-index:1;">
       <div class="about-intro-row">
         <h2 class="about-h2 rv">Meet Ascendion: Your Co-Engineering Ally</h2>
         <p class="about-sub rv">We're not a vendor. We're your partner in transformation, delivering managed services discipline, AI-led operations, and engineered execution.</p>
       </div>
 
-      <div class="about-grid">
+      <div class="about-ticker-controls">
+        <button class="about-ticker-btn" id="aboutPrev" aria-label="Previous">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13 8H3M7 4l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="about-ticker-btn" id="aboutNext" aria-label="Next">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div><!-- /container -->
 
-        <div class="about-item rv d1">
-          <div class="about-item-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
-          <span class="about-item-text">11,000+ global engineers and technologists</span>
-        </div>
-
-        <div class="about-item rv d2">
-          <div class="about-item-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
-          <span class="about-item-text">4 global AI studios + 11 delivery hubs</span>
-        </div>
-
-        <div class="about-item rv d3">
-          <div class="about-item-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg></div>
-          <span class="about-item-text">100% focused on AI-powered software services</span>
-        </div>
-
-        <div class="about-item rv d4">
-          <div class="about-item-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg></div>
-          <span class="about-item-text">400+ enterprise clients</span>
-        </div>
-
-        <div class="about-item rv d1">
-          <div class="about-item-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
-          <span class="about-item-text">Deep expertise in healthcare, banking, and life sciences</span>
-        </div>
-
-        <div class="about-item rv d2">
-          <div class="about-item-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
-          <span class="about-item-text">Recognized leader in Generative AI services</span>
-        </div>
-
-        <div class="about-item rv d3">
-          <div class="about-item-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
-          <span class="about-item-text">AAVA™, METAI, and Agent Factory accelerators</span>
-        </div>
-
-        <div class="about-item rv d4">
-          <div class="about-item-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-          <span class="about-item-text">Tier 1 analyst positioning with industry recognition</span>
-        </div>
-
-        <div class="about-item rv d1">
-          <div class="about-item-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-          <span class="about-item-text">Up to 3× velocity and 150% higher productivity</span>
-        </div>
-
-        <div class="about-item rv d2">
-          <div class="about-item-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
-          <span class="about-item-text">AI Arbitrage shifting value back to clients</span>
-        </div>
-
+    <div class="about-ticker-outer">
+    <div class="about-ticker-wrap" id="aboutTickerWrap">
+      <div class="about-ticker" id="aboutTicker">
+        <!-- Set 1 -->
+        <div class="about-ticker-item"><span class="about-ticker-item-num">01</span><span class="about-ticker-item-text">11,000+ global engineers and technologists</span></div>
+        <div class="about-ticker-item"><span class="about-ticker-item-num">02</span><span class="about-ticker-item-text">4 global AI studios + 11 delivery hubs</span></div>
+        <div class="about-ticker-item"><span class="about-ticker-item-num">03</span><span class="about-ticker-item-text">100% focused on AI-powered software services</span></div>
+        <div class="about-ticker-item"><span class="about-ticker-item-num">04</span><span class="about-ticker-item-text">400+ enterprise clients</span></div>
+        <div class="about-ticker-item"><span class="about-ticker-item-num">05</span><span class="about-ticker-item-text">Deep expertise in healthcare, banking, and life sciences</span></div>
+        <div class="about-ticker-item"><span class="about-ticker-item-num">06</span><span class="about-ticker-item-text">Recognized leader in Generative AI services</span></div>
+        <div class="about-ticker-item"><span class="about-ticker-item-num">07</span><span class="about-ticker-item-text">AAVA™, METAI, and Agent Factory accelerators</span></div>
+        <div class="about-ticker-item"><span class="about-ticker-item-num">08</span><span class="about-ticker-item-text">Tier 1 analyst positioning with industry recognition</span></div>
+        <div class="about-ticker-item"><span class="about-ticker-item-num">09</span><span class="about-ticker-item-text">Up to 3× velocity and 150% higher productivity</span></div>
+        <div class="about-ticker-item"><span class="about-ticker-item-num">10</span><span class="about-ticker-item-text">AI Arbitrage shifting value back to clients</span></div>
+        <!-- Set 2 — duplicate for seamless loop -->
+        <div class="about-ticker-item" aria-hidden="true"><span class="about-ticker-item-num">01</span><span class="about-ticker-item-text">11,000+ global engineers and technologists</span></div>
+        <div class="about-ticker-item" aria-hidden="true"><span class="about-ticker-item-num">02</span><span class="about-ticker-item-text">4 global AI studios + 11 delivery hubs</span></div>
+        <div class="about-ticker-item" aria-hidden="true"><span class="about-ticker-item-num">03</span><span class="about-ticker-item-text">100% focused on AI-powered software services</span></div>
+        <div class="about-ticker-item" aria-hidden="true"><span class="about-ticker-item-num">04</span><span class="about-ticker-item-text">400+ enterprise clients</span></div>
+        <div class="about-ticker-item" aria-hidden="true"><span class="about-ticker-item-num">05</span><span class="about-ticker-item-text">Deep expertise in healthcare, banking, and life sciences</span></div>
+        <div class="about-ticker-item" aria-hidden="true"><span class="about-ticker-item-num">06</span><span class="about-ticker-item-text">Recognized leader in Generative AI services</span></div>
+        <div class="about-ticker-item" aria-hidden="true"><span class="about-ticker-item-num">07</span><span class="about-ticker-item-text">AAVA™, METAI, and Agent Factory accelerators</span></div>
+        <div class="about-ticker-item" aria-hidden="true"><span class="about-ticker-item-num">08</span><span class="about-ticker-item-text">Tier 1 analyst positioning with industry recognition</span></div>
+        <div class="about-ticker-item" aria-hidden="true"><span class="about-ticker-item-num">09</span><span class="about-ticker-item-text">Up to 3× velocity and 150% higher productivity</span></div>
+        <div class="about-ticker-item" aria-hidden="true"><span class="about-ticker-item-num">10</span><span class="about-ticker-item-text">AI Arbitrage shifting value back to clients</span></div>
       </div>
     </div>
+    </div><!-- /about-ticker-outer -->
+
   </section>
 
   <!-- ═══════════════════════════════════════════════════
@@ -2767,11 +2940,8 @@
   <section class="why-section" id="why">
     <div class="container">
       <div class="why-inner">
-        <div>
+        <div class="why-left">
           <h2 class="why-h2 rv">Why Ascendion is the right partner for IQVIA</h2>
-          <div class="why-img rv" aria-hidden="true">
-            <img src="../assets/images/Client-microsite/section13.jpg" alt="">
-          </div>
         </div>
 
         <div class="why-list">
@@ -3043,56 +3213,89 @@
        SECTION 17 — ASCENDION ALLIES
   ═══════════════════════════════════════════════════ -->
   <section class="allies-section" id="allies">
-    <div class="container">
-      <div class="rv" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-bottom:32px;">
+    <div class="container" style="position:relative;z-index:1;">
+      <div class="rv" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-bottom:56px;">
         <h2 style="font-family:var(--font-display);font-size:40px;font-weight:400;color:var(--text-inv);line-height:1.1;margin:0;">Ascendion Allies for IQVIA</h2>
         <p style="font-size:18px;color:var(--text-inv-2);line-height:1.65;margin:0;">We've put together a world-class team of disruptors for IQVIA. Let them say hi!</p>
       </div>
-      <div class="allies-grid">
+      <div class="allies-carousel-wrap">
+        <div class="allies-grid" id="alliesTrack">
 
-        <div class="ally-card rv d1">
-          <div class="ally-header">
-            <div class="ally-photo"><img src="../assets/images/Client-microsite/Malle-Chamarty.webp" alt="Malle Chamarty"></div>
-            <div class="ally-info">
-              <h4 class="ally-name">Malle Chamarty</h4>
-              <div class="ally-role">Market Leader, SVP</div>
+          <div class="ally-card rv d1">
+            <div class="ally-header">
+              <div class="ally-photo"><img src="../assets/images/Client-microsite/Malle-Chamarty.webp" alt="Malle Chamarty"></div>
+              <div class="ally-info">
+                <h4 class="ally-name">Malle Chamarty</h4>
+                <div class="ally-role">Market Leader, SVP</div>
+              </div>
             </div>
-          </div>
-          <div class="ally-contact-row">
-            <a href="tel:+12012203807" class="ally-contact">
-              <span class="ally-contact-val">+1 (201) 220-3807</span>
-            </a>
-            <a href="mailto:malle.c@ascendion.com" class="ally-contact">
-              <span class="ally-contact-val">malle.c@ascendion.com</span>
-            </a>
-          </div>
-          <a href="https://www.linkedin.com/in/malleswararao-chamarty-7b914324/" target="_blank" rel="noopener" class="ally-linkedin" aria-label="LinkedIn">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          </a>
-        </div>
-
-        <div class="ally-card rv d2">
-          <div class="ally-header">
-            <div class="ally-photo"><img src="../assets/images/Client-microsite/Srikanth.webp" alt="Srikanth Bogadapati"></div>
-            <div class="ally-info">
-              <h4 class="ally-name">Srikanth Bogadapati</h4>
-              <div class="ally-role">Portfolio Leader, AVP</div>
+            <div class="ally-contact-row">
+              <a href="tel:+12012203807" class="ally-contact">
+                <span class="ally-contact-val">+1 (201) 220-3807</span>
+              </a>
+              <a href="mailto:malle.c@ascendion.com" class="ally-contact">
+                <span class="ally-contact-val">malle.c@ascendion.com</span>
+              </a>
             </div>
-          </div>
-          <div class="ally-contact-row">
-            <a href="tel:+12012203807" class="ally-contact">
-              <span class="ally-contact-val">+1 (201) 220-3807</span>
-            </a>
-            <a href="mailto:srikanth.bogadapati@ascendion.com" class="ally-contact">
-              <span class="ally-contact-val">srikanth.bogadapati@ascendion.com</span>
+            <a href="https://www.linkedin.com/in/malleswararao-chamarty-7b914324/" target="_blank" rel="noopener" class="ally-linkedin" aria-label="LinkedIn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
             </a>
           </div>
-          <a href="https://www.linkedin.com/in/srikanthbogadapati/" target="_blank" rel="noopener" class="ally-linkedin" aria-label="LinkedIn">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          </a>
-        </div>
 
+          <div class="ally-card rv d2">
+            <div class="ally-header">
+              <div class="ally-photo"><img src="../assets/images/Client-microsite/Srikanth.webp" alt="Srikanth Bogadapati"></div>
+              <div class="ally-info">
+                <h4 class="ally-name">Srikanth Bogadapati</h4>
+                <div class="ally-role">Portfolio Leader, AVP</div>
+              </div>
+            </div>
+            <div class="ally-contact-row">
+              <a href="tel:+12012203807" class="ally-contact">
+                <span class="ally-contact-val">+1 (201) 220-3807</span>
+              </a>
+              <a href="mailto:srikanth.bogadapati@ascendion.com" class="ally-contact">
+                <span class="ally-contact-val">srikanth.bogadapati@ascendion.com</span>
+              </a>
+            </div>
+            <a href="https://www.linkedin.com/in/srikanthbogadapati/" target="_blank" rel="noopener" class="ally-linkedin" aria-label="LinkedIn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+          </div>
+
+          <div class="ally-card rv d3">
+            <div class="ally-header">
+              <div class="ally-photo"><div class="ally-initials">TBA</div></div>
+              <div class="ally-info">
+                <h4 class="ally-name">Coming Soon</h4>
+                <div class="ally-role">Role — Title</div>
+              </div>
+            </div>
+            <div class="ally-contact-row">
+              <a href="#" class="ally-contact">
+                <span class="ally-contact-val">+1 (000) 000-0000</span>
+              </a>
+              <a href="#" class="ally-contact">
+                <span class="ally-contact-val">name@ascendion.com</span>
+              </a>
+            </div>
+            <a href="#" class="ally-linkedin" aria-label="LinkedIn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+          </div>
+
+        </div>
       </div>
+
+      <div class="allies-controls">
+        <button class="allies-btn" id="alliesPrev" aria-label="Previous">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13 8H3M7 4l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="allies-btn" id="alliesNext" aria-label="Next">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
     </div>
   </section>
 
@@ -3108,125 +3311,126 @@
 
       <div class="analyst-filters rv">
         <button class="analyst-filter active" data-filter="all">All</button>
-        <button class="analyst-filter" data-filter="hfs">HFS</button>
+        <button class="analyst-filter" data-filter="hfs">HFS Research</button>
         <button class="analyst-filter" data-filter="isg">ISG</button>
         <button class="analyst-filter" data-filter="zinnov">Zinnov Zones</button>
         <button class="analyst-filter" data-filter="gartner">Gartner</button>
       </div>
 
-      <div class="analyst-list rv" id="analystGrid">
+      <!-- Carousel -->
+      <div class="analyst-carousel-wrap rv" id="analystCarouselWrap">
+        <div class="analyst-track" id="analystTrack">
 
-        <div class="analyst-card" data-firm="hfs">
-          <div class="analyst-img-pop"><img src="../assets/images/Client-microsite/recognitions/HFS-Horizon-Generative Enterprise Services-2025.webp" alt="HFS Horizons 2025"></div>
-          <div class="analyst-card-left">
-            <span class="analyst-badge">HFS</span>
-            <span class="analyst-report">HFS Horizons: Generative Enterprise Services, 2025 — <span class="analyst-recognition">Market Leader</span></span>
-          </div>
-          <div class="analyst-btn-wrap">
-            <a href="https://spotlight.ascendion.com/staging/analyst-recognition/the-generative-enterprise-is-here-ascendion-leads-the-pack/" class="btn btn-text" target="_blank" rel="noopener">
-              <span class="btn__label">Read report</span>
-              <span class="btn__icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            </a>
-          </div>
+          <article class="analyst-card" data-firm="hfs">
+            <div class="analyst-card-img"><img src="../assets/images/Client-microsite/recognitions/HFS.jpg" alt="HFS Research"><span class="analyst-badge">HFS Research</span></div>
+            <div class="analyst-card-body">
+              <p class="analyst-report">HFS Horizons: Generative Enterprise Services, 2025 — <span class="analyst-recognition">Market Leader</span></p>
+              <div class="analyst-btn-wrap">
+                <a href="https://spotlight.ascendion.com/staging/analyst-recognition/the-generative-enterprise-is-here-ascendion-leads-the-pack/" class="btn btn-text" target="_blank" rel="noopener">
+                  <span class="btn__label">Read report</span>
+                  <span class="btn__icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="analyst-card" data-firm="hfs">
+            <div class="analyst-card-img"><img src="../assets/images/Client-microsite/recognitions/HFS.jpg" alt="HFS Research"><span class="analyst-badge">HFS Research</span></div>
+            <div class="analyst-card-body">
+              <p class="analyst-report">HFS Horizons: Digital Engineering Service Providers, 2023 — <span class="analyst-recognition">Enterprise Innovator</span></p>
+              <div class="analyst-btn-wrap">
+                <a href="https://spotlight.ascendion.com/staging/analyst-recognition/ascendion-named-enterprise-innovator-in-digital-engineering-study-by-hfs-research/" class="btn btn-text" target="_blank" rel="noopener">
+                  <span class="btn__label">Read report</span>
+                  <span class="btn__icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="analyst-card" data-firm="isg">
+            <div class="analyst-card-img"><img src="../assets/images/Client-microsite/recognitions/ISG.jpg" alt="ISG"><span class="analyst-badge">ISG</span></div>
+            <div class="analyst-card-body">
+              <p class="analyst-report">ISG Provider Lens 2024: Digital Engineering Services — <span class="analyst-recognition">Rising Star</span></p>
+              <div class="analyst-btn-wrap">
+                <a href="https://spotlight.ascendion.com/staging/analyst-recognition/ascendion-soars-as-a-rising-star-in-isg-provider-lens-for-digital-engineering/" class="btn btn-text" target="_blank" rel="noopener">
+                  <span class="btn__label">Read report</span>
+                  <span class="btn__icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="analyst-card" data-firm="isg">
+            <div class="analyst-card-img"><img src="../assets/images/Client-microsite/recognitions/ISG.jpg" alt="ISG"><span class="analyst-badge">ISG</span></div>
+            <div class="analyst-card-body">
+              <p class="analyst-report">ISG Provider Lens 2024: Gen AI Services — <span class="analyst-recognition">Leader</span></p>
+            </div>
+          </article>
+
+          <article class="analyst-card" data-firm="zinnov">
+            <div class="analyst-card-img"><img src="../assets/images/Client-microsite/recognitions/Zinnov.jpg" alt="Zinnov Zones"><span class="analyst-badge">Zinnov</span></div>
+            <div class="analyst-card-body">
+              <p class="analyst-report">Zinnov Zones 2023: Digital Engineering &amp; ER&amp;D — Overall ER&amp;D — <span class="analyst-recognition">Leader</span></p>
+              <div class="analyst-btn-wrap">
+                <a href="https://spotlight.ascendion.com/staging/analyst-recognition/ascendions-debut-triumph-secures-recognition-in-ten-zones-in-2023-zinnov-zones-erd-services-ratings/" class="btn btn-text" target="_blank" rel="noopener">
+                  <span class="btn__label">Read report</span>
+                  <span class="btn__icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="analyst-card" data-firm="zinnov">
+            <div class="analyst-card-img"><img src="../assets/images/Client-microsite/recognitions/Zinnov.jpg" alt="Zinnov Zones"><span class="analyst-badge">Zinnov</span></div>
+            <div class="analyst-card-body">
+              <p class="analyst-report">Zinnov Zones 2023: Digital Engineering &amp; ER&amp;D — Digital Engineering Services — <span class="analyst-recognition">Leader</span></p>
+              <div class="analyst-btn-wrap">
+                <a href="https://spotlight.ascendion.com/staging/analyst-recognition/ascendions-debut-triumph-secures-recognition-in-ten-zones-in-2023-zinnov-zones-erd-services-ratings/" class="btn btn-text" target="_blank" rel="noopener">
+                  <span class="btn__label">Read report</span>
+                  <span class="btn__icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="analyst-card" data-firm="gartner">
+            <div class="analyst-card-img"><img src="../assets/images/Client-microsite/recognitions/Gartner.jpg" alt="Gartner"><span class="analyst-badge">Gartner</span></div>
+            <div class="analyst-card-body">
+              <p class="analyst-report">Gartner Generative AI in Outsourced Software Development — AAVA™ — <span class="analyst-recognition">Featured Platform</span></p>
+              <div class="analyst-btn-wrap">
+                <a href="https://spotlight.ascendion.com/staging/analyst-recognition/ascendion-ava-platform-got-featured-in-gartner-generative-ai-in-outsourced-software-development-report/" class="btn btn-text" target="_blank" rel="noopener">
+                  <span class="btn__label">Read report</span>
+                  <span class="btn__icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="analyst-card" data-firm="gartner">
+            <div class="analyst-card-img"><img src="../assets/images/Client-microsite/recognitions/Gartner.jpg" alt="Gartner"><span class="analyst-badge">Gartner</span></div>
+            <div class="analyst-card-body">
+              <p class="analyst-report">Gartner Magic Quadrant for Custom Software Development Services 2024 — <span class="analyst-recognition">Honorable Mention</span></p>
+            </div>
+          </article>
+
+          <article class="analyst-card" data-firm="gartner">
+            <div class="analyst-card-img"><img src="../assets/images/Client-microsite/recognitions/Globee.jpg" alt="Globee"><span class="analyst-badge">Globee®</span></div>
+            <div class="analyst-card-body">
+              <p class="analyst-report">2025 AI Service Provider of the Year — Driving transformation through AAVA™ — <span class="analyst-recognition">Gold Award</span></p>
+            </div>
+          </article>
+
         </div>
+      </div>
 
-        <div class="analyst-card" data-firm="hfs">
-          <div class="analyst-img-pop"><img src="../assets/images/Client-microsite/recognitions/HFS-Horizon-Digital Engineering Service Provider.webp" alt="HFS Digital Engineering 2023"></div>
-          <div class="analyst-card-left">
-            <span class="analyst-badge">HFS</span>
-            <span class="analyst-report">HFS Horizons: Digital Engineering Service Providers, 2023 — <span class="analyst-recognition">Enterprise Innovator</span></span>
-          </div>
-          <div class="analyst-btn-wrap">
-            <a href="https://spotlight.ascendion.com/staging/analyst-recognition/ascendion-named-enterprise-innovator-in-digital-engineering-study-by-hfs-research/" class="btn btn-text" target="_blank" rel="noopener">
-              <span class="btn__label">Read report</span>
-              <span class="btn__icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            </a>
-          </div>
-        </div>
-
-        <div class="analyst-card" data-firm="isg">
-          <div class="analyst-img-pop"><img src="../assets/images/Client-microsite/recognitions/ISG - Digital Engineering Services.jpg" alt="ISG Digital Engineering 2024"></div>
-          <div class="analyst-card-left">
-            <span class="analyst-badge">ISG</span>
-            <span class="analyst-report">ISG Provider Lens 2024: Digital Engineering Services — <span class="analyst-recognition">Rising Star</span></span>
-          </div>
-          <div class="analyst-btn-wrap">
-            <a href="https://spotlight.ascendion.com/staging/analyst-recognition/ascendion-soars-as-a-rising-star-in-isg-provider-lens-for-digital-engineering/" class="btn btn-text" target="_blank" rel="noopener">
-              <span class="btn__label">Read report</span>
-              <span class="btn__icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            </a>
-          </div>
-        </div>
-
-        <div class="analyst-card" data-firm="isg">
-          <div class="analyst-img-pop"><img src="../assets/images/Client-microsite/recognitions/ISG-logo.jpg" alt="ISG Gen AI 2024"></div>
-          <div class="analyst-card-left">
-            <span class="analyst-badge">ISG</span>
-            <span class="analyst-report">ISG Provider Lens 2024: Gen AI Services — <span class="analyst-recognition">Leader</span></span>
-          </div>
-          <div class="analyst-btn-wrap"></div>
-        </div>
-
-        <div class="analyst-card" data-firm="zinnov">
-          <div class="analyst-img-pop"><img src="../assets/images/Client-microsite/recognitions/Zinnov-Zones-Logo-2023.jpg" alt="Zinnov Zones 2023"></div>
-          <div class="analyst-card-left">
-            <span class="analyst-badge">Zinnov</span>
-            <span class="analyst-report">Zinnov Zones 2023: Digital Engineering &amp; ER&amp;D — Overall ER&amp;D — <span class="analyst-recognition">Leader</span></span>
-          </div>
-          <div class="analyst-btn-wrap">
-            <a href="https://spotlight.ascendion.com/staging/analyst-recognition/ascendions-debut-triumph-secures-recognition-in-ten-zones-in-2023-zinnov-zones-erd-services-ratings/" class="btn btn-text" target="_blank" rel="noopener">
-              <span class="btn__label">Read report</span>
-              <span class="btn__icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            </a>
-          </div>
-        </div>
-
-        <div class="analyst-card" data-firm="zinnov">
-          <div class="analyst-img-pop"><img src="../assets/images/Client-microsite/recognitions/Zinnov-Zones-Logo-2023.jpg" alt="Zinnov Zones 2023"></div>
-          <div class="analyst-card-left">
-            <span class="analyst-badge">Zinnov</span>
-            <span class="analyst-report">Zinnov Zones 2023: Digital Engineering &amp; ER&amp;D — Digital Engineering Services — <span class="analyst-recognition">Leader</span></span>
-          </div>
-          <div class="analyst-btn-wrap">
-            <a href="https://spotlight.ascendion.com/staging/analyst-recognition/ascendions-debut-triumph-secures-recognition-in-ten-zones-in-2023-zinnov-zones-erd-services-ratings/" class="btn btn-text" target="_blank" rel="noopener">
-              <span class="btn__label">Read report</span>
-              <span class="btn__icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            </a>
-          </div>
-        </div>
-
-        <div class="analyst-card" data-firm="gartner">
-          <div class="analyst-img-pop"><img src="../assets/images/Client-microsite/recognitions/Gartner Logo.png" alt="Gartner"></div>
-          <div class="analyst-card-left">
-            <span class="analyst-badge">Gartner</span>
-            <span class="analyst-report">Gartner Generative AI in Outsourced Software Development — AAVA™ — <span class="analyst-recognition">Featured Platform</span></span>
-          </div>
-          <div class="analyst-btn-wrap">
-            <a href="https://spotlight.ascendion.com/staging/analyst-recognition/ascendion-ava-platform-got-featured-in-gartner-generative-ai-in-outsourced-software-development-report/" class="btn btn-text" target="_blank" rel="noopener">
-              <span class="btn__label">Read report</span>
-              <span class="btn__icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            </a>
-          </div>
-        </div>
-
-        <div class="analyst-card" data-firm="gartner">
-          <div class="analyst-img-pop"><img src="../assets/images/Client-microsite/recognitions/Gartner Logo.png" alt="Gartner"></div>
-          <div class="analyst-card-left">
-            <span class="analyst-badge">Gartner</span>
-            <span class="analyst-report">Gartner Magic Quadrant for Custom Software Development Services 2024 — <span class="analyst-recognition">Honorable Mention</span></span>
-          </div>
-          <div class="analyst-btn-wrap"></div>
-        </div>
-
-        <div class="analyst-card" data-firm="gartner">
-          <div class="analyst-img-pop"><img src="../assets/images/Client-microsite/recognitions/Globee.png" alt="Globee"></div>
-          <div class="analyst-card-left">
-            <span class="analyst-badge">Globee®</span>
-            <span class="analyst-report">2025 AI Service Provider of the Year — Driving transformation through AAVA™ — <span class="analyst-recognition">Gold Award</span></span>
-          </div>
-          <div class="analyst-btn-wrap"></div>
-        </div>
-
+      <!-- Controls -->
+      <div class="analyst-controls">
+        <button class="analyst-btn" id="analystPrev" aria-label="Previous">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="analyst-btn" id="analystNext" aria-label="Next">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
       </div>
     </div>
   </section>
@@ -3640,20 +3844,59 @@
       if (grid) init();
     })();
 
-    // ── Section 18: Analyst filter ──
+    // ── Section 18: Analyst carousel + filter ──
     (function () {
-      var filters = Array.from(document.querySelectorAll('.analyst-filter'));
-      var cards   = Array.from(document.querySelectorAll('.analyst-card'));
+      var filters  = Array.from(document.querySelectorAll('.analyst-filter'));
+      var allCards = Array.from(document.querySelectorAll('.analyst-card'));
+      var track    = document.getElementById('analystTrack');
+      var prevBtn  = document.getElementById('analystPrev');
+      var nextBtn  = document.getElementById('analystNext');
+      var VISIBLE  = 3;
+      var GAP      = 24;
+      var step     = 0;
+      var visible  = [];
+
+      function getCardWidth() {
+        var wrap = document.getElementById('analystCarouselWrap');
+        return (wrap.offsetWidth - GAP * (VISIBLE - 1)) / VISIBLE;
+      }
+
+      function applyFilter(f) {
+        // Show/hide cards in DOM — rebuild visible list
+        allCards.forEach(function (c) {
+          var show = (f === 'all' || c.dataset.firm === f);
+          c.style.display = show ? '' : 'none';
+        });
+        visible = allCards.filter(function (c) { return c.style.display !== 'none'; });
+        step = 0;
+        updateCarousel();
+      }
+
+      function updateCarousel() {
+        var cw   = getCardWidth();
+        var maxSteps = Math.max(0, visible.length - VISIBLE);
+        step = Math.max(0, Math.min(step, maxSteps));
+        var offset = step * (cw + GAP);
+        track.style.transform = 'translateX(-' + offset + 'px)';
+        // Set widths on all cards
+        allCards.forEach(function (c) { c.style.width = cw + 'px'; });
+        prevBtn.classList.toggle('disabled', step === 0);
+        nextBtn.classList.toggle('disabled', step >= maxSteps);
+      }
+
       filters.forEach(function (btn) {
         btn.addEventListener('click', function () {
           filters.forEach(function (b) { b.classList.remove('active'); });
           btn.classList.add('active');
-          var f = btn.dataset.filter;
-          cards.forEach(function (c) {
-            c.style.display = (f === 'all' || c.dataset.firm === f) ? '' : 'none';
-          });
+          applyFilter(btn.dataset.filter);
         });
       });
+
+      prevBtn.addEventListener('click', function () { step--; updateCarousel(); });
+      nextBtn.addEventListener('click', function () { step++; updateCarousel(); });
+
+      window.addEventListener('resize', updateCarousel);
+      applyFilter('all');
     })();
 
     // ── Hero terminal animation ──
@@ -3685,6 +3928,142 @@
       }, { threshold: 0.2 });
       obs.observe(terminal);
     }());
+
+  /* ── Allies carousel ────────────────────────────── */
+  (function () {
+    var track    = document.getElementById('alliesTrack');
+    var prevBtn  = document.getElementById('alliesPrev');
+    var nextBtn  = document.getElementById('alliesNext');
+    var TOTAL    = 3;   // total cards
+    var VISIBLE  = 3;   // cards visible at once
+    var STEPS    = TOTAL - VISIBLE; // max positions = 0
+    var step     = 0;
+
+    function goTo(s) {
+      step = Math.max(0, Math.min(s, STEPS));
+      track.style.transform = 'translateX(-' + (step * 33.333) + '%)';
+      prevBtn.disabled = step === 0;
+      nextBtn.disabled = step === STEPS;
+      prevBtn.style.opacity = step === 0     ? '0.35' : '1';
+      nextBtn.style.opacity = step === STEPS ? '0.35' : '1';
+    }
+
+    prevBtn.addEventListener('click', function () { goTo(step - 1); });
+    nextBtn.addEventListener('click', function () { goTo(step + 1); });
+
+    goTo(0);
+  }());
+
+  /* ── About ticker — staggered step carousel ─────── */
+  (function () {
+    var wrap    = document.getElementById('aboutTickerWrap');
+    var ticker  = document.getElementById('aboutTicker');
+    var prevBtn = document.getElementById('aboutPrev');
+    var nextBtn = document.getElementById('aboutNext');
+    var items   = ticker.querySelectorAll('.about-ticker-item');
+
+    var ITEM_COUNT   = 10;    // unique items per set
+    var MOVE_MS      = 550;   // transition duration
+    var PAUSE_MS     = 2700;  // pause between steps
+    var step         = 0;     // current step (0 = initial)
+    var isAnimating  = false;
+    var hovered      = false;
+    var timer        = null;
+
+    function iw() { return window.innerWidth * 0.2; } // 20vw in px
+
+    /* Highlight the item physically at the viewport centre */
+    function highlightCenter() {
+      var centre  = window.innerWidth / 2;
+      var trackX  = step * iw();
+      items.forEach(function (el, i) {
+        var left   = i * iw() - trackX;
+        var middle = left + iw() / 2;
+        el.classList.toggle('active', Math.abs(middle - centre) < iw() * 0.5);
+      });
+    }
+
+    /* Move one step forward */
+    function advance() {
+      if (isAnimating) return;
+      isAnimating = true;
+      step++;
+
+      /* At the halfway point, silently jump back to avoid runaway translation */
+      if (step >= ITEM_COUNT) {
+        ticker.style.transition = 'none';
+        ticker.style.transform  = 'translateX(0)';
+        step = 0;
+        /* tiny delay so browser paints the instant-reset, then continue */
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            isAnimating = false;
+            highlightCenter();
+            scheduleNext();
+          });
+        });
+        return;
+      }
+
+      ticker.style.transition = 'transform ' + MOVE_MS + 'ms cubic-bezier(0.4, 0, 0.2, 1)';
+      ticker.style.transform  = 'translateX(-' + (step * iw()) + 'px)';
+
+      setTimeout(function () {
+        isAnimating = false;
+        highlightCenter();
+        scheduleNext();
+      }, MOVE_MS);
+    }
+
+    /* Move one step backward */
+    function retreat() {
+      if (isAnimating) return;
+      clearTimeout(timer);
+      isAnimating = true;
+      step--;
+
+      if (step < 0) {
+        /* jump to end of first set */
+        ticker.style.transition = 'none';
+        step = ITEM_COUNT - 1;
+        ticker.style.transform  = 'translateX(-' + (step * iw()) + 'px)';
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            isAnimating = false;
+            highlightCenter();
+            scheduleNext();
+          });
+        });
+        return;
+      }
+
+      ticker.style.transition = 'transform ' + MOVE_MS + 'ms cubic-bezier(0.4, 0, 0.2, 1)';
+      ticker.style.transform  = 'translateX(-' + (step * iw()) + 'px)';
+
+      setTimeout(function () {
+        isAnimating = false;
+        highlightCenter();
+        scheduleNext();
+      }, MOVE_MS);
+    }
+
+    function scheduleNext() {
+      clearTimeout(timer);
+      if (!hovered) timer = setTimeout(advance, PAUSE_MS);
+    }
+
+    /* Hover: pause / resume */
+    wrap.addEventListener('mouseenter', function () { hovered = true;  clearTimeout(timer); });
+    wrap.addEventListener('mouseleave', function () { hovered = false; scheduleNext(); });
+
+    /* Buttons */
+    nextBtn.addEventListener('click', function () { advance(); });
+    prevBtn.addEventListener('click', function () { retreat(); });
+
+    /* Kick off */
+    highlightCenter();
+    scheduleNext();
+  }());
   </script>
 </body>
 </html>
