@@ -8,7 +8,7 @@
   <style>
     @font-face {
       font-family: 'PP Neue Machina';
-      src: url('../assets/fonts/PPNeueMachina-PlainRegular 2.ttf') format('truetype');
+      src: url('../assets/fonts/PPNeueMachina-PlainRegular.ttf') format('truetype');
       font-weight: 400;
       font-style: normal;
       font-display: swap;
@@ -327,8 +327,10 @@
     ===================================================== */
     .hero {
       background: var(--bg-default);
-      height: calc(100vh - 86px - 56px);
-      max-height: 800px;
+      height: 85vh;
+      min-height: 560px;
+      margin-top: -86px;
+      padding-top: 86px;
       position: relative;
       overflow: hidden;
       display: flex;
@@ -350,6 +352,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       width: 100%;
+      height: 100%;
     }
     .hero-left {
       display: flex;
@@ -403,13 +406,16 @@
     }
     .hero-img-placeholder {
       width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, #f4f4f4 0%, #e8e8e8 100%);
+      aspect-ratio: 4 / 3;
       border-radius: 2px;
-      border: 1px solid var(--neutral-200);
+      overflow: hidden;
     }
-    .hero-right {
-      align-self: stretch;
+    .hero-img-placeholder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
     }
 
     /* =====================================================
@@ -755,9 +761,16 @@
     }
     .method-tab-visual {
       aspect-ratio: 16 / 9;
-      background: linear-gradient(135deg, #e8e8e8 0%, #f4f4f4 100%);
       border: 1px solid var(--neutral-200);
       border-radius: 2px;
+      overflow: hidden;
+    }
+    .method-tab-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
     }
 
     .method-sub {
@@ -918,9 +931,14 @@
       background: linear-gradient(135deg, #e0e0e0 0%, #f4f4f4 100%);
       border-radius: 2px;
       border: 1px solid var(--neutral-200);
-      margin-bottom: 20px;
-      position: relative;
       overflow: hidden;
+    }
+    .aava-video-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
     }
     .aava-play-btn {
       position: absolute;
@@ -987,9 +1005,16 @@
     .impact-img {
       width: 100%;
       aspect-ratio: 4 / 3;
-      background: linear-gradient(135deg, #e8e8e8 0%, #f4f4f4 100%);
       border-radius: 2px;
       border: 1px solid var(--neutral-200);
+      overflow: hidden;
+    }
+    .impact-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
     }
     .impact-right {}
     .impact-item {
@@ -1213,8 +1238,15 @@
     .people-img-placeholder {
       width: 100%;
       aspect-ratio: 4 / 3;
-      background: linear-gradient(135deg, #d4d4d4 0%, #e8e8e8 100%);
       border-radius: 2px;
+      overflow: hidden;
+    }
+    .people-img-placeholder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
     }
     .people-col h3 { color: var(--text-primary); margin-bottom: 12px; font-size: 28px; }
     .people-col-sub {
@@ -1648,9 +1680,11 @@
         <p class="hero-tagline">The Ascendion Commitment to Centene and Your Members — and the 27 Million Members You Serve.</p>
       </div>
 
-      <!-- RIGHT: image placeholder -->
-      <div class="hero-right" aria-hidden="true">
-        <div class="hero-img-placeholder"></div>
+      <!-- RIGHT: banner image -->
+      <div class="hero-right">
+        <div class="hero-img-placeholder">
+          <img src="../assets/images/Client-micosite-Centene/banner-img.jpg" alt="Ascendion × Centene">
+        </div>
       </div>
 
     </div>
@@ -1879,7 +1913,9 @@
             <li class="method-tab-bullet">Human-in-the-loop oversight on every critical decision</li>
           </ul>
         </div>
-        <div class="method-tab-visual" aria-hidden="true"></div>
+        <div class="method-tab-visual">
+          <img src="../assets/images/Client-micosite-Centene/section03-img01.jpg" alt="People">
+        </div>
       </div>
 
       <!-- Tab 1 — Process -->
@@ -1895,7 +1931,9 @@
             <li class="method-tab-bullet">One clear, consistent timeline: configuration is fast; full compliance validation is appropriately paced</li>
           </ul>
         </div>
-        <div class="method-tab-visual" aria-hidden="true"></div>
+        <div class="method-tab-visual">
+          <img src="../assets/images/Client-micosite-Centene/section03-img02.jpg" alt="Process">
+        </div>
       </div>
 
       <!-- Tab 2 — Platform -->
@@ -1910,7 +1948,9 @@
             <li class="method-tab-bullet">ISG-cited, Gartner-featured, HFS-validated</li>
           </ul>
         </div>
-        <div class="method-tab-visual" aria-hidden="true"></div>
+        <div class="method-tab-visual">
+          <img src="../assets/images/Client-micosite-Centene/section03-img03.jpg" alt="Platform">
+        </div>
       </div>
 
     </div>
@@ -2040,7 +2080,9 @@
 
         <!-- Left — image only (sticky) -->
         <div class="impact-left rv">
-          <div class="impact-img" aria-hidden="true"></div>
+          <div class="impact-img">
+            <img src="../assets/images/Client-micosite-Centene/section05-img.jpg" alt="AI-Powered Impact Today">
+          </div>
         </div>
 
         <!-- Right — scrollable list of results -->
@@ -2212,12 +2254,16 @@
             <span class="people-chip">On-the-Fly Learning</span>
           </div>
         </div>
-        <div class="people-img-placeholder" aria-hidden="true"></div>
+        <div class="people-img-placeholder">
+          <img src="../assets/images/Client-micosite-Centene/Section07-img01.jpg" alt="How AAVA Works">
+        </div>
       </div>
 
       <!-- Row 2: image + Ascendion University content -->
       <div class="people-row rv d1">
-        <div class="people-img-placeholder" aria-hidden="true"></div>
+        <div class="people-img-placeholder">
+          <img src="../assets/images/Client-micosite-Centene/Section07-img02.jpg" alt="Ascendion University">
+        </div>
         <div class="people-col">
           <h3>Ascendion University</h3>
           <p class="people-col-body">We don't just deploy AAVA™. We build the human capability to work with it.</p>
