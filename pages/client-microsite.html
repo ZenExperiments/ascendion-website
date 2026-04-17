@@ -8,7 +8,7 @@
   <style>
     @font-face {
       font-family: 'PP Neue Machina';
-      src: url('../assets/fonts/PPNeueMachina-PlainRegular.ttf') format('truetype');
+      src: url('../assets/fonts/PPNeueMachina-PlainRegular 2.ttf') format('truetype');
       font-weight: 400;
       font-style: normal;
       font-display: swap;
@@ -1139,7 +1139,6 @@
       background: var(--bg-subtle);
       padding-bottom: var(--py);
       position: relative;
-      overflow: hidden;
     }
     .about-section::before {
       content: '';
@@ -1174,13 +1173,8 @@
       color: var(--text-secondary);
       max-width: 620px;
     }
-    /* Ticker */
-    .about-ticker-controls {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 32px;
-    }
+    /* Grid */
+    .about-ticker-controls { display: none; }
     .about-ticker-btn {
       width: 48px;
       height: 48px;
@@ -1200,38 +1194,21 @@
       border-color: var(--primary-500);
       color: #fff;
     }
-    /* Outer wrapper — fades on left/right like partners section */
     .about-ticker-outer {
       position: relative;
-      margin-top: 0;
-    }
-    .about-ticker-outer::before,
-    .about-ticker-outer::after {
-      content: '';
-      position: absolute;
-      top: 0; bottom: 0;
-      width: 120px;
-      z-index: 2;
-      pointer-events: none;
-    }
-    .about-ticker-outer::before { left: 0;  background: linear-gradient(90deg,  var(--bg-subtle), transparent); }
-    .about-ticker-outer::after  { right: 0; background: linear-gradient(-90deg, var(--bg-subtle), transparent); }
-    .about-ticker-wrap {
-      overflow-x: clip;
-      overflow-y: visible;
       border-top: 1px solid var(--neutral-200);
       border-bottom: 1px solid var(--neutral-200);
+    }
+    .about-ticker-wrap {
       cursor: default;
+      padding-left: 80px;
+      padding-right: 80px;
     }
     .about-ticker {
-      display: flex;
-      align-items: stretch;
-      width: max-content;
-      will-change: transform;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
     }
     .about-ticker-item {
-      flex-shrink: 0;
-      width: 20vw;
       padding: 28px 28px 32px;
       background: var(--bg-subtle);
       display: flex;
@@ -1243,7 +1220,7 @@
       position: relative;
       transition: background 0.4s ease, box-shadow 0.4s ease;
     }
-    /* Vertical divider — flush within item bounds */
+    /* Right border on each item */
     .about-ticker-item::after {
       content: '';
       position: absolute;
@@ -1253,13 +1230,21 @@
       width: 1px;
       background: var(--neutral-200);
     }
-    /* Active / centre item */
-    .about-ticker-item.active {
-      background: var(--bg-subtle);
+    /* Left border on first column items */
+    .about-ticker-item:nth-child(5n+1) {
+      border-left: 1px solid var(--neutral-200);
+    }
+    /* Horizontal line between row 1 and row 2 */
+    .about-ticker-item:nth-child(-n+5) {
+      border-bottom: 1px solid var(--neutral-200);
+    }
+    /* Hover highlight */
+    .about-ticker-item:hover {
+      background: #fff;
       box-shadow: 0 8px 24px rgba(0,0,0,0.08), inset 0 2px 0 var(--primary-500);
       z-index: 1;
     }
-    .about-ticker-item.active .about-ticker-item-text {
+    .about-ticker-item:hover .about-ticker-item-text {
       color: var(--primary-500);
       font-weight: 500;
     }
@@ -1269,9 +1254,9 @@
       font-weight: 400;
       color: var(--neutral-400);
       letter-spacing: 0.08em;
-      transition: color 0.4s ease;
+      transition: color 0.3s ease;
     }
-    .about-ticker-item.active .about-ticker-item-num {
+    .about-ticker-item:hover .about-ticker-item-num {
       color: var(--primary-500);
     }
     .about-ticker-item-text {
@@ -1812,9 +1797,9 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(0,133,103,0.18) 0%, rgba(0,133,103,0.04) 60%, transparent 100%);
+      background: linear-gradient(135deg, rgba(0,133,103,0.28) 0%, rgba(0,133,103,0.08) 60%, transparent 100%);
       opacity: 0;
-      transition: opacity 0.35s ease;
+      transition: opacity 0.3s ease;
       pointer-events: none;
       z-index: 0;
     }
@@ -2893,43 +2878,23 @@
         <p class="about-sub rv">We're not a vendor. We're your partner in transformation, delivering managed services discipline, AI-led operations, and engineered execution.</p>
       </div>
 
-      <div class="about-ticker-controls">
-        <button class="about-ticker-btn" id="aboutPrev" aria-label="Previous">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13 8H3M7 4l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <button class="about-ticker-btn" id="aboutNext" aria-label="Next">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-      </div>
     </div><!-- /container -->
 
     <div class="about-ticker-outer">
-    <div class="about-ticker-wrap" id="aboutTickerWrap">
-      <div class="about-ticker" id="aboutTicker">
-        <!-- Set 1 -->
-        <div class="about-ticker-item"><span class="about-ticker-item-num">01</span><span class="about-ticker-item-text">11,000+ global engineers and technologists</span></div>
-        <div class="about-ticker-item"><span class="about-ticker-item-num">02</span><span class="about-ticker-item-text">4 global AI studios + 11 delivery hubs</span></div>
-        <div class="about-ticker-item"><span class="about-ticker-item-num">03</span><span class="about-ticker-item-text">100% focused on AI-powered software services</span></div>
-        <div class="about-ticker-item"><span class="about-ticker-item-num">04</span><span class="about-ticker-item-text">400+ enterprise clients</span></div>
-        <div class="about-ticker-item"><span class="about-ticker-item-num">05</span><span class="about-ticker-item-text">Deep expertise in healthcare, banking, and life sciences</span></div>
-        <div class="about-ticker-item"><span class="about-ticker-item-num">06</span><span class="about-ticker-item-text">Recognized leader in Generative AI services</span></div>
-        <div class="about-ticker-item"><span class="about-ticker-item-num">07</span><span class="about-ticker-item-text">AAVA™, METAI, and Agent Factory accelerators</span></div>
-        <div class="about-ticker-item"><span class="about-ticker-item-num">08</span><span class="about-ticker-item-text">Tier 1 analyst positioning with industry recognition</span></div>
-        <div class="about-ticker-item"><span class="about-ticker-item-num">09</span><span class="about-ticker-item-text">Up to 3× velocity and 150% higher productivity</span></div>
-        <div class="about-ticker-item"><span class="about-ticker-item-num">10</span><span class="about-ticker-item-text">AI Arbitrage shifting value back to clients</span></div>
-        <!-- Set 2 — duplicate for seamless loop -->
-        <div class="about-ticker-item" aria-hidden="true"><span class="about-ticker-item-num">01</span><span class="about-ticker-item-text">11,000+ global engineers and technologists</span></div>
-        <div class="about-ticker-item" aria-hidden="true"><span class="about-ticker-item-num">02</span><span class="about-ticker-item-text">4 global AI studios + 11 delivery hubs</span></div>
-        <div class="about-ticker-item" aria-hidden="true"><span class="about-ticker-item-num">03</span><span class="about-ticker-item-text">100% focused on AI-powered software services</span></div>
-        <div class="about-ticker-item" aria-hidden="true"><span class="about-ticker-item-num">04</span><span class="about-ticker-item-text">400+ enterprise clients</span></div>
-        <div class="about-ticker-item" aria-hidden="true"><span class="about-ticker-item-num">05</span><span class="about-ticker-item-text">Deep expertise in healthcare, banking, and life sciences</span></div>
-        <div class="about-ticker-item" aria-hidden="true"><span class="about-ticker-item-num">06</span><span class="about-ticker-item-text">Recognized leader in Generative AI services</span></div>
-        <div class="about-ticker-item" aria-hidden="true"><span class="about-ticker-item-num">07</span><span class="about-ticker-item-text">AAVA™, METAI, and Agent Factory accelerators</span></div>
-        <div class="about-ticker-item" aria-hidden="true"><span class="about-ticker-item-num">08</span><span class="about-ticker-item-text">Tier 1 analyst positioning with industry recognition</span></div>
-        <div class="about-ticker-item" aria-hidden="true"><span class="about-ticker-item-num">09</span><span class="about-ticker-item-text">Up to 3× velocity and 150% higher productivity</span></div>
-        <div class="about-ticker-item" aria-hidden="true"><span class="about-ticker-item-num">10</span><span class="about-ticker-item-text">AI Arbitrage shifting value back to clients</span></div>
+      <div class="about-ticker-wrap">
+        <div class="about-ticker">
+          <div class="about-ticker-item"><span class="about-ticker-item-num">01</span><span class="about-ticker-item-text">11,000+ global engineers and technologists</span></div>
+          <div class="about-ticker-item"><span class="about-ticker-item-num">02</span><span class="about-ticker-item-text">4 global AI studios + 11 delivery hubs</span></div>
+          <div class="about-ticker-item"><span class="about-ticker-item-num">03</span><span class="about-ticker-item-text">100% focused on AI-powered software services</span></div>
+          <div class="about-ticker-item"><span class="about-ticker-item-num">04</span><span class="about-ticker-item-text">400+ enterprise clients</span></div>
+          <div class="about-ticker-item"><span class="about-ticker-item-num">05</span><span class="about-ticker-item-text">Deep expertise in healthcare, banking, and life sciences</span></div>
+          <div class="about-ticker-item"><span class="about-ticker-item-num">06</span><span class="about-ticker-item-text">Recognized leader in Generative AI services</span></div>
+          <div class="about-ticker-item"><span class="about-ticker-item-num">07</span><span class="about-ticker-item-text">AAVA™, METAI, and Agent Factory accelerators</span></div>
+          <div class="about-ticker-item"><span class="about-ticker-item-num">08</span><span class="about-ticker-item-text">Tier 1 analyst positioning with industry recognition</span></div>
+          <div class="about-ticker-item"><span class="about-ticker-item-num">09</span><span class="about-ticker-item-text">Up to 3× velocity and 150% higher productivity</span></div>
+          <div class="about-ticker-item"><span class="about-ticker-item-num">10</span><span class="about-ticker-item-text">AI Arbitrage shifting value back to clients</span></div>
+        </div>
       </div>
-    </div>
     </div><!-- /about-ticker-outer -->
 
   </section>
@@ -3929,15 +3894,16 @@
       obs.observe(terminal);
     }());
 
+
   /* ── Allies carousel ────────────────────────────── */
   (function () {
-    var track    = document.getElementById('alliesTrack');
-    var prevBtn  = document.getElementById('alliesPrev');
-    var nextBtn  = document.getElementById('alliesNext');
-    var TOTAL    = 3;   // total cards
-    var VISIBLE  = 3;   // cards visible at once
-    var STEPS    = TOTAL - VISIBLE; // max positions = 0
-    var step     = 0;
+    var track   = document.getElementById('alliesTrack');
+    var prevBtn = document.getElementById('alliesPrev');
+    var nextBtn = document.getElementById('alliesNext');
+    var TOTAL   = 3;
+    var VISIBLE = 3;
+    var STEPS   = TOTAL - VISIBLE;
+    var step    = 0;
 
     function goTo(s) {
       step = Math.max(0, Math.min(s, STEPS));
@@ -3954,116 +3920,6 @@
     goTo(0);
   }());
 
-  /* ── About ticker — staggered step carousel ─────── */
-  (function () {
-    var wrap    = document.getElementById('aboutTickerWrap');
-    var ticker  = document.getElementById('aboutTicker');
-    var prevBtn = document.getElementById('aboutPrev');
-    var nextBtn = document.getElementById('aboutNext');
-    var items   = ticker.querySelectorAll('.about-ticker-item');
-
-    var ITEM_COUNT   = 10;    // unique items per set
-    var MOVE_MS      = 550;   // transition duration
-    var PAUSE_MS     = 2700;  // pause between steps
-    var step         = 0;     // current step (0 = initial)
-    var isAnimating  = false;
-    var hovered      = false;
-    var timer        = null;
-
-    function iw() { return window.innerWidth * 0.2; } // 20vw in px
-
-    /* Highlight the item physically at the viewport centre */
-    function highlightCenter() {
-      var centre  = window.innerWidth / 2;
-      var trackX  = step * iw();
-      items.forEach(function (el, i) {
-        var left   = i * iw() - trackX;
-        var middle = left + iw() / 2;
-        el.classList.toggle('active', Math.abs(middle - centre) < iw() * 0.5);
-      });
-    }
-
-    /* Move one step forward */
-    function advance() {
-      if (isAnimating) return;
-      isAnimating = true;
-      step++;
-
-      /* At the halfway point, silently jump back to avoid runaway translation */
-      if (step >= ITEM_COUNT) {
-        ticker.style.transition = 'none';
-        ticker.style.transform  = 'translateX(0)';
-        step = 0;
-        /* tiny delay so browser paints the instant-reset, then continue */
-        requestAnimationFrame(function () {
-          requestAnimationFrame(function () {
-            isAnimating = false;
-            highlightCenter();
-            scheduleNext();
-          });
-        });
-        return;
-      }
-
-      ticker.style.transition = 'transform ' + MOVE_MS + 'ms cubic-bezier(0.4, 0, 0.2, 1)';
-      ticker.style.transform  = 'translateX(-' + (step * iw()) + 'px)';
-
-      setTimeout(function () {
-        isAnimating = false;
-        highlightCenter();
-        scheduleNext();
-      }, MOVE_MS);
-    }
-
-    /* Move one step backward */
-    function retreat() {
-      if (isAnimating) return;
-      clearTimeout(timer);
-      isAnimating = true;
-      step--;
-
-      if (step < 0) {
-        /* jump to end of first set */
-        ticker.style.transition = 'none';
-        step = ITEM_COUNT - 1;
-        ticker.style.transform  = 'translateX(-' + (step * iw()) + 'px)';
-        requestAnimationFrame(function () {
-          requestAnimationFrame(function () {
-            isAnimating = false;
-            highlightCenter();
-            scheduleNext();
-          });
-        });
-        return;
-      }
-
-      ticker.style.transition = 'transform ' + MOVE_MS + 'ms cubic-bezier(0.4, 0, 0.2, 1)';
-      ticker.style.transform  = 'translateX(-' + (step * iw()) + 'px)';
-
-      setTimeout(function () {
-        isAnimating = false;
-        highlightCenter();
-        scheduleNext();
-      }, MOVE_MS);
-    }
-
-    function scheduleNext() {
-      clearTimeout(timer);
-      if (!hovered) timer = setTimeout(advance, PAUSE_MS);
-    }
-
-    /* Hover: pause / resume */
-    wrap.addEventListener('mouseenter', function () { hovered = true;  clearTimeout(timer); });
-    wrap.addEventListener('mouseleave', function () { hovered = false; scheduleNext(); });
-
-    /* Buttons */
-    nextBtn.addEventListener('click', function () { advance(); });
-    prevBtn.addEventListener('click', function () { retreat(); });
-
-    /* Kick off */
-    highlightCenter();
-    scheduleNext();
-  }());
   </script>
 </body>
 </html>
